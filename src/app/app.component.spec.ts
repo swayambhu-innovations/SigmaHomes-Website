@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'SigamHomes-Website'`, () => {
+  it(`should have as title 'SigmaHomes-Website'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('SigamHomes-Website');
+    expect(app.title).toEqual('SigmaHomes-Website');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('SigamHomes-Website app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('SigmaHomes-Website app is running!');
   });
 });

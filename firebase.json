@@ -1,7 +1,7 @@
 {
   "hosting": {
-    "target": "SigamHomes-Website",
-    "public": "dist/sigam-homes-website",
+    "target": "SigmaHomes-Website",
+    "public": "dist/Sigma-homes-website",
     "ignore": [
       "**/.*"
     ],

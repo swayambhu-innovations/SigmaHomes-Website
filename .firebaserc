@@ -2,7 +2,7 @@
   "targets": {
     "sigmahomes-3dae4": {
       "hosting": {
-        "SigamHomes-Website": [
+        "SigmaHomes-Website": [
           "sigmahomes-3dae4"
         ]
       }
