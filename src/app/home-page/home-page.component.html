@@ -1,33 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <header class="navigation">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet" />
+</head>
 
-     
-        <div class="logo">Sigma <span>Homes</span></div>
-        <div class="routes">
-          <span>Home</span>
-          <span>Feature</span>
-          <span>Invest</span>
-          <span>Consult</span>
-          <span>About</span>
+<body>
+    <app-header></app-header>
+    <section id="first-section">
+        <div id="first-section-content">
+            <h2 id="first-section-heading">We help build your dream <span class="bold">professionally</span></h2>
+            <p id="first-section-paragraph">We always prioritize the maximum possible results with modern methods, and the latest texhnology that we use so far the client is very proud of the solid results.</p>
+            <form action="" method="post" id="first-section-email-form">
+                <input type="email" name="email" id="email-form-input" placeholder="Drop your email address here">
+                <button type="submit" id="email-form-submit">Let's Consult Now</button>
+            </form>
         </div>
-        <div class="auth">
-        <button class="login">Login</button>
-        <button class="create_account">Create Account</button>
-    </div>
-</header>
-  </body>
+    </section>
+    <app-footer></app-footer>
+</body>
+
 </html>
