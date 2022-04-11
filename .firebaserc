@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "sigmahomes-3dae4": {
+      "hosting": {
+        "SigamHomes-Website": [
+          "sigmahomes-3dae4"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "sigmahomes-3dae4"
+  }
+}

@@ -103,6 +103,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "SigamHomes-Website:build:production",
+            "firebaseProject": "sigmahomes-3dae4",
+            "firebaseHostingSite": "sigmahomes-3dae4"
+          }
         }
       }
     }
