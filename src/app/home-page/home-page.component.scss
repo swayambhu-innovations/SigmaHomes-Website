@@ -7,13 +7,14 @@
 
 // First Section
 
-#first-section {
+#home {
     font-family: 'Poppins', sans-serif;
     background-image: url(../../assets/img/first-section-background.png);
     background-size: cover;
     background-repeat: no-repeat;
-    height: 80vh;
+    height: 90vh;
     position: relative;
+    top:10vh;
 }
 
 #first-section-content {
@@ -58,4 +59,54 @@
     outline: 0;
     padding: .75em 1.25em;
     border: 1px solid transparent;
+}
+#about{
+    height: 50vh;
+    width: 100vw;
+    position: relative;
+    top:10vh;
+    font-family: 'Poppins';
+    background-color: #0a2e1836;
+}
+#about-content{
+  width: 85%;       
+  height: 100%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between    ;
+#box1{
+    width: 500px;   
+  display: flex;
+  flex-direction: column;
+  p{
+      font-size: 35px;
+      font-family: 'Poppins';
+      color: #03381c;
+  }
+  span{
+      font-size: 18px;
+      color: #4e4e4e;
+      padding: 20px  0px;
+  }
+}
+#box2   {
+    width: 50%;
+  display: flex;
+  justify-content: space-around;
+  #cards{
+      display: flex;
+      flex-direction: column;
+      width: 100px;
+      b{
+          font-size: 40px;
+          color: #03381c;
+      }
+      small{
+          font-size: 15px;
+          font-weight: 600;
+      }
+  }
+}
+
 }
