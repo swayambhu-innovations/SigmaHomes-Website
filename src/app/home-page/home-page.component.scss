@@ -1,20 +1,18 @@
-// Utility Classes
+// Universal Styles
 
-.bold {
-    font-weight: 700;
+* {
+    font-family: 'Poppins', sans-serif;
 }
 
 
 // First Section
 
 #home {
-    font-family: 'Poppins', sans-serif;
     background-image: url(../../assets/img/first-section-background.png);
     background-size: cover;
     background-repeat: no-repeat;
     height: 90vh;
     position: relative;
-    top:10vh;
 }
 
 #first-section-content {
@@ -45,7 +43,6 @@
     padding: 1.5em 1em;
     width: 100%;
     border: 1px solid #bac2bf;
-    font-family: inherit;
 }
 
 #email-form-submit {
@@ -55,17 +52,32 @@
     transform: translateY(-50%);
     background-color: #03381c;
     color: #f6f7f7;
-    font-family: inherit;
     outline: 0;
     padding: .75em 1.25em;
     border: 1px solid transparent;
 }
+
+
+// Sponsors Section
+
+#sponsors {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 2.5em 0;
+}
+
+.sponsor-svg-logo {
+    width: 100px;
+}
+
+
+// About Section
+
 #about{
     height: 50vh;
     width: 100vw;
     position: relative;
-    top:10vh;
-    font-family: 'Poppins';
     background-color: #0a2e1836;
 }
 #about-content{
@@ -81,7 +93,6 @@
   flex-direction: column;
   p{
       font-size: 35px;
-      font-family: 'Poppins';
       color: #03381c;
   }
   span{
@@ -108,5 +119,70 @@
       }
   }
 }
+}
 
+
+// Services and FAQs Sections
+
+#services, #faqs-section {
+    width: 90%;
+    margin: 3em auto;
+}
+
+.service, #faqs-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.service:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.service-content, .service-image-container, #faqs-image-container, #faqs {
+    width: 50%;
+    margin: 3em;
+}
+
+.service-image-container, #faqs-image-container {
+    border: 1px solid #bac2bf;
+    position: relative;
+    height: 410px;
+}
+
+.service-image, #faqs-image {
+    width: 100%;
+    position: absolute;
+    top: -2em;
+    right: -2em;
+}
+
+.service-heading, #faqs-heading {
+    font-size: 1.8rem;
+}
+
+.service-paragraph, .service-link {
+    margin-top: 1em;
+}
+
+.service-paragraph {
+    color: #626562;
+}
+
+.service-link {
+    display: block;
+    text-decoration: none;
+    color: #03381c;
+}
+
+#faqs {
+    list-style: none;
+    font-weight: 700;
+    color: #000;
+}
+
+.faq {
+    border: 1px solid #bac2bf;
+    margin-bottom: 1em;
+    padding: 1em;
 }
