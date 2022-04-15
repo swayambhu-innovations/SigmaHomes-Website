@@ -9,7 +9,6 @@ const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'agent', component: AgentPageComponent },
   { path: 'agent/leads', component: LeadsComponent },
-  { path: 'contact', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
   { path: 'contact', loadChildren: () => import('./about/about.module').then(m => m.AboutModule) }
 ];
 

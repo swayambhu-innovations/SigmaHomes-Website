@@ -1,26 +1,43 @@
-* {
-    font-family: 'Poppins', sans-serif;
-}
-
 footer {
-    width: 80%;
-    margin: 0 auto;
+    background-color: var(--secondary);
+    padding: 2em 5em 0 5em;
 }
 
-#top, #bottom {
+#top,
+#bottom {
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    align-items: center;
 }
 
-#contact, #message-form {
+#top {
+    align-items: flex-start;
+}
+
+#contact,
+#message-form {
     width: 40%;
-    color: #000;
+    color: var(--secondary-contrast);
+    font-family: var(--font-secondary);
+    font-size: var(--medium);
 }
 
-.contact-item-heading {
-    font-size: 1.5rem;
+.contact-item-heading,
+#form-heading {
+    font-size: var(--xlarge);
+    font-family: var(--font-primary);
+    color: var(--primary);
     font-weight: 700;
+    margin: 0;
+}
+
+.contact-item-paragraph {
+    margin: 0 0 .75em 0;
+}
+
+.contact-item-paragraph,
+.contact-item-link {
+    color: var(--primary-contrast);
 }
 
 #branch-offices {
@@ -28,30 +45,61 @@ footer {
     display: flex;
     flex-wrap: wrap;
     padding: 0;
+    margin: 0;
 }
 
 .branch-office {
-    margin: 0 1.5em .5em 0;
+    margin: 0 .5em 0 0;
 }
 
-.message-form-input, #message-form-submit {
+#form-heading {
+    margin-bottom: .75em;
+}
+
+.message-form-input,
+#message-form-submit {
     display: block;
     width: 100%;
     margin-bottom: 1.5em;
     padding: 1.25em 1em;
     outline: 0;
     resize: none;
-    border: 1px solid #bac2bf;
+    border: none;
+    color: var(--primary);
+    font-family: var(--font-secondary);
+    font-size: var(--small);
+    transition: all .5s;
+}
+
+.message-form-input {
+    filter: brightness(.8);
+}
+
+.message-form-input:hover,
+.message-form-input:focus {
+    filter: brightness(1);
 }
 
 #message-form-submit {
-    background-color: #03381c;
-    color: #f6f7f7;
+    background-color: var(--primary);
+    color: var(--primary-contrast);
     border: 1px solid transparent;
+    cursor: pointer;
+    transition: all .5s;
+}
+
+.message-form-input:hover,
+#message-form-submit:hover,
+.message-form-input:focus,
+#message-form-submit:focus {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 #bottom {
-    padding: 1em 0 2em 0;
+    padding: 2em 0;
+    color: var(--primary);
+    align-items: center;
+    font-family: var(--font-secondary);
 }
 
 #social-links {
@@ -60,4 +108,10 @@ footer {
 
 .social-link {
     margin-right: 1em;
+    transition: all .5s;
+}
+
+.social-link:hover,
+.social-link:focus {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }

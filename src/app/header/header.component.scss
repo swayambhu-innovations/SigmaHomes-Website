@@ -1,95 +1,89 @@
-.header{
-        height: 10vh;
-        width: 100vw;
-        position:fixed; 
-        background-color: rgb(255, 255, 255);
-        z-index: 999;
+header {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }
-.navigation {
-    width: 100%;
-    padding: 15px 120px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-family: "Poppins";
-    @media (max-width: 640px) {
-    //  background-color: #067038;
-        padding: 0;
-       display: none;
-       align-items: center;
-        .routes{
-          visibility: hidden;
-          display: none
-        }
-        .logo{
-            margin: 0px;
-            padding: 0px;
-        }
-      }
-    .logo {
-     
-     
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 25px;
-      font-weight: 900;
-      gap: 5px;
-      color: rgb(125, 125, 125);
-      span {
-        color: rgb(0, 0, 0);
-        font-size: 30px;
-      }
-    }
-    .routes{
-        margin-left: 50px;
-        display: flex;
-        gap:40px;
-        color: rgb(108, 108, 108);
-        font-weight: 500;
-        transition: all 0.3s ease;
-      font-weight: 600;
-       a{
-        cursor: pointer;
-        color: rgb(90, 88, 88);
-        text-decoration: none ;
-        &:hover{
-            color: black;
-        }
-       }
-    }
-    .auth{
-        .login{
-            padding: 10px 20px;
-            color: rgb(35, 35, 35);
-            border: none;
-            background: none;
-            font-weight: 600;
-            &:hover{
-                color: #067038;
-                font-weight: 600    ;
-            }
-            cursor: pointer;
-        //     background-color: #067038;
-        //   margin-right: 10px;
-        //   width: 150;
-        //   height: 45px;
-        }
-        .create_account{
-            cursor: pointer;
-            margin: auto;
-            width: 150;
-            height: 45px;
-            padding: 10px 20px;
-            border: 2px solid black;
-            background-color: white;
-            font-weight: 600;
-            &:hover{
-                
-            border: 2px solid #067038;
-            color: #067038;
-            }
-        }
-    }
-}  
+
+nav {
+  padding: 1em 2em;
+  height: fit-content;
+}
+
+#heading {
+  font-size: var(--xxlarge);
+  color: var(--primary-contrast);
+  font-weight: 700;
+  font-family: var(--font-primary);
+}
+
+.nav-link {
+  color: var(--primary-contrast);
+  font-size: var(--medium);
+  text-transform: unset;
+  transition: all .5s;
+  font-family: var(--font-secondary);
+}
+
+.nav-link:hover,
+.nav-link:focus,
+.active {
+  color: var(--secondary);
+}
+
+#login,
+#signup,
+#login2,
+#signup2 {
+  font-size: var(--medium);
+  padding: .5em 1.25em;
+  border-radius: 25px;
+  transition: all .5s;
+  font-family: var(--font-secondary);
+  display: block;
+}
+
+#login:hover,
+#signup:hover,
+#login2:hover,
+#login:focus,
+#signup:focus,
+#signup2:focus {
+  text-decoration: none;
+}
+
+#login:hover,
+#login:focus {
+  filter: opacity(.5);
+}
+
+#signup:hover,
+#signup:focus {
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+#login {
+  color: var(--primary-contrast);
+  margin-right: .5em;
+}
+
+#signup {
+  background-color: var(--secondary);
+  color: var(--secondary-contrast);
+}
+
+#toggle-button {
+  display: none;
+  color: var(--primary-contrast);
+  min-height: unset;
+}
+
+@media (max-width: 850px) {
+  .uk-navbar-center, #login, #signup {
+    display: none;
+  }
+  
+  #toggle-button {
+    display: block;
+  }
+}

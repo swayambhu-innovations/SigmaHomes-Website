@@ -1,7 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
-:root{
-    --dashbord-color:#f7f7f7;
-  --side-color:#f2fff9;
-  --form-color:#ffffff;
-  --text:#0adb79;
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:wght@800&display=swap');
+
+:root {
+  --primary: #519872;
+  --secondary: #08392C;
+  --primary-contrast: #FFF;
+  --secondary-contrast: #FFF;
+  --xxxlarge: 36px;
+  --xxlarge: 28px;
+  --xlarge: 24px;
+  --large: 20px;
+  --medium: 18px;
+  --small: 16px;
+  --font-primary: 'Montserrat', sans-serif;
+  --font-secondary: 'Lato', sans-serif;
+}
+
+* {
+  box-sizing: border-box !important;
+  margin: 0;
+  padding: 0;
+}
+
+@media (max-width: 850px) {
+  :root {
+    --xxxlarge: 28px;
+    --xxlarge: 24px;
+    --xlarge: 20px;
+    --large: 18px;
+    --medium: 16px;
+  }
 }

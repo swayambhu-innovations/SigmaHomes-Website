@@ -17,6 +17,12 @@ import { FooterComponent } from './footer/footer.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AgentPageComponent } from './agent-page/agent-page.component';
 import { LeadsComponent } from './agent-page/leads/leads.component';
+import { FirstSectionComponent } from './first-section/first-section.component';
+import { PartnerSectionComponent } from './partner-section/partner-section.component';
+import { ServicesSectionComponent } from './services-section/services-section.component';
+import { PropertiesSectionComponent } from './properties-section/properties-section.component';
+import { GallerySectionComponent } from './gallery-section/gallery-section.component';
+import { PropertyCardComponent } from './property-card/property-card.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +32,13 @@ import { LeadsComponent } from './agent-page/leads/leads.component';
     FooterComponent,
     LoginPageComponent,
     AgentPageComponent,
-    LeadsComponent
+    LeadsComponent,
+    FirstSectionComponent,
+    PartnerSectionComponent,
+    ServicesSectionComponent,
+    PropertiesSectionComponent,
+    GallerySectionComponent,
+    PropertyCardComponent
   ],
   imports: [
     BrowserModule,

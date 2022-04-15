@@ -1,0 +1,40 @@
+#properties {
+    padding: 2em;
+}
+
+h3 {
+    text-align: center;
+    font-size: var(--xxlarge);
+    font-family: var(--font-primary);
+}
+
+#properties-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 2em;
+}
+
+app-property-card {
+    width: 40%;
+    margin: 1em;
+}
+
+#view-all {
+    font-family: var(--font-secondary);
+    font-size: var(--medium);
+    border-radius: 20px;
+    display: block;
+    background-color: var(--secondary);
+    color: var(--primary-contrast);
+    width: fit-content;
+    margin: 2em auto 0 auto;
+    padding: .5em 1.25em;
+    text-decoration: none;
+    transition: all .5s;
+}
+
+#view-all:hover, #view-all:focus {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

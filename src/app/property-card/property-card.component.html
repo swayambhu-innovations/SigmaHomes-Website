@@ -1,0 +1,15 @@
+<div class="property">
+    <img src="{{ imageSrc }}"
+        alt="{{ heading }}" class="property-image">
+    <div class="property-content">
+        <div>
+            <h4 class="property-heading">{{ heading }}</h4>
+            <p class="property-price">₹{{ price }}</p>
+        </div>
+        <p class="property-address"><span uk-icon="location"></span> {{ address }}</p>
+        <div class="property-features">
+            <p class="property-feature" *ngFor="let feature of features"><span uk-icon="check"></span> {{ feature }}</p>
+        </div>
+        <a href="" class="property-link"><span uk-icon="icon: chevron-right; ratio: 1.5"></span></a>
+    </div>
+</div>
