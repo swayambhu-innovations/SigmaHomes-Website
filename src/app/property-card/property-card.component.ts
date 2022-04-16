@@ -10,7 +10,9 @@ export class PropertyCardComponent implements OnInit {
   @Input() heading: string = '';
   @Input() price: string = '';
   @Input() address: string = '';
-  @Input() features: string[] = [];
+  @Input() area: string = '';
+  @Input() rating: number = 0;
+  liked: boolean = false;
 
   constructor() { }
 

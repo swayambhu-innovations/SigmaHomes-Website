@@ -11,24 +11,33 @@ nav {
 }
 
 #heading {
-  font-size: var(--xxlarge);
+  font-size: var(--xlarge);
   color: var(--primary-contrast);
   font-weight: 700;
-  font-family: var(--font-primary);
+  font-family: var(--font-heading);
+}
+
+.uk-navbar-nav li:hover, .nav-link {
+  color: var(--primary-contrast);
 }
 
 .nav-link {
-  color: var(--primary-contrast);
   font-size: var(--medium);
   text-transform: unset;
   transition: all .5s;
-  font-family: var(--font-secondary);
+  font-family: var(--font-heading);
+  min-height: unset;
 }
 
 .nav-link:hover,
 .nav-link:focus,
 .active {
   color: var(--secondary);
+}
+
+.active {
+  border-bottom: 1px solid var(--secondary);
+  padding-bottom: .5em;
 }
 
 #login,
@@ -39,7 +48,7 @@ nav {
   padding: .5em 1.25em;
   border-radius: 25px;
   transition: all .5s;
-  font-family: var(--font-secondary);
+  font-family: var(--font-heading);
   display: block;
 }
 
