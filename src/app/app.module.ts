@@ -12,8 +12,6 @@ import { provideFunctions,getFunctions } from '@angular/fire/functions';
 import { providePerformance,getPerformance } from '@angular/fire/performance';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { HomePageComponent } from './home-page/home-page.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AgentPageComponent } from './agent-page/agent-page.component';
 import { LeadsComponent } from './agent-page/leads/leads.component';
@@ -24,13 +22,12 @@ import { PropertiesSectionComponent } from './properties-section/properties-sect
 import { GallerySectionComponent } from './gallery-section/gallery-section.component';
 import { PropertyCardComponent } from './property-card/property-card.component';
 import { AboutSectionComponent } from './about-section/about-section.component';
+import { WidgetModule } from './widgets/widgets.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
-    HeaderComponent,
-    FooterComponent,
     LoginPageComponent,
     AgentPageComponent,
     LeadsComponent,
@@ -45,6 +42,7 @@ import { AboutSectionComponent } from './about-section/about-section.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    WidgetModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
     provideAuth(() => getAuth()),

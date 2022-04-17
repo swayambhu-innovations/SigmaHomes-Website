@@ -9,7 +9,7 @@
 
 #background::after {
     content: "";
-    background-image: url('https://images.pexels.com/photos/358636/pexels-photo-358636.jpeg');
+    background-image: url('https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -19,12 +19,12 @@
     left: 0;
     width: 100%;
     height: 100%;
-    opacity: 0.5;
+    opacity: 0.3;
 }
 
 #foreground {
     position: absolute;
-    top: 7em;
+    top: 8em;
     padding: 1em 2em;
     width: 50%;
     min-width: 500px;
@@ -38,24 +38,26 @@ p {
 
 h2 {
     font-size: var(--xxxlarge);
-    font-family: var(--font-one);
+    font-family: var(--font-three);
 }
 
 p {
-    font-size: var(--large);
+    font-size: var(--xlarge);
     font-family: var(--font-two);
     text-align: justify;
 }
 
 form {
     margin-top: 1em;
-    display: flex;
 }
 
 input,
 button {
+    display: block;
+    margin: 1em 0;
+    width: 100%;
     border: none;
-    border-radius: 25px;
+    border-radius: 15px;
     padding: .5em 1em;
     font-size: var(--medium);
     outline: none;
@@ -75,7 +77,6 @@ input {
     margin-right: .5em;
     color: var(--primary);
     filter: brightness(.9);
-    width: 60%;
 }
 
 input:hover,
@@ -86,7 +87,6 @@ input:focus {
 button {
     background-color: var(--secondary);
     color: var(--secondary-contrast);
-    width: 40%;
     cursor: pointer;
 }
 
