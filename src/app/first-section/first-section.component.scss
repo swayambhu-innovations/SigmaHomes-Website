@@ -27,6 +27,8 @@
     top: 7em;
     padding: 1em 2em;
     width: 50%;
+    min-width: 500px;
+    max-width: 700px;
 }
 
 h2,
@@ -36,12 +38,12 @@ p {
 
 h2 {
     font-size: var(--xxxlarge);
-    font-family: var(--font-primary);
+    font-family: var(--font-one);
 }
 
 p {
     font-size: var(--large);
-    font-family: var(--font-secondary);
+    font-family: var(--font-two);
     text-align: justify;
 }
 
@@ -57,7 +59,7 @@ button {
     padding: .5em 1em;
     font-size: var(--medium);
     outline: none;
-    font-family: var(--font-secondary);
+    font-family: var(--font-two);
     transition: all .5s;
 }
 
@@ -88,8 +90,21 @@ button {
     cursor: pointer;
 }
 
-@media (max-width: 850px) {
+@media (max-width: 500px) {
     #foreground {
+        min-width: 100%;
+    }
+
+    form {
+        flex-direction: column;
+    }
+
+    input, button {
         width: 100%;
+    }
+
+    input {
+        margin-right: 0;
+        margin-bottom: .5em;
     }
 }

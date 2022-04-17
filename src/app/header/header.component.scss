@@ -14,18 +14,15 @@ nav {
   font-size: var(--xlarge);
   color: var(--primary-contrast);
   font-weight: 700;
-  font-family: var(--font-heading);
+  font-family: var(--font-three);
 }
 
-.uk-navbar-nav li:hover, .nav-link {
+.nav-link, .nav-link2 {
   color: var(--primary-contrast);
-}
-
-.nav-link {
   font-size: var(--medium);
   text-transform: unset;
   transition: all .5s;
-  font-family: var(--font-heading);
+  font-family: var(--font-three);
   min-height: unset;
 }
 
@@ -35,9 +32,20 @@ nav {
   color: var(--secondary);
 }
 
+.nav-link2:hover,
+.nav-link2:focus,
+.active2 {
+  color: var(--primary);
+}
+
 .active {
   border-bottom: 1px solid var(--secondary);
   padding-bottom: .5em;
+}
+
+.active2 {
+  border-bottom: 1px solid var(--primary);
+  margin-bottom: .5em;
 }
 
 #login,
@@ -45,11 +53,19 @@ nav {
 #login2,
 #signup2 {
   font-size: var(--medium);
-  padding: .5em 1.25em;
   border-radius: 25px;
   transition: all .5s;
-  font-family: var(--font-heading);
+  font-family: var(--font-three);
   display: block;
+}
+
+#login,
+#signup {
+  padding: .5em 1.25em;
+}
+
+#login2, #signup2 {
+  padding: 5px 0;
 }
 
 #login:hover,
@@ -87,7 +103,11 @@ nav {
   min-height: unset;
 }
 
-@media (max-width: 850px) {
+#offcanvas-bar {
+  background-color: var(--secondary);
+}
+
+@media (max-width: 950px) {
   .uk-navbar-center, #login, #signup {
     display: none;
   }

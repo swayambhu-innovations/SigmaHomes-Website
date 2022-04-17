@@ -20,13 +20,15 @@
     <div id="offcanvas-nav" uk-offcanvas="overlay: true; flip: true; mode: slide">
       <div class="uk-offcanvas-bar" id="offcanvas-bar">
         <ul class="uk-nav">
-          <li><a href="">Home</a></li>
-          <li><a href="">About</a></li>
-          <li><a href="">Projects</a></li>
-          <li><a href="">Contact</a></li>
+          <li><a href="" class="nav-link2{{ active == 'home' ? ' active2' : ''}}">Home</a></li>
+          <li><a href="" class="nav-link2{{ active == 'about' ? ' active2' : ''}}">About</a></li>
+          <li><a href="" class="nav-link2{{ active == 'projects' ? ' active2' : ''}}">Projects</a></li>
+          <li><a href="" class="nav-link2{{ active == 'contact' ? ' active2' : ''}}">Contact</a></li>
         </ul>
-        <a href="" id="login2">Login</a>
-        <a href="" id="signup2">Sign Up</a>
+        <div id="offcanvas-btns">
+          <a href="" id="login2">Login</a>
+          <a href="" id="signup2">Sign Up</a>
+        </div>
       </div>
     </div>
   </nav>

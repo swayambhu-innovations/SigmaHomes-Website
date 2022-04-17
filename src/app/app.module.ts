@@ -23,6 +23,7 @@ import { ServicesSectionComponent } from './services-section/services-section.co
 import { PropertiesSectionComponent } from './properties-section/properties-section.component';
 import { GallerySectionComponent } from './gallery-section/gallery-section.component';
 import { PropertyCardComponent } from './property-card/property-card.component';
+import { AboutSectionComponent } from './about-section/about-section.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PropertyCardComponent } from './property-card/property-card.component';
     ServicesSectionComponent,
     PropertiesSectionComponent,
     GallerySectionComponent,
-    PropertyCardComponent
+    PropertyCardComponent,
+    AboutSectionComponent
   ],
   imports: [
     BrowserModule,

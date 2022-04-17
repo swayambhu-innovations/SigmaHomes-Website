@@ -11,23 +11,13 @@
   --large: 20px;
   --medium: 18px;
   --small: 16px;
-  --font-primary: 'Playfair Display', serif;
-  --font-secondary: 'Lato', sans-serif;
-  --font-heading: 'Poppins', sans-serif;
+  --font-one: 'Playfair Display', serif;
+  --font-two: 'Lato', sans-serif;
+  --font-three: 'Poppins', sans-serif;
 }
 
 * {
   box-sizing: border-box !important;
   margin: 0;
   padding: 0;
-}
-
-@media (max-width: 850px) {
-  :root {
-    --xxxlarge: 28px;
-    --xxlarge: 24px;
-    --xlarge: 20px;
-    --large: 18px;
-    --medium: 16px;
-  }
 }

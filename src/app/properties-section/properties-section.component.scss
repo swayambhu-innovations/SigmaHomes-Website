@@ -5,7 +5,7 @@
 h3 {
     text-align: center;
     font-size: var(--xxlarge);
-    font-family: var(--font-heading);
+    font-family: var(--font-three);
 }
 
 #properties-container {
@@ -13,16 +13,17 @@ h3 {
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-    margin-top: 2em;
 }
 
 app-property-card {
-    width: 30%;
+    min-width: 250px;
+    max-width: 400px;
+    width: 20%;
     margin: 1em;
 }
 
 #view-all {
-    font-family: var(--font-secondary);
+    font-family: var(--font-two);
     font-size: var(--medium);
     border-radius: 20px;
     display: block;
@@ -37,4 +38,22 @@ app-property-card {
 
 #view-all:hover, #view-all:focus {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+@media (max-width: 1200px) {
+    app-property-card {
+        width: 30%;
+    }
+}
+
+@media (max-width: 1024px) {
+    app-property-card {
+        width: 45%;
+    }
+}
+
+@media (max-width: 704px) {
+    app-property-card {
+        width: 100%;
+    }
 }

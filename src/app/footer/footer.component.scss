@@ -7,6 +7,7 @@ footer {
 #bottom {
     margin: 0 auto;
     display: flex;
+    max-width: 1500px;
     justify-content: space-between;
 }
 
@@ -16,16 +17,23 @@ footer {
 
 #contact,
 #message-form {
-    width: 40%;
     color: var(--secondary-contrast);
-    font-family: var(--font-secondary);
+    font-family: var(--font-two);
     font-size: var(--medium);
+}
+
+#contact {
+    width: 40%;
+}
+
+#message-form {
+    width: 50%;
 }
 
 .contact-item-heading,
 #form-heading {
     font-size: var(--xlarge);
-    font-family: var(--font-primary);
+    font-family: var(--font-one);
     color: var(--primary);
     font-weight: 700;
     margin: 0;
@@ -66,7 +74,7 @@ footer {
     resize: none;
     border: none;
     color: var(--primary);
-    font-family: var(--font-secondary);
+    font-family: var(--font-two);
     font-size: var(--small);
     transition: all .5s;
 }
@@ -99,11 +107,12 @@ footer {
     padding: 2em 0;
     color: var(--primary);
     align-items: center;
-    font-family: var(--font-secondary);
+    font-family: var(--font-two);
 }
 
 #social-links {
     display: flex;
+    margin-right: 1em;
 }
 
 .social-link {
@@ -114,4 +123,43 @@ footer {
 .social-link:hover,
 .social-link:focus {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+#copyright {
+    text-align: center;
+    font-size: var(--medium);
+}
+
+@media (max-width: 900px) {
+    footer {
+        padding: 2em;
+    }
+
+    #top {
+        flex-direction: column-reverse;
+    }
+
+    #contact,
+    #message-form,
+    #bottom {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    #contact {
+        margin-top: 1em;
+    }
+}
+
+@media (max-width: 540px) {
+    #bottom {
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    #social-links {
+        margin-right: 0;
+        margin-bottom: 1em;
+    }
 }

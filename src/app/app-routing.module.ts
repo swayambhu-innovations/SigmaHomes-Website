@@ -8,8 +8,7 @@ const routes: Routes = [
   { path: '', component: HomePageComponent },
   { path: 'login', component: LoginPageComponent },
   { path: 'agent', component: AgentPageComponent },
-  { path: 'agent/leads', component: LeadsComponent },
-  { path: 'contact', loadChildren: () => import('./about/about.module').then(m => m.AboutModule) }
+  { path: 'agent/leads', component: LeadsComponent }
 ];
 
 @NgModule({

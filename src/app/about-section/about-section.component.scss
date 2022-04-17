@@ -1,0 +1,241 @@
+#about {
+    padding: 2em;
+}
+
+h3 {
+    text-align: center;
+    font-size: var(--xxlarge);
+    font-family: var(--font-three);
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#images {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.image-container {
+    width: 20%;
+    max-width: 400px;
+    margin-right: .5em;
+}
+
+.image-container:last-of-type {
+    margin-right: 0;
+}
+
+.image {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    transition: all .5s;
+}
+
+.image:hover {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.image-container:nth-of-type(2) .image {
+    margin-top: 7em;
+}
+
+.image-container:nth-of-type(3) .image,
+.image-container:nth-of-type(5) .image {
+    margin-top: 5em;
+}
+
+#content {
+    margin-top: 5em;
+    width: 60%;
+    min-width: 700px;
+}
+
+h4 {
+    font-size: var(--xlarge);
+    font-family: var(--font-one);
+}
+
+p {
+    font-size: var(--large);
+    font-family: var(--font-two);
+}
+
+#numbers {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3em;
+    font-family: var(--font-three);
+    flex-wrap: wrap;
+}
+
+.number-box {
+    width: 30%;
+    min-width: 190px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.number {
+    font-size: var(--xxlarge);
+    width: 30%;
+    text-align: right;
+}
+
+.number-desc {
+    width: 65%;
+    margin-left: 1em;
+    font-size: var(--small);
+    text-transform: uppercase;
+}
+
+@property --customers {
+    syntax: "<integer>";
+    initial-value: 500; /* Must be same as the max limit of the keyframe customers-counter */
+    inherits: false;
+}
+
+#happy-customers {
+    animation: customers-counter 5s ease-out;
+    counter-reset: customers var(--customers);
+}
+
+#happy-customers::after {
+    content: counter(customers);
+}
+
+@keyframes customers-counter {
+    from {
+        --customers: 0;
+    }
+
+    to {
+        --customers: 500; /* Must be same as the initial value of @property --customers */
+    }
+}
+
+@property --months {
+    syntax: "<integer>";
+    initial-value: 400; /* Must be same as the max limit of the keyframe months-counter*/
+    inherits: false;
+}
+
+#months-experience {
+    animation: months-counter 5s ease-out;
+    counter-reset: months var(--months);
+}
+
+#months-experience::after {
+    content: counter(months);
+}
+
+@keyframes months-counter {
+    from {
+        --months: 0;
+    }
+
+    to {
+        --months: 400; /* Must be same as the initial value of @property --months */
+    }
+}
+
+@property --members {
+    syntax: "<integer>";
+    initial-value: 40; /* Must be same as the max limit of the keyframe members-counter*/
+    inherits: false;
+}
+
+#creative-members {
+    animation: members-counter 5s ease-out;
+    counter-reset: members var(--members);
+}
+
+#creative-members::after {
+    content: counter(members);
+}
+
+@keyframes members-counter {
+    from {
+        --members: 0;
+    }
+
+    to {
+        --members: 40; /* Must be same as the initial value of @property --members */
+    }
+}
+
+@media (max-width: 2000px) {
+    .image-container {
+        max-width: 300px;
+    }
+    
+    .image {
+        height: 400px;
+    }
+}
+
+@media (max-width: 850px) {
+    .image-container {
+        max-width: 200px;
+    }
+    
+    .image {
+        height: 300px;
+    }
+
+    #content {
+        margin: 3em .5em .5em .5em;
+        width: unset;
+        min-width: unset;
+    }
+
+    #numbers {
+        margin-top: 1em;
+        justify-content: center;
+    }
+
+    .number-box {
+        flex-direction: column;
+        margin: 1em 0;
+    }
+
+    .number, .number-desc {
+        width: 100%;
+        text-align: center;
+    }
+
+    .number-desc {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 459px) {
+    .image-container {
+        max-width: 100px;
+    }
+    
+    .image {
+        height: 200px;
+    }
+
+    .number-box {
+        flex-direction: row;
+    }
+
+    .number {
+        width: 50%;
+        text-align: right;
+    }
+    
+    .number-desc {
+        width: 50%;
+        margin-left: 1em;
+        text-align: left;
+    }
+}
