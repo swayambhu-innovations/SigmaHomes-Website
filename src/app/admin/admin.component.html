@@ -1,20 +1,36 @@
 <main>
-    <div class="header">
-        <h2>Agent Panel</h2>
-    </div>
-    <div class="sidebar">
-        <ul class="sidebar-ul">
-            <li class="sidebar-li active">Dashboard</li>
-            <li class="sidebar-li">Profile</li>
-            <li class="sidebar-li">Broadcast</li>
-            <li class="sidebar-li">Lead Center</li>
-            <li class="sidebar-li">Customers</li>
-            <li class="sidebar-li">Properties</li>
-            <li class="sidebar-li">Responses</li>
-            <li class="sidebar-li">Visit Log</li>
-        </ul>
-    </div>
-    <div class="content">
-        <router-outlet></router-outlet>
-    </div>
+  <div class="header">
+  </div>
+  <div class="sidebar">
+    <h2>Agent Panel</h2>
+    <ul class="sidebar-ul">
+      <li class="sidebar-li">
+        <a routerLink="dashboard" class="sidebar-li-a active">Dashboard</a>
+      </li>
+      <li class="sidebar-li">
+        <a routerLink="profile" class="sidebar-li-a">Profile</a>
+      </li>
+      <li class="sidebar-li">
+        <a routerLink="broadcast" class="sidebar-li-a">Broadcast</a>
+      </li>
+      <li class="sidebar-li">
+        <a routerLink="lead-center" class="sidebar-li-a">Lead Center</a>
+      </li>
+      <li class="sidebar-li">
+        <a routerLink="customers" class="sidebar-li-a">Customers</a>
+      </li>
+      <li class="sidebar-li">
+        <a routerLink="properties" class="sidebar-li-a">Properties</a>
+      </li>
+      <li class="sidebar-li">
+        <a routerLink="responses" class="sidebar-li-a">Responses</a>
+      </li>
+      <li class="sidebar-li">
+        <a routerLink="visit-log" class="sidebar-li-a">Visit Log</a>
+      </li>
+    </ul>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </main>

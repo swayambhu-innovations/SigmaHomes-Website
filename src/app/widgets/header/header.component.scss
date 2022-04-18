@@ -12,40 +12,57 @@ nav {
 
 #heading {
   font-size: var(--xlarge);
-  color: var(--primary-contrast);
+  color: var(--secondary);
   font-weight: 700;
   font-family: var(--font-three);
 }
 
-.nav-link, .nav-link2 {
-  color: var(--primary-contrast);
+.nav-link,
+.nav-link2,
+#login2,
+#signup2 {
   font-size: var(--medium);
   text-transform: unset;
-  transition: all .5s;
+  transition: all 0.5s;
   font-family: var(--font-three);
   min-height: unset;
+}
+
+.nav-link {
+  color: var(--secondary);
+  opacity: 0.5;
+}
+
+.nav-link2,
+#login,
+#signup {
+  // color: var(--secondary-contrast);
+  color: #000;
 }
 
 .nav-link:hover,
 .nav-link:focus,
 .active {
-  color: var(--secondary);
+  opacity: 1;
 }
 
 .nav-link2:hover,
 .nav-link2:focus,
-.active2 {
+.active2,
+#login2:hover,
+#signup2:hover,
+#signup:focus,
+#signup2:focus {
   color: var(--primary);
 }
 
 .active {
-  border-bottom: 1px solid var(--secondary);
-  padding-bottom: .5em;
+  border-bottom: 2px solid var(--secondary);
+  padding-bottom: 0.5em;
 }
 
 .active2 {
-  border-bottom: 1px solid var(--primary);
-  margin-bottom: .5em;
+  border-bottom: 2px solid var(--primary);
 }
 
 #login,
@@ -53,25 +70,27 @@ nav {
 #login2,
 #signup2 {
   font-size: var(--medium);
-  border-radius: 25px;
-  transition: all .5s;
+  transition: all 0.5s;
   font-family: var(--font-three);
   display: block;
 }
 
 #login,
 #signup {
-  padding: .5em 1.25em;
+  border-radius: 25px;
+  padding: 0.5em 1.25em;
 }
 
-#login2, #signup2 {
+#login2,
+#signup2 {
   padding: 5px 0;
+  color: #000;
 }
 
 #login:hover,
 #signup:hover,
 #login2:hover,
-#login:focus,
+#signup2:hover,
 #signup:focus,
 #signup2:focus {
   text-decoration: none;
@@ -79,7 +98,7 @@ nav {
 
 #login:hover,
 #login:focus {
-  filter: opacity(.5);
+  filter: opacity(0.5);
 }
 
 #signup:hover,
@@ -88,8 +107,8 @@ nav {
 }
 
 #login {
-  color: var(--primary-contrast);
-  margin-right: .5em;
+  color: var(--secondary);
+  margin-right: 0.5em;
 }
 
 #signup {
@@ -99,19 +118,22 @@ nav {
 
 #toggle-button {
   display: none;
-  color: var(--primary-contrast);
+  color: var(--secondary);
   min-height: unset;
 }
 
 #offcanvas-bar {
-  background-color: var(--secondary);
+  background-color: #FFF;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 @media (max-width: 950px) {
-  .uk-navbar-center, #login, #signup {
+  .uk-navbar-center,
+  #login,
+  #signup {
     display: none;
   }
-  
+
   #toggle-button {
     display: block;
   }

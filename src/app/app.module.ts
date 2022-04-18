@@ -11,38 +11,19 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideFunctions,getFunctions } from '@angular/fire/functions';
 import { providePerformance,getPerformance } from '@angular/fire/performance';
 import { provideStorage,getStorage } from '@angular/fire/storage';
-import { HomePageComponent } from './home-page/home-page.component';
-import { LoginPageComponent } from './login-page/login-page.component';
-import { AgentPageComponent } from './agent-page/agent-page.component';
-import { LeadsComponent } from './agent-page/leads/leads.component';
-import { FirstSectionComponent } from './first-section/first-section.component';
-import { PartnerSectionComponent } from './partner-section/partner-section.component';
-import { ServicesSectionComponent } from './services-section/services-section.component';
-import { PropertiesSectionComponent } from './properties-section/properties-section.component';
-import { GallerySectionComponent } from './gallery-section/gallery-section.component';
-import { PropertyCardComponent } from './property-card/property-card.component';
-import { AboutSectionComponent } from './about-section/about-section.component';
+
 import { WidgetModule } from './widgets/widgets.module';
+import { HomeModule } from './customer/home/home.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomePageComponent,
-    LoginPageComponent,
-    AgentPageComponent,
-    LeadsComponent,
-    FirstSectionComponent,
-    PartnerSectionComponent,
-    ServicesSectionComponent,
-    PropertiesSectionComponent,
-    GallerySectionComponent,
-    PropertyCardComponent,
-    AboutSectionComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     WidgetModule,
+    HomeModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
     provideAuth(() => getAuth()),

@@ -1,0 +1,32 @@
+section {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    .item {
+        width: 30%;
+        margin: 1em;
+        padding: 1em;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+
+    h3, p, a {
+        font-family: var(--font-two);
+        margin: 0;
+    }
+
+    h3 {
+        font-size: var(--xlarge);
+    }
+
+    p {
+        font-size: var(--large);
+    }
+
+    a {
+        font-size: var(--medium);
+        color: var(--primary);
+        display: block;
+        margin-top: 1em;
+    }
+}
