@@ -15,4 +15,4 @@ import { PropertyCardComponent } from './property-card/property-card.component';
     HeaderComponent, FooterComponent, PropertyCardComponent
   ]
 })
-export class WidgetModule { }
+export class WidgetsModule { }

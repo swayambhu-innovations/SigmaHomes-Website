@@ -1,36 +1,36 @@
-<main>
-  <div class="header">
-  </div>
-  <div class="sidebar">
-    <h2>Agent Panel</h2>
-    <ul class="sidebar-ul">
-      <li class="sidebar-li">
-        <a routerLink="dashboard" class="sidebar-li-a active">Dashboard</a>
+<div id="grid-wrapper">
+  <header>
+    <h2 id="header-heading">Agent Panel</h2>
+  </header>
+  <aside>
+    <ul id="sidebar-ul">
+      <li>
+        <a routerLink="dashboard" class="sidebar-li-a active"><span uk-icon="icon: thumbnails" class="sidebar-icon"></span> Dashboard</a>
       </li>
-      <li class="sidebar-li">
-        <a routerLink="profile" class="sidebar-li-a">Profile</a>
+      <li>
+        <a routerLink="profile" class="sidebar-li-a"><span uk-icon="icon: user" class="sidebar-icon"></span> Profile</a>
       </li>
-      <li class="sidebar-li">
-        <a routerLink="broadcast" class="sidebar-li-a">Broadcast</a>
+      <li>
+        <a routerLink="broadcast" class="sidebar-li-a"><span uk-icon="icon: rss" class="sidebar-icon"></span> Broadcast</a>
       </li>
-      <li class="sidebar-li">
-        <a routerLink="lead-center" class="sidebar-li-a">Lead Center</a>
+      <li>
+        <a routerLink="lead-center" class="sidebar-li-a"><span uk-icon="icon: folder" class="sidebar-icon"></span> Lead Center</a>
       </li>
-      <li class="sidebar-li">
-        <a routerLink="customers" class="sidebar-li-a">Customers</a>
+      <li>
+        <a routerLink="customers" class="sidebar-li-a"><span uk-icon="icon: users" class="sidebar-icon"></span> Customers</a>
       </li>
-      <li class="sidebar-li">
-        <a routerLink="properties" class="sidebar-li-a">Properties</a>
+      <li>
+        <a routerLink="properties" class="sidebar-li-a"><span uk-icon="icon: home" class="sidebar-icon"></span> Properties</a>
       </li>
-      <li class="sidebar-li">
-        <a routerLink="responses" class="sidebar-li-a">Responses</a>
+      <li>
+        <a routerLink="responses" class="sidebar-li-a"><span uk-icon="icon: info" class="sidebar-icon"></span> Responses</a>
       </li>
-      <li class="sidebar-li">
-        <a routerLink="visit-log" class="sidebar-li-a">Visit Log</a>
+      <li>
+        <a routerLink="visit-log" class="sidebar-li-a"><span uk-icon="icon:  pencil" class="sidebar-icon"></span> Visit Log</a>
       </li>
     </ul>
-  </div>
-  <div class="content">
+  </aside>
+  <main>
     <router-outlet></router-outlet>
-  </div>
-</main>
+  </main>
+</div>

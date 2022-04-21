@@ -12,7 +12,6 @@ import { provideFunctions,getFunctions } from '@angular/fire/functions';
 import { providePerformance,getPerformance } from '@angular/fire/performance';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 
-import { WidgetModule } from './widgets/widgets.module';
 import { HomeModule } from './customer/home/home.module';
 
 @NgModule({
@@ -22,7 +21,6 @@ import { HomeModule } from './customer/home/home.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    WidgetModule,
     HomeModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),

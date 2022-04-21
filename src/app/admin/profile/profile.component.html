@@ -1,22 +1,67 @@
 <section>
-  <form>
-    <fieldset class="uk-fieldset">
-      <legend class="uk-legend">Profile</legend>
-      <div class="uk-margin">
-        <input class="uk-input" type="text" name="name" placeholder="Name">
-      </div>
-      <div class="uk-margin">
-        <input class="uk-input" type="tel" name="phone" placeholder="Phone Number">
-      </div>
-      <div class="uk-margin">
-        <input class="uk-input" type="email" name="email" placeholder="Email Address">
-      </div>
-      <div class="uk-margin">
-        <input class="uk-input" type="text" name="qualification" placeholder="Qualification">
-      </div>
-      <div class="uk-margin">
-        <input class="uk-input" type="date" name="qualification" placeholder="Qualification">
-      </div>
-    </fieldset>
-  </form>
+  <div id="photos">
+    <img src="../../../assets/img/Rectangle 643.png" alt="" id="cover" />
+    <app-avatar
+      [imgSrc]="'./../../../assets/img/agent-photo-sample.png'"
+      [altText]="'Mukesh Tomar'"
+    ></app-avatar>
+  </div>
+  <div id="details">
+    <div class="detail">
+      <span class="key">Name: </span>
+      <span class="value">Mukesh Tomar</span>
+    </div>
+    <div class="detail">
+      <span class="key">Phone Number: </span>
+      <span class="value">8057568369</span>
+    </div>
+    <div class="detail">
+      <span class="key">Email Address: </span>
+      <span class="value">raghavgoel2701@gmail.com</span>
+    </div>
+    <div class="detail">
+      <span class="key">Qualification: </span>
+      <span class="value">B. Tech (CSE)</span>
+    </div>
+    <div class="detail">
+      <span class="key">Date of Birth: </span>
+      <span class="value">27/01/2002</span>
+    </div>
+    <div class="detail">
+      <span class="key">PAN No.: </span>
+      <span class="value">DARGG8808</span>
+    </div>
+    <div class="detail">
+      <span class="key">Address: </span>
+      <span class="value">St. George's College, Barlowganj</span>
+    </div>
+    <div class="detail">
+      <span class="key">Bank Name: </span>
+      <span class="value">State Bank of India</span>
+    </div>
+    <div class="detail">
+      <span class="key">Father Name: </span>
+      <span class="value">Shailesh Tomar</span>
+    </div>
+    <div class="detail">
+      <span class="key">Branch: </span>
+      <span class="value">SGC, Mussoorie</span>
+    </div>
+    <div class="detail">
+      <span class="key">Account No.: </span>
+      <span class="value">83845882011000</span>
+    </div>
+    <div class="detail">
+      <span class="key">IFSC: </span>
+      <span class="value">SBIN011000</span>
+    </div>
+    <div class="detail">
+      <span class="key">Parent employee: </span>
+      <span class="value">Yes</span>
+    </div>
+    <div class="detail">
+      <span class="key">User type: </span>
+      <span class="value">Agent</span>
+    </div>
+  </div>
 </section>

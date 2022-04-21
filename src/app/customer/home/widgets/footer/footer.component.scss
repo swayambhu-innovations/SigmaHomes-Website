@@ -100,7 +100,7 @@ footer {
 #message-form-submit:hover,
 .message-form-input:focus,
 #message-form-submit:focus {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: var(--normal-shadow);
 }
 
 #bottom {
@@ -122,7 +122,7 @@ footer {
 
 .social-link:hover,
 .social-link:focus {
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: var(--normal-shadow);
 }
 
 #copyright {

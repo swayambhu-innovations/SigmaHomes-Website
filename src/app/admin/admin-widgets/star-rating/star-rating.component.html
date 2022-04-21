@@ -1,0 +1,8 @@
+<div>
+  <i
+    *ngFor="let item of genList()"
+    (click)="!readonly ? [(filled = item), selectedStarsTrigger()] : null"
+    [class]="filled >= item ? 'ri-star-fill' : 'ri-star-line'"
+    [ngStyle]="{ 'animation-delay': 200 * item }"
+  ></i>
+</div>
