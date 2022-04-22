@@ -53,7 +53,7 @@
           id="name-input"
           class="admin-input"
           placeholder="Name"
-          formControlName=""
+          formControlName="name"
         />
         <input
           type="tel"
@@ -61,7 +61,7 @@
           id="phone-input"
           class="admin-input"
           placeholder="Phone Number"
-          formControlName=""
+          formControlName="phone"
         />
         <input
           type="email"
@@ -69,11 +69,11 @@
           id="email-input"
           class="admin-input"
           placeholder="Email"
-          formControlName=""
+          formControlName="email"
         />
         <div class="date">
           <label for="booking-date-input">Booking date</label>
-          <input type="date" name="booking-date" id="booking-date-input" class="admin-input" />
+          <input formControlName="bookingDate" type="date" name="booking-date" id="booking-date-input" class="admin-input" />
         </div>
         <input
           type="text"
@@ -81,7 +81,7 @@
           id="project-name-input"
           class="admin-input"
           placeholder="Project Name"
-          formControlName=""
+          formControlName="projectName"
         />
         <input
           type="text"
@@ -89,7 +89,7 @@
           id="unit-no-input"
           class="admin-input"
           placeholder="Unit No."
-          formControlName=""
+          formControlName="unitNo"
         />
         <input
           type="text"
@@ -97,7 +97,7 @@
           id="property-type-input"
           class="admin-input"
           placeholder="Property Type"
-          formControlName=""
+          formControlName="propertyType"
         />
         <input
           type="text"
@@ -105,7 +105,7 @@
           id="company-sales-input"
           class="admin-input"
           placeholder="Company Sales Value"
-          formControlName=""
+          formControlName="companySalesValue"
         />
         <input
           type="text"
@@ -113,7 +113,7 @@
           id="sales-value-input"
           class="admin-input"
           placeholder="Sales Value"
-          formControlName=""
+          formControlName="salesValue"
         />
         <input
           type="text"
@@ -121,7 +121,7 @@
           id="advance-value-input"
           class="admin-input"
           placeholder="Advance Value"
-          formControlName=""
+          formControlName="advanceValue"
         />
         <input
           type="text"
@@ -129,7 +129,7 @@
           id="finance-details-input"
           class="admin-input"
           placeholder="Finance Details"
-          formControlName=""
+          formControlName="financeDetails"
         />
         <input
           type="text"
@@ -137,7 +137,7 @@
           id="payment-mode-input"
           class="admin-input"
           placeholder="Payment Mode"
-          formControlName=""
+          formControlName="paymentMode"
         />
         <input
           type="text"
@@ -145,7 +145,7 @@
           id="job-type-input"
           class="admin-input"
           placeholder="Job Type"
-          formControlName=""
+          formControlName="jobType"
         />
         <input
           type="text"
@@ -153,7 +153,7 @@
           id="company-name-input"
           class="admin-input"
           placeholder="Name of Company"
-          formControlName=""
+          formControlName="companyName"
         />
         <input
           type="text"
@@ -161,7 +161,7 @@
           id="monthly-salary-input"
           class="admin-input"
           placeholder="Monthly Salary"
-          formControlName=""
+          formControlName="monthlySalary"
         />
         <input
           type="text"
@@ -169,7 +169,7 @@
           id="firm-name-input"
           class="admin-input"
           placeholder="Name of Firm"
-          formControlName=""
+          formControlName="firmName"
         />
         <input
           type="text"
@@ -177,7 +177,7 @@
           id="year-of-establishment-input"
           class="admin-input"
           placeholder="Year of Establishment"
-          formControlName=""
+          formControlName="yearOfEstablishment"
         />
         <input
           type="text"
@@ -185,7 +185,7 @@
           id="income-as-per-itr-input"
           class="admin-input"
           placeholder="Income as per ITR"
-          formControlName=""
+          formControlName="incomeAsPerITR"
         />
         <input
           type="text"
@@ -193,7 +193,7 @@
           id="itr-status-input"
           class="admin-input"
           placeholder="ITR Status"
-          formControlName=""
+          formControlName="itrStatus"
         />
         <app-primary-btn [text]="'Add Customer'"></app-primary-btn>
       </form>

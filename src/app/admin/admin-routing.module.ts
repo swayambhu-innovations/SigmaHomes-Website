@@ -7,12 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
-    // canActivate: [AdminGuard],
+    canActivate: [AdminGuard],
     children: [
       {
         path: '',
-        // redirectTo: 'dashboard',
-        redirectTo: 'profile',
+        redirectTo: 'dashboard',
+        // redirectTo: 'profile',
       },
       {
         path: 'dashboard',

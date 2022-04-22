@@ -1,65 +1,21 @@
 <section>
   <div id="properties">
-    <app-property-card
-      [imageSrc]="
-        'https://images.unsplash.com/photo-1632242994397-4311abbedc77?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=809&q=80'
-      "
-      [heading]="'3 BHK, Sky Heights'"
-      [price]="'1 Crore'"
-      [address]="'Near Town Hall, Jaipur'"
-      [area]="'12548 sqft'"
-      [rating]="3"
-    ></app-property-card>
-    <app-property-card
-      [imageSrc]="
-        'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-      "
-      [heading]="'3 BHK, Sky Heights'"
-      [price]="'1 Crore'"
-      [address]="'Near Town Hall, Jaipur'"
-      [area]="'12548 sqft'"
-      [rating]="3"
-    ></app-property-card>
-    <app-property-card
-      [imageSrc]="
-        'https://images.unsplash.com/photo-1572120360610-d971b9d7767c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-      "
-      [heading]="'3 BHK, Sky Heights'"
-      [price]="'1 Crore'"
-      [address]="'Near Town Hall, Jaipur'"
-      [area]="'12548 sqft'"
-      [rating]="3"
-    ></app-property-card>
-    <app-property-card
-      [imageSrc]="
-        'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-      "
-      [heading]="'3 BHK, Sky Heights'"
-      [price]="'1 Crore'"
-      [address]="'Near Town Hall, Jaipur'"
-      [area]="'12548 sqft'"
-      [rating]="3"
-    ></app-property-card>
-    <app-property-card
-      [imageSrc]="
-        'https://images.unsplash.com/photo-1510627489930-0c1b0bfb6785?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80'
-      "
-      [heading]="'3 BHK, Sky Heights'"
-      [price]="'1 Crore'"
-      [address]="'Near Town Hall, Jaipur'"
-      [area]="'12548 sqft'"
-      [rating]="3"
-    ></app-property-card>
-    <app-property-card
-      [imageSrc]="
-        'https://images.unsplash.com/photo-1632242994397-4311abbedc77?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=809&q=80'
-      "
-      [heading]="'3 BHK, Sky Heights'"
-      [price]="'1 Crore'"
-      [address]="'Near Town Hall, Jaipur'"
-      [area]="'12548 sqft'"
-      [rating]="3"
-    ></app-property-card>
+    <app-property-card *ngFor="let item of properties" [imageSrc]="item.image" [heading]="item.name" [price]="item.price" [address]="item.address" [area]="item.area+' sqft'"
+      [rating]="item.rating"></app-property-card>
   </div>
-  <app-fab [icon]="'plus'" [target]="''" [title]="'Add New Property'"></app-fab>
+  <app-fab [icon]="'plus'" [target]="'#add-properties-modal'" [title]="'Add New Property'"></app-fab>
 </section>
+<div id="add-properties-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <h2 class="uk-modal-title"></h2>
+    <form [formGroup]="propertyForm" (ngSubmit)="submitForm()">
+      <div><label>Property Name</label><input type="text" formControlName="name"></div>
+      <div><label>Image</label><input type="file" (change)="imageValue = $event" formControlName="image"></div>
+      <div><label>Price</label><input type="number" formControlName="price"></div>
+      <div><label>Area (sqft)</label><input type="number" formControlName="area"></div>
+      <div><label>Address</label><textarea type="text" formControlName="address"></textarea></div>
+      <button>Submit</button>
+    </form>
+  </div>
+</div>

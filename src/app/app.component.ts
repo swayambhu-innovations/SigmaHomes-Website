@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DataProvider } from './providers/data.provider';
 import { AuthenticationService } from './services/authentication.service';
 
 @Component({
@@ -9,5 +10,5 @@ import { AuthenticationService } from './services/authentication.service';
 export class AppComponent {
   title = 'SigmaHomes-Website';
 
-  constructor(private authService: AuthenticationService) {}
+  constructor(private authService: AuthenticationService,public dataProvider:DataProvider) {}
 }

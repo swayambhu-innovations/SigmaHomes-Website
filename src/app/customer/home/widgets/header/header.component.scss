@@ -63,86 +63,86 @@ nav {
   color: var(--primary);
 }
 
-// #login2,
-// #signup2 {
-//   font-size: var(--medium);
-//   text-transform: unset;
-//   transition: all 0.5s;
-//   font-family: var(--font-three);
-//   min-height: unset;
-// }
+#login2,
+#signup2 {
+  font-size: var(--medium);
+  text-transform: unset;
+  transition: all 0.5s;
+  font-family: var(--font-three);
+  min-height: unset;
+}
 
-// #signup,
-// #logout {
-//     color: var(--tertiary);
-// }
+#signup,
+#logout {
+    color: var(--tertiary);
+}
 
-// .active {
-//   opacity: 1;
-// }
+.active {
+  opacity: 1;
+}
 
-// .active2,
-// #login2:hover,
-// #signup2:hover,
-// #signup2:focus {
-//   color: var(--primary);
-// }
+.active2,
+#login2:hover,
+#signup2:hover,
+#signup2:focus {
+  color: var(--primary);
+}
 
-// .active {
-//   border-bottom: 2px solid var(--secondary);
-//   padding-bottom: 0.5em;
-// }
+.active {
+  border-bottom: 2px solid var(--secondary);
+  padding-bottom: 0.5em;
+}
 
-// .active2 {
-//   border-bottom: 2px solid var(--primary);
-// }
+.active2 {
+  border-bottom: 2px solid var(--primary);
+}
 
-// #signup,
-// #logout,
-// #login2,
-// #signup2 {
-//   font-size: var(--medium);
-//   transition: all 0.5s;
-//   font-family: var(--font-three);
-//   display: block;
-// }
+#signup,
+#logout,
+#login2,
+#signup2 {
+  font-size: var(--medium);
+  transition: all 0.5s;
+  font-family: var(--font-three);
+  display: block;
+}
 
-// #signup,
-// #logout {
-//   border-radius: 25px;
-//   padding: 0.5em 1.25em;
-// }
+#signup,
+#logout {
+  border-radius: 25px;
+  padding: 0.5em 1.25em;
+}
 
-// #login2,
-// #signup2 {
-//   padding: 5px 0;
-//   color: #000;
-// }
+#login2,
+#signup2 {
+  padding: 5px 0;
+  color: #000;
+}
 
-// #signup:hover,
-// #login2:hover,
-// #logout:hover,
-// #signup2:hover,
-// #signup:focus,
-// #signup2:focus,
-// #logout:focus {
-//   text-decoration: none;
-// }
+#signup:hover,
+#login2:hover,
+#logout:hover,
+#signup2:hover,
+#signup:focus,
+#signup2:focus,
+#logout:focus {
+  text-decoration: none;
+}
 
-// #signup:hover,
-// #signup:focus,
-// #logout:hover,
-// #logout:focus {
-//   box-shadow: var(--normal-shadow);
-// }
+#signup:hover,
+#signup:focus,
+#logout:hover,
+#logout:focus {
+  box-shadow: var(--normal-shadow);
+}
 
-// #signup,
-// #logout {
-//   background-color: var(--secondary);
-//   color: var(--secondary-contrast);
-//   border: none;
-//   font-size: inherit;
-// }
+#signup,
+#logout {
+  background-color: var(--secondary);
+  color: var(--secondary-contrast);
+  border: none;
+  font-size: inherit;
+}
 
 #toggle-button {
   display: none;

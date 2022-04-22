@@ -14,7 +14,8 @@ import {
   docSnapshots,
   docData,
   getDoc,
-  getDocs
+  getDocs,
+  collectionSnapshots,
 } from '@angular/fire/firestore';
 import {
   getDownloadURL,
@@ -67,8 +68,16 @@ export class DatabaseService {
   addCustomer(data: any) {
     return addDoc(collection(this.fs, 'customers'), data);
   }
-
+  
   getCustomers() {
     return getDocs(collection(this.fs, 'customers'));
+  }
+
+  addProperty(property: any) {
+    return addDoc(collection(this.fs, 'properties'), property);
+  }
+
+  getProperties() {
+    return collectionSnapshots(collection(this.fs, 'properties'));
   }
 }

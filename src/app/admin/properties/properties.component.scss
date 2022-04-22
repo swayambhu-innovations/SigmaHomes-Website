@@ -13,3 +13,39 @@ app-property-card {
     width: 30%;
     margin: 1em;
 }
+#add-properties-modal{
+    .uk-modal-dialog{
+        height: auto;
+        form{
+            font-size: var(--medium);
+            height: auto;
+            div{
+                display: flex;
+                justify-content: space-between;
+                height:30px;
+                width:auto;
+                margin-top: 10px;
+                input,textarea{
+                    font-size: var(--medium);
+                    width:300px;
+                    border:none;
+                    border-bottom: 2px solid var(--secondary);
+                }
+            }
+            button{
+                margin-top: 20px;
+                background:var(--secondary);
+                font-size: var(--medium);
+                height:40px;
+                width:auto;
+                padding:10px;
+                border:none;
+                border-radius: 7px;
+                color:white;
+                left:50%;
+                position: relative;
+                transform: translateX(-50%);
+            }
+        }
+    }
+}

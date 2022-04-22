@@ -36,14 +36,14 @@
     </div>
     <div *ngIf="!dataProvider.loggedIn" class="uk-navbar-right">
       <button
-        routerLink="login"
+        routerLink="../login"
         id="login"
         uk-scrollspy="cls: uk-animation-fade; repeat: true"
       >
         Login
       </button>
       <button
-        routerLink="signup"
+        routerLink="../signup"
         id="signup"
         uk-scrollspy="cls: uk-animation-fade; repeat: true"
       >
@@ -67,7 +67,7 @@
       </button>
       <button
         *ngIf="this.dataProvider.userData?.access?.access != 'Unassigned'"
-        routerLink="admin"
+        routerLink="../admin"
         id="signup"
         uk-scrollspy="cls: uk-animation-fade; repeat: true"
       >
