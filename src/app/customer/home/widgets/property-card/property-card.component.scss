@@ -11,6 +11,8 @@
 .property-image {
     object-fit: cover;
     border-radius: 15px 15px 0 0;
+    width: 100%;
+    height: 200px;
 }
 
 .property-content {
@@ -25,7 +27,8 @@
 .property-price,
 .property-address,
 .property-features {
-    font-family: var(--font-two);
+    font-family: var(--font-three);
+    color: var(--tertiary);
 }
 
 .property-heading {
@@ -69,7 +72,7 @@
     bottom: 1em;
     background-color: transparent;
     border: none;
-    color: #000;
+    color: var(--tertiary);
     font-size: var(--xlarge);
     transition: all .5s;
     cursor: pointer;

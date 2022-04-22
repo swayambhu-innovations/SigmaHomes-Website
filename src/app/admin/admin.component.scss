@@ -20,6 +20,11 @@ header {
   margin: 0;
 }
 
+aside,
+main {
+  height: calc(100vh - 58px);
+}
+
 aside {
   grid-area: sidebar;
   width: 20vw;
@@ -58,11 +63,11 @@ aside {
 }
 
 .sidebar-icon {
-  margin-right: .75em;
+  margin-right: 0.75em;
 }
 
 main {
   grid-area: content;
   width: 80vw;
-  height: calc(100vh - 58px);
+  overflow-y: auto;
 }

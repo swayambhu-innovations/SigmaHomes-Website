@@ -1,0 +1,49 @@
+#card {
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    border-radius: 15px; /* should be same as h3's border-radius */
+    transition: all .3s;
+}
+
+#card:hover {
+    box-shadow: var(--normal-shadow);
+    transform: scale(1.05);
+}
+
+h3 {
+    background-color: var(--secondary);
+    color: var(--secondary-contrast);
+    font-size: var(--medium);
+    font-family: var(--font-three);
+    padding: .75em 1em;
+    margin: 0;
+    border-radius: 15px 15px 0 0; /* should be same as #card's border-radius */
+}
+
+#key-values, #buttons {
+    padding: 1em;
+}
+
+p {
+    margin: 0;
+    font-family: var(--font-two);
+    font-size: var(--small);
+    color: var(--tertiary);
+}
+
+.key {
+    font-weight: 700;
+}
+
+#buttons {
+    display: flex;
+    padding-top: 0;
+}
+
+app-primary-btn, app-secondary-btn {
+    width: 50%;
+}
+
+app-primary-btn {
+    margin-right: .5em;
+}

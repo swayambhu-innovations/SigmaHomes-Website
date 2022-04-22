@@ -1,1 +1,8 @@
-<img src="{{ imgSrc }}" alt="{{ altText }}" />
+<div id="container">
+    <img *ngIf="imgSrc" src="{{ imgSrc }}" alt="{{ altText }}" />
+    <div *ngIf="editMode" id="change-photo"  (click)="changePhoto()">
+        <span uk-icon="icon: image; ratio: 2"></span>
+        <p *ngIf="imgSrc">Change Photo</p>
+        <p *ngIf="!imgSrc">Add Photo</p>
+    </div>
+</div>

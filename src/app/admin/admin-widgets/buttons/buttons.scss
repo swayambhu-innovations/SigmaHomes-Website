@@ -2,12 +2,13 @@ button {
     display: block;
     background-color: transparent;
     color: var(--primary);
+    width: 100%;
     border-width: 2px;
     border-style: solid;
     border-color: transparent;
-    border-radius: 15px;
-    padding: .5em;
-    font-size: var(--small);
+    border-radius: 7px;
+    padding: .5em 1em;
+    font-size: var(--medium);
     font-family: var(--font-two);
     cursor: pointer;
     transition: all .5s;

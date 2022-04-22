@@ -1,0 +1,77 @@
+section {
+    position: relative;
+}
+
+#lead-cards {
+    padding: 1em;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+app-lead-card {
+    width: 30%;
+    margin: .5em;
+}
+
+.uk-modal-body {
+    position: relative;
+    height: 80vh;
+    width: 70vw;
+}
+
+#modal-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 300px;
+}
+
+.uk-modal-title {
+    font-family: var(--font-three);
+    font-size: var(--xlarge);
+    color: var(--tertiary);
+}
+
+.uk-modal-close-default {
+    background-color: var(--secondary);
+    color: var(--secondary-contrast);
+    border-radius: 50%;
+    padding: .5em;
+}
+
+form {
+    width: calc(100% - 300px);
+    height: calc(100% - 10vh);
+    padding-right: 1em;
+    overflow-y: auto;
+}
+
+.admin-input {
+    display: block;
+    width: 100%;
+    margin-bottom: .75em;
+}
+
+label {
+    font-family: var(--font-three);
+    font-size: var(--small);
+    color: var(--tertiary);
+}
+
+#dates {
+    display: flex;
+}
+
+.date {
+    width: 50%;
+}
+
+.date:first-of-type {
+    margin-right: 1em;
+}
+
+app-primary-btn {
+    display: block;
+    margin-top: 1em;
+}

@@ -1,0 +1,83 @@
+section {
+    position: relative;
+}
+
+ul {
+    list-style: none;
+    padding: 1em 2em;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    margin: 0 0 1.5em 0;
+}
+
+.customer-img {
+    margin-right: 1em;
+    width: 40px;
+}
+
+p {
+    font-family: var(--font-two);
+    font-size: var(--large);
+    color: var(--tertiary);
+    margin: 0;
+}
+
+.uk-modal-body {
+    position: relative;
+    height: 80vh;
+    width: 70vw;
+}
+
+#modal-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 300px;
+}
+
+.uk-modal-title {
+    font-family: var(--font-three);
+    font-size: var(--xlarge);
+    color: var(--tertiary);
+}
+
+.uk-modal-close-default {
+    background-color: var(--secondary);
+    color: var(--secondary-contrast);
+    border-radius: 50%;
+    padding: .5em;
+}
+
+form {
+    width: calc(100% - 300px);
+    height: calc(100% - 10vh);
+    padding-right: 1em;
+    overflow-y: auto;
+}
+
+app-avatar {
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.admin-input {
+    display: block;
+    width: 100%;
+    margin-bottom: .75em;
+}
+
+label {
+    font-family: var(--font-three);
+    font-size: var(--small);
+    color: var(--tertiary);
+}
+
+app-primary-btn {
+    display: block;
+    margin-top: 2em;
+}

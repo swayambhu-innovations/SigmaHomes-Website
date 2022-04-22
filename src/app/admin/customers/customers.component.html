@@ -1,0 +1,186 @@
+<section>
+  <ul>
+    <li>
+      <img
+        src="../../../assets/img/customer-sample-1.png"
+        alt="Jayant Kumar Mohapatra"
+        class="customer-img"
+      />
+      <p>Jayant Kumar Mohapatra</p>
+    </li>
+    <li>
+      <img src="../../../assets/img/customer-sample-2.png" alt="Sukant Singh" class="customer-img" />
+      <p>Sukant Singh</p>
+    </li>
+    <li>
+      <img
+        src="../../../assets/img/customer-sample-3.png"
+        alt="Anil Kumar Singh"
+        class="customer-img"
+      />
+      <p>Anil Kumar Singh</p>
+    </li>
+    <li>
+      <img
+        src="../../../assets/img/customer-sample-1.png"
+        alt="Jayant Kumar Mohapatra"
+        class="customer-img"
+      />
+      <p>Jayant Kumar Mohapatra</p>
+    </li>
+    <li>
+      <img src="../../../assets/img/customer-sample-2.png" alt="Sukant Singh" class="customer-img" />
+      <p>Sukant Singh</p>
+    </li>
+    <li>
+      <img
+        src="../../../assets/img/customer-sample-3.png"
+        alt="Anil Kumar Singh"
+        class="customer-img"
+      />
+      <p>Anil Kumar Singh</p>
+    </li>
+  </ul>
+  <app-fab [icon]="'plus'" [target]="'#add-customer-modal'" [title]="'Add New Customer'"></app-fab>
+  <div id="add-customer-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <h2 class="uk-modal-title">Add New Customer</h2>
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <form action="" method="post">
+        <app-avatar></app-avatar>
+        <input
+          type="text"
+          name="name"
+          id="name-input"
+          class="admin-input"
+          placeholder="Name"
+        />
+        <input
+          type="tel"
+          name="phone"
+          id="phone-input"
+          class="admin-input"
+          placeholder="Phone Number"
+        />
+        <input
+          type="email"
+          name="email"
+          id="email-input"
+          class="admin-input"
+          placeholder="Email"
+        />
+        <div class="date">
+          <label for="booking-date-input">Booking date</label>
+          <input type="date" name="booking-date" id="booking-date-input" class="admin-input" />
+        </div>
+        <input
+          type="text"
+          name="project-name"
+          id="project-name-input"
+          class="admin-input"
+          placeholder="Project Name"
+        />
+        <input
+          type="text"
+          name="unit-no"
+          id="unit-no-input"
+          class="admin-input"
+          placeholder="Unit No."
+        />
+        <input
+          type="text"
+          name="property-type"
+          id="property-type-input"
+          class="admin-input"
+          placeholder="Property Type"
+        />
+        <input
+          type="text"
+          name="company-sales"
+          id="company-sales-input"
+          class="admin-input"
+          placeholder="Company Sales Value"
+        />
+        <input
+          type="text"
+          name="sales-value"
+          id="sales-value-input"
+          class="admin-input"
+          placeholder="Sales Value"
+        />
+        <input
+          type="text"
+          name="advance-value"
+          id="advance-value-input"
+          class="admin-input"
+          placeholder="Advance Value"
+        />
+        <input
+          type="text"
+          name="finance-details"
+          id="finance-details-input"
+          class="admin-input"
+          placeholder="Finance Details"
+        />
+        <input
+          type="text"
+          name="payment-mode"
+          id="payment-mode-input"
+          class="admin-input"
+          placeholder="Payment Mode"
+        />
+        <input
+          type="text"
+          name="job-type"
+          id="job-type-input"
+          class="admin-input"
+          placeholder="Job Type"
+        />
+        <input
+          type="text"
+          name="company-name"
+          id="company-name-input"
+          class="admin-input"
+          placeholder="Name of Company"
+        />
+        <input
+          type="text"
+          name="monthly-salary"
+          id="monthly-salary-input"
+          class="admin-input"
+          placeholder="Monthly Salary"
+        />
+        <input
+          type="text"
+          name="firm-name"
+          id="firm-name-input"
+          class="admin-input"
+          placeholder="Name of Firm"
+        />
+        <input
+          type="text"
+          name="year-of-establishment"
+          id="year-of-establishment-input"
+          class="admin-input"
+          placeholder="Year of Establishment"
+        />
+        <input
+          type="text"
+          name="income-as-per-itr"
+          id="income-as-per-itr-input"
+          class="admin-input"
+          placeholder="Income as per ITR"
+        />
+        <input
+          type="text"
+          name="itr-status"
+          id="itr-status-input"
+          class="admin-input"
+          placeholder="ITR Status"
+        />
+        <app-primary-btn [innerHtml]="'Add Customer'"></app-primary-btn>
+      </form>
+      <img src="../../../assets/img/add-customer-modal-img.png" id="modal-img" />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,154 @@
+<section>
+  <div id="lead-cards">
+    <app-lead-card
+      [name]="'Hemant Singh'"
+      [budget]="'35 Lakh'"
+      [interestedIn]="'4 BHK'"
+      [preferredLocality]="'Town Hall, Jaipur'"
+      [contactNumber]="'6846846846'"
+      [job]="'Government Employee'"
+      [salary]="'23 LPA'"
+      [otherPreferences]="'Minimum 2 Balconies'"
+    ></app-lead-card>
+    <app-lead-card
+      [name]="'Hemant Singh'"
+      [budget]="'35 Lakh'"
+      [interestedIn]="'4 BHK'"
+      [preferredLocality]="'Town Hall, Jaipur'"
+      [contactNumber]="'6846846846'"
+      [job]="'Government Employee'"
+      [salary]="'23 LPA'"
+      [otherPreferences]="'Minimum 2 Balconies'"
+    ></app-lead-card>
+    <app-lead-card
+      [name]="'Hemant Singh'"
+      [budget]="'35 Lakh'"
+      [interestedIn]="'4 BHK'"
+      [preferredLocality]="'Town Hall, Jaipur'"
+      [contactNumber]="'6846846846'"
+      [job]="'Government Employee'"
+      [salary]="'23 LPA'"
+      [otherPreferences]="'Minimum 2 Balconies'"
+    ></app-lead-card>
+    <app-lead-card
+      [name]="'Hemant Singh'"
+      [budget]="'35 Lakh'"
+      [interestedIn]="'4 BHK'"
+      [preferredLocality]="'Town Hall, Jaipur'"
+      [contactNumber]="'6846846846'"
+      [job]="'Government Employee'"
+      [salary]="'23 LPA'"
+      [otherPreferences]="'Minimum 2 Balconies'"
+    ></app-lead-card>
+    <app-lead-card
+      [name]="'Hemant Singh'"
+      [budget]="'35 Lakh'"
+      [interestedIn]="'4 BHK'"
+      [preferredLocality]="'Town Hall, Jaipur'"
+      [contactNumber]="'6846846846'"
+      [job]="'Government Employee'"
+      [salary]="'23 LPA'"
+      [otherPreferences]="'Minimum 2 Balconies'"
+    ></app-lead-card>
+    <app-lead-card
+      [name]="'Hemant Singh'"
+      [budget]="'35 Lakh'"
+      [interestedIn]="'4 BHK'"
+      [preferredLocality]="'Town Hall, Jaipur'"
+      [contactNumber]="'6846846846'"
+      [job]="'Government Employee'"
+      [salary]="'23 LPA'"
+      [otherPreferences]="'Minimum 2 Balconies'"
+    ></app-lead-card>
+  </div>
+  <app-fab [icon]="'plus'" [target]="'#add-lead-modal'" [title]="'Add New Lead'"></app-fab>
+  <div id="add-lead-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <h2 class="uk-modal-title">Add New Lead</h2>
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <form action="" method="post">
+        <input
+          type="text"
+          name="name"
+          id="name-input"
+          class="admin-input"
+          placeholder="Name"
+        />
+        <input
+          type="tel"
+          name="phone"
+          id="phone-input"
+          class="admin-input"
+          placeholder="Phone Number"
+        />
+        <input
+          type="email"
+          name="email"
+          id="email-input"
+          class="admin-input"
+          placeholder="Email"
+        />
+        <input
+          type="text"
+          name="address"
+          id="address-input"
+          class="admin-input"
+          placeholder="Address"
+        />
+        <input
+          type="text"
+          name="city"
+          id="city-input"
+          class="admin-input"
+          placeholder="City"
+        />
+        <input
+          type="text"
+          name="state"
+          id="state-input"
+          class="admin-input"
+          placeholder="State"
+        />
+        <input
+          type="text"
+          name="pincode"
+          id="pincode-input"
+          class="admin-input"
+          placeholder="Pincode"
+        />
+        <input
+          type="text"
+          name="aadhar"
+          id="aadhar-input"
+          class="admin-input"
+          placeholder="Aadhar Card No."
+        />
+        <input
+          type="text"
+          name="pan-no"
+          id="pan-input"
+          class="admin-input"
+          placeholder="Pan Card No."
+        />
+        <div id="dates">
+          <div class="date">
+            <label for="dob-input">Customer DOB</label>
+            <input type="date" name="dob" id="dob-input" class="admin-input" />
+          </div>
+          <div class="date">
+            <label for="dob-input">Customer Anniversary</label>
+            <input
+              type="date"
+              name="anniversary"
+              id="anniversary-input"
+              class="admin-input"
+              placeholder="Customer Anniversary"
+            />
+          </div>
+        </div>
+        <app-primary-btn [innerHtml]="'Add Lead'"></app-primary-btn>
+      </form>
+      <img src="../../../assets/img/add-lead-modal-img.png" id="modal-img" />
+    </div>
+  </div>
+</section>

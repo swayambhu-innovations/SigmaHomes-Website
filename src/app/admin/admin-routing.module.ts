@@ -1,12 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AdminGuard } from '../guards/admin.guard';
 import { AdminComponent } from './admin.component';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
+    canActivate: [AdminGuard],
     children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+      },
       {
         path: 'dashboard',
         loadChildren: () =>
@@ -18,8 +24,28 @@ const routes: Routes = [
           import('./profile/profile.module').then((m) => m.ProfileModule),
       },
       {
-        path: '',
-        redirectTo: 'dashboard',
+        path: 'lead-center',
+        loadChildren: () =>
+          import('./lead-center/lead-center.module').then(
+            (m) => m.LeadCenterModule
+          ),
+      },
+      {
+        path: 'customers',
+        loadChildren: () =>
+          import('./customers/customers.module').then((m) => m.CustomersModule),
+      },
+      {
+        path: 'properties',
+        loadChildren: () =>
+          import('./properties/properties.module').then(
+            (m) => m.PropertiesModule
+          ),
+      },
+      {
+        path: 'visit-log',
+        loadChildren: () =>
+          import('./visit-log/visit-log.module').then((m) => m.VisitLogModule),
       },
     ],
   },

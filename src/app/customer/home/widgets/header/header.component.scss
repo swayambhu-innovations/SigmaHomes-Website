@@ -35,7 +35,8 @@ nav {
 
 .nav-link2,
 #login,
-#signup {
+#signup,
+#logout {
   // color: var(--secondary-contrast);
   color: #000;
 }
@@ -51,7 +52,6 @@ nav {
 .active2,
 #login2:hover,
 #signup2:hover,
-#signup:focus,
 #signup2:focus {
   color: var(--primary);
 }
@@ -67,6 +67,7 @@ nav {
 
 #login,
 #signup,
+#logout,
 #login2,
 #signup2 {
   font-size: var(--medium);
@@ -76,7 +77,8 @@ nav {
 }
 
 #login,
-#signup {
+#signup,
+#logout {
   border-radius: 25px;
   padding: 0.5em 1.25em;
 }
@@ -90,9 +92,11 @@ nav {
 #login:hover,
 #signup:hover,
 #login2:hover,
+#logout:hover,
 #signup2:hover,
 #signup:focus,
-#signup2:focus {
+#signup2:focus,
+#logout:focus {
   text-decoration: none;
 }
 
@@ -102,7 +106,9 @@ nav {
 }
 
 #signup:hover,
-#signup:focus {
+#signup:focus,
+#logout:hover,
+#logout:focus {
   box-shadow: var(--normal-shadow);
 }
 
@@ -111,9 +117,12 @@ nav {
   margin-right: 0.5em;
 }
 
-#signup {
+#signup,
+#logout {
   background-color: var(--secondary);
   color: var(--secondary-contrast);
+  border: none;
+  font-size: inherit;
 }
 
 #toggle-button {
@@ -123,14 +132,15 @@ nav {
 }
 
 #offcanvas-bar {
-  background-color: #FFF;
+  background-color: #fff;
   box-shadow: var(--normal-shadow);
 }
 
 @media (max-width: 950px) {
   .uk-navbar-center,
   #login,
-  #signup {
+  #signup,
+  #logout {
     display: none;
   }
 

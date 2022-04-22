@@ -1,29 +1,117 @@
 <header>
   <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
-    <div class="uk-navbar-left" uk-scrollspy="cls: uk-animation-scale-up; repeat: true" id="heading">
+    <div
+      class="uk-navbar-left"
+      uk-scrollspy="cls: uk-animation-scale-up; repeat: true"
+      id="heading"
+    >
       Sigma Homes
     </div>
     <div class="uk-navbar-center">
-      <ul class="uk-navbar-nav" uk-scrollspy="target: > li; cls: uk-animation-slide-left-small; delay: 150; repeat: true">
-        <li><a href="" class="nav-link{{ active == 'home' ? ' active' : ''}}">Home</a></li>
-        <li><a href="" class="nav-link{{ active == 'about' ? ' active' : ''}}">About</a></li>
-        <li><a href="" class="nav-link{{ active == 'projects' ? ' active' : ''}}">Projects</a></li>
-        <li><a href="" class="nav-link{{ active == 'contact' ? ' active' : ''}}">Contact</a></li>
+      <ul
+        class="uk-navbar-nav"
+        uk-scrollspy="target: > li; cls: uk-animation-slide-left-small; delay: 150; repeat: true"
+      >
+        <li>
+          <a href="" class="nav-link{{ active == 'home' ? ' active' : '' }}"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a href="" class="nav-link{{ active == 'about' ? ' active' : '' }}"
+            >About</a
+          >
+        </li>
+        <li>
+          <a href="" class="nav-link{{ active == 'projects' ? ' active' : '' }}"
+            >Projects</a
+          >
+        </li>
+        <li>
+          <a href="" class="nav-link{{ active == 'contact' ? ' active' : '' }}"
+            >Contact</a
+          >
+        </li>
       </ul>
     </div>
-    <div class="uk-navbar-right">
-      <a href="login" id="login" uk-scrollspy="cls: uk-animation-fade; repeat: true">Login</a>
-      <a href="" id="signup" uk-scrollspy="cls: uk-animation-fade; repeat: true">Sign Up</a>
-      <a class="uk-navbar-toggle" uk-navbar-toggle-icon href="" uk-toggle="target: #offcanvas-nav"
-        id="toggle-button"></a>
+    <div *ngIf="!dataProvider.loggedIn" class="uk-navbar-right">
+      <button
+        routerLink="login"
+        id="login"
+        uk-scrollspy="cls: uk-animation-fade; repeat: true"
+      >
+        Login
+      </button>
+      <button
+        routerLink="signup"
+        id="signup"
+        uk-scrollspy="cls: uk-animation-fade; repeat: true"
+      >
+        Sign Up
+      </button>
+      <a
+        class="uk-navbar-toggle"
+        uk-navbar-toggle-icon
+        href=""
+        uk-toggle="target: #offcanvas-nav"
+        id="toggle-button"
+      ></a>
     </div>
-    <div id="offcanvas-nav" uk-offcanvas="overlay: true; flip: true; mode: slide">
+    <div *ngIf="dataProvider.loggedIn" class="uk-navbar-right">
+      <button
+        id="login"
+        uk-scrollspy="cls: uk-animation-fade; repeat: true"
+        (click)="authService.logout()"
+      >
+        Logout
+      </button>
+      <button
+        routerLink="admin"
+        id="signup"
+        uk-scrollspy="cls: uk-animation-fade; repeat: true"
+      >
+        Admin
+      </button>
+      <a
+        class="uk-navbar-toggle"
+        uk-navbar-toggle-icon
+        href=""
+        uk-toggle="target: #offcanvas-nav"
+        id="toggle-button"
+      ></a>
+    </div>
+    <div
+      id="offcanvas-nav"
+      uk-offcanvas="overlay: true; flip: true; mode: slide"
+    >
       <div class="uk-offcanvas-bar" id="offcanvas-bar">
         <ul class="uk-nav">
-          <li><a href="" class="nav-link2{{ active == 'home' ? ' active2' : ''}}">Home</a></li>
-          <li><a href="" class="nav-link2{{ active == 'about' ? ' active2' : ''}}">About</a></li>
-          <li><a href="" class="nav-link2{{ active == 'projects' ? ' active2' : ''}}">Projects</a></li>
-          <li><a href="" class="nav-link2{{ active == 'contact' ? ' active2' : ''}}">Contact</a></li>
+          <li>
+            <a href="" class="nav-link2{{ active == 'home' ? ' active2' : '' }}"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href=""
+              class="nav-link2{{ active == 'about' ? ' active2' : '' }}"
+              >About</a
+            >
+          </li>
+          <li>
+            <a
+              href=""
+              class="nav-link2{{ active == 'projects' ? ' active2' : '' }}"
+              >Projects</a
+            >
+          </li>
+          <li>
+            <a
+              href=""
+              class="nav-link2{{ active == 'contact' ? ' active2' : '' }}"
+              >Contact</a
+            >
+          </li>
         </ul>
         <div id="offcanvas-btns">
           <a href="login" id="login2">Login</a>

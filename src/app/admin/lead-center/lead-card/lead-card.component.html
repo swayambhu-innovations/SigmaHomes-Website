@@ -1,0 +1,16 @@
+<div id="card">
+  <h3>{{ name }}</h3>
+  <div id="key-values">
+    <p><span class="key">Budget: </span><span class="value">{{ budget }}</span></p>
+    <p><span class="key">Interested in: </span><span class="value">{{ interestedIn }}</span></p>
+    <p><span class="key">Preferred Locality: </span><span class="value">{{ preferredLocality }}</span></p>
+    <p><span class="key">Contact number: </span><span class="value">{{ contactNumber }}</span></p>
+    <p><span class="key">Job: </span><span class="value">{{ job }}</span></p>
+    <p><span class="key">Salary: </span><span class="value">{{ salary }}</span></p>
+    <p><span class="key">Other preferences: </span><span class="value">{{ otherPreferences }}</span></p>
+  </div>
+  <div id="buttons">
+      <app-primary-btn [innerHtml]="'Edit'"></app-primary-btn>
+      <app-secondary-btn [innerHtml]="'Delete'"></app-secondary-btn>
+  </div>
+</div>

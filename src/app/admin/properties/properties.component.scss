@@ -1,0 +1,15 @@
+section {
+    position: relative;
+}
+
+#properties {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 1em;
+}
+
+app-property-card {
+    width: 30%;
+    margin: 1em;
+}

@@ -5,6 +5,8 @@ import { SecondaryBtnComponent } from './buttons/secondary-btn/secondary-btn.com
 import { TertiaryBtnComponent } from './buttons/tertiary-btn/tertiary-btn.component';
 import { StarRatingComponent } from './star-rating/star-rating.component';
 import { AvatarComponent } from './avatar/avatar.component';
+import { FabComponent } from './fab/fab.component';
+import { PropertyInfoCardComponent } from './property-info-card/property-info-card.component';
 
 @NgModule({
   declarations: [
@@ -12,7 +14,9 @@ import { AvatarComponent } from './avatar/avatar.component';
     SecondaryBtnComponent,
     TertiaryBtnComponent,
     StarRatingComponent,
-    AvatarComponent
+    AvatarComponent,
+    FabComponent,
+    PropertyInfoCardComponent
   ],
   imports: [
     CommonModule
@@ -22,7 +26,9 @@ import { AvatarComponent } from './avatar/avatar.component';
     SecondaryBtnComponent,
     TertiaryBtnComponent,
     StarRatingComponent,
-    AvatarComponent
+    AvatarComponent,
+    FabComponent,
+    PropertyInfoCardComponent
   ]
 })
 export class AdminWidgetsModule { }

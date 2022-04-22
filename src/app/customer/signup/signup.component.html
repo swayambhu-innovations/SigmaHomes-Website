@@ -1,0 +1,36 @@
+<section>
+    <div id="container">
+      <h2>Sign Up</h2>
+      <form [formGroup]="signupForm" (ngSubmit)="submitSignupForm()">
+        <input
+          type="name"
+          placeholder="Name"
+          formControlName="name"
+          class="admin-input"
+        />
+        <input
+          type="email"
+          placeholder="Email"
+          formControlName="email"
+          class="admin-input"
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          formControlName="password"
+          class="admin-input"
+        />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          formControlName="confirmPassword"
+          class="admin-input"
+        />
+        <button type="submit" id="signup-btn" [disabled]="!signupForm.valid || this.signupForm.value.password != this.signupForm.value.confirmPassword">Sign Up</button>
+      </form>
+      <button id="sign-up-with-google" (click)="signUpWithGoogle()">
+        <span uk-icon="google" id="google-icon"></span>Sign Up With Google
+      </button>
+    </div>
+  </section>
+  

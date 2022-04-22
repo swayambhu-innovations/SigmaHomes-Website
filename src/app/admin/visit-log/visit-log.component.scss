@@ -1,0 +1,10 @@
+#cards {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1em;
+}
+
+app-property-info-card {
+    width: 50%;
+    margin: 1em;
+}

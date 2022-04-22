@@ -4,64 +4,230 @@
     <app-avatar
       [imgSrc]="'./../../../assets/img/agent-photo-sample.png'"
       [altText]="'Mukesh Tomar'"
+      [editMode]="editMode"
     ></app-avatar>
   </div>
-  <div id="details">
-    <div class="detail">
-      <span class="key">Name: </span>
-      <span class="value">Mukesh Tomar</span>
+  <div *ngIf="!editMode" id="container">
+    <h3>Jatin Kumar Singh</h3>
+    <h4>Real Estate Agent (12 years experience)</h4>
+    <div id="rating">
+      <app-star-rating
+        [readonly]="true"
+        [rating]="3"
+        [max]="5"
+      ></app-star-rating>
+      <a href="" id="reviews">(300 reviews)</a>
     </div>
-    <div class="detail">
-      <span class="key">Phone Number: </span>
-      <span class="value">8057568369</span>
+    <div id="details">
+      <p class="detail">
+        <span class="key">Phone Number: </span>
+        <span class="value">8057568369</span>
+      </p>
+      <p class="detail">
+        <span class="key">Email Address: </span>
+        <span class="value">raghavgoel2701@gmail.com</span>
+      </p>
+      <p class="detail">
+        <span class="key">Qualification: </span>
+        <span class="value">B. Tech (CSE)</span>
+      </p>
+      <p class="detail">
+        <span class="key">Date of Birth: </span>
+        <span class="value">27-01-2002</span>
+      </p>
+      <p class="detail">
+        <span class="key">PAN No.: </span>
+        <span class="value">DARGG8808</span>
+      </p>
+      <p class="detail">
+        <span class="key">Address: </span>
+        <span class="value"
+          >St. George's College, Barlowganj, Mussoorie, Uttarakhand -
+          248122</span
+        >
+      </p>
+      <p class="detail">
+        <span class="key">Bank Name: </span>
+        <span class="value">State Bank of India</span>
+      </p>
+      <p class="detail">
+        <span class="key">Father Name: </span>
+        <span class="value">Shailesh Tomar</span>
+      </p>
+      <p class="detail">
+        <span class="key">Branch: </span>
+        <span class="value">SGC, Mussoorie</span>
+      </p>
+      <p class="detail">
+        <span class="key">Account No.: </span>
+        <span class="value">83845882011000</span>
+      </p>
+      <p class="detail">
+        <span class="key">IFSC: </span>
+        <span class="value">SBIN011000</span>
+      </p>
+      <p class="detail">
+        <span class="key">Parent employee: </span>
+        <span class="value">Yes</span>
+      </p>
+      <p class="detail">
+        <span class="key">User type: </span>
+        <span class="value">Agent</span>
+      </p>
     </div>
-    <div class="detail">
-      <span class="key">Email Address: </span>
-      <span class="value">raghavgoel2701@gmail.com</span>
-    </div>
-    <div class="detail">
-      <span class="key">Qualification: </span>
-      <span class="value">B. Tech (CSE)</span>
-    </div>
-    <div class="detail">
-      <span class="key">Date of Birth: </span>
-      <span class="value">27/01/2002</span>
-    </div>
-    <div class="detail">
-      <span class="key">PAN No.: </span>
-      <span class="value">DARGG8808</span>
-    </div>
-    <div class="detail">
-      <span class="key">Address: </span>
-      <span class="value">St. George's College, Barlowganj</span>
-    </div>
-    <div class="detail">
-      <span class="key">Bank Name: </span>
-      <span class="value">State Bank of India</span>
-    </div>
-    <div class="detail">
-      <span class="key">Father Name: </span>
-      <span class="value">Shailesh Tomar</span>
-    </div>
-    <div class="detail">
-      <span class="key">Branch: </span>
-      <span class="value">SGC, Mussoorie</span>
-    </div>
-    <div class="detail">
-      <span class="key">Account No.: </span>
-      <span class="value">83845882011000</span>
-    </div>
-    <div class="detail">
-      <span class="key">IFSC: </span>
-      <span class="value">SBIN011000</span>
-    </div>
-    <div class="detail">
-      <span class="key">Parent employee: </span>
-      <span class="value">Yes</span>
-    </div>
-    <div class="detail">
-      <span class="key">User type: </span>
-      <span class="value">Agent</span>
+    <app-primary-btn
+      [innerHtml]="'Edit Profile'"
+      (btnClick)="goToEditMode()"
+    ></app-primary-btn>
+  </div>
+  <div *ngIf="editMode" id="container">
+    <form id="details">
+      <p class="detail">
+        <label for="name-input" class="key">Name: </label>
+        <input
+          type="text"
+          name="name"
+          value="Jatin Kumar Singh"
+          id="name-input"
+          class="admin-input value"
+        />
+      </p>
+      <p class="detail">
+        <label for="phone-input" class="key">Phone Number: </label>
+        <input
+          type="tel"
+          name="phone"
+          value="8057568369"
+          id="phone-input"
+          class="admin-input value"
+        />
+      </p>
+      <p class="detail">
+        <label for="email-input" class="key">Email Address: </label>
+        <input
+          type="email"
+          name="email"
+          value="raghavgoel2701@gmail.com"
+          id="email-input"
+          class="admin-input value"
+        />
+      </p>
+      <p class="detail">
+        <label for="qualification-input" class="key">Qualification: </label>
+        <input
+          type="text"
+          name="qualification"
+          value="B. Tech (CSE)"
+          id="qualification-input"
+          class="admin-input value"
+        />
+      </p>
+      <p class="detail">
+        <label for="dob-input" class="key">Date of Birth: </label>
+        <input
+          type="date"
+          name="dob"
+          value="2002-01-27"
+          id="dob-input"
+          class="admin-input value"
+        />
+      </p>
+      <p class="detail">
+        <label for="pan-input" class="key">PAN No.: </label>
+        <input
+          type="text"
+          name="pan-no"
+          value="DARGG8808"
+          id="pan-input"
+          class="admin-input value"
+        />
+      </p>
+      <p class="detail">
+        <label for="address-input" class="key">Address: </label>
+        <textarea name="address" id="address-input" class="admin-input value">
+St. George's College, Barlowganj, Mussoorie, Uttarakhand - 248122</textarea
+        >
+      </p>
+      <p class="detail">
+        <label for="bank-name-input" class="key">Bank Name: </label>
+        <input
+          type="text"
+          name="bank-name"
+          value="State Bank of India"
+          id="bank-name-input"
+          class="admin-input value"
+        />
+      </p>
+      <p class="detail">
+        <label for="father-name-input" class="key">Father Name: </label>
+        <input
+          type="text"
+          name="father-name"
+          value="Shailesh Tomar"
+          id="father-name-input"
+          class="admin-input value"
+        />
+      </p>
+      <p class="detail">
+        <label for="branch-input" class="key">Branch: </label>
+        <input
+          type="text"
+          name="branch"
+          value="SGC, Mussoorie"
+          id="branch-input"
+          class="admin-input value"
+        />
+      </p>
+      <p class="detail">
+        <label for="account-no-input" class="key">Account No.: </label>
+        <input
+          type="text"
+          name="account-no"
+          value="83845882011000"
+          id="account-no-input"
+          class="admin-input value"
+        />
+      </p>
+      <p class="detail">
+        <label for="ifsc-code-input" class="key">IFSC Code: </label>
+        <input
+          type="text"
+          name="ifsc-code"
+          value="SBIN011000"
+          id="ifsc-code-input"
+          class="admin-input value"
+        />
+      </p>
+      <p class="detail">
+        <label for="parent-employee-input" class="key">Parent Employee: </label>
+        <input
+          type="text"
+          name="parent-employee"
+          value="Yes"
+          id="parent-employee-input"
+          class="admin-input value"
+        />
+      </p>
+      <p class="detail">
+        <label for="user-type-input" class="key">User Type: </label>
+        <input
+          type="text"
+          name="user-type"
+          value="Agent"
+          id="user-type-input"
+          class="admin-input value"
+        />
+      </p>
+    </form>
+    <div id="buttons">
+      <app-primary-btn
+        [innerHtml]="'Save'"
+        (btnClick)="saveEdit()"
+      ></app-primary-btn>
+      <app-primary-btn
+        [innerHtml]="'Cancel'"
+        (btnClick)="cancelEdit()"
+      ></app-primary-btn>
     </div>
   </div>
 </section>

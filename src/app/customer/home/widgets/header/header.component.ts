@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DataProvider } from 'src/app/providers/data.provider';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +10,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   @Input() active: string = '';
 
-  constructor() { }
+  constructor(public dataProvider: DataProvider, public authService: AuthenticationService) { }
 
   ngOnInit(): void {
   }

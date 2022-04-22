@@ -1,0 +1,35 @@
+#card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1em;
+    box-shadow: var(--normal-shadow);
+}
+
+#property-img {
+    width: 30%;
+    margin-right: 1em;
+}
+
+#text-container {
+    width: 60%;
+}
+
+p {
+    font-family: var(--font-three);
+    color: var(--tertiary);
+    margin: 0;
+}
+
+#headings p {
+    font-weight: 700;
+    font-size: var(--medium);
+}
+
+#subheadings p {
+    font-size: var(--small);
+}
+
+#customer-img {
+    width: 10%;
+}
