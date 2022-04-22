@@ -9,7 +9,10 @@ import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private authService: AuthenticationService, private alertService: AlertsAndNotificationsService) {}
+  constructor(
+    private authService: AuthenticationService,
+    private alertService: AlertsAndNotificationsService
+  ) {}
 
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required]),
@@ -18,10 +21,11 @@ export class LoginComponent implements OnInit {
 
   submitLoginForm() {
     if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-      this.authService.loginEmailPassword(this.loginForm.value.email, this.loginForm.value.password);
-    }
-    else {
+      this.authService.loginEmailPassword(
+        this.loginForm.value.email,
+        this.loginForm.value.password
+      );
+    } else {
       this.alertService.presentToast('Invalid form');
     }
   }

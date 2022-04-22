@@ -1,3 +1,4 @@
-<button (click)="this.btnClick.emit()">
-    {{ innerHtml }}
-</button>
+<button (click)="this.btnClick.emit()" [disabled]="disabled">
+    {{ text }}
+  </button>
+  

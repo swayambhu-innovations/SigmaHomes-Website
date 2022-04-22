@@ -19,3 +19,7 @@ button:hover {
     color: var(--primary-contrast);
     box-shadow: var(--normal-shadow);
 }
+
+button:disabled {
+    opacity: .5;
+}

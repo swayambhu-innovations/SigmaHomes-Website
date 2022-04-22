@@ -1,0 +1,43 @@
+form {
+    display: flex;
+
+    #left, #right {
+        padding: 2em;
+    }
+    
+    #left {
+        width: 35%;
+        
+        #upload-post-wrapper {
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%;
+            background-color: #ADADAD;
+            border-radius: 10px;
+            position: relative;
+            align-items: center;
+
+            #upload-post-container {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+
+                img {
+                    width: 100px;
+                }
+    
+                p {
+                    color: #FFF;
+                    font-size: var(--large);
+                    font-family: var(--font-three);
+                    margin: .5em 0;
+                }
+            }
+        }
+    }
+
+    #right {
+        width: 65%;
+    }
+}

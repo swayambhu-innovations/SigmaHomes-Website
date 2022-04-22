@@ -1,0 +1,36 @@
+<section>
+  <form>
+    <div id="left">
+      <div id="upload-post-wrapper">
+        <div id="upload-post-container">
+            <img src="../../../assets/img/ri_image-edit-fill.png" />
+            <p>Upload Post</p>
+        </div>
+      </div>
+      <input type="text" id="" class="admin-input" />
+      <textarea class="admin-input"></textarea>
+    </div>
+    <div id="right">
+        <h3>Select Recipients</h3>
+        <textarea class="admin-input"></textarea>
+        OR
+        <app-secondary-btn [text]="'Upload CSV'"></app-secondary-btn>
+        OR
+        <div id="search-in-leads">
+            <input type="search" placeholder="Search in Leads">
+            <div id="leads">
+                <div class="lead">
+                    <img src="../../../assets/img/customer-sample-1.png" alt="Manohar Singh">
+                    <p>Manohar Singh</p>
+                </div>
+                <div class="lead">
+                    <img src="../../../assets/img/customer-sample-2.png" alt="Manohar Singh">
+                    <p>Raghab Mishra</p>
+                </div>
+                <app-tertiary-btn [text]="'+99 others'"></app-tertiary-btn>
+            </div>
+            <app-primary-btn [text]="'Send'"></app-primary-btn>
+        </div>
+    </div>
+  </form>
+</section>

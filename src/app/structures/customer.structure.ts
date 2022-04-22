@@ -1,0 +1,22 @@
+export type CustomerData = {
+    customerId: string;
+    name: string;
+    phoneNumber: string;
+    email: string;
+    bokingDate: any;
+    projectName: string;
+    unitNo: string;
+    propertyType: string;
+    companySalesValue: string;
+    salesValue: string;
+    advanceValue: string;
+    financeDetails: string;
+    paymentMode: string;
+    jobType: string;
+    companyName: string;
+    monthlySalary: string;
+    firmName: string;
+    yearOfEstablishment: string;
+    incomeAsPerITR: string;
+    itrStatus: string;
+  };

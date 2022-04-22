@@ -46,14 +46,14 @@
     <div class="uk-modal-dialog uk-modal-body">
       <h2 class="uk-modal-title">Add New Customer</h2>
       <button class="uk-modal-close-default" type="button" uk-close></button>
-      <form action="" method="post">
-        <app-avatar></app-avatar>
+      <form [formGroup]="addCustomerForm" (ngSubmit)="submitAddCustomerForm()">
         <input
           type="text"
           name="name"
           id="name-input"
           class="admin-input"
           placeholder="Name"
+          formControlName=""
         />
         <input
           type="tel"
@@ -61,6 +61,7 @@
           id="phone-input"
           class="admin-input"
           placeholder="Phone Number"
+          formControlName=""
         />
         <input
           type="email"
@@ -68,6 +69,7 @@
           id="email-input"
           class="admin-input"
           placeholder="Email"
+          formControlName=""
         />
         <div class="date">
           <label for="booking-date-input">Booking date</label>
@@ -79,6 +81,7 @@
           id="project-name-input"
           class="admin-input"
           placeholder="Project Name"
+          formControlName=""
         />
         <input
           type="text"
@@ -86,6 +89,7 @@
           id="unit-no-input"
           class="admin-input"
           placeholder="Unit No."
+          formControlName=""
         />
         <input
           type="text"
@@ -93,6 +97,7 @@
           id="property-type-input"
           class="admin-input"
           placeholder="Property Type"
+          formControlName=""
         />
         <input
           type="text"
@@ -100,6 +105,7 @@
           id="company-sales-input"
           class="admin-input"
           placeholder="Company Sales Value"
+          formControlName=""
         />
         <input
           type="text"
@@ -107,6 +113,7 @@
           id="sales-value-input"
           class="admin-input"
           placeholder="Sales Value"
+          formControlName=""
         />
         <input
           type="text"
@@ -114,6 +121,7 @@
           id="advance-value-input"
           class="admin-input"
           placeholder="Advance Value"
+          formControlName=""
         />
         <input
           type="text"
@@ -121,6 +129,7 @@
           id="finance-details-input"
           class="admin-input"
           placeholder="Finance Details"
+          formControlName=""
         />
         <input
           type="text"
@@ -128,6 +137,7 @@
           id="payment-mode-input"
           class="admin-input"
           placeholder="Payment Mode"
+          formControlName=""
         />
         <input
           type="text"
@@ -135,6 +145,7 @@
           id="job-type-input"
           class="admin-input"
           placeholder="Job Type"
+          formControlName=""
         />
         <input
           type="text"
@@ -142,6 +153,7 @@
           id="company-name-input"
           class="admin-input"
           placeholder="Name of Company"
+          formControlName=""
         />
         <input
           type="text"
@@ -149,6 +161,7 @@
           id="monthly-salary-input"
           class="admin-input"
           placeholder="Monthly Salary"
+          formControlName=""
         />
         <input
           type="text"
@@ -156,6 +169,7 @@
           id="firm-name-input"
           class="admin-input"
           placeholder="Name of Firm"
+          formControlName=""
         />
         <input
           type="text"
@@ -163,6 +177,7 @@
           id="year-of-establishment-input"
           class="admin-input"
           placeholder="Year of Establishment"
+          formControlName=""
         />
         <input
           type="text"
@@ -170,6 +185,7 @@
           id="income-as-per-itr-input"
           class="admin-input"
           placeholder="Income as per ITR"
+          formControlName=""
         />
         <input
           type="text"
@@ -177,8 +193,9 @@
           id="itr-status-input"
           class="admin-input"
           placeholder="ITR Status"
+          formControlName=""
         />
-        <app-primary-btn [innerHtml]="'Add Customer'"></app-primary-btn>
+        <app-primary-btn [text]="'Add Customer'"></app-primary-btn>
       </form>
       <img src="../../../assets/img/add-customer-modal-img.png" id="modal-img" />
     </div>

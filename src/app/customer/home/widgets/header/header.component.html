@@ -66,6 +66,7 @@
         Logout
       </button>
       <button
+        *ngIf="this.dataProvider.userData?.access?.access != 'Unassigned'"
         routerLink="admin"
         id="signup"
         uk-scrollspy="cls: uk-animation-fade; repeat: true"

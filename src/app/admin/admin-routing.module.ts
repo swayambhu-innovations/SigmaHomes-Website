@@ -7,11 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: AdminComponent,
-    canActivate: [AdminGuard],
+    // canActivate: [AdminGuard],
     children: [
       {
         path: '',
-        redirectTo: 'dashboard',
+        // redirectTo: 'dashboard',
+        redirectTo: 'profile',
       },
       {
         path: 'dashboard',
@@ -46,6 +47,11 @@ const routes: Routes = [
         path: 'visit-log',
         loadChildren: () =>
           import('./visit-log/visit-log.module').then((m) => m.VisitLogModule),
+      },
+      {
+        path: 'broadcast',
+        loadChildren: () =>
+          import('./broadcast/broadcast.module').then((m) => m.BroadcastModule),
       },
     ],
   },

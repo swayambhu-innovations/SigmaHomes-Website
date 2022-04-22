@@ -6,7 +6,8 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['../buttons.scss', './secondary-btn.component.scss']
 })
 export class SecondaryBtnComponent implements OnInit {
-  @Input() innerHtml: string = '';
+  @Input() text: string = '';
+  @Input() disabled: boolean = false;
   @Output() btnClick: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
