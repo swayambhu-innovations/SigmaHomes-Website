@@ -27,7 +27,7 @@ p {
 
 .uk-modal-body {
     position: relative;
-    height: 80vh;
+    // height: 80vh;
     width: 70vw;
 }
 
@@ -80,4 +80,24 @@ label {
 app-primary-btn {
     display: block;
     margin-top: 2em;
+}
+section{
+    table{
+        width:100%;
+        margin: 30px;
+        thead{
+            tr{
+                th{
+
+                }
+            }
+        }
+        tbody{
+            tr{
+                td{
+
+                }
+            }
+        }
+    }
 }

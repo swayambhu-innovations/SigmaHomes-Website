@@ -70,7 +70,15 @@ export class DatabaseService {
   }
   
   getCustomers() {
-    return getDocs(collection(this.fs, 'customers'));
+    return collectionSnapshots(collection(this.fs, 'customers'));
+  }
+
+  deleteCustomer(customerId:string){
+    return deleteDoc(doc(this.fs,'customers/'+customerId));
+  }
+
+  updateCustomer(customerId: string, data: any) {
+    return updateDoc(doc(this.fs, 'customers/' + customerId), data);
   }
 
   addProperty(property: any) {
