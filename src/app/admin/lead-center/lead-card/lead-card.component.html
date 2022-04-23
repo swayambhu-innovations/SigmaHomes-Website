@@ -10,7 +10,7 @@
     <p><span class="key">Other preferences: </span><span class="value">{{ otherPreferences }}</span></p>
   </div>
   <div id="buttons">
-      <app-primary-btn [text]="'Edit'"></app-primary-btn>
-      <app-secondary-btn [text]="'Delete'"></app-secondary-btn>
+      <app-primary-btn (btnClick)="edit()" [text]="'Edit'"></app-primary-btn>
+      <app-secondary-btn (btnClick)="delete()" [text]="'Delete'"></app-secondary-btn>
   </div>
 </div>

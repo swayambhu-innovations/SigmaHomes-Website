@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component,EventEmitter , OnInit, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-lead-card',
@@ -14,8 +14,14 @@ export class LeadCardComponent implements OnInit {
   @Input() job: string = '';
   @Input() salary: string = '';
   @Input() otherPreferences: string = '';
-
+  @Output() onEdit: EventEmitter<any> = new EventEmitter();
+  @Output() onDelete: EventEmitter<any> = new EventEmitter();
   constructor() {}
-
+  edit(){
+    this.onEdit.emit();
+  }
+  delete(){
+    this.onDelete.emit();
+  }
   ngOnInit(): void {}
 }

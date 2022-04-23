@@ -5,6 +5,7 @@ import { LeadCenterRoutingModule } from './lead-center-routing.module';
 import { LeadCenterComponent } from './lead-center.component';
 import { LeadCardComponent } from './lead-card/lead-card.component';
 import { AdminWidgetsModule } from '../admin-widgets/admin-widgets.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,9 @@ import { AdminWidgetsModule } from '../admin-widgets/admin-widgets.module';
   imports: [
     CommonModule,
     LeadCenterRoutingModule,
-    AdminWidgetsModule
+    AdminWidgetsModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class LeadCenterModule { }

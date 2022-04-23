@@ -11,5 +11,8 @@ export class NotFound404Component implements OnInit {
 
   ngOnInit(): void {
   }
+  back(){
+    window.history.back();
+  }
 
 }

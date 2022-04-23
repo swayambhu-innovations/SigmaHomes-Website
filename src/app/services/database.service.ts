@@ -88,4 +88,19 @@ export class DatabaseService {
   getProperties() {
     return collectionSnapshots(collection(this.fs, 'properties'));
   }
+  addLead(lead:any){
+    return addDoc(collection(this.fs,'leads'),lead);
+  }
+  
+  getLeads(){
+    return collectionSnapshots(collection(this.fs,'leads'));
+  }
+
+  updateLead(leadId:string,leadData:any){
+    return updateDoc(doc(this.fs,'leads/'+leadId),leadData);
+  }
+
+  deleteLead(leadId:string){
+    return deleteDoc(doc(this.fs,'leads/'+leadId));
+  }
 }
