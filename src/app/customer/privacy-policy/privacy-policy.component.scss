@@ -1,0 +1,24 @@
+.container{
+    display: block;
+    margin: auto;
+    margin-top: 15px;
+    width: 85%;
+    border-radius: 15px;
+    padding: 15px;
+    border: 4px solid var(--secondary);
+    box-shadow: inset 10px 10px 10px #0000000d, 15px 25px 10px #0000000d, 15px 20px 20px #0000000d, inset -10px -10px 15px #ffffffe6;
+}
+#heading{
+    text-align: center;
+    margin-bottom: 25px;
+}
+.container h2,h3{
+    color: var(--secondary);
+}
+.container h3{
+    font-weight: bold;
+}
+.container p,li{
+    color: var(--secondary);
+    font-family: 'Poppins','sans-serif';
+}
