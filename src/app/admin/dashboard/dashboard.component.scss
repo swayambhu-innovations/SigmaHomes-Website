@@ -2,50 +2,65 @@ section {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-}
+  padding: 1em;
 
-.item {
-  width: 30%;
-  margin: 1em;
-  padding: 1em 1.5em;
-  box-shadow: var(--normal-shadow);
-  background-color: var(--secondary);
-  border-radius: 10px;
-  transition: all .5s;
-}
+  .item {
+    width: 30%;
+    margin: 0.5em;
+    padding: 1em 1.5em;
+    box-shadow: var(--normal-shadow);
+    background-color: var(--secondary);
+    border-radius: 10px;
+    transition: all 0.5s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
 
-.item:hover {
+    h3,
+    p,
+    button {
+      font-family: var(--font-two);
+      color: var(--secondary-contrast);
+      margin: 0;
+    }
+
+    h3 {
+      font-size: var(--large);
+    }
+
+    p {
+      font-size: var(--medium);
+    }
+
+    button {
+      font-size: var(--small);
+      display: inline-block;
+      margin-top: 1em;
+      border: none;
+      padding: 0.25em 0.75em;
+      background-color: var(--primary);
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.5s;
+    }
+
+    button:hover,
+    button:focus {
+      text-decoration: none;
+      box-shadow: var(--normal-shadow);
+    }
+
+    @media (max-width: 850px) {
+      width: 45%;
+    }
+
+    @media (max-width: 600px) {
+      width: 100%;
+    }
+  }
+
+  .item:hover {
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-}
-
-h3,
-p,
-a {
-  font-family: var(--font-two);
-  color: var(--secondary-contrast);
-  margin: 0;
-}
-
-h3 {
-  font-size: var(--large);
-}
-
-p {
-  font-size: var(--medium);
-}
-
-a {
-  font-size: var(--small);
-  display: inline-block;
-  margin-top: 1em;
-  padding: .25em .75em;
-  background-color: var(--primary);
-  border-radius: 7px;
-  transition: all .5s;
-}
-
-a:hover, a:focus {
-    text-decoration: none;
-  box-shadow: var(--normal-shadow);
-
+  }
 }

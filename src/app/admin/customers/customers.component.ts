@@ -48,7 +48,6 @@ export class CustomersComponent implements OnInit {
     UIkit.modal(document.getElementById('add-customer-modal')).show()
   }
   deleteCustomer(customer:any){
-    console.log(customer);
     if (customer.id && confirm('Are you sure you want to delete this customer?')) {
       this.dataProvider.pageSetting.blur = true;
       this.databaseService.deleteCustomer(customer.id).then(()=>{
@@ -61,16 +60,12 @@ export class CustomersComponent implements OnInit {
     }
   }
   viewCustomer(customer:any){
-    this.currentViewCustomer = customer;
-    console.log(this.currentViewCustomer);
     UIkit.modal(document.getElementById('see-customer-modal')).show()
   }
   submitAddCustomerForm() {
-    console.log(this.addCustomerForm.value);
     if (this.newMode){
       if (this.addCustomerForm.valid) {
         this.dataProvider.pageSetting.blur = true;
-        console.log(this.addCustomerForm.value);
         this.databaseService.addCustomer(this.addCustomerForm.value).then(()=>{
           UIkit.modal(document.getElementById('add-customer-modal')).hide()
           this.addCustomerForm.reset();
@@ -83,7 +78,6 @@ export class CustomersComponent implements OnInit {
       }
     } else if(!this.newMode) {
       if (this.addCustomerForm.valid && this.currentEditId ) {
-        console.log(this.addCustomerForm.value);
         this.dataProvider.pageSetting.blur = true;
         this.databaseService.updateCustomer(this.currentEditId,this.addCustomerForm.value).then(()=>{
           this.newMode = true;

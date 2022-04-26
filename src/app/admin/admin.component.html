@@ -1,35 +1,103 @@
-<div id="grid-wrapper">
-  <header>
-    <h2 id="header-heading">Agent Panel</h2>
-  </header>
-  <aside>
-    <ul id="sidebar-ul">
-      <li>
-        <a routerLink="/admin/dashboard" routerLinkActive="active" class="sidebar-li-a"><span uk-icon="icon: thumbnails" class="sidebar-icon"></span> Dashboard</a>
-      </li>
-      <li>
-        <a routerLink="/admin/profile" routerLinkActive="active" class="sidebar-li-a"><span uk-icon="icon: user" class="sidebar-icon"></span> Profile</a>
-      </li>
-      <li>
-        <a routerLink="/admin/broadcast" routerLinkActive="active" class="sidebar-li-a"><span uk-icon="icon: rss" class="sidebar-icon"></span> Broadcast</a>
-      </li>
-      <li>
-        <a routerLink="/admin/lead-center" routerLinkActive="active" class="sidebar-li-a"><span uk-icon="icon: folder" class="sidebar-icon"></span> Lead Center</a>
-      </li>
-      <li>
-        <a routerLink="/admin/customers" routerLinkActive="active" class="sidebar-li-a"><span uk-icon="icon: users" class="sidebar-icon"></span> Customers</a>
-      </li>
-      <li>
-        <a routerLink="/admin/properties" routerLinkActive="active" class="sidebar-li-a"><span uk-icon="icon: home" class="sidebar-icon"></span> Properties</a>
-      </li>
-      <li>
-        <a routerLink="/admin/responses" routerLinkActive="active" class="sidebar-li-a"><span uk-icon="icon: info" class="sidebar-icon"></span> Responses</a>
-      </li>
-      <li>
-        <a routerLink="/admin/visit-log" routerLinkActive="active" class="sidebar-li-a"><span uk-icon="icon:  pencil" class="sidebar-icon"></span> Visit Log</a>
-      </li>
-    </ul>
-  </aside>
+<header>
+  <button
+    *ngIf="!largeScreen"
+    class="uk-navbar-toggle"
+    uk-navbar-toggle-icon
+    id="toggle-button"
+    (click)="toggleSidebar()"
+  ></button>
+  <h2 id="header-heading">Agent {{ currentPanel }}</h2>
+</header>
+<div id="wrapper" (window:resize)="onWindowResize()">
+  <div
+    [style]="largeScreen || showSidebar ? '' : 'display: none'"
+    id="sidebar-container"
+  >
+    <aside id="sidebar">
+      <ul id="sidebar-ul">
+        <li>
+          <a
+            routerLink="/admin/dashboard"
+            routerLinkActive="active"
+            class="sidebar-li-a"
+            (click)="toggleSidebar()"
+            ><span uk-icon="icon: thumbnails" class="sidebar-icon"></span
+            ><span class="sidebar-text">Dashboard</span></a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/admin/profile"
+            routerLinkActive="active"
+            class="sidebar-li-a"
+            (click)="toggleSidebar()"
+            ><span uk-icon="icon: user" class="sidebar-icon"></span
+            ><span class="sidebar-text">Profile</span></a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/admin/broadcast"
+            routerLinkActive="active"
+            class="sidebar-li-a"
+            (click)="toggleSidebar()"
+            ><span uk-icon="icon: rss" class="sidebar-icon"></span
+            ><span class="sidebar-text">Broadcast</span></a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/admin/lead-center"
+            routerLinkActive="active"
+            class="sidebar-li-a"
+            (click)="toggleSidebar()"
+            ><span uk-icon="icon: folder" class="sidebar-icon"></span
+            ><span class="sidebar-text">Lead Center</span></a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/admin/customers"
+            routerLinkActive="active"
+            class="sidebar-li-a"
+            (click)="toggleSidebar()"
+            ><span uk-icon="icon: users" class="sidebar-icon"></span
+            ><span class="sidebar-text">Customers</span></a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/admin/properties"
+            routerLinkActive="active"
+            class="sidebar-li-a"
+            (click)="toggleSidebar()"
+            ><span uk-icon="icon: home" class="sidebar-icon"></span
+            ><span class="sidebar-text">Properties</span></a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/admin/responses"
+            routerLinkActive="active"
+            class="sidebar-li-a"
+            (click)="toggleSidebar()"
+            ><span uk-icon="icon: info" class="sidebar-icon"></span
+            ><span class="sidebar-text">Responses</span></a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="/admin/visit-log"
+            routerLinkActive="active"
+            class="sidebar-li-a"
+            (click)="toggleSidebar()"
+            ><span uk-icon="icon:  pencil" class="sidebar-icon"></span
+            ><span class="sidebar-text">Visit Log</span></a
+          >
+        </li>
+      </ul>
+    </aside>
+  </div>
   <main>
     <router-outlet></router-outlet>
   </main>

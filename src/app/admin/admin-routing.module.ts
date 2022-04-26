@@ -11,8 +11,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'dashboard',
-        // redirectTo: 'profile',
+        redirectTo: 'dashboard'
       },
       {
         path: 'dashboard',
@@ -52,6 +51,11 @@ const routes: Routes = [
         path: 'broadcast',
         loadChildren: () =>
           import('./broadcast/broadcast.module').then((m) => m.BroadcastModule),
+      },
+      {
+        path: 'responses',
+        loadChildren: () =>
+          import('./responses/responses.module').then((m) => m.ResponsesModule),
       },
     ],
   },

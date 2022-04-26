@@ -22,4 +22,5 @@ button:hover {
 
 button:disabled {
     opacity: .5;
+    cursor: no-drop;
 }

@@ -1,7 +1,8 @@
 <button
   type="button"
-  [attr.uk-toggle]="'target: ' + target"
-  [attr.uk-tooltip]="'title: ' + title"
+  [attr.uk-toggle]="target ? 'target: ' + target : ''"
+  [attr.uk-tooltip]="title ? 'title: ' + title : ''"
+  (click)="btnClick.emit()"
 >
   <span [attr.uk-icon]="'icon: ' + icon + '; ratio: 1.5'"></span>
 </button>

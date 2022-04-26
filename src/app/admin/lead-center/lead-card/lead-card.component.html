@@ -1,16 +1,58 @@
 <div id="card">
-  <h3>{{ name }}</h3>
-  <div id="key-values">
-    <p><span class="key">Budget: </span><span class="value">{{ budget }}</span></p>
-    <p><span class="key">Interested in: </span><span class="value">{{ interestedIn }}</span></p>
-    <p><span class="key">Preferred Locality: </span><span class="value">{{ preferredLocality }}</span></p>
-    <p><span class="key">Contact number: </span><span class="value">{{ contactNumber }}</span></p>
-    <p><span class="key">Job: </span><span class="value">{{ job }}</span></p>
-    <p><span class="key">Salary: </span><span class="value">{{ salary }}</span></p>
-    <p><span class="key">Other preferences: </span><span class="value">{{ otherPreferences }}</span></p>
+  <div id="top" (click)="expanded = !expanded" [style]="'border-radius: ' + (expanded ? '15px 15px 0 0' : '15px')">
+    <h3>{{ name }}</h3>
+    <button id="expand-collapse">
+      <span
+        [attr.uk-icon]="
+          'icon: triangle-' + (expanded ? 'up' : 'down') + '; ratio: 1.25'
+        "
+      ></span>
+    </button>
   </div>
-  <div id="buttons">
-      <app-primary-btn (btnClick)="edit()" [text]="'Edit'"></app-primary-btn>
-      <app-secondary-btn (btnClick)="delete()" [text]="'Delete'"></app-secondary-btn>
+  <div *ngIf="expanded" id="key-values">
+    <p>
+      <span class="key">Name: </span><span class="value">{{ name }}</span>
+    </p>
+    <p>
+      <span class="key">Phone: </span><span class="value">{{ number }}</span>
+    </p>
+    <p>
+      <span class="key">Email: </span><span class="value">{{ email }}</span>
+    </p>
+    <p>
+      <span class="key">Address: </span><span class="value">{{ address }}</span>
+    </p>
+    <p>
+      <span class="key">City: </span><span class="value">{{ city }}</span>
+    </p>
+    <p>
+      <span class="key">State: </span><span class="value">{{ state }}</span>
+    </p>
+    <p>
+      <span class="key">Pin Code: </span
+      ><span class="value">{{ pinCode }}</span>
+    </p>
+    <p>
+      <span class="key">Aadhar No.: </span
+      ><span class="value">{{ aadharNo }}</span>
+    </p>
+    <p>
+      <span class="key">PAN No.: </span><span class="value">{{ panNo }}</span>
+    </p>
+    <p>
+      <span class="key">Customer DOB: </span
+      ><span class="value">{{ customerDob }}</span>
+    </p>
+    <p>
+      <span class="key">Customer Anniversary: </span
+      ><span class="value">{{ customerAnniversary }}</span>
+    </p>
+  </div>
+  <div *ngIf="expanded" id="buttons">
+    <app-primary-btn [text]="'Edit'" (btnClick)="edit()"></app-primary-btn>
+    <app-secondary-btn
+      (btnClick)="delete()"
+      [text]="'Delete'"
+    ></app-secondary-btn>
   </div>
 </div>

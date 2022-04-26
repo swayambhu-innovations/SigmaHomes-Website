@@ -3,7 +3,7 @@
     <img src="../../../assets/img/Rectangle 643.png" alt="" id="cover" />
     <app-avatar
       [imgSrc]="dataProvider.userData?.photoURL || ''"
-      [altText]="'Mukesh Tomar'"
+      [altText]="dataProvider.userData?.displayName || 'N/A'"
     ></app-avatar>
   </div>
   <div *ngIf="!editMode" id="container">
@@ -14,15 +14,6 @@
           : "N/A"
       }}
     </h3>
-    <!-- <h4>Real Estate Agent (12 years experience)</h4> -->
-    <!-- <div id="rating">
-      <app-star-rating
-        [readonly]="true"
-        [rating]="3"
-        [max]="5"
-      ></app-star-rating>
-      <a href="" id="reviews">(300 reviews)</a>
-    </div> -->
     <div id="details">
       <p class="detail">
         <span class="key">Phone Number: </span>
@@ -127,16 +118,17 @@
     ></app-primary-btn>
   </div>
   <div *ngIf="editMode" id="container">
-    <p class="detail">
-      <label for="photo-input" class="key">Profile Photo: </label>
-      <input
-        type="file"
-        id="photo-input"
-        class="admin-input value"
-        (change)="uploadProfilePhoto($event)"
-      />
-    </p>
     <form [formGroup]="editForm" (ngSubmit)="saveEdit()" id="details">
+      <p class="detail">
+        <label for="photo-input" class="key">Profile Photo: </label>
+        <input
+          type="file"
+          id="photo-input"
+          class="admin-input value"
+          #photoInput
+          (change)="validateProfilePhoto()"
+        />
+      </p>
       <p class="detail">
         <label for="name-input" class="key">Name: </label>
         <input

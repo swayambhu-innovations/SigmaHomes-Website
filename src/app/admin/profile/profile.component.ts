@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { profile } from 'console';
 import { DataProvider } from 'src/app/providers/data.provider';
 import { DatabaseService } from 'src/app/services/database.service';
 import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
@@ -16,43 +17,51 @@ export class ProfileComponent implements OnInit {
     private databaseService: DatabaseService
   ) {}
 
+  @ViewChild('photoInput') photoInput: ElementRef;
   editMode: boolean = false;
 
   goToEditMode() {
     this.editMode = true;
   }
 
-  uploadProfilePhoto(event: any) {
-    const target = event.target;
-    const file = target.files[0];
+  validateProfilePhoto() {
+    const file = this.photoInput.nativeElement.files[0];
 
     if (!['image/png', 'image/jpg', 'image/jpeg'].includes(file.type)) {
       this.alertService.presentToast(
         'Your photo should either be in .png or .jpg'
       );
-      target.value = '';
-      return;
+      this.photoInput.nativeElement.value = '';
+      return false;
     }
+
     if (file.size > 100_000) {
       this.alertService.presentToast(
         "Your photo's size should not exceed 100 KB"
       );
-      target.value = '';
-      return;
+      this.photoInput.nativeElement.value = '';
+      return false;
     }
 
-    this.databaseService
-      .upload('users/' + this.dataProvider.userData?.userId, file)
-      .then((url: string) => {
-        this.databaseService
-          .updateUserImage(url, this.dataProvider.userData?.userId || '')
-          .then(() => {
-            this.alertService.presentToast('Image updated');
-          });
-      })
-      .catch((error) => {
-        this.alertService.presentToast(error);
-      });
+    return true;
+  }
+
+  uploadProfilePhoto() {
+    if (this.validateProfilePhoto()) {
+      const file = this.photoInput.nativeElement.files[0];
+      this.databaseService
+        .upload('users/' + this.dataProvider.userData?.userId, file)
+        .then((url: string) => {
+          this.databaseService
+            .updateUserImage(url, this.dataProvider.userData?.userId || '')
+            .then(() => {
+              this.alertService.presentToast('Image updated');
+            });
+        })
+        .catch((error) => {
+          this.alertService.presentToast(error);
+        });
+    }
   }
 
   editForm: FormGroup = new FormGroup({
@@ -80,8 +89,15 @@ export class ProfileComponent implements OnInit {
 
   saveEdit() {
     if (confirm('Are you sure?') && this.editForm.valid) {
+      if (this.photoInput.nativeElement.files.length == 1) {
+        this.uploadProfilePhoto();
+      }
       this.editMode = false;
-      this.databaseService.updateUserData(this.editForm.value, this.dataProvider.userData!.userId);
+      this.databaseService
+        .updateUserData(this.editForm.value, this.dataProvider.userData!.userId)
+        .then(() => {
+          this.alertService.presentToast('Profile updated successfully');
+        });
     } else {
       this.alertService.presentToast('Your name is required');
     }

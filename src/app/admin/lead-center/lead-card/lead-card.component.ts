@@ -1,4 +1,4 @@
-import { Component,EventEmitter , OnInit, Input, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-lead-card',
@@ -7,21 +7,31 @@ import { Component,EventEmitter , OnInit, Input, Output } from '@angular/core';
 })
 export class LeadCardComponent implements OnInit {
   @Input() name: string = '';
-  @Input() budget: string = '';
-  @Input() interestedIn: string = '';
-  @Input() preferredLocality: string = '';
-  @Input() contactNumber: string = '';
-  @Input() job: string = '';
-  @Input() salary: string = '';
-  @Input() otherPreferences: string = '';
+  @Input() number: string = '';
+  @Input() email: string = '';
+  @Input() address: string = '';
+  @Input() city: string = '';
+  @Input() state: string = '';
+  @Input() pinCode: string = '';
+  @Input() aadharNo: string = '';
+  @Input() panNo: string = '';
+  @Input() customerDob: string = '';
+  @Input() customerAnniversary: string = '';
+
   @Output() onEdit: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<any> = new EventEmitter();
+
+  expanded: boolean = false;
+
   constructor() {}
-  edit(){
+
+  edit() {
     this.onEdit.emit();
   }
-  delete(){
+  
+  delete() {
     this.onDelete.emit();
   }
+  
   ngOnInit(): void {}
 }

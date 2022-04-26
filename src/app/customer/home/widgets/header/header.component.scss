@@ -3,167 +3,112 @@ header {
   top: 0;
   width: 100%;
   z-index: 1;
-}
 
-nav {
-  padding: 1em 2em;
-  height: fit-content;
-}
+  nav {
+    padding: 1em 2em;
+    height: fit-content;
 
-#heading {
-  font-size: var(--xlarge);
-  color: var(--secondary);
-  font-weight: 700;
-  font-family: var(--font-three);
-}
+    #heading {
+      font-size: var(--xlarge);
+      color: var(--secondary);
+      font-weight: 700;
+      font-family: var(--font-three);
+    }
+  }
 
-.nav-link {
-  font-size: var(--medium);
-  text-transform: unset;
-  font-family: var(--font-three);
-  min-height: unset;
-  transition: all 0.5s;
-  color: var(--secondary);
-  opacity: 0.5;
-}
+  .nav-link {
+    font-family: var(--font-three);
+    color: var(--secondary);
+    font-size: var(--medium);
+    text-transform: unset;
+    background: none;
+    border: none;
+    opacity: 0.5;
+    cursor: pointer;
+    margin: 0 0.75em;
+    transition: all 0.5s;
+  }
 
-.nav-link:hover,
-.nav-link:focus {
-  opacity: 1;
-}
+  .nav-link:hover,
+  .nav-link:focus {
+    opacity: 1;
+  }
 
-#login {
-  color: var(--tertiary);
-  font-size: var(--medium);
-  font-family: var(--font-three);
-  display: block;
-  border-radius: 25px;
-  padding: 0.5em 1.25em;
-  color: var(--secondary);
-  margin-right: 0.5em;
-  transition: all 0.5s;
-}
+  .active {
+    opacity: 1;
+    border-bottom: 2px solid var(--secondary);
+    padding-bottom: 0.5em;
+  }
 
-#login:hover,
-#login:focus {
-  filter: opacity(0.5);
-}
+  #header-buttons {
+    display: flex;
 
-.nav-link2 {
-  font-size: var(--medium);
-  text-transform: unset;
-  transition: all 0.5s;
-  font-family: var(--font-three);
-  min-height: unset;
-  color: var(--tertiary);
-}
+    .header-button {
+      font-family: var(--font-three);
+      font-size: var(--medium);
+      display: block;
+      border-radius: 25px;
+      padding: 0.5em 1.25em;
+      margin-right: 0.5em;
+      border: none;
+      cursor: pointer;
+      transition: all 0.5s;
+    }
 
-.nav-link2:hover,
-.nav-link2:focus {
-  color: var(--primary);
-}
+    #login,
+    #logout {
+      color: var(--secondary);
+      background: none;
+    }
 
-#login2,
-#signup2 {
-  font-size: var(--medium);
-  text-transform: unset;
-  transition: all 0.5s;
-  font-family: var(--font-three);
-  min-height: unset;
-}
+    #login:hover,
+    #login:focus,
+    #logout:hover,
+    #logout:focus {
+      filter: opacity(0.5);
+    }
 
-#signup,
-#logout {
-    color: var(--tertiary);
-}
+    #signup,
+    #admin {
+      color: var(--secondary-contrast);
+      background: var(--secondary);
+    }
 
-.active {
-  opacity: 1;
-}
-
-.active2,
-#login2:hover,
-#signup2:hover,
-#signup2:focus {
-  color: var(--primary);
-}
-
-.active {
-  border-bottom: 2px solid var(--secondary);
-  padding-bottom: 0.5em;
-}
-
-.active2 {
-  border-bottom: 2px solid var(--primary);
-}
-
-#signup,
-#logout,
-#login2,
-#signup2 {
-  font-size: var(--medium);
-  transition: all 0.5s;
-  font-family: var(--font-three);
-  display: block;
-}
-
-#signup,
-#logout {
-  border-radius: 25px;
-  padding: 0.5em 1.25em;
-}
-
-#login2,
-#signup2 {
-  padding: 5px 0;
-  color: #000;
-}
-
-#signup:hover,
-#login2:hover,
-#logout:hover,
-#signup2:hover,
-#signup:focus,
-#signup2:focus,
-#logout:focus {
-  text-decoration: none;
-}
-
-#signup:hover,
-#signup:focus,
-#logout:hover,
-#logout:focus {
-  box-shadow: var(--normal-shadow);
-}
-
-#signup,
-#logout {
-  background-color: var(--secondary);
-  color: var(--secondary-contrast);
-  border: none;
-  font-size: inherit;
-}
-
-#toggle-button {
-  display: none;
-  color: var(--secondary);
-  min-height: unset;
-}
-
-#offcanvas-bar {
-  background-color: #fff;
-  box-shadow: var(--normal-shadow);
-}
-
-@media (max-width: 950px) {
-  .uk-navbar-center,
-  #login,
-  #signup,
-  #logout {
-    display: none;
+    #signup:hover,
+    #signup:focus,
+    #admin:hover,
+    #admin:focus {
+      box-shadow: var(--normal-shadow);
+    }
   }
 
   #toggle-button {
-    display: block;
+    color: var(--secondary);
+    min-height: unset;
+  }
+
+  #offcanvas-bar {
+    background-color: var(--secondary);
+    box-shadow: var(--normal-shadow);
+
+    .nav-link2 {
+      font-family: var(--font-three);
+      color: var(--secondary-contrast);
+      font-size: var(--medium);
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      margin: 0;
+      padding: 0.5em 0.25em;
+      transition: all 0.5s;
+    }
+
+    .nav-link2:hover,
+    .nav-link2:focus,
+    .active2 {
+      border-bottom: 2px solid var(--primary);
+    }
   }
 }

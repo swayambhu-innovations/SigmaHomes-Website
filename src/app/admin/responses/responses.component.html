@@ -1,0 +1,225 @@
+<section *ngIf="!viewResponseDetails" id="responses">
+  <div id="cards">
+    <app-property-info-card
+      *ngFor="let response of responses; let i = index"
+      [id]="response.id"
+      [propertyImgSrc]="response.propertyImgSrc"
+      [propertyName]="response.propertyName"
+      [customerName]="response.customerName"
+      [customerImgSrc]="response.customerImgSrc"
+      [time]="response.time"
+      [date]="response.date"
+      [badge]="response.badge"
+      (cardClick)="loadResponseDetails(i)"
+    ></app-property-info-card>
+  </div>
+  <app-fab
+    icon="plus"
+    title="Add New Response"
+    target="#add-response-modal"
+  ></app-fab>
+</section>
+
+<div id="add-response-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Add New Response</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form [formGroup]="addResponseForm" (ngSubmit)="addResponse()">
+      <div id="search-in-leads">
+        <div id="search-lead-input-container">
+          <input
+            type="text"
+            class="admin-input"
+            placeholder="Search in Leads"
+          />
+          <span uk-icon="icon: search; ratio: 1.25"></span>
+        </div>
+        <div id="leads-container">
+          <input type="hidden" formControlName="lead" #leadInput />
+          <div id="leads">
+            <button
+              [class]="
+                'lead' + (leadInput.value == 'customer1' ? ' selected' : '')
+              "
+              (click)="leadInput.value = 'customer1'"
+            >
+              <img
+                src="../../../assets/img/customer-sample-1.png"
+                alt="Manohar Singh"
+              />
+              <p>Manohar Singh</p>
+            </button>
+            <button
+              [class]="
+                'lead' + (leadInput.value == 'customer2' ? ' selected' : '')
+              "
+              (click)="leadInput.value = 'customer2'"
+            >
+              <img
+                src="../../../assets/img/customer-sample-2.png"
+                alt="Manohar Singh"
+              />
+              <p>Raghab Mishra</p>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="search-property">
+        <input type="hidden" formControlName="property" #propertyInput />
+        <div id="search-property-input-container">
+          <input
+            type="text"
+            class="admin-input"
+            placeholder="Search Property"
+          />
+          <span uk-icon="icon: search; ratio: 1.25"></span>
+        </div>
+        <div id="search-property-container">
+          <img
+            src="../../../assets/img/unsplash_4ojhpgKpS68.png"
+            alt="4 BHK, Sky Heights"
+            id="search-property-img"
+          />
+          <div id="search-property-details">
+            <h4>4 BHK, Sky Heights</h4>
+            <p id="search-address">Near Town Hall, Jaypur</p>
+            <p>Area: 12548 (Sq Ft)</p>
+            <p>Price: 1 Crore</p>
+            <app-secondary-btn [text]="'Select Property'"></app-secondary-btn>
+          </div>
+        </div>
+      </div>
+      <div id="phase-radio">
+        <label>Phase</label>
+        <input type="hidden" formControlName="phase" #phaseInput />
+        <div id="phase-btns">
+          <button class="phase-btn" (click)="selectPhase($event, 'stageOne')">
+            Query
+          </button>
+          <button class="phase-btn" (click)="selectPhase($event, 'stageTwo')">
+            Visitation
+          </button>
+          <button class="phase-btn" (click)="selectPhase($event, 'stageThree')">
+            Negotiation
+          </button>
+          <button class="phase-btn" (click)="selectPhase($event, 'stageFour')">
+            Legalization
+          </button>
+          <button class="phase-btn" (click)="selectPhase($event, 'stageFive')">
+            Closure
+          </button>
+        </div>
+      </div>
+      <div id="phase-note">
+        <input
+          type="text"
+          class="admin-input"
+          placeholder="Add a note as per current phase"
+        />
+      </div>
+      <app-primary-btn
+        text="Add Response"
+        [disabled]="!addResponseForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>
+
+<section *ngIf="viewResponseDetails" id="response-details" #responseDetails>
+  <div id="property-customer-details">
+    <div id="property-container">
+      <img
+        [src]="responses[curResponse].propertyImgSrc"
+        [alt]="responses[curResponse].propertyName"
+      />
+      <div id="property-details">
+        <h4>{{ responses[curResponse].propertyName }}</h4>
+        <p id="address">{{ responses[curResponse].address }}</p>
+        <p>Area: {{ responses[curResponse].area }}</p>
+        <p>Price: {{ responses[curResponse].price }}</p>
+      </div>
+    </div>
+    <div id="customer-container">
+      <img
+        [src]="responses[curResponse].customerImgSrc"
+        [alt]="responses[curResponse].customerName"
+      />
+      <div id="customer-details">
+        <h4>{{ responses[curResponse].customerName }}</h4>
+        <p id="phone">{{ responses[curResponse].phone }}</p>
+      </div>
+    </div>
+  </div>
+  <div id="stepper-wrapper">
+    <div
+      [class]="
+        'stepper-item ' +
+        (stageChecker(responses[curResponse].phase) >= 1 ? 'completed' : '')
+      "
+    >
+      <div class="step-counter"></div>
+      <div class="step-name">Query</div>
+    </div>
+    <div
+      [class]="
+        'stepper-item ' +
+        (stageChecker(responses[curResponse].phase) >= 2 ? 'completed' : '')
+      "
+    >
+      <div class="step-counter"></div>
+      <div class="step-name">Visitation</div>
+    </div>
+    <div
+      [class]="
+        'stepper-item ' +
+        (stageChecker(responses[curResponse].phase) >= 3 ? 'completed' : '')
+      "
+    >
+      <div class="step-counter"></div>
+      <div class="step-name">Negotiation</div>
+    </div>
+    <div
+      [class]="
+        'stepper-item ' +
+        (stageChecker(responses[curResponse].phase) >= 4 ? 'completed' : '')
+      "
+    >
+      <div class="step-counter"></div>
+      <div class="step-name">Legalization</div>
+    </div>
+    <div
+      [class]="
+        'stepper-item ' +
+        (stageChecker(responses[curResponse].phase) >= 5 ? 'completed' : '')
+      "
+    >
+      <div class="step-counter"></div>
+      <div class="step-name">Closure</div>
+    </div>
+  </div>
+  <ul uk-tab>
+    <li><a href="#" (click)="activePhaseTab = 'stageOne'">Query</a></li>
+    <li><a href="#" (click)="activePhaseTab = 'stageTwo'">Visitation</a></li>
+    <li><a href="#" (click)="activePhaseTab = 'stageThree'">Negotiation</a></li>
+    <li class="uk-active">
+      <a href="#" (click)="activePhaseTab = 'stageFour'">Legalization</a>
+    </li>
+    <li class="uk-disabled">
+      <a href="#" (click)="activePhaseTab = 'stageFive'">Closure</a>
+    </li>
+  </ul>
+  <div id="notes">
+    <div
+      *ngFor="let note of responses[curResponse].phases[activePhaseTab]"
+      class="note"
+    >
+      <p class="date">{{ note.date }}</p>
+      <p class="description">{{ note.description }}</p>
+    </div>
+  </div>
+  <app-fab
+    [icon]="'arrow-left'"
+    [title]="'Go back'"
+    (btnClick)="viewResponseDetails = false"
+  ></app-fab>
+</section>

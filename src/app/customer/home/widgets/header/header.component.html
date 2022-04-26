@@ -1,123 +1,159 @@
 <header>
-  <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar>
+  <nav
+    class="uk-navbar-container uk-navbar-transparent"
+    uk-navbar
+    (window:resize)="onWindowResize()"
+  >
     <div
       class="uk-navbar-left"
-      uk-scrollspy="cls: uk-animation-scale-up; repeat: true"
+      uk-scrollspy="cls: uk-animation-scale-up"
       id="heading"
     >
       Sigma Homes
     </div>
-    <div class="uk-navbar-center">
+
+    <div *ngIf="largeScreen" class="uk-navbar-center">
       <ul
         class="uk-navbar-nav"
-        uk-scrollspy="target: > li; cls: uk-animation-slide-left-small; delay: 150; repeat: true"
+        uk-scrollspy="target: > li; cls: uk-animation-slide-left-small; delay: 150"
       >
         <li>
-          <a href="" class="nav-link{{ active == 'home' ? ' active' : '' }}"
-            >Home</a
-          >
+          <button class="nav-link" routerLink="" routerLinkActive="active">
+            Home
+          </button>
         </li>
         <li>
-          <a href="" class="nav-link{{ active == 'about' ? ' active' : '' }}"
-            >About</a
-          >
+          <button class="nav-link" routerLink="/about" routerLinkActive="active">
+            About
+          </button>
         </li>
         <li>
-          <a href="" class="nav-link{{ active == 'projects' ? ' active' : '' }}"
-            >Projects</a
+          <button
+            class="nav-link"
+            routerLink="/projects"
+            routerLinkActive="active"
           >
+            Projects
+          </button>
         </li>
         <li>
-          <a href="" class="nav-link{{ active == 'contact' ? ' active' : '' }}"
-            >Contact</a
+          <button
+            class="nav-link"
+            routerLink="/contact"
+            routerLinkActive="active"
           >
+            Contact
+          </button>
         </li>
       </ul>
     </div>
-    <div *ngIf="!dataProvider.loggedIn" class="uk-navbar-right">
+
+    <div class="uk-navbar-right">
+      <div *ngIf="largeScreen && !dataProvider.loggedIn" id="header-buttons">
+        <button
+          routerLink="/login"
+          class="header-button"
+          id="login"
+          uk-scrollspy="cls: uk-animation-fade"
+        >
+          Login
+        </button>
+        <button
+          routerLink="/signup"
+          class="header-button"
+          id="signup"
+          uk-scrollspy="cls: uk-animation-fade"
+        >
+          Sign Up
+        </button>
+      </div>
+
+      <div *ngIf="largeScreen && dataProvider.loggedIn" id="header-buttons">
+        <button
+          id="logout"
+          class="header-button"
+          uk-scrollspy="cls: uk-animation-fade"
+          (click)="authService.logout()"
+        >
+          Logout
+        </button>
+        <button
+          *ngIf="this.dataProvider.userData?.access?.access != 'Unassigned'"
+          routerLink="/admin"
+          id="admin"
+          class="header-button"
+          uk-scrollspy="cls: uk-animation-fade"
+        >
+          Admin
+        </button>
+      </div>
+
       <button
-        routerLink="../login"
-        id="login"
-        uk-scrollspy="cls: uk-animation-fade; repeat: true"
-      >
-        Login
-      </button>
-      <button
-        routerLink="../signup"
-        id="signup"
-        uk-scrollspy="cls: uk-animation-fade; repeat: true"
-      >
-        Sign Up
-      </button>
-      <a
+        *ngIf="!largeScreen"
         class="uk-navbar-toggle"
         uk-navbar-toggle-icon
-        href=""
         uk-toggle="target: #offcanvas-nav"
         id="toggle-button"
-      ></a>
+        uk-scrollspy="cls: uk-animation-fade"
+      ></button>
     </div>
-    <div *ngIf="dataProvider.loggedIn" class="uk-navbar-right">
-      <button
-        id="login"
-        uk-scrollspy="cls: uk-animation-fade; repeat: true"
-        (click)="authService.logout()"
-      >
-        Logout
-      </button>
-      <button
-        *ngIf="this.dataProvider.userData?.access?.access != 'Unassigned'"
-        routerLink="../admin"
-        id="signup"
-        uk-scrollspy="cls: uk-animation-fade; repeat: true"
-      >
-        Admin
-      </button>
-      <a
-        class="uk-navbar-toggle"
-        uk-navbar-toggle-icon
-        href=""
-        uk-toggle="target: #offcanvas-nav"
-        id="toggle-button"
-      ></a>
-    </div>
+
     <div
+      *ngIf="!largeScreen"
       id="offcanvas-nav"
-      uk-offcanvas="overlay: true; flip: true; mode: slide"
+      uk-offcanvas="overlay: true; flip: true"
     >
       <div class="uk-offcanvas-bar" id="offcanvas-bar">
         <ul class="uk-nav">
           <li>
-            <a href="" class="nav-link2{{ active == 'home' ? ' active2' : '' }}"
-              >Home</a
-            >
+            <button class="nav-link2" routerLink="" routerLinkActive="active2">
+              Home
+            </button>
           </li>
           <li>
-            <a
-              href=""
-              class="nav-link2{{ active == 'about' ? ' active2' : '' }}"
-              >About</a
+            <button
+              class="nav-link2"
+              routerLink="/about"
+              routerLinkActive="active2"
             >
+              About
+            </button>
           </li>
           <li>
-            <a
-              href=""
-              class="nav-link2{{ active == 'projects' ? ' active2' : '' }}"
-              >Projects</a
+            <button
+              class="nav-link2"
+              routerLink="/projects"
+              routerLinkActive="active2"
             >
+              Projects
+            </button>
           </li>
           <li>
-            <a
-              href=""
-              class="nav-link2{{ active == 'contact' ? ' active2' : '' }}"
-              >Contact</a
+            <button
+              class="nav-link2"
+              routerLink="/contact"
+              routerLinkActive="active2"
             >
+              Contact
+            </button>
+          </li>
+          <li *ngIf="!dataProvider.loggedIn">
+            <button class="nav-link2" routerLink="/login">
+              Login
+            </button>
+          </li>
+          <li *ngIf="!dataProvider.loggedIn">
+            <button class="nav-link2" routerLink="/signup">Sign Up</button>
+          </li>
+          <li *ngIf="dataProvider.loggedIn">
+            <button class="nav-link2" (click)="authService.logout()">
+              Logout
+            </button>
+          </li>
+          <li *ngIf="dataProvider.loggedIn">
+            <button class="nav-link2" routerLink="/admin">Admin</button>
           </li>
         </ul>
-        <div id="offcanvas-btns">
-          <a href="login" id="login2">Login</a>
-          <a href="" id="signup2">Sign Up</a>
-        </div>
       </div>
     </div>
   </nav>

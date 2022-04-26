@@ -1,5 +1,7 @@
 <section>
-  <table class="uk-table uk-table-hover uk-table-middle uk-table-justify uk-table-striped">
+  <table
+    class="uk-table uk-table-hover uk-table-middle uk-table-justify uk-table-striped"
+  >
     <thead>
       <tr>
         <th>ID</th>
@@ -12,166 +14,303 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let customer of customers; let i = index" [attr.data-index]="i">
-        <td>&nbsp;&nbsp;{{i+1}}&nbsp;&nbsp;</td>
-        <td>{{customer.name}}</td>
-        <td>{{customer.email}}</td>
-        <td>{{customer.phone}}</td>
-        <td>{{customer.bookingDate}}</td>
-        <td>{{customer.propertyType}}</td>
+      <tr
+        *ngFor="let customer of customers; let i = index"
+        [attr.data-index]="i"
+      >
+        <td>&nbsp;&nbsp;{{ i + 1 }}&nbsp;&nbsp;</td>
+        <td>{{ customer.name }}</td>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>{{ customer.bookingDate }}</td>
+        <td>{{ customer.propertyType }}</td>
         <td>
-          <button (click)="viewCustomer(customer)" class="uk-button uk-button-secondary">
+          <button
+            (click)="viewCustomer(customer)"
+            class="uk-button uk-button-secondary"
+          >
             View <span uk-icon="icon: info"></span>
           </button>
-          <button class="uk-button uk-button-primary" (click)="editCustomer(customer)">Edit <span uk-icon="file-edit"></span></button>
-          <button class="uk-button uk-button-danger" (click)="deleteCustomer(customer)">Delete <span uk-icon="trash"></span></button>
+          <button
+            class="uk-button uk-button-primary"
+            (click)="editCustomer(customer)"
+          >
+            Edit <span uk-icon="file-edit"></span>
+          </button>
+          <button
+            class="uk-button uk-button-danger"
+            (click)="deleteCustomer(customer)"
+          >
+            Delete <span uk-icon="trash"></span>
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
-  <app-fab [icon]="'plus'" [target]="'#add-customer-modal'" [title]="'Add New Customer'"></app-fab>
-  <div id="add-customer-modal" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body">
-      <h2 class="uk-modal-title">Add New Customer</h2>
-      <button class="uk-modal-close-default" type="button" uk-close></button>
-      <form [formGroup]="addCustomerForm" (ngSubmit)="submitAddCustomerForm()">
-        <input type="text" name="name" id="name-input" class="admin-input" placeholder="Name" formControlName="name" />
-        <input type="tel" name="phone" id="phone-input" class="admin-input" placeholder="Phone Number"
-          formControlName="phone" />
-        <input type="email" name="email" id="email-input" class="admin-input" placeholder="Email"
-          formControlName="email" />
-        <div class="date">
-          <label for="booking-date-input">Booking date</label>
-          <input formControlName="bookingDate" type="date" name="booking-date" id="booking-date-input"
-            class="admin-input" />
-        </div>
-        <input type="text" name="project-name" id="project-name-input" class="admin-input" placeholder="Project Name"
-          formControlName="projectName" />
-        <input type="text" name="unit-no" id="unit-no-input" class="admin-input" placeholder="Unit No."
-          formControlName="unitNo" />
-        <input type="text" name="property-type" id="property-type-input" class="admin-input" placeholder="Property Type"
-          formControlName="propertyType" />
-        <input type="text" name="company-sales" id="company-sales-input" class="admin-input"
-          placeholder="Company Sales Value" formControlName="companySalesValue" />
-        <input type="text" name="sales-value" id="sales-value-input" class="admin-input" placeholder="Sales Value"
-          formControlName="salesValue" />
-        <input type="text" name="advance-value" id="advance-value-input" class="admin-input" placeholder="Advance Value"
-          formControlName="advanceValue" />
-        <input type="text" name="finance-details" id="finance-details-input" class="admin-input"
-          placeholder="Finance Details" formControlName="financeDetails" />
-        <input type="text" name="payment-mode" id="payment-mode-input" class="admin-input" placeholder="Payment Mode"
-          formControlName="paymentMode" />
-        <input type="text" name="job-type" id="job-type-input" class="admin-input" placeholder="Job Type"
-          formControlName="jobType" />
-        <input type="text" name="company-name" id="company-name-input" class="admin-input" placeholder="Name of Company"
-          formControlName="companyName" />
-        <input type="text" name="monthly-salary" id="monthly-salary-input" class="admin-input"
-          placeholder="Monthly Salary" formControlName="monthlySalary" />
-        <input type="text" name="firm-name" id="firm-name-input" class="admin-input" placeholder="Name of Firm"
-          formControlName="firmName" />
-        <input type="text" name="year-of-establishment" id="year-of-establishment-input" class="admin-input"
-          placeholder="Year of Establishment" formControlName="yearOfEstablishment" />
-        <input type="text" name="income-as-per-itr" id="income-as-per-itr-input" class="admin-input"
-          placeholder="Income as per ITR" formControlName="incomeAsPerITR" />
-        <input type="text" name="itr-status" id="itr-status-input" class="admin-input" placeholder="ITR Status"
-          formControlName="itrStatus" />
-        <app-primary-btn [text]="newMode ? 'Add Customer' : 'Update Details'"></app-primary-btn>
-      </form>
-      <img src="../../../assets/img/add-customer-modal-img.png" id="modal-img" />
-    </div>
-  </div>
-  <div id="see-customer-modal" uk-modal>
-    <!-- see customer modal -->
-    <div class="uk-modal-dialog uk-modal-body">
-      <h2 class="uk-modal-title">Add New Customer</h2>
-      <button class="uk-modal-close-default" type="button" uk-close></button>
-      <table class="uk-table uk-table-hover uk-table-middle uk-table-justify uk-table-striped;uk-overflow-auto">
-        <thead>
-          <tr>
-            <th>Field</th> 
-            <th>Detail</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Name</td>
-            <td>{{currentViewCustomer?.name}}</td>
-          </tr>
-          <tr>
-            <td>Phone</td>
-            <td>{{currentViewCustomer?.phone}}</td>
-          </tr>
-          <tr>
-            <td>Email</td>
-            <td>{{currentViewCustomer?.email}}</td>
-          </tr>
-          <tr>
-            <td>Booking Date</td>
-            <td>{{currentViewCustomer?.bookingDate}}</td>
-          </tr>
-          <tr>
-            <td>Project Name</td>
-            <td>{{currentViewCustomer?.projectName}}</td>
-          </tr>
-          <tr>
-            <td>Unit No.</td>
-            <td>{{currentViewCustomer?.unitNo}}</td>
-          </tr>
-          <tr>
-            <td>Property Type</td>
-            <td>{{currentViewCustomer?.propertyType}}</td>
-          </tr>
-          <tr>
-            <td>Company Sales Value</td>
-            <td>{{currentViewCustomer?.companySalesValue}}</td>
-          </tr>
-          <tr>
-            <td>Sales Value</td>
-            <td>{{currentViewCustomer?.salesValue}}</td>
-          </tr>
-          <tr>
-            <td>Advance Value</td>
-            <td>{{currentViewCustomer?.advanceValue}}</td>
-          </tr>
-          <tr>
-            <td>Finance Details</td>
-            <td>{{currentViewCustomer?.financeDetails}}</td>
-          </tr>
-          <tr>
-            <td>Payment Mode</td>
-            <td>{{currentViewCustomer?.paymentMode}}</td>
-
-          </tr>
-          <tr>
-            <td>Job Type</td>
-            <td>{{currentViewCustomer?.jobType}}</td>
-          </tr>
-          <tr>
-            <td>Company Name</td>
-            <td>{{currentViewCustomer?.companyName}}</td>
-          </tr>
-          <tr>
-            <td>Monthly Salary</td>
-            <td>{{currentViewCustomer?.monthlySalary}}</td>
-          </tr>
-          <tr>
-            <td>Firm Name</td>
-            <td>{{currentViewCustomer?.firmName}}</td>
-          </tr>
-          <tr>
-            <td>Year of Establishment</td>
-            <td>{{currentViewCustomer?.yearOfEstablishment}}</td>
-          </tr>
-          <tr>
-            <td>Income as per ITR</td>
-            <td>{{currentViewCustomer?.incomeAsPerITR}}</td>
-          </tr>
-          <tr>
-            <td>ITR Status</td>
-            <td>{{currentViewCustomer?.itrStatus}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+  <app-fab
+    [icon]="'plus'"
+    [target]="'#add-customer-modal'"
+    [title]="'Add New Customer'"
+  ></app-fab>
 </section>
+<div id="add-customer-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Add New Customer</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form [formGroup]="addCustomerForm" (ngSubmit)="submitAddCustomerForm()">
+      <input
+        type="text"
+        name="name"
+        id="name-input"
+        class="admin-input"
+        placeholder="Name"
+        formControlName="name"
+      />
+      <input
+        type="tel"
+        name="phone"
+        id="phone-input"
+        class="admin-input"
+        placeholder="Phone Number"
+        formControlName="phone"
+      />
+      <input
+        type="email"
+        name="email"
+        id="email-input"
+        class="admin-input"
+        placeholder="Email"
+        formControlName="email"
+      />
+      <div class="date">
+        <label for="booking-date-input">Booking date</label>
+        <input
+          formControlName="bookingDate"
+          type="date"
+          name="booking-date"
+          id="booking-date-input"
+          class="admin-input"
+        />
+      </div>
+      <input
+        type="text"
+        name="project-name"
+        id="project-name-input"
+        class="admin-input"
+        placeholder="Project Name"
+        formControlName="projectName"
+      />
+      <input
+        type="text"
+        name="unit-no"
+        id="unit-no-input"
+        class="admin-input"
+        placeholder="Unit No."
+        formControlName="unitNo"
+      />
+      <input
+        type="text"
+        name="property-type"
+        id="property-type-input"
+        class="admin-input"
+        placeholder="Property Type"
+        formControlName="propertyType"
+      />
+      <input
+        type="text"
+        name="company-sales"
+        id="company-sales-input"
+        class="admin-input"
+        placeholder="Company Sales Value"
+        formControlName="companySalesValue"
+      />
+      <input
+        type="text"
+        name="sales-value"
+        id="sales-value-input"
+        class="admin-input"
+        placeholder="Sales Value"
+        formControlName="salesValue"
+      />
+      <input
+        type="text"
+        name="advance-value"
+        id="advance-value-input"
+        class="admin-input"
+        placeholder="Advance Value"
+        formControlName="advanceValue"
+      />
+      <input
+        type="text"
+        name="finance-details"
+        id="finance-details-input"
+        class="admin-input"
+        placeholder="Finance Details"
+        formControlName="financeDetails"
+      />
+      <input
+        type="text"
+        name="payment-mode"
+        id="payment-mode-input"
+        class="admin-input"
+        placeholder="Payment Mode"
+        formControlName="paymentMode"
+      />
+      <input
+        type="text"
+        name="job-type"
+        id="job-type-input"
+        class="admin-input"
+        placeholder="Job Type"
+        formControlName="jobType"
+      />
+      <input
+        type="text"
+        name="company-name"
+        id="company-name-input"
+        class="admin-input"
+        placeholder="Name of Company"
+        formControlName="companyName"
+      />
+      <input
+        type="text"
+        name="monthly-salary"
+        id="monthly-salary-input"
+        class="admin-input"
+        placeholder="Monthly Salary"
+        formControlName="monthlySalary"
+      />
+      <input
+        type="text"
+        name="firm-name"
+        id="firm-name-input"
+        class="admin-input"
+        placeholder="Name of Firm"
+        formControlName="firmName"
+      />
+      <input
+        type="text"
+        name="year-of-establishment"
+        id="year-of-establishment-input"
+        class="admin-input"
+        placeholder="Year of Establishment"
+        formControlName="yearOfEstablishment"
+      />
+      <input
+        type="text"
+        name="income-as-per-itr"
+        id="income-as-per-itr-input"
+        class="admin-input"
+        placeholder="Income as per ITR"
+        formControlName="incomeAsPerITR"
+      />
+      <input
+        type="text"
+        name="itr-status"
+        id="itr-status-input"
+        class="admin-input"
+        placeholder="ITR Status"
+        formControlName="itrStatus"
+      />
+      <app-primary-btn
+        [text]="newMode ? 'Add Customer' : 'Update Details'"
+      ></app-primary-btn>
+    </form>
+    <img src="../../../assets/img/add-customer-modal-img.png" id="modal-img" />
+  </div>
+</div>
+<div id="see-customer-modal" uk-modal>
+  <!-- see customer modal -->
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Add New Customer</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <table
+      class="uk-table uk-table-hover uk-table-middle uk-table-justify uk-table-striped;uk-overflow-auto"
+    >
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Detail</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Name</td>
+          <td>{{ currentViewCustomer?.name }}</td>
+        </tr>
+        <tr>
+          <td>Phone</td>
+          <td>{{ currentViewCustomer?.phone }}</td>
+        </tr>
+        <tr>
+          <td>Email</td>
+          <td>{{ currentViewCustomer?.email }}</td>
+        </tr>
+        <tr>
+          <td>Booking Date</td>
+          <td>{{ currentViewCustomer?.bookingDate }}</td>
+        </tr>
+        <tr>
+          <td>Project Name</td>
+          <td>{{ currentViewCustomer?.projectName }}</td>
+        </tr>
+        <tr>
+          <td>Unit No.</td>
+          <td>{{ currentViewCustomer?.unitNo }}</td>
+        </tr>
+        <tr>
+          <td>Property Type</td>
+          <td>{{ currentViewCustomer?.propertyType }}</td>
+        </tr>
+        <tr>
+          <td>Company Sales Value</td>
+          <td>{{ currentViewCustomer?.companySalesValue }}</td>
+        </tr>
+        <tr>
+          <td>Sales Value</td>
+          <td>{{ currentViewCustomer?.salesValue }}</td>
+        </tr>
+        <tr>
+          <td>Advance Value</td>
+          <td>{{ currentViewCustomer?.advanceValue }}</td>
+        </tr>
+        <tr>
+          <td>Finance Details</td>
+          <td>{{ currentViewCustomer?.financeDetails }}</td>
+        </tr>
+        <tr>
+          <td>Payment Mode</td>
+          <td>{{ currentViewCustomer?.paymentMode }}</td>
+        </tr>
+        <tr>
+          <td>Job Type</td>
+          <td>{{ currentViewCustomer?.jobType }}</td>
+        </tr>
+        <tr>
+          <td>Company Name</td>
+          <td>{{ currentViewCustomer?.companyName }}</td>
+        </tr>
+        <tr>
+          <td>Monthly Salary</td>
+          <td>{{ currentViewCustomer?.monthlySalary }}</td>
+        </tr>
+        <tr>
+          <td>Firm Name</td>
+          <td>{{ currentViewCustomer?.firmName }}</td>
+        </tr>
+        <tr>
+          <td>Year of Establishment</td>
+          <td>{{ currentViewCustomer?.yearOfEstablishment }}</td>
+        </tr>
+        <tr>
+          <td>Income as per ITR</td>
+          <td>{{ currentViewCustomer?.incomeAsPerITR }}</td>
+        </tr>
+        <tr>
+          <td>ITR Status</td>
+          <td>{{ currentViewCustomer?.itrStatus }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

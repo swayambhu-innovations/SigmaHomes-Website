@@ -1,18 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-fab',
   templateUrl: './fab.component.html',
-  styleUrls: ['./fab.component.scss']
+  styleUrls: ['./fab.component.scss'],
 })
 export class FabComponent implements OnInit {
   @Input() icon: string = '';
   @Input() target: string = '';
   @Input() title: string = '';
 
-  constructor() { }
+  @Output() btnClick: EventEmitter<any> = new EventEmitter();
 
-  ngOnInit(): void {
-  }
+  constructor() {}
 
+  ngOnInit(): void {}
 }

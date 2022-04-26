@@ -1,21 +1,85 @@
 <section>
   <div id="properties">
-    <app-property-card *ngFor="let item of properties" [imageSrc]="item.image" [heading]="item.name" [price]="item.price" [address]="item.address" [area]="item.area+' sqft'"
-      [rating]="item.rating"></app-property-card>
+    <app-property-card
+      *ngFor="let item of properties"
+      [imageSrc]="item.image"
+      [heading]="item.name"
+      [price]="item.price"
+      [address]="item.address"
+      [area]="item.area + ' sqft'"
+      [rating]="item.rating"
+    ></app-property-card>
   </div>
-  <app-fab [icon]="'plus'" [target]="'#add-properties-modal'" [title]="'Add New Property'"></app-fab>
+  <app-fab
+    [icon]="'plus'"
+    [target]="'#add-properties-modal'"
+    [title]="'Add New Property'"
+  ></app-fab>
 </section>
 <div id="add-properties-modal" uk-modal>
   <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Add New Property</h2>
     <button class="uk-modal-close-default" type="button" uk-close></button>
     <h2 class="uk-modal-title"></h2>
     <form [formGroup]="propertyForm" (ngSubmit)="submitForm()">
-      <div><label>Property Name</label><input type="text" formControlName="name"></div>
-      <div><label>Image</label><input type="file" (change)="imageValue = $event" formControlName="image"></div>
-      <div><label>Price</label><input type="number" formControlName="price"></div>
-      <div><label>Area (sqft)</label><input type="number" formControlName="area"></div>
-      <div><label>Address</label><textarea type="text" formControlName="address"></textarea></div>
-      <button>Submit</button>
+      <input
+        type="file"
+        class="admin-input"
+        placeholder="Image"
+        formControlName="image"
+        (change)="imageValue = $event"
+      />
+      <input
+        type="text"
+        class="admin-input"
+        placeholder="Property Name"
+        formControlName="name"
+      />
+      <input
+        type="text"
+        class="admin-input"
+        placeholder="Plot/Flat/Villa No."
+        formControlName="plotNo"
+      />
+      <input
+        type="number"
+        class="admin-input"
+        placeholder="Plot Area (sqft)"
+        formControlName="plotArea"
+      />
+      <input
+        type="number"
+        class="admin-input"
+        placeholder="Flat Area (sqft)"
+        formControlName="flatArea"
+      />
+      <input
+        type="text"
+        class="admin-input"
+        placeholder="Flat Type"
+        formControlName="flatType"
+      />
+      <input
+        type="text"
+        name="company-sales"
+        id="company-sales-input"
+        class="admin-input"
+        placeholder="Company Sales Value"
+        formControlName="companySalesValue"
+      />
+      <input
+        type="text"
+        class="admin-input"
+        placeholder="Company Accepted Rate"
+        formControlName="companyAcceptedRate"
+      />
+      <input
+        type="text"
+        class="admin-input"
+        placeholder="Company Accepted Value"
+        formControlName="companyAcceptedValue"
+      />
+      <app-primary-btn [text]="'Add Property'"></app-primary-btn>
     </form>
   </div>
 </div>

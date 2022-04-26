@@ -5,14 +5,20 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  @Input() active: string = '';
+  breakpoint: number = 950;
 
-  constructor(public dataProvider: DataProvider, public authService: AuthenticationService) { }
-
-  ngOnInit(): void {
+  largeScreen: boolean = window.innerWidth > this.breakpoint;
+  onWindowResize() {
+    this.largeScreen = window.innerWidth > this.breakpoint;
   }
 
+  constructor(
+    public dataProvider: DataProvider,
+    public authService: AuthenticationService
+  ) {}
+
+  ngOnInit(): void {}
 }
