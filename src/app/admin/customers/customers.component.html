@@ -1,316 +1,328 @@
 <section>
-  <table
-    class="uk-table uk-table-hover uk-table-middle uk-table-justify uk-table-striped"
-  >
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Booking Date</th>
-        <th>Property Type</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let customer of customers; let i = index"
-        [attr.data-index]="i"
-      >
-        <td>&nbsp;&nbsp;{{ i + 1 }}&nbsp;&nbsp;</td>
-        <td>{{ customer.name }}</td>
-        <td>{{ customer.email }}</td>
-        <td>{{ customer.phone }}</td>
-        <td>{{ customer.bookingDate }}</td>
-        <td>{{ customer.propertyType }}</td>
-        <td>
-          <button
-            (click)="viewCustomer(customer)"
-            class="uk-button uk-button-secondary"
-          >
-            View <span uk-icon="icon: info"></span>
-          </button>
-          <button
-            class="uk-button uk-button-primary"
-            (click)="editCustomer(customer)"
-          >
-            Edit <span uk-icon="file-edit"></span>
-          </button>
-          <button
-            class="uk-button uk-button-danger"
-            (click)="deleteCustomer(customer)"
-          >
-            Delete <span uk-icon="trash"></span>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <p *ngIf="customers.length < 1" id="no-customers">No customers :(</p>
+  <ul *ngIf="customers.length >= 1">
+    <li *ngFor="let customer of customers; let i = index" [attr.data-index]="i">
+      <div class="image-and-name">
+        <img *ngIf="customer.img" [src]="customer.img" [alt]="customer.name" />
+        <p>{{ customer.name }}</p>
+      </div>
+      <div class="buttons">
+        <app-primary-btn
+          icon="info"
+          text="View"
+          (btnClick)="viewCustomer(customer)"
+        ></app-primary-btn>
+        <app-secondary-btn
+          icon="pencil"
+          text="Edit"
+          (btnClick)="editCustomer(customer)"
+        ></app-secondary-btn>
+        <app-secondary-btn
+          icon="trash"
+          text="Delete"
+          (btnClick)="deleteCustomer(customer)"
+        ></app-secondary-btn>
+      </div>
+    </li>
+  </ul>
+
   <app-fab
     [icon]="'plus'"
-    [target]="'#add-customer-modal'"
+    [target]="'#edit-or-add-customer-modal'"
     [title]="'Add New Customer'"
   ></app-fab>
 </section>
-<div id="add-customer-modal" uk-modal>
+
+<div id="view-customer-modal" uk-modal>
   <div class="uk-modal-dialog uk-modal-body">
-    <h2 class="uk-modal-title">Add New Customer</h2>
+    <div id="current-customer-image-and-name">
+      <img
+        *ngIf="currentViewCustomer?.img"
+        [src]="currentViewCustomer.img"
+        [alt]="currentViewCustomer.name"
+        id="current-customer-img"
+      />
+      <h2 class="uk-modal-title">{{ currentViewCustomer?.name }}</h2>
+    </div>
     <button class="uk-modal-close-default" type="button" uk-close></button>
-    <form [formGroup]="addCustomerForm" (ngSubmit)="submitAddCustomerForm()">
-      <input
-        type="text"
-        name="name"
-        id="name-input"
-        class="admin-input"
-        placeholder="Name"
-        formControlName="name"
-      />
-      <input
-        type="tel"
-        name="phone"
-        id="phone-input"
-        class="admin-input"
-        placeholder="Phone Number"
-        formControlName="phone"
-      />
-      <input
-        type="email"
-        name="email"
-        id="email-input"
-        class="admin-input"
-        placeholder="Email"
-        formControlName="email"
-      />
-      <div class="date">
-        <label for="booking-date-input">Booking date</label>
-        <input
-          formControlName="bookingDate"
-          type="date"
-          name="booking-date"
-          id="booking-date-input"
-          class="admin-input"
-        />
+    <div id="details">
+      <div class="detail">
+        <p class="key">Name</p>
+        <p class="value">{{ currentViewCustomer?.name }}</p>
       </div>
-      <input
-        type="text"
-        name="project-name"
-        id="project-name-input"
-        class="admin-input"
-        placeholder="Project Name"
-        formControlName="projectName"
-      />
-      <input
-        type="text"
-        name="unit-no"
-        id="unit-no-input"
-        class="admin-input"
-        placeholder="Unit No."
-        formControlName="unitNo"
-      />
-      <input
-        type="text"
-        name="property-type"
-        id="property-type-input"
-        class="admin-input"
-        placeholder="Property Type"
-        formControlName="propertyType"
-      />
-      <input
-        type="text"
-        name="company-sales"
-        id="company-sales-input"
-        class="admin-input"
-        placeholder="Company Sales Value"
-        formControlName="companySalesValue"
-      />
-      <input
-        type="text"
-        name="sales-value"
-        id="sales-value-input"
-        class="admin-input"
-        placeholder="Sales Value"
-        formControlName="salesValue"
-      />
-      <input
-        type="text"
-        name="advance-value"
-        id="advance-value-input"
-        class="admin-input"
-        placeholder="Advance Value"
-        formControlName="advanceValue"
-      />
-      <input
-        type="text"
-        name="finance-details"
-        id="finance-details-input"
-        class="admin-input"
-        placeholder="Finance Details"
-        formControlName="financeDetails"
-      />
-      <input
-        type="text"
-        name="payment-mode"
-        id="payment-mode-input"
-        class="admin-input"
-        placeholder="Payment Mode"
-        formControlName="paymentMode"
-      />
-      <input
-        type="text"
-        name="job-type"
-        id="job-type-input"
-        class="admin-input"
-        placeholder="Job Type"
-        formControlName="jobType"
-      />
-      <input
-        type="text"
-        name="company-name"
-        id="company-name-input"
-        class="admin-input"
-        placeholder="Name of Company"
-        formControlName="companyName"
-      />
-      <input
-        type="text"
-        name="monthly-salary"
-        id="monthly-salary-input"
-        class="admin-input"
-        placeholder="Monthly Salary"
-        formControlName="monthlySalary"
-      />
-      <input
-        type="text"
-        name="firm-name"
-        id="firm-name-input"
-        class="admin-input"
-        placeholder="Name of Firm"
-        formControlName="firmName"
-      />
-      <input
-        type="text"
-        name="year-of-establishment"
-        id="year-of-establishment-input"
-        class="admin-input"
-        placeholder="Year of Establishment"
-        formControlName="yearOfEstablishment"
-      />
-      <input
-        type="text"
-        name="income-as-per-itr"
-        id="income-as-per-itr-input"
-        class="admin-input"
-        placeholder="Income as per ITR"
-        formControlName="incomeAsPerITR"
-      />
-      <input
-        type="text"
-        name="itr-status"
-        id="itr-status-input"
-        class="admin-input"
-        placeholder="ITR Status"
-        formControlName="itrStatus"
-      />
-      <app-primary-btn
-        [text]="newMode ? 'Add Customer' : 'Update Details'"
-      ></app-primary-btn>
-    </form>
-    <img src="../../../assets/img/add-customer-modal-img.png" id="modal-img" />
+      <div class="detail">
+        <p class="key">Phone Number</p>
+        <p class="value">{{ currentViewCustomer?.phone || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Email Address</p>
+        <p class="value">{{ currentViewCustomer?.email || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Booking Date</p>
+        <p class="value">{{ currentViewCustomer?.bookingDate || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Project Name</p>
+        <p class="value">{{ currentViewCustomer?.projectName || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Unit No.</p>
+        <p class="value">{{ currentViewCustomer?.unitNo || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Property Type</p>
+        <p class="value">{{ currentViewCustomer?.propertyType || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Company Sales Value</p>
+        <p class="value">
+          {{ currentViewCustomer?.companySalesValue || "N/A" }}
+        </p>
+      </div>
+      <div class="detail">
+        <p class="key">Sales Value</p>
+        <p class="value">{{ currentViewCustomer?.salesValue || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Advance Value</p>
+        <p class="value">{{ currentViewCustomer?.advanceValue || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Finance Details</p>
+        <p class="value">{{ currentViewCustomer?.financeDetails || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Payment Mode</p>
+        <p class="value">{{ currentViewCustomer?.paymentMode || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Job Type</p>
+        <p class="value">{{ currentViewCustomer?.jobType || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Company Name</p>
+        <p class="value">{{ currentViewCustomer?.companyName || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Monthly Salary</p>
+        <p class="value">{{ currentViewCustomer?.monthlySalary || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Firm Name</p>
+        <p class="value">{{ currentViewCustomer?.firmName || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Year of Establishment</p>
+        <p class="value">
+          {{ currentViewCustomer?.yearOfEstablishment || "N/A" }}
+        </p>
+      </div>
+      <div class="detail">
+        <p class="key">Income as per ITR</p>
+        <p class="value">{{ currentViewCustomer?.incomeAsPerITR || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">ITR Status</p>
+        <p class="value">{{ currentViewCustomer?.itrStatus || "N/A" }}</p>
+      </div>
+    </div>
   </div>
 </div>
-<div id="see-customer-modal" uk-modal>
-  <!-- see customer modal -->
+
+<div id="edit-or-add-customer-modal" uk-modal>
   <div class="uk-modal-dialog uk-modal-body">
-    <h2 class="uk-modal-title">Add New Customer</h2>
+    <h2 *ngIf="editMode" class="uk-modal-title">Edit Customer Details</h2>
+    <h2 *ngIf="!editMode" class="uk-modal-title">Add New Customer</h2>
     <button class="uk-modal-close-default" type="button" uk-close></button>
-    <table
-      class="uk-table uk-table-hover uk-table-middle uk-table-justify uk-table-striped;uk-overflow-auto"
-    >
-      <thead>
-        <tr>
-          <th>Field</th>
-          <th>Detail</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Name</td>
-          <td>{{ currentViewCustomer?.name }}</td>
-        </tr>
-        <tr>
-          <td>Phone</td>
-          <td>{{ currentViewCustomer?.phone }}</td>
-        </tr>
-        <tr>
-          <td>Email</td>
-          <td>{{ currentViewCustomer?.email }}</td>
-        </tr>
-        <tr>
-          <td>Booking Date</td>
-          <td>{{ currentViewCustomer?.bookingDate }}</td>
-        </tr>
-        <tr>
-          <td>Project Name</td>
-          <td>{{ currentViewCustomer?.projectName }}</td>
-        </tr>
-        <tr>
-          <td>Unit No.</td>
-          <td>{{ currentViewCustomer?.unitNo }}</td>
-        </tr>
-        <tr>
-          <td>Property Type</td>
-          <td>{{ currentViewCustomer?.propertyType }}</td>
-        </tr>
-        <tr>
-          <td>Company Sales Value</td>
-          <td>{{ currentViewCustomer?.companySalesValue }}</td>
-        </tr>
-        <tr>
-          <td>Sales Value</td>
-          <td>{{ currentViewCustomer?.salesValue }}</td>
-        </tr>
-        <tr>
-          <td>Advance Value</td>
-          <td>{{ currentViewCustomer?.advanceValue }}</td>
-        </tr>
-        <tr>
-          <td>Finance Details</td>
-          <td>{{ currentViewCustomer?.financeDetails }}</td>
-        </tr>
-        <tr>
-          <td>Payment Mode</td>
-          <td>{{ currentViewCustomer?.paymentMode }}</td>
-        </tr>
-        <tr>
-          <td>Job Type</td>
-          <td>{{ currentViewCustomer?.jobType }}</td>
-        </tr>
-        <tr>
-          <td>Company Name</td>
-          <td>{{ currentViewCustomer?.companyName }}</td>
-        </tr>
-        <tr>
-          <td>Monthly Salary</td>
-          <td>{{ currentViewCustomer?.monthlySalary }}</td>
-        </tr>
-        <tr>
-          <td>Firm Name</td>
-          <td>{{ currentViewCustomer?.firmName }}</td>
-        </tr>
-        <tr>
-          <td>Year of Establishment</td>
-          <td>{{ currentViewCustomer?.yearOfEstablishment }}</td>
-        </tr>
-        <tr>
-          <td>Income as per ITR</td>
-          <td>{{ currentViewCustomer?.incomeAsPerITR }}</td>
-        </tr>
-        <tr>
-          <td>ITR Status</td>
-          <td>{{ currentViewCustomer?.itrStatus }}</td>
-        </tr>
-      </tbody>
-    </table>
+
+    <form [formGroup]="customerForm" (ngSubmit)="submitCustomerForm()">
+      <div class="customer-form-box">
+        <label for="photo-input"
+          >{{ editMode ? "Change" : "" }}Profile Photo:
+        </label>
+        <input
+          type="file"
+          id="photo-input"
+          class="admin-input value"
+          #photoInput
+          (change)="validateProfilePhoto()"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="name-input">Name</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="name-input"
+          formControlName="name"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="phone-input">Phone number</label>
+        <input
+          type="tel"
+          class="admin-input"
+          id="phone-input"
+          formControlName="phone"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="email-input">Email address</label>
+        <input
+          type="email"
+          class="admin-input"
+          id="email-input"
+          formControlName="email"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="booking-date-input">Booking date</label>
+        <input
+          type="date"
+          class="admin-input"
+          id="booking-date-input"
+          formControlName="bookingDate"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="project-name-input">Project Name</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="project-name-input"
+          formControlName="projectName"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="unit-no-input">Unit No.</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="unit-no-input"
+          formControlName="unitNo"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="property-type-input">Property Type</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="property-type-input"
+          formControlName="propertyType"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="company-sales-input">Company Sales Value</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="company-sales-input"
+          formControlName="companySalesValue"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="sales-value-input">Sales Value</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="sales-value-input"
+          formControlName="salesValue"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="advance-value-input">Advance Value</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="advance-value-input"
+          formControlName="advanceValue"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="finance-details-input">Finance Details</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="finance-details-input"
+          formControlName="financeDetails"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="payment-mode-input">Payment Mode</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="payment-mode-input"
+          formControlName="paymentMode"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="job-type-input">Job Type</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="job-type-input"
+          formControlName="jobType"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="company-name-input">Company Name</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="company-name-input"
+          formControlName="companyName"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="monthly-salary-input">Monthly Salary</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="monthly-salary-input"
+          formControlName="monthlySalary"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="firm-name-input">Firm Name</label>
+        <input
+          type="text"
+          id="firm-name-input"
+          class="admin-input"
+          formControlName="firmName"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="year-of-establishment-input">Year of Establishment</label>
+        <input
+          type="text"
+          id="year-of-establishment-input"
+          class="admin-input"
+          formControlName="yearOfEstablishment"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="income-as-per-itr-input">Income as per ITR</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="income-as-per-itr-input"
+          formControlName="incomeAsPerITR"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="itr-status-input">ITR Status</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="itr-status-input"
+          formControlName="itrStatus"
+        />
+      </div>
+      <app-primary-btn
+        [text]="editMode ? 'Update Details' : 'Add Customer'"
+      ></app-primary-btn>
+    </form>
   </div>
 </div>

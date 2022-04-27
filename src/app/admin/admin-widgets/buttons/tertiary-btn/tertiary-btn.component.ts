@@ -3,16 +3,15 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-tertiary-btn',
   templateUrl: './tertiary-btn.component.html',
-  styleUrls: ['../buttons.scss', './tertiary-btn.component.scss']
+  styleUrls: ['../buttons.scss', './tertiary-btn.component.scss'],
 })
 export class TertiaryBtnComponent implements OnInit {
+  @Input() icon: string = '';
   @Input() text: string = '';
   @Input() disabled: boolean = false;
   @Output() btnClick: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

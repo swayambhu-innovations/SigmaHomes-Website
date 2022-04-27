@@ -1,5 +1,6 @@
 button {
-    display: block;
+    display: flex;
+    align-items: center;
     background-color: transparent;
     color: var(--primary);
     width: 100%;
@@ -9,9 +10,15 @@ button {
     border-radius: 7px;
     padding: .5em 1em;
     font-size: var(--medium);
-    font-family: var(--font-two);
+    font-family: var(--font-three);
     cursor: pointer;
     transition: all .5s;
+    display: flex;
+    justify-content: center;
+
+    span {
+        margin-right: .25em;
+    }
 }
 
 button:hover {

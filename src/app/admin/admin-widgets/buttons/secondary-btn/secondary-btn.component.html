@@ -1,4 +1,4 @@
 <button (click)="this.btnClick.emit()" [disabled]="disabled">
-    {{ text }}
-  </button>
-  
+  <span *ngIf="icon != ''" [attr.uk-icon]="icon"></span>
+  {{ text }}
+</button>
