@@ -9,17 +9,17 @@
       <div class="buttons">
         <app-primary-btn
           icon="info"
-          text="View"
+          title="View"
           (btnClick)="viewCustomer(customer)"
         ></app-primary-btn>
         <app-secondary-btn
           icon="pencil"
-          text="Edit"
+          title="Edit"
           (btnClick)="editCustomer(customer)"
         ></app-secondary-btn>
         <app-secondary-btn
           icon="trash"
-          text="Delete"
+          title="Delete"
           (btnClick)="deleteCustomer(customer)"
         ></app-secondary-btn>
       </div>
@@ -139,7 +139,7 @@
     <form [formGroup]="customerForm" (ngSubmit)="submitCustomerForm()">
       <div class="customer-form-box">
         <label for="photo-input"
-          >{{ editMode ? "Change" : "" }}Profile Photo:
+          >{{ editMode ? "Change " : "" }}Profile Photo:
         </label>
         <input
           type="file"

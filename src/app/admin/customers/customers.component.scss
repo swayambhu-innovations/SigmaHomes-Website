@@ -25,6 +25,7 @@ section {
       margin: 0 0 1em 0;
       padding: 0.5em;
       border-radius: 15px;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
       transition: all 0.5s;
 
       .image-and-name {
@@ -55,6 +56,16 @@ section {
           margin: 0 0.25em;
         }
       }
+
+      @media (max-width: 550px) {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0 0 0.5em 0;
+
+        .buttons {
+          margin-top: 0.5em;
+        }
+      }
     }
 
     li:hover {
@@ -65,12 +76,12 @@ section {
 }
 
 .uk-modal-body {
-  width: 70vw;
+  width: min(90vw, 1000px);
   padding: 2em;
 
   .uk-modal-title {
     font-family: var(--font-three);
-    font-size: var(--xxlarge);
+    font-size: var(--xlarge);
     color: var(--tertiary);
     margin: 0;
   }
@@ -87,8 +98,8 @@ section {
     align-items: center;
 
     #current-customer-img {
-      width: 90px;
-      height: 90px;
+      width: 70px;
+      height: 70px;
       object-fit: cover;
       border-radius: 50%;
       margin-right: 1em;
@@ -106,20 +117,40 @@ section {
       font-family: var(--font-three);
       font-size: var(--medium);
       color: var(--tertiary);
-    }
 
-    p,
-    label,
-    input {
-      margin: 0.25em 0;
-      width: 50%;
-      word-wrap: break-word;
-    }
+      p,
+      label,
+      input {
+        margin: 0.25em 0;
+        min-width: 50%;
+        word-wrap: break-word;
+      }
 
-    .key,
-    label {
-      margin-right: 1em;
-      font-weight: 700;
+      input {
+        min-width: none;
+        width: 50%;
+      }
+
+      .key,
+      label {
+        margin-right: 1em;
+        font-weight: 700;
+      }
+
+      @media (max-width: 650px) {
+        flex-direction: column;
+
+        p,
+        label,
+        input {
+          width: 100%;
+        }
+
+        .key,
+        label {
+          margin-right: 0;
+        }
+      }
     }
 
     app-primary-btn {
