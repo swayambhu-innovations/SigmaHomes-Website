@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataProvider } from 'src/app/providers/data.provider';
 import { DatabaseService } from 'src/app/services/database.service';
@@ -10,11 +10,10 @@ declare const UIkit: any;
   styleUrls: ['./properties.component.scss'],
 })
 export class PropertiesComponent implements OnInit {
-  constructor(
-    private dataProvider: DataProvider,
-    private databaseService: DatabaseService,
-    private alertify: AlertsAndNotificationsService
-  ) {}
+  properties: any[] = [];
+  imageValue: any;
+
+  @ViewChild('photoInput') photoInput: ElementRef;
 
   propertyForm: FormGroup = new FormGroup({
     image: new FormControl(null, [Validators.required]),
@@ -28,19 +27,13 @@ export class PropertiesComponent implements OnInit {
     companyAcceptedValue: new FormControl('', [Validators.required]),
   });
 
-  properties: any[] = [];
-  imageValue: any;
+  constructor(
+    private dataProvider: DataProvider,
+    private databaseService: DatabaseService,
+    private alertify: AlertsAndNotificationsService
+  ) {}
 
-  ngOnInit(): void {
-    this.databaseService.getProperties().subscribe((data: any) => {
-      this.properties = [];
-      data.forEach((element: any) => {
-        this.properties.push(element.data());
-      });
-    });
-  }
-
-  submitForm() {
+  submitPropertyForm() {
     if (confirm('Are you sure ?') && this.propertyForm.valid) {
       if (
         this.imageValue.target.files[0].size < 1000_000 &&
@@ -70,7 +63,7 @@ export class PropertiesComponent implements OnInit {
               })
               .finally(() => {
                 UIkit.modal(
-                  document.getElementById('add-properties-modal')
+                  document.getElementById('add-property-modal')
                 ).hide();
               });
           });
@@ -84,5 +77,14 @@ export class PropertiesComponent implements OnInit {
     } else {
       this.alertify.presentToast('Please Fill All Fields');
     }
+  }
+
+  ngOnInit(): void {
+    this.databaseService.getProperties().subscribe((data: any) => {
+      this.properties = [];
+      data.forEach((element: any) => {
+        this.properties.push(element.data());
+      });
+    });
   }
 }

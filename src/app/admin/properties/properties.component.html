@@ -1,84 +1,110 @@
 <section>
   <div id="properties">
     <app-property-card
-      *ngFor="let item of properties"
-      [imageSrc]="item.image"
-      [heading]="item.name"
-      [price]="item.price"
-      [address]="item.address"
-      [area]="item.area + ' sqft'"
-      [rating]="item.rating"
+      *ngFor="let property of properties"
+      [imageSrc]="property.image"
+      [heading]="property.name"
+      [price]="property.price"
+      [address]="property.address"
+      [area]="property.area + ' sqft'"
+      [rating]="property.rating"
     ></app-property-card>
   </div>
   <app-fab
     [icon]="'plus'"
-    [target]="'#add-properties-modal'"
+    [target]="'#add-property-modal'"
     [title]="'Add New Property'"
   ></app-fab>
 </section>
-<div id="add-properties-modal" uk-modal>
+
+<div id="add-property-modal" uk-modal>
   <div class="uk-modal-dialog uk-modal-body">
     <h2 class="uk-modal-title">Add New Property</h2>
     <button class="uk-modal-close-default" type="button" uk-close></button>
-    <h2 class="uk-modal-title"></h2>
-    <form [formGroup]="propertyForm" (ngSubmit)="submitForm()">
-      <input
-        type="file"
-        class="admin-input"
-        placeholder="Image"
-        formControlName="image"
-        (change)="imageValue = $event"
-      />
-      <input
-        type="text"
-        class="admin-input"
-        placeholder="Property Name"
-        formControlName="name"
-      />
-      <input
-        type="text"
-        class="admin-input"
-        placeholder="Plot/Flat/Villa No."
-        formControlName="plotNo"
-      />
-      <input
-        type="number"
-        class="admin-input"
-        placeholder="Plot Area (sqft)"
-        formControlName="plotArea"
-      />
-      <input
-        type="number"
-        class="admin-input"
-        placeholder="Flat Area (sqft)"
-        formControlName="flatArea"
-      />
-      <input
-        type="text"
-        class="admin-input"
-        placeholder="Flat Type"
-        formControlName="flatType"
-      />
-      <input
-        type="text"
-        name="company-sales"
-        id="company-sales-input"
-        class="admin-input"
-        placeholder="Company Sales Value"
-        formControlName="companySalesValue"
-      />
-      <input
-        type="text"
-        class="admin-input"
-        placeholder="Company Accepted Rate"
-        formControlName="companyAcceptedRate"
-      />
-      <input
-        type="text"
-        class="admin-input"
-        placeholder="Company Accepted Value"
-        formControlName="companyAcceptedValue"
-      />
+
+    <form [formGroup]="propertyForm" (ngSubmit)="submitPropertyForm()">
+      <div class="property-form-box">
+        <label for="image-input">Property Photo</label>
+        <input
+          type="file"
+          class="admin-input"
+          id="image-input"
+          formControlName="image"
+          (change)="imageValue = $event"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="name-input">Name</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="name-input"
+          formControlName="name"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="plot-input">Plot/Flat/Villa No.</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="plot-input"
+          formControlName="plotNo"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="plot-area-input">Plot Area (sqft)</label>
+        <input
+          type="number"
+          class="admin-input"
+          id="plot-area-input"
+          formControlName="plotArea"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="flat-area-input">Flat Area (sqft)</label>
+        <input
+          type="number"
+          class="admin-input"
+          id="flat-area-input"
+          formControlName="flatArea"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="flat-type-input">Flat Type</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="flat-type-input"
+          formControlName="flatType"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="company-sales-input">Company Sales Value</label>
+        <input
+          type="text"
+          id="company-sales-input"
+          class="admin-input"
+          formControlName="companySalesValue"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="company-accepted-rate-input">Company Accepted Rate</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="company-accepted-rate-input"
+          formControlName="companyAcceptedRate"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="company-accepted-value-input">Company Accepted Value</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="company-accepted-value-input"
+          formControlName="companyAcceptedValue"
+        />
+      </div>
       <app-primary-btn [text]="'Add Property'"></app-primary-btn>
     </form>
   </div>

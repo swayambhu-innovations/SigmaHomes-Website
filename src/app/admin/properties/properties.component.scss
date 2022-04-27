@@ -1,59 +1,95 @@
 section {
-    position: relative;
-}
+  position: relative;
 
-#properties {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 1em;
-}
+  #properties {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1em;
 
-app-property-card {
-  width: 30%;
-  margin: 1em;
-}
-#add-properties-modal {
-  .uk-modal-dialog {
-    height: auto;
+    app-property-card {
+      width: 19%;
+      margin: 0.5em;
 
-    .uk-modal-title {
-      font-family: var(--font-three);
-      font-size: var(--xlarge);
-      color: var(--tertiary);
+      @media (max-width: 2040px) {
+        width: 23%;
+      }
+
+      @media (max-width: 1500px) {
+        width: 31%;
+      }
+
+      @media (max-width: 850px) {
+        width: 47%;
+      }
+
+      @media (max-width: 570px) {
+        width: 100%;
+      }
     }
+  }
+}
 
-    form {
+.uk-modal-body {
+  width: min(90vw, 1000px);
+  padding: 2em;
+
+  .uk-modal-title {
+    font-family: var(--font-three);
+    font-size: var(--xlarge);
+    color: var(--tertiary);
+    margin: 0;
+  }
+
+  .uk-modal-close-default {
+    background-color: var(--secondary);
+    color: var(--secondary-contrast);
+    border-radius: 50%;
+    padding: 0.5em;
+  }
+
+  form {
+    margin-top: 1em;
+
+    .property-form-box {
+      display: flex;
+      align-items: baseline;
+      font-family: var(--font-three);
       font-size: var(--medium);
-      height: auto;
-      div {
-        display: flex;
-        justify-content: space-between;
-        height: 30px;
-        width: auto;
-        margin-top: 10px;
-        input,
-        textarea {
-          font-size: var(--medium);
-          width: 300px;
-          border: none;
-          border-bottom: 2px solid var(--secondary);
+      color: var(--tertiary);
+      margin-bottom: .5em;
+
+      label,
+      input {
+        word-wrap: break-word;
+      }
+
+      label {
+        margin-right: 1em;
+        font-weight: 700;
+        min-width: 50%;
+      }
+
+      input {
+        width: 50%;
+      }
+
+      @media (max-width: 650px) {
+        flex-direction: column;
+
+        label,
+        input {
+          width: 100%;
+        }
+
+        label {
+          margin-right: 0;
         }
       }
-      button {
-        margin-top: 20px;
-        background: var(--secondary);
-        font-size: var(--medium);
-        height: 40px;
-        width: auto;
-        padding: 10px;
-        border: none;
-        border-radius: 7px;
-        color: white;
-        left: 50%;
-        position: relative;
-        transform: translateX(-50%);
-      }
+    }
+
+    app-primary-btn {
+      display: block;
+      margin-top: 1.5em;
     }
   }
 }
