@@ -1,12 +1,14 @@
 <section>
-  <div id="properties">
+  <p *ngIf="properties.length < 1" id="no-properties">No properties :(</p>
+
+  <div *ngIf="properties.length >= 1" id="properties">
     <app-property-card
       *ngFor="let property of properties"
       [imageSrc]="property.image"
       [heading]="property.name"
-      [price]="property.price"
-      [address]="property.address"
-      [area]="property.area + ' sqft'"
+      [price]="property.companySalesValue"
+      [address]="property.plotNo"
+      [area]="property.plotArea + ' sqft'"
       [rating]="property.rating"
     ></app-property-card>
   </div>

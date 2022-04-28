@@ -4,8 +4,15 @@
   padding: 1em;
 
   app-property-info-card {
-    width: 45%;
-    margin: 1em;
+    width: 40%;
+    max-width: 400px;
+    flex-grow: 1;
+    margin: .5em;
+
+    @media (max-width: 900px) {
+      width: 25%;
+      min-width: 250px;
+    }
   }
 }
 
@@ -148,7 +155,7 @@
         font-family: var(--font-three);
         background: none;
         border: none;
-        padding: 1em
+        padding: 1em;
       }
 
       .phase-btn:last-of-type {

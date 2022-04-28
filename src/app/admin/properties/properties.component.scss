@@ -1,5 +1,17 @@
 section {
   position: relative;
+  width: 100%;
+  height: 100%;
+
+  #no-properties {
+    font-family: var(--font-three);
+    font-size: var(--large);
+    color: var(--secondary);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
   #properties {
     display: flex;
@@ -56,7 +68,7 @@ section {
       font-family: var(--font-three);
       font-size: var(--medium);
       color: var(--tertiary);
-      margin-bottom: .5em;
+      margin-bottom: 0.5em;
 
       label,
       input {
