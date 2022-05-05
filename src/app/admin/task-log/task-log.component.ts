@@ -1,16 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-responses',
-  templateUrl: './responses.component.html',
-  styleUrls: [
-    './responses.component.scss',
-    './response-details.component.scss',
-  ],
+  selector: 'app-task-log',
+  templateUrl: './task-log.component.html',
+  styleUrls: ['./task-log.component.scss', './task-log-details.component.scss'],
 })
-export class ResponsesComponent implements OnInit {
-  responses: any[] = [
+export class TaskLogComponent implements OnInit {
+  taskLogs: any[] = [
     {
       id: 1,
       propertyImgSrc: '../../../../assets/img/unsplash_4ojhpgKpS68.png',
@@ -474,13 +471,13 @@ export class ResponsesComponent implements OnInit {
       },
     },
   ];
+
   curResponse: number = -1;
   activePhaseTab: string = '';
-  viewResponseDetails: boolean = false;
+  viewTaskLogDetails: boolean = false;
 
-  addResponseForm: FormGroup = new FormGroup({
-    lead: new FormControl('', [Validators.required]),
-    phase: new FormControl('', [Validators.required]),
+  addLogForm: FormGroup = new FormGroup({
+    responseId: new FormControl('', [Validators.required]),
     property: new FormControl('', [Validators.required]),
   });
 
@@ -491,10 +488,10 @@ export class ResponsesComponent implements OnInit {
 
   constructor() {}
 
-  loadResponseDetails(index: number) {
-    this.viewResponseDetails = true;
+  loadTaskLogDetails(index: number) {
+    this.viewTaskLogDetails = true;
     this.curResponse = index;
-    this.activePhaseTab = this.responses[index].phase;
+    this.activePhaseTab = this.taskLogs[index].phase;
   }
 
   stageChecker(stage: string): number {
@@ -505,38 +502,18 @@ export class ResponsesComponent implements OnInit {
         return 2;
       case 'stageThree':
         return 3;
-      case 'stageFour':
-        return 4;
-      case 'stageFive':
-        return 5;
     }
     return -1;
   }
 
-  selectPhase(event: Event, phase: string) {
-    const target = event.target;
-  }
-
-  addResponse() {
-    if (this.addResponseForm.valid) {
-      //   this.dataProvider.pageSetting.blur = true;
-      //   this.databaseService
-      //     .addLead(this.leadForm.value)
-      //     .then(() => {
-      //       this.alertify.presentToast('Lead Added Successfully', 'info');
-      //       this.leadForm.reset();
-      //       UIkit.modal(document.getElementById('add-lead-modal')).hide();
-      //       this.dataProvider.pageSetting.blur = false;
-      //     })
-      //     .catch((error) => {
-      //       this.dataProvider.pageSetting.blur = false;
-      //       this.alertify.presentToast('Error Occurred: ' + error, 'error');
-      //     });
-      // } else {
-      //   this.alertify.presentToast('Please Fill All The Fields', 'error');
-      // }
+  responseClick(event: Event, id: any) {
+    const responseInput = document.getElementById('response-input');
+    if (responseInput) {
+      responseInput.setAttribute('value', id);
     }
   }
+
+  addLog() {}
 
   addNote() {}
 

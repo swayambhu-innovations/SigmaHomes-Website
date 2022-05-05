@@ -1,0 +1,134 @@
+<section *ngIf="!viewTaskLogDetails">
+  <div id="cards">
+    <app-property-info-card
+      *ngFor="let taskLog of taskLogs; let i = index"
+      [propertyImgSrc]="taskLog.propertyImgSrc"
+      [propertyName]="taskLog.propertyName"
+      [customerName]="taskLog.customerName"
+      [customerImgSrc]="taskLog.customerImgSrc"
+      [time]="taskLog.time"
+      [date]="taskLog.date"
+      [badge]="taskLog.badge"
+      (cardClick)="loadTaskLogDetails(i)"
+    ></app-property-info-card>
+  </div>
+  <app-fab icon="plus" title="Add Log" target="#add-log-modal"></app-fab>
+</section>
+
+<div id="add-log-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Add New Response</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form [formGroup]="addLogForm" (ngSubmit)="addLog()">
+      <div id="search-responsess">
+        <div id="search-responses-input-container">
+          <input
+            type="text"
+            class="admin-input"
+            placeholder="Search Responses"
+          />
+          <span uk-icon="icon: search; ratio: 1.25"></span>
+        </div>
+        <div id="responses-container">
+          <input
+            type="hidden"
+            formControlName="responseId"
+            id="response-input"
+          />
+          <app-property-info-card
+            [id]="'1'"
+            [propertyImgSrc]="'../../../../assets/img/unsplash_4ojhpgKpS68.png'"
+            [propertyName]="'4 BHK, Sky Heights '"
+            [customerName]="'Mohit Khanna'"
+            [customerImgSrc]="'../../../../assets/img/unsplash_EVzvJoBdRgk.png'"
+            [time]="'3:30PM'"
+            [date]="'Sunday, April 25 2022'"
+            [badge]="'Tomorrow'"
+          ></app-property-info-card>
+        </div>
+      </div>
+      <app-primary-btn
+        text="Add Log"
+        [disabled]="!addLogForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>
+
+<section *ngIf="viewTaskLogDetails" id="response-details" #responseDetails>
+  <div id="property-customer-details">
+    <div id="property-container">
+      <img
+        [src]="taskLogs[curResponse].propertyImgSrc"
+        [alt]="taskLogs[curResponse].propertyName"
+      />
+      <div id="property-details">
+        <h4>{{ taskLogs[curResponse].propertyName }}</h4>
+        <p id="address">{{ taskLogs[curResponse].address }}</p>
+        <p>Area: {{ taskLogs[curResponse].area }}</p>
+        <p>Price: {{ taskLogs[curResponse].price }}</p>
+      </div>
+    </div>
+    <div id="customer-container">
+      <img
+        [src]="taskLogs[curResponse].customerImgSrc"
+        [alt]="taskLogs[curResponse].customerName"
+      />
+      <div id="customer-details">
+        <h4>{{ taskLogs[curResponse].customerName }}</h4>
+        <p id="phone">{{ taskLogs[curResponse].phone }}</p>
+      </div>
+    </div>
+  </div>
+  <ul uk-tab>
+    <li [class]="taskLogs[curResponse].phase == 'stageOne' ? 'uk-active' : ''">
+      <a href="#" (click)="activePhaseTab = 'stageOne'">In Process</a>
+    </li>
+    <li
+      [class]="
+        (taskLogs[curResponse].phase == 'stageTwo' ? 'uk-active' : '') +
+        (stageChecker(taskLogs[curResponse].phase) < 2 ? 'uk-disabled' : '')
+      "
+    >
+      <a href="#" (click)="activePhaseTab = 'stageTwo'">Pending</a>
+    </li>
+    <li
+      [class]="
+        (taskLogs[curResponse].phase == 'stageThree' ? 'uk-active' : '') +
+        (stageChecker(taskLogs[curResponse].phase) < 3 ? 'uk-disabled' : '')
+      "
+    >
+      <a href="#" (click)="activePhaseTab = 'stageThree'">Delayed</a>
+    </li>
+  </ul>
+  <div id="notes">
+    <div
+      *ngFor="let note of taskLogs[curResponse].phases[activePhaseTab]"
+      class="note"
+    >
+      <p class="date">{{ note.date }}</p>
+      <p class="description">{{ note.description }}</p>
+    </div>
+    <app-secondary-btn text="Add Note" target="#add-note-modal"></app-secondary-btn>
+  </div>
+  <app-fab
+    [icon]="'arrow-left'"
+    [title]="'Go back'"
+    (btnClick)="viewTaskLogDetails = false"
+  ></app-fab>
+</section>
+
+<div id="add-note-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Add Note</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form [formGroup]="addNoteForm" (ngSubmit)="addNote()">
+      <input type="text" class="admin-input" formControlName="date" placeholder="Date">
+      <textarea class="admin-input" formControlName="date" placeholder="Description"></textarea> 
+      <app-primary-btn
+        text="Add Note"
+        [disabled]="!addNoteForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>

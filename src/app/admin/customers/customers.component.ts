@@ -8,7 +8,7 @@ declare const UIkit: any;
 @Component({
   selector: 'app-customers',
   templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.scss'],
+  styleUrls: ['./customers.component.scss', './customers.modal.scss'],
 })
 export class CustomersComponent implements OnInit {
   customers: any[] = [];

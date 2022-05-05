@@ -9,6 +9,7 @@ export class PrimaryBtnComponent implements OnInit {
   @Input() text: string = '';
   @Input() icon: string = '';
   @Input() disabled: boolean = false;
+  @Input() target: string = '';
   @Output() btnClick: EventEmitter<any> = new EventEmitter();
 
   constructor() {}

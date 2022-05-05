@@ -13,10 +13,19 @@ export class PropertyInfoCardComponent implements OnInit {
   @Input() time: string = '';
   @Input() date: string = '';
   @Input() badge: string = '';
+  @Input() selectable: boolean = false;
+  selected: boolean = false;
 
   @Output() cardClick: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
+
+  onClick() {
+    this.cardClick.emit();
+    if (this.selectable) {
+      this.selected = !this.selected;
+    }
+  }
 
   ngOnInit(): void {}
 }

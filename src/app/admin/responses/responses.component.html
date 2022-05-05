@@ -198,13 +198,39 @@
     </div>
   </div>
   <ul uk-tab>
-    <li><a href="#" (click)="activePhaseTab = 'stageOne'">Query</a></li>
-    <li><a href="#" (click)="activePhaseTab = 'stageTwo'">Visitation</a></li>
-    <li><a href="#" (click)="activePhaseTab = 'stageThree'">Negotiation</a></li>
-    <li class="uk-active">
+    <li [class]="responses[curResponse].phase == 'stageOne' ? 'uk-active' : ''">
+      <a href="#" (click)="activePhaseTab = 'stageOne'">Query</a>
+    </li>
+    <li
+      [class]="
+        (responses[curResponse].phase == 'stageTwo' ? 'uk-active' : '') +
+        (stageChecker(responses[curResponse].phase) < 2 ? 'uk-disabled' : '')
+      "
+    >
+      <a href="#" (click)="activePhaseTab = 'stageTwo'">Visitation</a>
+    </li>
+    <li
+      [class]="
+        (responses[curResponse].phase == 'stageThree' ? 'uk-active' : '') +
+        (stageChecker(responses[curResponse].phase) < 3 ? 'uk-disabled' : '')
+      "
+    >
+      <a href="#" (click)="activePhaseTab = 'stageThree'">Negotiation</a>
+    </li>
+    <li
+      [class]="
+        (responses[curResponse].phase == 'stageFour' ? 'uk-active' : '') +
+        (stageChecker(responses[curResponse].phase) < 4 ? 'uk-disabled' : '')
+      "
+    >
       <a href="#" (click)="activePhaseTab = 'stageFour'">Legalization</a>
     </li>
-    <li class="uk-disabled">
+    <li
+      [class]="
+        (responses[curResponse].phase == 'stageFive' ? 'uk-active' : '') +
+        (stageChecker(responses[curResponse].phase) < 5 ? 'uk-disabled' : '')
+      "
+    >
       <a href="#" (click)="activePhaseTab = 'stageFive'">Closure</a>
     </li>
   </ul>
@@ -216,6 +242,10 @@
       <p class="date">{{ note.date }}</p>
       <p class="description">{{ note.description }}</p>
     </div>
+    <app-secondary-btn
+      text="Add Note"
+      target="#add-note-modal"
+    ></app-secondary-btn>
   </div>
   <app-fab
     [icon]="'arrow-left'"
@@ -223,3 +253,27 @@
     (btnClick)="viewResponseDetails = false"
   ></app-fab>
 </section>
+
+<div id="add-note-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Add Note</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form [formGroup]="addNoteForm" (ngSubmit)="addNote()">
+      <input
+        type="text"
+        class="admin-input"
+        formControlName="date"
+        placeholder="Date"
+      />
+      <textarea
+        class="admin-input"
+        formControlName="date"
+        placeholder="Description"
+      ></textarea>
+      <app-primary-btn
+        text="Add Note"
+        [disabled]="!addNoteForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>

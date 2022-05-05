@@ -43,9 +43,9 @@ const routes: Routes = [
           ),
       },
       {
-        path: 'visit-log',
+        path: 'task-log',
         loadChildren: () =>
-          import('./visit-log/visit-log.module').then((m) => m.VisitLogModule),
+          import('./task-log/task-log.module').then((m) => m.TaskLogModule),
       },
       {
         path: 'broadcast',
