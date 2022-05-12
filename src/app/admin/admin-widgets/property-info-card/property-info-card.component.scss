@@ -77,9 +77,9 @@
       width: 100%;
     }
   }
-}
 
-#card:hover {
-  box-shadow: var(--normal-shadow);
-  transform: scale(1.05);
+  &:hover {
+    box-shadow: var(--normal-shadow);
+    transform: scale(1.02);
+  }
 }

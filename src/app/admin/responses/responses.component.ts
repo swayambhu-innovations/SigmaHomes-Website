@@ -23,7 +23,7 @@ export class ResponsesComponent implements OnInit {
       phone: '8791721248',
       time: '3:30PM',
       date: 'Sunday, April 25 2022',
-      badge: 'Tomorrow',
+      status: 'Tomorrow',
       phase: 'stageTwo',
       phases: {
         stageOne: [
@@ -50,42 +50,6 @@ export class ResponsesComponent implements OnInit {
               'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
           },
         ],
-        stageThree: [
-          {
-            date: '25 April 2022',
-            description:
-              'Three ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageFour: [
-          {
-            date: '25 April 2022',
-            description:
-              'Legali ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageFive: [
-          {
-            date: '25 April 2022',
-            description:
-              'F5 ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
       },
     },
     {
@@ -100,7 +64,7 @@ export class ResponsesComponent implements OnInit {
       phone: '8791721248',
       time: '3:30PM',
       date: 'Sunday, April 25 2022',
-      badge: 'Tomorrow',
+      status: 'Tomorrow',
       phase: 'stageThree',
       phases: {
         stageOne: [
@@ -139,30 +103,6 @@ export class ResponsesComponent implements OnInit {
               'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
           },
         ],
-        stageFour: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageFive: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
       },
     },
     {
@@ -177,7 +117,7 @@ export class ResponsesComponent implements OnInit {
       phone: '8791721248',
       time: '3:30PM',
       date: 'Sunday, April 25 2022',
-      badge: 'Tomorrow',
+      status: 'Tomorrow',
       phase: 'stageFour',
       phases: {
         stageOne: [
@@ -217,18 +157,6 @@ export class ResponsesComponent implements OnInit {
           },
         ],
         stageFour: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageFive: [
           {
             date: '25 April 2022',
             description:
@@ -254,7 +182,7 @@ export class ResponsesComponent implements OnInit {
       phone: '8791721248',
       time: '3:30PM',
       date: 'Sunday, April 25 2022',
-      badge: 'Tomorrow',
+      status: 'Tomorrow',
       phase: 'stageFour',
       phases: {
         stageOne: [
@@ -294,18 +222,6 @@ export class ResponsesComponent implements OnInit {
           },
         ],
         stageFour: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageFive: [
           {
             date: '25 April 2022',
             description:
@@ -331,7 +247,7 @@ export class ResponsesComponent implements OnInit {
       phone: '8791721248',
       time: '3:30PM',
       date: 'Sunday, April 25 2022',
-      badge: 'Tomorrow',
+      status: 'Tomorrow',
       phase: 'stageFour',
       phases: {
         stageOne: [
@@ -382,18 +298,6 @@ export class ResponsesComponent implements OnInit {
               'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
           },
         ],
-        stageFive: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
       },
     },
     {
@@ -408,7 +312,7 @@ export class ResponsesComponent implements OnInit {
       phone: '8791721248',
       time: '3:30PM',
       date: 'Sunday, April 25 2022',
-      badge: 'Tomorrow',
+      status: 'Tomorrow',
       phase: 'stageFour',
       phases: {
         stageOne: [
@@ -474,9 +378,19 @@ export class ResponsesComponent implements OnInit {
       },
     },
   ];
+  filteredResponses = this.responses;
+
+  viewAs: any = 'cards';
   curResponse: number = -1;
   activePhaseTab: string = '';
   viewResponseDetails: boolean = false;
+  phases: any = {
+    stageOne: 'Query',
+    stageTwo: 'Visitation',
+    stageThree: 'Negotiation',
+    stageFour: 'Legalization',
+    stageFive: 'Closure',
+  };
 
   addResponseForm: FormGroup = new FormGroup({
     lead: new FormControl('', [Validators.required]),
@@ -541,4 +455,46 @@ export class ResponsesComponent implements OnInit {
   addNote() {}
 
   ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    // Set up response search
+    const responseSearchInput = document.getElementById(
+      'response-search-input'
+    ) as HTMLInputElement;
+
+    if (responseSearchInput) {
+      responseSearchInput.addEventListener(
+        'input',
+        () => {
+          const query = responseSearchInput.value.trim().toLowerCase();
+          this.filteredResponses = this.responses.filter((response) => {
+            return response.customerName.toLowerCase().indexOf(query) !== -1;
+          });
+          this.filteredResponses.sort((response1, response2) => {
+            const index1 = response1.customerName.toLowerCase().indexOf(query);
+            const index2 = response2.customerName.toLowerCase().indexOf(query);
+            return index1 - index2;
+          });
+        },
+        false
+      );
+    }
+
+    // Set up "view as"
+    const viewResponsesAs = document.getElementById('view-responses-as');
+    if (viewResponsesAs) {
+      viewResponsesAs.addEventListener(
+        'click',
+        (event: Event) => {
+          var target = event.target as HTMLElement;
+          if (target.classList.contains('view-as-btn')) {
+            this.viewAs = target.getAttribute('data-view-as');
+          } else if (target.parentElement?.classList.contains('view-as-btn')) {
+            this.viewAs = target.parentElement.getAttribute('data-view-as');
+          }
+        },
+        false
+      );
+    }
+  }
 }

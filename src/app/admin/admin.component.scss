@@ -2,31 +2,12 @@
   --overlay-width: 0%;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
 header {
   padding: 1em;
   background-color: var(--secondary);
   box-shadow: var(--normal-shadow);
   display: flex;
+  justify-content: space-between;
   align-items: center;
 
   #toggle-button {
@@ -41,6 +22,81 @@ header {
     font-size: var(--large);
     margin: 0;
   }
+
+  #header-end {
+    display: flex;
+
+    .search-box {
+      position: relative;
+      width: fit-content;
+
+      .admin-search {
+        border: none;
+        font-family: var(--font-three);
+        font-size: var(--xsmall);
+        padding: 0.25em 1em;
+        border-radius: 20px;
+        width: 250px;
+        outline: none;
+        font-weight: 500;
+      }
+
+      i {
+        position: absolute;
+        top: 50%;
+        right: 1em;
+        color: var(--secondary);
+        transform: translateY(-50%);
+      }
+    }
+
+    .secondary-btn {
+      font-family: var(--font-three);
+      font-size: var(--xsmall);
+      font-weight: 500;
+      padding: 0.25em 0.5em;
+      background-color: var(--secondary-contrast);
+      color: var(--secondary);
+      border: none;
+      transition: all 0.5s;
+      border-radius: 7px;
+      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+      cursor: pointer;
+      margin-left: 1em;
+
+      &:hover,
+      &:focus {
+        transform: scale(1.05);
+      }
+
+      i {
+        margin-right: .5em;
+      }
+    }
+
+    #view-responses-as {
+      margin-left: 1em;
+      
+      button {
+        background: none;
+        padding: .5em 1em;
+        font-size: var(--small);
+        color: var(--secondary-contrast);
+        border: none;
+        border-right: 1px solid var(--secondary-contrast);
+        cursor: pointer;
+        transition: all .3s;
+
+        &:last-of-type {
+          border-right: none;
+        }
+
+        &.selected {
+          color: var(--primary);
+        }
+      }
+    }
+  }
 }
 
 #wrapper {
@@ -50,7 +106,7 @@ header {
   #sidebar-container {
     position: relative;
     display: flex;
-    
+
     #sidebar {
       font-size: var(--medium);
       background-color: var(--secondary-contrast);
@@ -58,7 +114,7 @@ header {
       min-width: max(20vw, 210px);
       border-right: 2px solid var(--secondary);
       height: 100%;
-      
+
       @media (max-width: 1000px) {
         position: absolute;
         z-index: 1;
@@ -110,7 +166,7 @@ header {
   main::after {
     content: "";
     background-color: var(--tertiary);
-    opacity: .3;
+    opacity: 0.3;
     width: var(--overlay-width);
     height: 100%;
     position: absolute;

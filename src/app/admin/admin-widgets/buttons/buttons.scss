@@ -1,5 +1,6 @@
 button {
     display: flex;
+    justify-content: center;
     align-items: center;
     background-color: transparent;
     color: var(--primary);
@@ -13,8 +14,6 @@ button {
     font-family: var(--font-three);
     cursor: pointer;
     transition: all .5s;
-    display: flex;
-    justify-content: center;
 
     span {
         margin-right: .25em;

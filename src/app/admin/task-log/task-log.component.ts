@@ -20,7 +20,7 @@ export class TaskLogComponent implements OnInit {
       phone: '8791721248',
       time: '3:30PM',
       date: 'Sunday, April 25 2022',
-      badge: 'Tomorrow',
+      status: 'Tomorrow',
       phase: 'stageTwo',
       phases: {
         stageOne: [
@@ -97,7 +97,7 @@ export class TaskLogComponent implements OnInit {
       phone: '8791721248',
       time: '3:30PM',
       date: 'Sunday, April 25 2022',
-      badge: 'Tomorrow',
+      status: 'Tomorrow',
       phase: 'stageThree',
       phases: {
         stageOne: [
@@ -174,7 +174,7 @@ export class TaskLogComponent implements OnInit {
       phone: '8791721248',
       time: '3:30PM',
       date: 'Sunday, April 25 2022',
-      badge: 'Tomorrow',
+      status: 'Tomorrow',
       phase: 'stageFour',
       phases: {
         stageOne: [
@@ -251,7 +251,7 @@ export class TaskLogComponent implements OnInit {
       phone: '8791721248',
       time: '3:30PM',
       date: 'Sunday, April 25 2022',
-      badge: 'Tomorrow',
+      status: 'Tomorrow',
       phase: 'stageFour',
       phases: {
         stageOne: [
@@ -328,7 +328,7 @@ export class TaskLogComponent implements OnInit {
       phone: '8791721248',
       time: '3:30PM',
       date: 'Sunday, April 25 2022',
-      badge: 'Tomorrow',
+      status: 'Tomorrow',
       phase: 'stageFour',
       phases: {
         stageOne: [
@@ -405,7 +405,7 @@ export class TaskLogComponent implements OnInit {
       phone: '8791721248',
       time: '3:30PM',
       date: 'Sunday, April 25 2022',
-      badge: 'Tomorrow',
+      status: 'Tomorrow',
       phase: 'stageFour',
       phases: {
         stageOne: [

@@ -12,7 +12,7 @@ export class PropertyInfoCardComponent implements OnInit {
   @Input() customerImgSrc: string = '';
   @Input() time: string = '';
   @Input() date: string = '';
-  @Input() badge: string = '';
+  @Input() status: string = '';
   @Input() selectable: boolean = false;
   selected: boolean = false;
 
