@@ -1,34 +1,45 @@
 <section>
-  <form>
+  <form [formGroup]="broadcastForm" (ngSubmit)="submitBroadcastForm()">
     <div id="left">
       <div
         id="upload-post-wrapper"
-        (click)="postInput.click()"
-        #uploadPostWrapper
+        (click)="triggerImageUpload()"
       >
         <div id="upload-post-container">
           <img src="../../../assets/img/ri_image-edit-fill.png" />
-          <p *ngIf="postInput.files?.length != 1">Upload Post</p>
-          <p *ngIf="postInput.files?.length == 1">Change Post</p>
-          <input type="file" (change)="imageSelected()" #postInput />
+          <p *ngIf="photoInput.files?.length != 1">Upload Post</p>
+          <p *ngIf="photoInput.files?.length == 1">Change Post</p>
+          <input
+            type="file"
+            (change)="imageSelected()"
+            #photoInput
+            formControlName="image"
+          />
         </div>
       </div>
       <div id="subject-and-caption">
-        <input type="text" class="admin-input" placeholder="Subject" />
+        <input
+          type="text"
+          class="admin-input"
+          placeholder="Subject"
+          formControlName="subject"
+        />
         <textarea
           class="admin-input"
           placeholder="Text or caption goes here"
+          formControlName="text"
         ></textarea>
       </div>
     </div>
     <div id="right">
       <h3>Select Recipients</h3>
+      <input type="file" />
+      <app-secondary-btn [text]="'Upload CSV'"></app-secondary-btn>
+      <div class="or">OR</div>
       <textarea
         class="admin-input"
-        placeholder="Type in phone numbers separated by commas"
+        placeholder="Type in phone numbers/emails separated by commas"
       ></textarea>
-      <div class="or">OR</div>
-      <app-secondary-btn [text]="'Upload CSV'"></app-secondary-btn>
       <div class="or">OR</div>
       <div id="search-in-leads">
         <div id="search-input-container">
@@ -50,7 +61,7 @@
             </div>
           </div>
         </div>
-        <app-primary-btn [text]="'Send'"></app-primary-btn>
+        <app-primary-btn [text]="'Send'" type="submit"></app-primary-btn>
       </div>
     </div>
   </form>

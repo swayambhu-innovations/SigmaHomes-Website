@@ -1,17 +1,30 @@
-<div id="card" (click)="onClick()">
+<div id="card">
+  <div id="details">
     <div id="property-img-container">
-        <img src="{{ propertyImgSrc }}" alt="{{ propertyName }}">
+      <img src="{{ propertyImgSrc }}" alt="{{ propertyName }}" />
     </div>
     <div id="text-container">
-        <div id="headings">
-            <p>{{ customerName }}</p>
-            <p>{{ propertyName }}</p>
-        </div>
-        <div id="subheadings">
-            <p>{{ time }}</p>
-            <p>{{ date }}</p>
-        </div>
-        <div id="badge">{{ status }}</div>
+      <div id="headings">
+        <p>{{ customerName }}</p>
+        <p>{{ propertyName }}</p>
+      </div>
+      <div id="subheadings">
+        <p>{{ time }}</p>
+        <p>{{ date }}</p>
+      </div>
+      <div id="badge">{{ status }}</div>
     </div>
-    <img src="{{ customerImgSrc }}" alt="{{ customerName }}" [attr.uk-tooltip]="customerName" id="customer-img">
+    <img
+      src="{{ customerImgSrc }}"
+      alt="{{ customerName }}"
+      id="customer-img"
+      [attr.uk-tooltip]="customerName"
+    />
+  </div>
+  <div id="contact-buttons">
+    <button uk-tooltip="Call"><i class="fa-solid fa-phone"></i></button>
+    <button uk-tooltip="Send SMS"><i class="fa-solid fa-comment-sms"></i></button>
+    <button uk-tooltip="Email"><i class="fa-solid fa-envelope"></i></button>
+  </div>
+  <button id="view-button" (click)="onClick()">View Details</button>
 </div>

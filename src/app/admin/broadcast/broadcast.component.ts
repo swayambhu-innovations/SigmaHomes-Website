@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
 
 @Component({
@@ -7,17 +8,28 @@ import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts
   styleUrls: ['./broadcast.component.scss'],
 })
 export class BroadcastComponent implements OnInit {
+  broadcastForm: FormGroup = new FormGroup({
+    image: new FormControl(''),
+    subject: new FormControl(''),
+    text: new FormControl(''),
+    csv: new FormControl(''),
+    recipients: new FormControl([]),
+    leads: new FormControl([]),
+  });
+
+  @ViewChild('photoInput') photoInput: ElementRef;
+
   constructor(private alertService: AlertsAndNotificationsService) {}
 
-  @ViewChild('uploadPostWrapper') uploadPostWrapper: ElementRef;
-  @ViewChild('postInput') postInput: ElementRef;
-  @ViewChild('csvInput') csvInput: ElementRef;
+  triggerImageUpload(): void {
+    this.photoInput.nativeElement.click();
+  }
 
   imageSelected() {
     var selectionIsValid = true;
-    const file = this.postInput.nativeElement.files[0];
+    const file = this.photoInput.nativeElement.files[0];
 
-    if (this.postInput.nativeElement.files.length != 1) {
+    if (this.photoInput.nativeElement.files.length != 1) {
       selectionIsValid = false;
     } else if (!['image/png', 'image/jpg', 'image/jpeg'].includes(file.type)) {
       this.alertService.presentToast(
@@ -42,6 +54,21 @@ export class BroadcastComponent implements OnInit {
       };
     } else {
       document.documentElement.style.setProperty('--post-background', '');
+    }
+  }
+
+  submitBroadcastForm() {
+    var isValid = true;
+    console.log((this.broadcastForm.get('subject')?.value.trim()))
+    console.log((this.broadcastForm.get('text')?.value.trim()))
+
+    if (this.broadcastForm.get('subject')?.value.trim() == '' && this.broadcastForm.get('text')?.value.trim() == '') {
+      this.alertService.presentToast('Subject and text both cannot be empty', 'error');
+      isValid = false;
+    }
+
+    if (!isValid) {
+      return;
     }
   }
 

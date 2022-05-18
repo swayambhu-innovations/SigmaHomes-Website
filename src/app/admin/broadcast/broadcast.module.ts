@@ -4,16 +4,16 @@ import { CommonModule } from '@angular/common';
 import { BroadcastRoutingModule } from './broadcast-routing.module';
 import { BroadcastComponent } from './broadcast.component';
 import { AdminWidgetsModule } from '../admin-widgets/admin-widgets.module';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    BroadcastComponent
-  ],
+  declarations: [BroadcastComponent],
   imports: [
     CommonModule,
     BroadcastRoutingModule,
-    AdminWidgetsModule
-  ]
+    AdminWidgetsModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
 })
-export class BroadcastModule { }
+export class BroadcastModule {}
