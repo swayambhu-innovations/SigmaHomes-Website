@@ -7,6 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: [
     './responses.component.scss',
     './response-details.component.scss',
+    './stepper.scss',
   ],
 })
 export class ResponsesComponent implements OnInit {
