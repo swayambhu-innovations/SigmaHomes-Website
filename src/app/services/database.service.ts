@@ -16,6 +16,9 @@ import {
   getDoc,
   getDocs,
   collectionSnapshots,
+  query,
+  orderBy,
+  limit,
 } from '@angular/fire/firestore';
 import {
   getDownloadURL,
@@ -68,13 +71,13 @@ export class DatabaseService {
   addCustomer(data: any) {
     return addDoc(collection(this.fs, 'customers'), data);
   }
-  
+
   getCustomers() {
     return collectionSnapshots(collection(this.fs, 'customers'));
   }
 
-  deleteCustomer(customerId:string){
-    return deleteDoc(doc(this.fs,'customers/'+customerId));
+  deleteCustomer(customerId: string) {
+    return deleteDoc(doc(this.fs, 'customers/' + customerId));
   }
 
   updateCustomer(customerId: string, data: any) {
@@ -85,22 +88,53 @@ export class DatabaseService {
     return addDoc(collection(this.fs, 'properties'), property);
   }
 
-  getProperties() {
+  getAllProperties() {
     return collectionSnapshots(collection(this.fs, 'properties'));
   }
-  addLead(lead:any){
-    return addDoc(collection(this.fs,'leads'),lead);
-  }
-  
-  getLeads(){
-    return collectionSnapshots(collection(this.fs,'leads'));
+
+  getNProperties(nProperties: number) {
+    return getDocs(
+      query(
+        collection(this.fs, 'properties'),
+        orderBy('rating', 'desc'),
+        limit(nProperties)
+      )
+    );
   }
 
-  updateLead(leadId:string,leadData:any){
-    return updateDoc(doc(this.fs,'leads/'+leadId),leadData);
+  updateProperty(propertyId: string, data: any) {
+    return updateDoc(doc(this.fs, 'properties/' + propertyId), data);
   }
 
-  deleteLead(leadId:string){
-    return deleteDoc(doc(this.fs,'leads/'+leadId));
+  deleteProperty(propertyId: string) {
+    return deleteDoc(doc(this.fs, 'properties/' + propertyId));
+  }
+
+  addLead(lead: any) {
+    return addDoc(collection(this.fs, 'leads'), lead);
+  }
+
+  getLeads() {
+    return collectionSnapshots(collection(this.fs, 'leads'));
+  }
+
+  updateLead(leadId: string, leadData: any) {
+    return updateDoc(doc(this.fs, 'leads/' + leadId), leadData);
+  }
+
+  deleteLead(leadId: string) {
+    return deleteDoc(doc(this.fs, 'leads/' + leadId));
+  }
+
+  addResponse(response: any) {
+    return addDoc(collection(this.fs, 'responses'), response);
+  }
+
+  getResponses() {
+    return collectionSnapshots(collection(this.fs, 'responses'));
+  }
+
+  getResponse(responseId: any) {
+    return getDoc(doc(this.fs, 'responses/' + responseId));
   }
 }

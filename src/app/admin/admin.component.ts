@@ -8,6 +8,7 @@ import { NavigationEnd, Router } from '@angular/router';
 })
 export class AdminComponent implements OnInit {
   currentPanel: string = 'Panel';
+  showingResponsePage: boolean = false;
 
   breakpoint: number = 1000;
   largeScreen: boolean = window.innerWidth > this.breakpoint;
@@ -22,13 +23,20 @@ export class AdminComponent implements OnInit {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         const url = this.router.url;
-        const lastSlashIndex = url.lastIndexOf('/');
-        const panel = url.substring(lastSlashIndex + 1);
-        const panelWords = panel.split('-');
-        panelWords.forEach((word, index) => {
-          panelWords[index] = word.charAt(0).toUpperCase() + word.substring(1);
-        });
-        this.currentPanel = panelWords.join(' ');
+        const urlArr = url.split('/');
+        if (urlArr.includes('responses')) {
+          this.currentPanel = 'Responses';
+          this.showingResponsePage = urlArr.indexOf('responses') != urlArr.length - 1;
+        }
+        else {
+          const panel = urlArr[urlArr.length - 1];
+          const panelWords = panel.split('-');
+          panelWords.forEach((word, index) => {
+            panelWords[index] =
+              word.charAt(0).toUpperCase() + word.substring(1);
+          });
+          this.currentPanel = panelWords.join(' ');
+        }
       }
     });
   }

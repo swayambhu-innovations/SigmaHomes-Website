@@ -1,31 +1,59 @@
 <section>
   <p *ngIf="customers.length < 1" id="no-customers">No customers :(</p>
-  <ul *ngIf="customers.length >= 1">
-    <li *ngFor="let customer of customers; let i = index" [attr.data-index]="i">
-      <div class="image-and-name">
-        <img *ngIf="customer.img" [src]="customer.img" [alt]="customer.name" />
-        <p>{{ customer.name }}</p>
-      </div>
-      <div class="buttons">
-        <app-primary-btn
-          icon="info"
-          title="View"
-          (btnClick)="viewCustomer(customer)"
-        ></app-primary-btn>
-        <app-secondary-btn
-          icon="pencil"
-          title="Edit"
-          (btnClick)="editCustomer(customer)"
-        ></app-secondary-btn>
-        <app-secondary-btn
-          icon="trash"
-          title="Delete"
-          (btnClick)="deleteCustomer(customer)"
-        ></app-secondary-btn>
-      </div>
-    </li>
-  </ul>
-
+  <table *ngIf="customers.length >= 1">
+    <thead>
+      <tr>
+        <th style="width: 10%">Photo</th>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>View/Edit/Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let customer of customers; let i = index"
+        [attr.data-index]="i"
+      >
+        <td>
+          <img *ngIf="customer.img" [src]="customer.img" />
+        </td>
+        <td style="font-weight: 500">{{ customer.name }}</td>
+        <td>
+          <div class="buttons">
+            <button uk-tooltip="Call"><i class="fa-solid fa-phone"></i></button>
+            <button uk-tooltip="Send SMS">
+              <i class="fa-solid fa-comment-sms"></i>
+            </button>
+            <button uk-tooltip="Email">
+              <i class="fa-solid fa-envelope"></i>
+            </button>
+          </div>
+        </td>
+        <td>
+          <div class="buttons">
+            <button
+              (click)="viewCustomer(customer)"
+              uk-tooltip="title: View Customer"
+            >
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <button
+              (click)="editCustomer(customer)"
+              uk-tooltip="title: Edit Customer"
+            >
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button
+              (click)="deleteCustomer(customer)"
+              uk-tooltip="title: Delete Customer" class="delete-btn"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <app-fab
     [icon]="'plus'"
     [target]="'#edit-or-add-customer-modal'"
@@ -326,3 +354,4 @@
     </form>
   </div>
 </div>
+

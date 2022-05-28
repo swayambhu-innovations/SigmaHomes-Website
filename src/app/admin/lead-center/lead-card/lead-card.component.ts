@@ -21,7 +21,7 @@ export class LeadCardComponent implements OnInit {
   @Output() onEdit: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<any> = new EventEmitter();
 
-  expanded: boolean = false;
+  expanded: boolean = true;
 
   constructor() {}
 

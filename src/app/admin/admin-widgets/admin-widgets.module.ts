@@ -7,6 +7,7 @@ import { StarRatingComponent } from './star-rating/star-rating.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { FabComponent } from './fab/fab.component';
 import { PropertyInfoCardComponent } from './property-info-card/property-info-card.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,9 @@ import { PropertyInfoCardComponent } from './property-info-card/property-info-ca
     PropertyInfoCardComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     PrimaryBtnComponent,

@@ -14,63 +14,80 @@ section {
     transform: translate(-50%, -50%);
   }
 
-  ul {
-    list-style: none;
-    padding: 0;
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-three);
+    color: var(--tertiary);
 
-    li {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 0 0 1em 0;
+    th,
+    td {
       padding: 0.5em;
-      border-radius: 15px;
-      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-      transition: all 0.5s;
+      font-size: var(--small);
+    }
 
-      .image-and-name {
-        display: flex;
-        align-items: center;
+    thead {
+      tr {
+        background-color: var(--secondary);
+        color: var(--secondary-contrast);
 
-        img {
-          width: 60px;
-          height: 60px;
-          object-fit: cover;
-          border-radius: 50%;
-          margin-right: 1em;
-        }
-
-        p {
-          font-family: var(--font-three);
-          font-size: var(--large);
-          color: var(--tertiary);
-          margin: 0;
-        }
-      }
-
-      .buttons {
-        display: flex;
-
-        app-primary-btn,
-        app-secondary-btn {
-          margin: 0 0.25em;
-        }
-      }
-
-      @media (max-width: 550px) {
-        flex-direction: column;
-        align-items: flex-start;
-        margin: 0 0 0.5em 0;
-
-        .buttons {
-          margin-top: 0.5em;
+        th {
+          font-weight: 500;
         }
       }
     }
 
-    li:hover {
-      box-shadow: var(--normal-shadow);
-      transform: scale(1.02);
+    tbody {
+      tr {
+        transition: all 0.5s;
+
+        &:nth-child(even) {
+          background-color: var(--secondary-lighter);
+        }
+
+        &:hover {
+          background-color: var(--secondary-light);
+        }
+
+        td {
+          vertical-align: center;
+          text-align: center;
+
+          img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: 1em;
+          }
+
+          .buttons {
+            display: flex;
+            justify-content: center;
+
+            button {
+              background-color: var(--secondary);
+              color: var(--secondary-contrast);
+              border: none;
+              font-family: var(--font-three);
+              padding: 0.5em 1em;
+              margin: 0.25em;
+              font-size: var(--small);
+              border-radius: 7px;
+              transition: all 0.5s;
+              cursor: pointer;
+
+              &:hover {
+                box-shadow: var(--normal-shadow);
+              }
+
+              &.delete-btn {
+                background-color: #DC143C;
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

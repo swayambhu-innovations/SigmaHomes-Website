@@ -3,6 +3,7 @@
   transition: all 0.4s;
   box-shadow: var(--normal-shadow);
   padding: 1em;
+  position: relative;
 
   &:hover {
     box-shadow: var(--normal-shadow);
@@ -87,40 +88,43 @@
     }
   }
 
-  button {
-    padding: 0.5em;
-    background-color: var(--secondary);
-    color: var(--secondary-contrast);
-    border: none;
-    font-size: var(--small);
-    font-family: var(--font-three);
-    margin-right: 0.5em;
-    width: 33%;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: all 0.5s;
-
-    &:last-of-type {
-      margin-right: 0;
-    }
-
-    &:hover {
-      box-shadow: var(--normal-shadow);
-    }
-  }
-
-  #contact-buttons {
+  #buttons {
     margin-top: 1em;
     display: flex;
     justify-content: space-evenly;
 
     button {
+      padding: 0.5em;
+      background-color: var(--secondary);
+      color: var(--secondary-contrast);
+      border: none;
+      font-size: var(--small);
+      font-family: var(--font-three);
+      margin-right: 0.5em;
       width: 33%;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.5s;
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+
+      &:hover {
+        box-shadow: var(--normal-shadow);
+      }
     }
   }
 
-  #view-button {
-    margin-top: .5em;
-    width: 100%;
+  #select-button {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    background: none;
+    font-weight: 700;
+    border: none;
+    font-size: var(--large);
+    cursor: pointer;
+    transition: all 0.5s;
   }
 }

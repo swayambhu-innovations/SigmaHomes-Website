@@ -6,6 +6,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./property-info-card.component.scss'],
 })
 export class PropertyInfoCardComponent implements OnInit {
+  @Input() id: string = '';
   @Input() propertyImgSrc: string = '';
   @Input() propertyName: string = '';
   @Input() customerName: string = '';
@@ -14,18 +15,20 @@ export class PropertyInfoCardComponent implements OnInit {
   @Input() date: string = '';
   @Input() status: string = '';
   @Input() selectable: boolean = false;
-  selected: boolean = false;
+  @Input() selected: boolean = false;
 
-  @Output() cardClick: EventEmitter<any> = new EventEmitter();
+  @Output() view: EventEmitter<any> = new EventEmitter<any>();
+  @Output() edit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() delete: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() cardSelect: EventEmitter<string> = new EventEmitter<string>();
 
   constructor() {}
 
-  onClick() {
-    this.cardClick.emit();
-    if (this.selectable) {
-      this.selected = !this.selected;
-    }
-  }
-
   ngOnInit(): void {}
+
+  selectResponse(): void {
+    this.selected = !this.selected;
+    this.cardSelect.emit(this.id);
+  }
 }

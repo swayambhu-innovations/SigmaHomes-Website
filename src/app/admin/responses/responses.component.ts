@@ -1,396 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-responses',
   templateUrl: './responses.component.html',
-  styleUrls: [
-    './responses.component.scss',
-    './response-details.component.scss',
-    './stepper.scss',
-  ],
+  styleUrls: ['./responses.component.scss', 'responses.modal.scss'],
 })
 export class ResponsesComponent implements OnInit {
-  responses: any[] = [
-    {
-      id: 1,
-      propertyImgSrc: '../../../../assets/img/unsplash_4ojhpgKpS68.png',
-      propertyName: '3 BHK, Sky Heights',
-      address: 'Orange Building, Near Town Hall, Jaunpuri West',
-      area: '885 sqft.',
-      price: '30 Lakhs',
-      customerName: 'Brahmananda',
-      customerImgSrc: '../../../../assets/img/unsplash_EVzvJoBdRgk.png',
-      phone: '8791721248',
-      email: 'kunalagarwal@gmail.com',
-      time: '3:30PM',
-      date: 'Sunday, April 25 2022',
-      status: 'Tomorrow',
-      phase: 'stageTwo',
-      phases: {
-        stageOne: [
-          {
-            date: '25 April 2022',
-            description:
-              'Query ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageTwo: [
-          {
-            date: '25 April 2022',
-            description:
-              'Two ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-      },
-    },
-    {
-      id: 2,
-      propertyImgSrc: '../../../../assets/img/unsplash_4ojhpgKpS68.png',
-      propertyName: '3 BHK, Sky Heights',
-      address: 'Orange Building, Near Town Hall, Jaunpuri West',
-      area: '885 sqft.',
-      price: '30 Lakhs',
-      customerName: 'Raghav Chopra',
-      customerImgSrc: '../../../../assets/img/unsplash_EVzvJoBdRgk.png',
-      phone: '8791721248',
-      email: 'kunalagarwal@gmail.com',
-      time: '3:30PM',
-      date: 'Sunday, April 25 2022',
-      status: 'Tomorrow',
-      phase: 'stageThree',
-      phases: {
-        stageOne: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageTwo: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageThree: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-      },
-    },
-    {
-      id: 3,
-      propertyImgSrc: '../../../../assets/img/unsplash_4ojhpgKpS68.png',
-      propertyName: '3 BHK, Sky Heights',
-      address: 'Orange Building, Near Town Hall, Jaunpuri West',
-      area: '885 sqft.',
-      price: '30 Lakhs',
-      customerName: 'Niraj Chopra',
-      customerImgSrc: '../../../../assets/img/unsplash_EVzvJoBdRgk.png',
-      phone: '8791721248',
-      email: 'kunalagarwal@gmail.com',
-      time: '3:30PM',
-      date: 'Sunday, April 25 2022',
-      status: 'Tomorrow',
-      phase: 'stageFour',
-      phases: {
-        stageOne: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageTwo: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageThree: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageFour: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-      },
-    },
-    {
-      id: 4,
-      propertyImgSrc: '../../../../assets/img/unsplash_4ojhpgKpS68.png',
-      propertyName: '3 BHK, Sky Heights',
-      address: 'Orange Building, Near Town Hall, Jaunpuri West',
-      area: '885 sqft.',
-      price: '30 Lakhs',
-      customerName: 'Niraj Chopra',
-      customerImgSrc: '../../../../assets/img/unsplash_EVzvJoBdRgk.png',
-      phone: '8791721248',
-      email: 'kunalagarwal@gmail.com',
-      time: '3:30PM',
-      date: 'Sunday, April 25 2022',
-      status: 'Tomorrow',
-      phase: 'stageFour',
-      phases: {
-        stageOne: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageTwo: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageThree: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageFour: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-      },
-    },
-    {
-      id: 5,
-      propertyImgSrc: '../../../../assets/img/unsplash_4ojhpgKpS68.png',
-      propertyName: '3 BHK, Sky Heights',
-      address: 'Orange Building, Near Town Hall, Jaunpuri West',
-      area: '885 sqft.',
-      price: '30 Lakhs',
-      customerName: 'Niraj Chopra',
-      customerImgSrc: '../../../../assets/img/unsplash_EVzvJoBdRgk.png',
-      phone: '8791721248',
-      email: 'kunalagarwal@gmail.com',
-      time: '3:30PM',
-      date: 'Sunday, April 25 2022',
-      status: 'Tomorrow',
-      phase: 'stageFour',
-      phases: {
-        stageOne: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageTwo: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageThree: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageFour: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-      },
-    },
-    {
-      id: 6,
-      propertyImgSrc: '../../../../assets/img/unsplash_4ojhpgKpS68.png',
-      propertyName: '3 BHK, Sky Heights',
-      address: 'Orange Building, Near Town Hall, Jaunpuri West',
-      area: '885 sqft.',
-      price: '30 Lakhs',
-      customerName: 'Niraj Chopra',
-      customerImgSrc: '../../../../assets/img/unsplash_EVzvJoBdRgk.png',
-      phone: '8791721248',
-      email: 'kunalagarwal@gmail.com',
-      time: '3:30PM',
-      date: 'Sunday, April 25 2022',
-      status: 'Tomorrow',
-      phase: 'stageFour',
-      phases: {
-        stageOne: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageTwo: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageThree: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageFour: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-        stageFive: [
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-          {
-            date: '25 April 2022',
-            description:
-              'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum, eius.',
-          },
-        ],
-      },
-    },
-  ];
-  filteredResponses = this.responses;
-
+  responses: any[];
+  filteredResponses: any[];
   viewAs: any = 'cards';
-  curResponse: number = -1;
-  activePhaseTab: string = '';
-  viewResponseDetails: boolean = false;
   phases: any = {
     stageOne: 'Query',
     stageTwo: 'Visitation',
@@ -398,6 +19,7 @@ export class ResponsesComponent implements OnInit {
     stageFour: 'Legalization',
     stageFive: 'Closure',
   };
+  responsesSelected: string[] = [];
 
   addResponseForm: FormGroup = new FormGroup({
     lead: new FormControl('', [Validators.required]),
@@ -405,34 +27,31 @@ export class ResponsesComponent implements OnInit {
     property: new FormControl('', [Validators.required]),
   });
 
-  addNoteForm: FormGroup = new FormGroup({
-    date: new FormControl('', [Validators.required]),
-    description: new FormControl('', [Validators.required]),
-  });
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private databaseService: DatabaseService
+  ) {}
 
-  constructor() {}
-
-  loadResponseDetails(index: number) {
-    this.viewResponseDetails = true;
-    this.curResponse = index;
-    this.activePhaseTab = this.responses[index].phase;
-  }
-
-  stageChecker(stage: string): number {
-    switch (stage) {
-      case 'stageOne':
-        return 1;
-      case 'stageTwo':
-        return 2;
-      case 'stageThree':
-        return 3;
-      case 'stageFour':
-        return 4;
-      case 'stageFive':
-        return 5;
+  toggleSelection(responseId: string) {
+    if (this.responsesSelected.includes(responseId)) {
+      this.responsesSelected = this.responsesSelected.filter(
+        (id) => id !== responseId
+      );
     }
-    return -1;
+    else {
+      this.responsesSelected.push(responseId);
+    }
   }
+
+  goToResponsePage(responseId: any) {
+    this.router.navigate([responseId], { relativeTo: this.route });
+    // this.activePhaseTab = this.responses[index].phase;
+  }
+
+  editResponse(response: any) {}
+
+  deleteResponse(response: any) {}
 
   selectPhase(event: Event, phase: string) {
     const target = event.target;
@@ -459,9 +78,16 @@ export class ResponsesComponent implements OnInit {
     }
   }
 
-  addNote() {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.databaseService.getResponses().subscribe((data: any) => {
+      this.responses = [];
+      this.filteredResponses = this.responses;
+      data.forEach((element: any) => {
+        const response = { id: element.id, ...element.data() };
+        this.responses.push(response);
+      });
+    });
+  }
 
   ngAfterViewInit(): void {
     // Set up response search

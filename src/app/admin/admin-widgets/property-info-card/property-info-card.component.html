@@ -21,10 +21,25 @@
       [attr.uk-tooltip]="customerName"
     />
   </div>
-  <div id="contact-buttons">
-    <button uk-tooltip="Call"><i class="fa-solid fa-phone"></i></button>
-    <button uk-tooltip="Send SMS"><i class="fa-solid fa-comment-sms"></i></button>
-    <button uk-tooltip="Email"><i class="fa-solid fa-envelope"></i></button>
+  <div id="buttons">
+    <button (click)="view.emit()" uk-tooltip="title: View">
+      <i class="fa-solid fa-eye"></i>
+    </button>
+    <button (click)="edit.emit()" uk-tooltip="title: Edit">
+      <i class="fa-solid fa-pen-to-square"></i>
+    </button>
+    <button
+      (click)="delete.emit()"
+      uk-tooltip="title: Delete"
+      class="delete-btn"
+    >
+      <i class="fa-solid fa-trash"></i>
+    </button>
   </div>
-  <button id="view-button" (click)="onClick()">View Details</button>
+  <button *ngIf="selectable" id="select-button" (click)="selectResponse()">
+    <i
+      class="fa-solid fa-circle-check"
+      [style]="'color: ' + (selected ? '#5cb85c' : '#727a81')"
+    ></i>
+  </button>
 </div>

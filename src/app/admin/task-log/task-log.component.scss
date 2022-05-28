@@ -1,136 +1,26 @@
-#cards {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 1em;
+section {
+  padding: 1.5em;
 
-  app-property-info-card {
-    width: 40%;
-    max-width: 400px;
-    flex-grow: 1;
-    margin: 0.5em;
-
-    @media (max-width: 900px) {
-      width: 25%;
-      min-width: 250px;
-    }
-  }
-}
-
-.uk-modal-body {
-  .uk-modal-title {
+  .uk-accordion-title {
     font-family: var(--font-three);
-    font-size: var(--xlarge);
-    color: var(--tertiary);
+    color: var(--secondary);
+    font-weight: 500;
   }
 
-  .uk-modal-close-default {
-    background-color: var(--secondary);
-    color: var(--secondary-contrast);
-    border-radius: 50%;
-    padding: 0.5em;
-  }
+  .uk-accordion-content {
+    display: flex;
+    flex-wrap: wrap;
 
-  form {
-    #search-responses-input-container {
-      position: relative;
+    app-property-info-card {
+      width: 40%;
+      max-width: 400px;
+      flex-grow: 1;
+      margin: 0.5em;
 
-      input {
-        margin: 0;
+      @media (max-width: 900px) {
+        width: 25%;
+        min-width: 250px;
       }
-
-      span {
-        position: absolute;
-        right: 1em;
-        top: 50%;
-        transform: translateY(-50%);
-        color: var(--secondary);
-      }
-    }
-
-    #responses-container {
-      margin: 1.5em 0;
-      display: flex;
-    }
-
-    #search-property-container {
-      margin: 1.5em 0;
-      display: flex;
-
-      img {
-        margin-right: 1em;
-      }
-
-      #search-property-details {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        h4,
-        p {
-          margin: 0;
-          font-family: var(--font-three);
-          color: var(--tertiary);
-        }
-
-        h4 {
-          font-weight: 700;
-          font-size: var(--medium);
-        }
-
-        p {
-          font-size: var(--small);
-        }
-
-        #search-address {
-          margin: 1em 0;
-        }
-
-        app-secondary-btn {
-          display: block;
-          margin-top: 1em;
-        }
-      }
-    }
-
-    label {
-      font-family: var(--font-three);
-      font-size: var(--small);
-      color: var(--tertiary);
-    }
-
-    .admin-input {
-      display: block;
-      width: 100%;
-      margin-bottom: 0.75em;
-    }
-
-    #phase-radio {
-      #phase-btns {
-        display: flex;
-      }
-
-      .phase-btn {
-        display: block;
-        width: 20%;
-        margin-right: 1em;
-        font-family: var(--font-three);
-        background: none;
-        border: none;
-        padding: 1em;
-      }
-
-      .phase-btn:last-of-type {
-        margin-right: 0;
-      }
-
-      .selected {
-        background-color: var(--);
-      }
-    }
-
-    app-primary-btn {
-      display: block;
-      margin-top: 1em;
     }
   }
 }

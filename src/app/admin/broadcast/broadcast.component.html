@@ -1,68 +1,106 @@
 <section>
-  <form [formGroup]="broadcastForm" (ngSubmit)="submitBroadcastForm()">
-    <div id="left">
-      <div
-        id="upload-post-wrapper"
-        (click)="triggerImageUpload()"
-      >
-        <div id="upload-post-container">
-          <img src="../../../assets/img/ri_image-edit-fill.png" />
-          <p *ngIf="photoInput.files?.length != 1">Upload Post</p>
-          <p *ngIf="photoInput.files?.length == 1">Change Post</p>
-          <input
-            type="file"
-            (change)="imageSelected()"
-            #photoInput
-            formControlName="image"
-          />
-        </div>
-      </div>
-      <div id="subject-and-caption">
-        <input
-          type="text"
-          class="admin-input"
-          placeholder="Subject"
-          formControlName="subject"
-        />
-        <textarea
-          class="admin-input"
-          placeholder="Text or caption goes here"
-          formControlName="text"
-        ></textarea>
-      </div>
-    </div>
-    <div id="right">
-      <h3>Select Recipients</h3>
-      <input type="file" />
-      <app-secondary-btn [text]="'Upload CSV'"></app-secondary-btn>
-      <div class="or">OR</div>
-      <textarea
-        class="admin-input"
-        placeholder="Type in phone numbers/emails separated by commas"
-      ></textarea>
-      <div class="or">OR</div>
-      <div id="search-in-leads">
-        <div id="search-input-container">
-          <input
-            type="text"
-            class="admin-input"
-            placeholder="Search in Leads"
-          />
-          <span uk-icon="icon: search; ratio: 1.25"></span>
-        </div>
-        <div id="leads-container">
-          <div id="leads">
-            <div class="lead">
-              <img
-                src="../../../assets/img/customer-sample-1.png"
-                alt="Manohar Singh"
-              />
-              <p>Manohar Singh</p>
-            </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Text</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Recipients</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight: 500;">Broadcast Title</td>
+        <td>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, amet!
+        </td>
+        <td style="white-space: nowrap;">22 May 2022</td>
+        <td style="white-space: nowrap;">22:42:22</td>
+        <td>87</td>
+        <td>
+          <div class="buttons">
+            <button>Resend</button>
+            <button>Delete</button>
           </div>
-        </div>
-        <app-primary-btn [text]="'Send'" type="submit"></app-primary-btn>
-      </div>
-    </div>
-  </form>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight: 500;">Broadcast Title</td>
+        <td>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, amet!
+        </td>
+        <td style="white-space: nowrap;">22 May 2022</td>
+        <td style="white-space: nowrap;">22:42:22</td>
+        <td>87</td>
+        <td>
+          <div class="buttons">
+            <button>Resend</button>
+            <button>Delete</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight: 500;">Broadcast Title</td>
+        <td>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, amet!
+        </td>
+        <td style="white-space: nowrap;">22 May 2022</td>
+        <td style="white-space: nowrap;">22:42:22</td>
+        <td>87</td>
+        <td>
+          <div class="buttons">
+            <button>Resend</button>
+            <button>Delete</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight: 500;">Broadcast Title</td>
+        <td>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, amet!
+        </td>
+        <td style="white-space: nowrap;">22 May 2022</td>
+        <td style="white-space: nowrap;">22:42:22</td>
+        <td>87</td>
+        <td>
+          <div class="buttons">
+            <button>Resend</button>
+            <button>Delete</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight: 500;">Broadcast Title</td>
+        <td>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, amet!
+        </td>
+        <td style="white-space: nowrap;">22 May 2022</td>
+        <td style="white-space: nowrap;">22:42:22</td>
+        <td>87</td>
+        <td>
+          <div class="buttons">
+            <button>Resend</button>
+            <button>Delete</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight: 500;">Broadcast Title</td>
+        <td>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta, amet!
+        </td>
+        <td style="white-space: nowrap;">22 May 2022</td>
+        <td style="white-space: nowrap;">22:42:22</td>
+        <td>87</td>
+        <td>
+          <div class="buttons">
+            <button>Resend</button>
+            <button>Delete</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </section>

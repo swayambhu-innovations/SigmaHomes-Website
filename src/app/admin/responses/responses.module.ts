@@ -5,9 +5,10 @@ import { ResponsesRoutingModule } from './responses-routing.module';
 import { ResponsesComponent } from './responses.component';
 import { AdminWidgetsModule } from '../admin-widgets/admin-widgets.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ResponsePageComponent } from './response-page/response-page.component';
 
 @NgModule({
-  declarations: [ResponsesComponent],
+  declarations: [ResponsesComponent, ResponsePageComponent],
   imports: [
     CommonModule,
     ResponsesRoutingModule,

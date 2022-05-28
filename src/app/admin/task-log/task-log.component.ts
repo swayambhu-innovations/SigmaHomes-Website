@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-task-log',
   templateUrl: './task-log.component.html',
-  styleUrls: ['./task-log.component.scss', './task-log-details.component.scss'],
+  styleUrls: ['./task-log.component.scss'],
 })
 export class TaskLogComponent implements OnInit {
   taskLogs: any[] = [
@@ -474,7 +474,6 @@ export class TaskLogComponent implements OnInit {
 
   curResponse: number = -1;
   activePhaseTab: string = '';
-  viewTaskLogDetails: boolean = false;
 
   addLogForm: FormGroup = new FormGroup({
     responseId: new FormControl('', [Validators.required]),
@@ -489,7 +488,6 @@ export class TaskLogComponent implements OnInit {
   constructor() {}
 
   loadTaskLogDetails(index: number) {
-    this.viewTaskLogDetails = true;
     this.curResponse = index;
     this.activePhaseTab = this.taskLogs[index].phase;
   }

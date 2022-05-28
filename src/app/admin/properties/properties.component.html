@@ -1,38 +1,144 @@
 <section>
   <p *ngIf="properties.length < 1" id="no-properties">No properties :(</p>
-
   <div *ngIf="properties.length >= 1" id="properties">
     <app-property-card
       *ngFor="let property of properties"
-      [imageSrc]="property.image"
+      [images]="property.images"
       [heading]="property.name"
-      [price]="property.companySalesValue"
       [address]="property.plotNo"
-      [area]="property.plotArea + ' sqft'"
-      [rating]="property.rating"
+      (viewProperty)="viewProperty(property)"
+      (editProperty)="editProperty(property)"
+      (deleteProperty)="deleteProperty(property)"
     ></app-property-card>
   </div>
   <app-fab
     [icon]="'plus'"
-    [target]="'#add-property-modal'"
+    [target]="'#edit-or-add-property-modal'"
     [title]="'Add New Property'"
   ></app-fab>
 </section>
 
-<div id="add-property-modal" uk-modal>
+<div id="view-property-modal" uk-modal>
   <div class="uk-modal-dialog uk-modal-body">
-    <h2 class="uk-modal-title">Add New Property</h2>
+    <h2 class="uk-modal-title">{{ currentViewProperty?.name }}</h2>
+    <div
+      class="uk-position-relative uk-visible-toggle uk-light"
+      id="property-slider"
+      tabindex="-1"
+      uk-slider
+    >
+      <ul
+        class="uk-slider-items uk-child-width-1-2"
+      >
+        <li *ngFor="let imageSrc of currentViewProperty?.images">
+          <img [src]="imageSrc" class="property-slider-image">
+        </li>
+      </ul>
+      <a
+        class="uk-position-center-left uk-position-small uk-hidden-hover"
+        href="#"
+        uk-slidenav-previous
+        uk-slider-item="previous"
+      ></a>
+      <a
+        class="uk-position-center-right uk-position-small uk-hidden-hover"
+        href="#"
+        uk-slidenav-next
+        uk-slider-item="next"
+      ></a>
+    </div>
     <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div id="details">
+      <div class="detail">
+        <p class="key">Name</p>
+        <p class="value">{{ currentViewProperty?.name || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Plot/Flat/Villa No.</p>
+        <p class="value">{{ currentViewProperty?.plotNo || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Plot Area (sqft)</p>
+        <p class="value">{{ currentViewProperty?.plotArea || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Flat Area (sqft)</p>
+        <p class="value">{{ currentViewProperty?.flatArea || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Flat Type</p>
+        <p class="value">{{ currentViewProperty?.flatType || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Company Sales Value</p>
+        <p class="value">
+          {{ currentViewProperty?.companySalesValue || "N/A" }}
+        </p>
+      </div>
+      <div class="detail">
+        <p class="key">Company Accepted Rate</p>
+        <p class="value">
+          {{ currentViewProperty?.companyAcceptedRate || "N/A" }}
+        </p>
+      </div>
+      <div class="detail">
+        <p class="key">Company Accepted Value</p>
+        <p class="value">
+          {{ currentViewProperty?.companyAcceptedValue || "N/A" }}
+        </p>
+      </div>
+      <div class="detail">
+        <p class="key">Furnishing</p>
+        <p class="value">{{ currentViewProperty?.furnishing || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Facilities Nearby</p>
+        <p class="value">
+          {{ currentViewProperty?.facilitiesNearby || "N/A" }}
+        </p>
+      </div>
+      <div class="detail">
+        <p class="key">Distance from Important Locations</p>
+        <p class="value">
+          {{ currentViewProperty?.distanceFromImportantLocations || "N/A" }}
+        </p>
+      </div>
+      <div class="detail">
+        <p class="key">Renting Cost</p>
+        <p class="value">{{ currentViewProperty?.rentingCost || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Full Furnishing Cost</p>
+        <p class="value">
+          {{ currentViewProperty?.fullFurnishingCost || "N/A" }}
+        </p>
+      </div>
+      <div class="detail">
+        <p class="key">RERA Status</p>
+        <p class="value">{{ currentViewProperty?.reraStatus || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Other Details</p>
+        <p class="value">{{ currentViewProperty?.otherDetails || "N/A" }}</p>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div id="edit-or-add-property-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 *ngIf="editMode" class="uk-modal-title">Edit Customer Details</h2>
+    <h2 *ngIf="!editMode" class="uk-modal-title">Add New Customer</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
     <form [formGroup]="propertyForm" (ngSubmit)="submitPropertyForm()">
       <div class="property-form-box">
-        <label for="image-input">Property Photo</label>
+        <label for="images-input">Property Images</label>
         <input
           type="file"
           class="admin-input"
-          id="image-input"
-          formControlName="image"
-          (change)="imageValue = $event"
+          id="images-input"
+          multiple
+          (change)="imagesValue = $event"
         />
       </div>
       <div class="property-form-box">
@@ -107,7 +213,73 @@
           formControlName="companyAcceptedValue"
         />
       </div>
-      <app-primary-btn [text]="'Add Property'"></app-primary-btn>
+      <div class="property-form-box">
+        <label for="furnishing-input">Furnishing</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="furnishing-input"
+          formControlName="furnishing"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="facilities-nearby-input">Facilities Nearby</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="facilities-near-input"
+          formControlName="facilitiesNearby"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="distance-from-important-locations-input"
+          >Distance from Important Locations</label
+        >
+        <input
+          type="text"
+          class="admin-input"
+          id="distance-from-important-locations-input"
+          formControlName="distanceFromImportantLocations"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="renting-cost-input">Renting Cost</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="renting-cost-input"
+          formControlName="rentingCost"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="full-furnishing-cost-input">Full Furnishing Cost</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="full-furnishing-cost-input"
+          formControlName="fullFurnishingCost"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="rera-status-input">RERA Status</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="rera-status-input"
+          formControlName="reraStatus"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="other-details-input">Other Details</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="other-details-input"
+          formControlName="otherDetails"
+        />
+      </div>
+      <app-primary-btn *ngIf="!editMode" [text]="'Add Property'"></app-primary-btn>
+      <app-primary-btn *ngIf="editMode" [text]="'Edit Property'"></app-primary-btn>
     </form>
   </div>
 </div>
