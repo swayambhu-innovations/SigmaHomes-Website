@@ -50,30 +50,6 @@ header {
       }
     }
 
-    .secondary-btn {
-      font-family: var(--font-three);
-      font-size: var(--xsmall);
-      font-weight: 500;
-      padding: 0.25em 0.5em;
-      background-color: var(--secondary-contrast);
-      color: var(--secondary);
-      border: none;
-      transition: all 0.5s;
-      border-radius: 7px;
-      box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-      cursor: pointer;
-      margin-left: 1em;
-
-      &:hover,
-      &:focus {
-        transform: scale(1.05);
-      }
-
-      i {
-        margin-right: .5em;
-      }
-    }
-
     #view-responses-as {
       margin-left: 1em;
       
@@ -114,10 +90,10 @@ header {
       min-width: max(20vw, 210px);
       border-right: 2px solid var(--secondary);
       height: 100%;
+      z-index: 1;
 
       @media (max-width: 1000px) {
         position: absolute;
-        z-index: 1;
         top: 0;
       }
 
@@ -159,16 +135,15 @@ header {
 
   main {
     overflow-y: auto;
-    position: relative;
     width: 100%;
+    position: relative;
   }
 
-  main::after {
-    content: "";
-    background-color: var(--tertiary);
-    opacity: 0.3;
+  #overlay {
     width: var(--overlay-width);
     height: 100%;
+    background-color: var(--tertiary);
+    opacity: 0.3;
     position: absolute;
     top: 0;
     left: 0;

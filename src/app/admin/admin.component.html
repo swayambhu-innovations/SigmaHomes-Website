@@ -9,6 +9,62 @@
     ></button>
     <h2 id="header-heading">Agent {{ currentPanel }}</h2>
   </div>
+  <div *ngIf="currentPanel == 'Customers'" id="header-end">
+    <div class="search-box">
+      <input
+        type="text"
+        class="admin-search"
+        placeholder="Search"
+        id="broadcast-search-input"
+      />
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+    <button class="secondary-btn">
+      <i class="fa-solid fa-file-import"></i>Import
+    </button>
+    <button class="secondary-btn">
+      <i class="fa-solid fa-file-export"></i>Export
+    </button>
+  </div>
+  <div *ngIf="currentPanel == 'Broadcast'" id="header-end">
+    <div class="search-box">
+      <input
+        type="text"
+        class="admin-search"
+        placeholder="Search"
+        id="broadcast-search-input"
+      />
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+    <button routerLink="broadcast/new-broadcast" class="secondary-btn">
+      <i class="fa-solid fa-plus"></i>New Broadcast
+    </button>
+  </div>
+  <div *ngIf="currentPanel == 'Lead Center'" id="header-end">
+    <button class="secondary-btn">
+      <i class="fa-solid fa-file-import"></i>Import
+    </button>
+    <button class="secondary-btn">
+      <i class="fa-solid fa-file-export"></i>Export
+    </button>
+  </div>
+  <div *ngIf="currentPanel == 'Properties'" id="header-end">
+    <div class="search-box">
+      <input
+        type="text"
+        class="admin-search"
+        placeholder="Search"
+        id="property-search-input"
+      />
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+    <button class="secondary-btn">
+      <i class="fa-solid fa-file-import"></i>Import
+    </button>
+    <button class="secondary-btn">
+      <i class="fa-solid fa-file-export"></i>Export
+    </button>
+  </div>
   <div *ngIf="currentPanel == 'Responses'" id="header-end">
     <div class="search-box">
       <input
@@ -136,7 +192,8 @@
       </ul>
     </aside>
   </div>
-  <main (click)="showSidebar && toggleSidebar()">
+  <main>
     <router-outlet></router-outlet>
+    <div id="overlay" (click)="showSidebar && toggleSidebar()"></div>
   </main>
 </div>
