@@ -64,7 +64,7 @@
         }
 
         &.delete-btn {
-          background-color: #DC143C;
+          background-color: var(--danger);
         }
       }
     }

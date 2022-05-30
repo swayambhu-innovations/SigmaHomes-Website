@@ -50,7 +50,29 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
         });
       });
   }
-  
+
+  ngAfterViewInit(): void {
+    // import leads
+    const importLeads = document.getElementById('import-leads');
+    if (importLeads) {
+      importLeads.addEventListener(
+        'click',
+        () => {
+          const input = document.createElement('input');
+          input.type = 'file';
+          input.accept = '.xlsx, .xls, .csv';
+          input.click();
+          input.onchange = () => {
+            if (input.files && input.files.length > 0) {
+              
+            }
+          };
+        },
+        false
+      );
+    }
+  }
+
   edit(lead: any) {
     this.editMode = true;
     this.currentLeadId = lead.id;
@@ -63,7 +85,7 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
     });
     UIkit.modal(document.getElementById('lead-modal')).show();
   }
-  
+
   delete(lead: any) {
     if (lead.id && confirm('Are you sure you want to delete this lead?')) {
       this.dataProvider.pageSetting.blur = true;
@@ -78,7 +100,7 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
         });
     }
   }
-  
+
   editLead(leadId: string) {
     if (this.leadForm.valid) {
       this.dataProvider.pageSetting.blur = true;
@@ -99,7 +121,7 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
       this.alertify.presentToast('Please Fill All The Fields', 'error');
     }
   }
-  
+
   addLead() {
     if (this.leadForm.valid) {
       this.dataProvider.pageSetting.blur = true;
@@ -119,7 +141,7 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
       this.alertify.presentToast('Please Fill All The Fields', 'error');
     }
   }
-  
+
   ngOnDestroy(): void {
     this.leadsSubscription.unsubscribe();
   }

@@ -1,0 +1,36 @@
+main {
+  padding: 2em;
+
+  h3 {
+    text-align: center;
+    font-size: var(--xxlarge);
+    font-family: var(--font-three);
+    color: var(--tertiary);
+  }
+
+  #properties {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    app-property-card {
+      min-width: 250px;
+      max-width: 400px;
+      width: 20%;
+      margin: 1em;
+
+      @media (max-width: 1200px) {
+        width: 30%;
+      }
+
+      @media (max-width: 1024px) {
+        width: 45%;
+      }
+
+      @media (max-width: 704px) {
+        width: 100%;
+      }
+    }
+  }
+}

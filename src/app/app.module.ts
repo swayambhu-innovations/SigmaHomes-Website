@@ -49,7 +49,7 @@ import { DataProvider } from './providers/data.provider';
     DatabaseService,
     UserDataService,
     AlertsAndNotificationsService,
-    DataProvider,
+    DataProvider
   ],
   bootstrap: [AppComponent],
 })

@@ -1,24 +1,18 @@
 import { Injectable } from '@angular/core';
 import {
   Firestore,
-  arrayUnion,
   addDoc,
-  collectionData,
-  DocumentReference,
-  CollectionReference,
   collection,
-  setDoc,
   doc,
   updateDoc,
   deleteDoc,
-  docSnapshots,
-  docData,
   getDoc,
   getDocs,
   collectionSnapshots,
   query,
   orderBy,
   limit,
+  Timestamp,
 } from '@angular/fire/firestore';
 import {
   getDownloadURL,
@@ -26,10 +20,9 @@ import {
   ref,
   uploadBytesResumable,
 } from '@angular/fire/storage';
-import { arrayRemove, increment } from 'firebase/firestore';
 import { editFormInfo } from '../admin/profile/profile.component';
 import { DataProvider } from '../providers/data.provider';
-import { UserData } from '../structures/user.structure';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -136,5 +129,20 @@ export class DatabaseService {
 
   getResponse(responseId: any) {
     return getDoc(doc(this.fs, 'responses/' + responseId));
+  }
+
+  getBroadcasts() {
+    return getDocs(
+      query(
+        collection(this.fs, 'broadcasts'),
+        orderBy('date', 'desc')
+      )
+    );
+  }
+
+  addBroadcast(broadcast: any) {
+    const timestamp = Timestamp.now();
+    broadcast.date = timestamp;
+    return addDoc(collection(this.fs, 'broadcasts'), broadcast);
   }
 }

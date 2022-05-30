@@ -7,6 +7,8 @@ import { AdminWidgetsModule } from '../admin-widgets/admin-widgets.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../material/material.module';
 import { NewBroadcastComponent } from './new-broadcast/new-broadcast.component';
+import { BroadcastService } from 'src/app/services/broadcast.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [BroadcastComponent, NewBroadcastComponent],
@@ -16,7 +18,9 @@ import { NewBroadcastComponent } from './new-broadcast/new-broadcast.component';
     AdminWidgetsModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    RouterModule
   ],
+  providers: [BroadcastService],
 })
 export class BroadcastModule {}

@@ -1,0 +1,34 @@
+#card {
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  transition: all 0.5s;
+  border-radius: 10px;
+
+  &:hover {
+    box-shadow: var(--normal-shadow);
+  }
+
+  img {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+  }
+
+  #details {
+    padding: 1em;
+
+    h4,
+    p {
+      font-family: var(--font-three);
+      color: var(--tertiary);
+      margin: 0;
+    }
+
+    h4 {
+      font-size: var(--xlarge);
+      margin-bottom: 0.5em;
+    }
+
+    p {
+      font-size: var(--small);
+    }
+  }
+}

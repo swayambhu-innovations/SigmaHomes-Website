@@ -8,6 +8,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
+  @Input() positionAbsolute: boolean = false;
+  
   breakpoint: number = 950;
 
   largeScreen: boolean = window.innerWidth > this.breakpoint;

@@ -1,4 +1,4 @@
-<header>
+<header [style]="positionAbsolute ? ' position: absolute; top: 0; left: 0; width: 100%; z-index: 1;' : ''">
   <nav
     class="uk-navbar-container uk-navbar-transparent"
     uk-navbar
@@ -18,7 +18,7 @@
         uk-scrollspy="target: > li; cls: uk-animation-slide-left-small; delay: 150"
       >
         <li>
-          <button class="nav-link" routerLink="" routerLinkActive="active">
+          <button class="nav-link" routerLink="/home" routerLinkActive="active">
             Home
           </button>
         </li>
@@ -30,10 +30,10 @@
         <li>
           <button
             class="nav-link"
-            routerLink="/projects"
+            routerLink="/properties"
             routerLinkActive="active"
           >
-            Projects
+            Properties
           </button>
         </li>
         <li>
@@ -122,10 +122,10 @@
           <li>
             <button
               class="nav-link2"
-              routerLink="/projects"
+              routerLink="/properties"
               routerLinkActive="active2"
             >
-              Projects
+              Properties
             </button>
           </li>
           <li>

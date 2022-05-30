@@ -1,28 +1,39 @@
 #properties {
-    padding: 2em;
-}
+  padding: 2em;
 
-h3 {
+  h3 {
     text-align: center;
     font-size: var(--xxlarge);
     font-family: var(--font-three);
-}
+  }
 
-#properties-container {
+  #properties-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
-}
 
-app-property-card {
-    min-width: 250px;
-    max-width: 400px;
-    width: 20%;
-    margin: 1em;
-}
+    app-property-card {
+      min-width: 250px;
+      max-width: 400px;
+      width: 20%;
+      margin: 1em;
 
-#view-all {
+      @media (max-width: 1200px) {
+        width: 30%;
+      }
+
+      @media (max-width: 1024px) {
+        width: 45%;
+      }
+
+      @media (max-width: 704px) {
+        width: 100%;
+      }
+    }
+  }
+
+  #view-all {
     font-family: var(--font-two);
     font-size: var(--medium);
     border-radius: 20px;
@@ -31,29 +42,14 @@ app-property-card {
     color: var(--primary-contrast);
     width: fit-content;
     margin: 2em auto 0 auto;
-    padding: .5em 1.25em;
-    text-decoration: none;
-    transition: all .5s;
-}
+    padding: 0.5em 1.25em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s;
 
-#view-all:hover, #view-all:focus {
-    box-shadow: var(--normal-shadow);
-}
-
-@media (max-width: 1200px) {
-    app-property-card {
-        width: 30%;
+    &:hover,
+    &:focus {
+      box-shadow: var(--normal-shadow);
     }
-}
-
-@media (max-width: 1024px) {
-    app-property-card {
-        width: 45%;
-    }
-}
-
-@media (max-width: 704px) {
-    app-property-card {
-        width: 100%;
-    }
+  }
 }

@@ -1,0 +1,105 @@
+header {
+  nav {
+    padding: 1em 2em;
+    height: fit-content;
+
+    #heading {
+      font-size: var(--xlarge);
+      color: var(--secondary);
+      font-weight: 700;
+      font-family: var(--font-three);
+    }
+
+    .nav-link {
+      font-family: var(--font-three);
+      color: var(--secondary);
+      font-size: var(--medium);
+      text-transform: unset;
+      background: none;
+      border: none;
+      opacity: 0.5;
+      cursor: pointer;
+      margin: 0 0.75em;
+      transition: all 0.5s;
+
+      &:hover,
+      &:focus {
+        opacity: 1;
+      }
+
+      &.active {
+        opacity: 1;
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5em;
+      }
+    }
+
+    #header-buttons {
+      display: flex;
+
+      .header-button {
+        font-family: var(--font-three);
+        font-size: var(--medium);
+        display: block;
+        border-radius: 25px;
+        padding: 0.5em 1.25em;
+        margin-right: 0.5em;
+        border: none;
+        cursor: pointer;
+        transition: all 0.5s;
+
+        &#login,
+        &#logout {
+          color: var(--secondary);
+          background: none;
+
+          &:hover,
+          &:focus {
+            filter: opacity(0.5);
+          }
+        }
+
+        &#signup,
+        &#admin {
+          color: var(--secondary-contrast);
+          background: var(--secondary);
+
+          &:hover,
+          &:focus {
+            box-shadow: var(--normal-shadow);
+          }
+        }
+      }
+    }
+
+    #toggle-button {
+      color: var(--secondary);
+      min-height: unset;
+    }
+
+    #offcanvas-bar {
+      background-color: var(--secondary);
+      box-shadow: var(--normal-shadow);
+
+      .nav-link2 {
+        font-family: var(--font-three);
+        color: var(--secondary-contrast);
+        font-size: var(--medium);
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        margin: 0;
+        padding: 0.5em 0.25em;
+        transition: all 0.5s;
+
+        &:hover,
+        &:focus,
+        &.active2 {
+          border-bottom: 2px solid var(--primary);
+        }
+      }
+    }
+  }
+}

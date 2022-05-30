@@ -127,8 +127,8 @@
 
 <div id="edit-or-add-property-modal" uk-modal>
   <div class="uk-modal-dialog uk-modal-body">
-    <h2 *ngIf="editMode" class="uk-modal-title">Edit Customer Details</h2>
-    <h2 *ngIf="!editMode" class="uk-modal-title">Add New Customer</h2>
+    <h2 *ngIf="editMode" class="uk-modal-title">Edit Property Details</h2>
+    <h2 *ngIf="!editMode" class="uk-modal-title">Add New Property</h2>
     <button class="uk-modal-close-default" type="button" uk-close></button>
     <form [formGroup]="propertyForm" (ngSubmit)="submitPropertyForm()">
       <div class="property-form-box">
