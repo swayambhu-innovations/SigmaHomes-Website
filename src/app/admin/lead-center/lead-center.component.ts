@@ -2,8 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DataProvider } from 'src/app/providers/data.provider';
+import { CSVService } from 'src/app/services/csv.service';
 import { DatabaseService } from 'src/app/services/database.service';
 import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
+import Fuse from 'fuse.js';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DataTransferService } from 'src/app/services/data-transfer.service';
 declare const UIkit: any;
 
 @Component({
@@ -13,6 +17,7 @@ declare const UIkit: any;
 })
 export class LeadCenterComponent implements OnInit, OnDestroy {
   leads: any[] = [];
+  filteredLeads: any[] = [];
   editMode: boolean = false;
   editLeadsValue: any;
   currentLeadId: string = '';
@@ -21,7 +26,11 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
   constructor(
     private databaseService: DatabaseService,
     private alertify: AlertsAndNotificationsService,
-    private dataProvider: DataProvider
+    private dataProvider: DataProvider,
+    private csvService: CSVService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private dataTransferService: DataTransferService
   ) {}
 
   leadForm: FormGroup = new FormGroup({
@@ -48,10 +57,32 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
           data.id = element.id;
           this.leads.push(data);
         });
+        this.filteredLeads = this.leads;
       });
   }
 
   ngAfterViewInit(): void {
+    // search leads
+    const leadSearchInput = document.getElementById(
+      'lead-search-input'
+    ) as HTMLInputElement;
+    if (leadSearchInput) {
+      leadSearchInput.oninput = () => {
+        const query = leadSearchInput.value.trim();
+        if (query.length > 0) {
+          const options = { keys: ['name', 'phone', 'email'] };
+          const fuse = new Fuse(this.leads, options);
+          const results = fuse.search(query);
+          this.filteredLeads = [];
+          results.forEach((result: any) => {
+            this.filteredLeads.push(result.item);
+          });
+        } else {
+          this.filteredLeads = this.leads;
+        }
+      };
+    }
+
     // import leads
     const importLeads = document.getElementById('import-leads');
     if (importLeads) {
@@ -60,23 +91,83 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
         () => {
           const input = document.createElement('input');
           input.type = 'file';
-          input.accept = '.xlsx, .xls, .csv';
+          input.accept = '.csv';
           input.click();
           input.onchange = () => {
-            if (input.files && input.files.length > 0) {
-              
+            this.dataProvider.pageSetting.blur = true;
+            if (input.files && input.files[0]) {
+              this.csvService.loadRecords(input.files[0]);
+              setTimeout(async () => {
+                const leads = this.csvService.getRecords();
+                for (const lead of leads) {
+                  await this.databaseService.addLead(lead);
+                }
+                input.value = '';
+                this.dataProvider.pageSetting.blur = false;
+                this.alertify.presentToast('Leads added successfully', 'info');
+              }, 1000);
             }
           };
         },
         false
       );
     }
+
+    // export leads
+    const exportLeads = document.getElementById('export-leads');
+    if (exportLeads) {
+      exportLeads.addEventListener(
+        'click',
+        () => {
+          if (this.leads.length > 0) {
+            const keys = Object.keys(this.leads[0]);
+            const csvData = [keys];
+            this.leads.forEach((lead) => {
+              const values = [];
+              for (const key of keys) {
+                values.push(lead[key]);
+              }
+              csvData.push(values);
+            });
+            this.csvService.export(csvData, 'leads');
+          } else {
+            this.alertify.presentToast('No leads to export', 'error');
+          }
+        },
+        false
+      );
+    }
+  }
+
+  makeCustomer(lead: any) {
+    this.dataTransferService.setLead(lead);
+    this.router.navigate(['../customers'], { relativeTo: this.route });
   }
 
   edit(lead: any) {
     this.editMode = true;
     this.currentLeadId = lead.id;
     this.leadForm.patchValue(lead);
+
+    // Patching dates (gets tricky)
+    const dobDate = new Date(lead.customerDob);
+    const dobFormat =
+      dobDate.getFullYear() +
+      '-' +
+      String(dobDate.getMonth() + 1).padStart(2, '0') +
+      '-' +
+      String(dobDate.getDate()).padStart(2, '0');
+    this.leadForm.patchValue({ customerDob: dobFormat });
+
+    const anniversaryDate = new Date(lead.customerAnniversary);
+    const anniversaryFormat =
+      anniversaryDate.getFullYear() +
+      '-' +
+      String(anniversaryDate.getMonth() + 1).padStart(2, '0') +
+      '-' +
+      String(anniversaryDate.getDate()).padStart(2, '0');
+    this.leadForm.patchValue({ customerAnniversary: anniversaryFormat });
+
     document.getElementById('lead-modal')?.addEventListener('hidden', () => {
       this.editMode = false;
       this.currentLeadId = '';
@@ -110,7 +201,7 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
           this.alertify.presentToast('Lead Updated Successfully', 'info');
           this.leadForm.reset();
           this.editMode = false;
-          UIkit.modal(document.getElementById('add-lead-modal')).hide();
+          UIkit.modal(document.getElementById('lead-modal')).hide();
           this.dataProvider.pageSetting.blur = false;
         })
         .catch((error) => {
@@ -130,7 +221,7 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
         .then(() => {
           this.alertify.presentToast('Lead Added Successfully', 'info');
           this.leadForm.reset();
-          UIkit.modal(document.getElementById('add-lead-modal')).hide();
+          UIkit.modal(document.getElementById('lead-modal')).hide();
           this.dataProvider.pageSetting.blur = false;
         })
         .catch((error) => {

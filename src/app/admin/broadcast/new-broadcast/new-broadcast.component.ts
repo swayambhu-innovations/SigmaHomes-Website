@@ -201,7 +201,7 @@ export class NewBroadcastComponent implements OnInit {
     } else {
       // Upload the image if an image is selected
       this.dataProvider.pageSetting.blur = true;
-      
+
       if (this.photoInput.nativeElement.files.length === 1) {
         const file = this.photoInput.nativeElement.files[0];
         await this.databaseService
@@ -215,10 +215,12 @@ export class NewBroadcastComponent implements OnInit {
           .then((url) => {
             this.broadcastForm.patchValue({ image: url });
           });
-        console.log(this.broadcastForm.value);
       }
 
       this.broadcastForm.patchValue({ recipients: this.recipients });
+
+      // Send broadcast
+      this.broadcastService.sendBroadcast(this.broadcastForm.value);
 
       // Upload Broadcast to the list of broadcasts
       this.databaseService

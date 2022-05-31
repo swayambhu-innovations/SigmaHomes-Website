@@ -1,7 +1,7 @@
 <section>
   <div id="lead-cards" uk-grid="masonry:true">
     <app-lead-card
-      *ngFor="let lead of leads"
+      *ngFor="let lead of filteredLeads"
       [name]="lead.name ? lead.name : 'N/A'"
       [number]="lead.phone ? lead.phone : 'N/A'"
       [email]="lead.email ? lead.email : 'N/A'"
@@ -15,6 +15,7 @@
       [customerAnniversary]="
         lead.customerAnniversary ? lead.customerAnniversary : 'N/A'
       "
+      (onMakeCustomer)="makeCustomer(lead)"
       (onEdit)="edit(lead)"
       (onDelete)="delete(lead)"
     >

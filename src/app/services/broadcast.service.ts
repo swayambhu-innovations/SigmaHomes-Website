@@ -24,4 +24,6 @@ export class BroadcastService {
   getBroadcast() {
     return this.broadcast;
   }
+
+  sendBroadcast(broadcast: any) {}
 }

@@ -49,9 +49,9 @@
     </p>
   </div>
   <div *ngIf="expanded" id="buttons">
-    <button id="move-to-customer">Make Customer</button>
+    <button id="make-customer" (click)="onMakeCustomer.emit()">Make Customer</button>
     <button uk-tooltip="title: Interesting Properties"><i class="fa-solid fa-circle-info"></i></button>
-    <button uk-tooltip="title: Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-    <button uk-tooltip="title: Delete"><i class="fa-solid fa-trash-can"></i></button>
+    <button (click)="onEdit.emit()" uk-tooltip="title: Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+    <button (click)="onDelete.emit()" uk-tooltip="title: Delete"><i class="fa-solid fa-trash-can"></i></button>
   </div>
 </div>

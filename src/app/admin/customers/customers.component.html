@@ -1,32 +1,40 @@
 <section>
-  <p *ngIf="customers.length < 1" id="no-customers">No customers :(</p>
-  <table *ngIf="customers.length >= 1">
+  <p *ngIf="!customers || customers.length < 1" id="no-customers">
+    No customers :(
+  </p>
+  <table *ngIf="customers && customers.length >= 1">
     <thead>
       <tr>
-        <th style="width: 10%">Photo</th>
-        <th>Name</th>
-        <th>Contact</th>
-        <th>View/Edit/Delete</th>
+        <th width="10%">Photo</th>
+        <th width="30%">Name</th>
+        <th width="30%">Contact</th>
+        <th width="30%">View/Edit/Delete</th>
       </tr>
     </thead>
     <tbody>
       <tr
-        *ngFor="let customer of customers; let i = index"
+        *ngFor="let customer of filteredCustomers; let i = index"
         [attr.data-index]="i"
       >
         <td>
-          <img *ngIf="customer.img" [src]="customer.img" />
+          <img [src]="customer.img || 'assets/img/circle-user-solid.svg'" />
         </td>
         <td style="font-weight: 500">{{ customer.name }}</td>
         <td>
           <div class="buttons">
-            <button uk-tooltip="Call"><i class="fa-solid fa-phone"></i></button>
+            <a href="tel:{{ customer.phone }}" uk-tooltip="Call"
+              ><i class="fa-solid fa-phone"></i
+            ></a>
             <button uk-tooltip="Send SMS">
               <i class="fa-solid fa-comment-sms"></i>
             </button>
-            <button uk-tooltip="Email">
+            <a
+              href="mailto:{{ customer.email }}"
+              target="_blank"
+              uk-tooltip="Email"
+            >
               <i class="fa-solid fa-envelope"></i>
-            </button>
+            </a>
           </div>
         </td>
         <td>
@@ -45,7 +53,8 @@
             </button>
             <button
               (click)="deleteCustomer(customer)"
-              uk-tooltip="title: Delete Customer" class="delete-btn"
+              uk-tooltip="title: Delete Customer"
+              class="delete-btn"
             >
               <i class="fa-solid fa-trash"></i>
             </button>
@@ -65,9 +74,7 @@
   <div class="uk-modal-dialog uk-modal-body">
     <div id="current-customer-image-and-name">
       <img
-        *ngIf="currentViewCustomer?.img"
-        [src]="currentViewCustomer.img"
-        [alt]="currentViewCustomer.name"
+        [src]="currentViewCustomer?.img || 'assets/img/circle-user-solid.svg'"
         id="current-customer-img"
       />
       <h2 class="uk-modal-title">{{ currentViewCustomer?.name }}</h2>
@@ -85,6 +92,40 @@
       <div class="detail">
         <p class="key">Email Address</p>
         <p class="value">{{ currentViewCustomer?.email || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Address</p>
+        <p class="value">{{ currentViewCustomer?.address || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">State</p>
+        <p class="value">{{ currentViewCustomer?.state || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">City</p>
+        <p class="value">{{ currentViewCustomer?.city || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Pincode</p>
+        <p class="value">{{ currentViewCustomer?.pincode || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Aadhar No.</p>
+        <p class="value">{{ currentViewCustomer?.aadharNo || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">PAN No.</p>
+        <p class="value">{{ currentViewCustomer?.panNo || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Customer DOB</p>
+        <p class="value">{{ currentViewCustomer?.customerDob || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Customer Anniversary</p>
+        <p class="value">
+          {{ currentViewCustomer?.customerAnniversary || "N/A" }}
+        </p>
       </div>
       <div class="detail">
         <p class="key">Booking Date</p>
@@ -169,13 +210,7 @@
         <label for="photo-input"
           >{{ editMode ? "Change " : "" }}Profile Photo:
         </label>
-        <input
-          type="file"
-          id="photo-input"
-          class="admin-input"
-          #photoInput
-          (change)="validateProfilePhoto()"
-        />
+        <input type="file" id="photo-input" class="admin-input" #photoInput />
       </div>
       <div class="customer-form-box">
         <label for="name-input">Name</label>
@@ -202,6 +237,78 @@
           class="admin-input"
           id="email-input"
           formControlName="email"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="address-input">Address</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="address-input"
+          formControlName="address"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="state-input">State</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="state-input"
+          formControlName="state"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="city-input">City</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="city-input"
+          formControlName="city"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="pincode-input">Pincode</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="pincode-input"
+          formControlName="pincode"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="aadhar-no-input">Aadhar No.</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="aadhar-no-input"
+          formControlName="aadharNo"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="pan-no-input">PAN No.</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="pan-no-input"
+          formControlName="panNo"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="customer-dob-input">Customer DOB</label>
+        <input
+          type="date"
+          class="admin-input"
+          id="customer-dob-input"
+          formControlName="customerDob"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="customer-anniversary-input">Customer Anniversary</label>
+        <input
+          type="date"
+          class="admin-input"
+          id="customer-anniversary-input"
+          formControlName="customerAnniversary"
         />
       </div>
       <div class="customer-form-box">
@@ -350,8 +457,8 @@
       </div>
       <app-primary-btn
         [text]="editMode ? 'Update Details' : 'Add Customer'"
+        [disabled]="!customerForm.valid"
       ></app-primary-btn>
     </form>
   </div>
 </div>
-

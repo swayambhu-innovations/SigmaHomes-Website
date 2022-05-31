@@ -6,7 +6,8 @@ import { LeadCenterComponent } from './lead-center.component';
 import { LeadCardComponent } from './lead-card/lead-card.component';
 import { AdminWidgetsModule } from '../admin-widgets/admin-widgets.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { CSVService } from 'src/app/services/csv.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     LeadCenterRoutingModule,
     AdminWidgetsModule,
     FormsModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+    RouterModule
+  ],
+  providers: [CSVService],
 })
 export class LeadCenterModule { }

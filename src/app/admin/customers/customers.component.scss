@@ -65,7 +65,7 @@ section {
             display: flex;
             justify-content: center;
 
-            button {
+            button, a {
               background-color: var(--secondary);
               color: var(--secondary-contrast);
               border: none;

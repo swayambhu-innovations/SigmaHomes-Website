@@ -3,6 +3,8 @@ section {
 
   #lead-cards {
     padding: 1em;
+    height: 100% !important;
+    overflow: hidden;
 
     app-lead-card {
       width: 32%;
