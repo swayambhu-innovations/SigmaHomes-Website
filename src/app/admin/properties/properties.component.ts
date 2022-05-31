@@ -3,6 +3,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataProvider } from 'src/app/providers/data.provider';
 import { DatabaseService } from 'src/app/services/database.service';
 import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
+import Fuse from 'fuse.js';
+import { CSVService } from 'src/app/services/csv.service';
 declare const UIkit: any;
 
 @Component({
@@ -12,6 +14,7 @@ declare const UIkit: any;
 })
 export class PropertiesComponent implements OnInit {
   properties: any[] = [];
+  filteredProperties: any[] = [];
   editMode: boolean = false;
   currentEditId: string = '';
   currentViewProperty: any;
@@ -39,7 +42,8 @@ export class PropertiesComponent implements OnInit {
   constructor(
     private dataProvider: DataProvider,
     private databaseService: DatabaseService,
-    private alertify: AlertsAndNotificationsService
+    private alertify: AlertsAndNotificationsService,
+    private csvService: CSVService
   ) {}
 
   ngOnInit() {
@@ -49,7 +53,93 @@ export class PropertiesComponent implements OnInit {
         const property = { id: element.id, ...element.data() };
         this.properties.push(property);
       });
+      this.filteredProperties = this.properties;
     });
+  }
+
+  ngAfterViewInit(): void {
+    // Search properties
+    const propertySearchInput = document.getElementById(
+      'property-search-input'
+    ) as HTMLInputElement;
+    if (propertySearchInput) {
+      propertySearchInput.oninput = () => {
+        const query = propertySearchInput.value.trim();
+        if (query.length > 0) {
+          const options = { keys: ['name'] };
+          const fuse = new Fuse(this.properties, options);
+          const results = fuse.search(query);
+          this.filteredProperties = [];
+          results.forEach((result: any) => {
+            this.filteredProperties.push(result.item);
+          });
+        } else {
+          this.filteredProperties = this.properties;
+        }
+      };
+    }
+
+    // import properties
+    const importProperties = document.getElementById('import-properties');
+    if (importProperties) {
+      importProperties.addEventListener(
+        'click',
+        () => {
+          const input = document.createElement('input');
+          input.type = 'file';
+          input.accept = '.csv';
+          input.click();
+          input.onchange = () => {
+            this.dataProvider.pageSetting.blur = true;
+            if (input.files && input.files[0]) {
+              this.csvService.load(input.files[0]);
+              setTimeout(async () => {
+                const properties = this.csvService.import();
+                for (const property of properties) {
+                  property.images = property.images.split('|');
+                  Object.keys(this.propertyForm).forEach((key) => {
+                    
+                  });
+                  await this.databaseService.addProperty(property);
+                }
+                input.value = '';
+                this.dataProvider.pageSetting.blur = false;
+                this.alertify.presentToast(
+                  'Properties added successfully',
+                  'info'
+                );
+              }, 1000);
+            }
+          };
+        },
+        false
+      );
+    }
+
+    // export properties
+    const exportProperties = document.getElementById('export-properties');
+    if (exportProperties) {
+      exportProperties.addEventListener(
+        'click',
+        () => {
+          if (this.properties.length > 0) {
+            const keys = Object.keys(this.properties[0]);
+            const csvData = [keys];
+            this.properties.forEach((property) => {
+              const values = [];
+              for (const key of keys) {
+                values.push(property[key]);
+              }
+              csvData.push(values);
+            });
+            this.csvService.export(csvData, 'properties');
+          } else {
+            this.alertify.presentToast('No properties to export', 'error');
+          }
+        },
+        false
+      );
+    }
   }
 
   viewProperty(property: any): void {

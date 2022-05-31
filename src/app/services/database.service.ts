@@ -78,6 +78,7 @@ export class DatabaseService {
   }
 
   addProperty(property: any) {
+    property.rating = 0;
     return addDoc(collection(this.fs, 'properties'), property);
   }
 
@@ -100,6 +101,7 @@ export class DatabaseService {
   }
 
   deleteProperty(propertyId: string) {
+    console.log(propertyId)
     return deleteDoc(doc(this.fs, 'properties/' + propertyId));
   }
 

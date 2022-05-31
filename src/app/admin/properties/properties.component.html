@@ -2,7 +2,7 @@
   <p *ngIf="properties.length < 1" id="no-properties">No properties :(</p>
   <div *ngIf="properties.length >= 1" id="properties">
     <app-property-card
-      *ngFor="let property of properties"
+      *ngFor="let property of filteredProperties"
       [images]="property.images"
       [heading]="property.name"
       [address]="property.plotNo"

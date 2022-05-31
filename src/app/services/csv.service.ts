@@ -13,7 +13,7 @@ export class CSVService {
 
   private records: any[] = [];
 
-  loadRecords(file: any): void {
+  load(file: any): void {
     if (file.name.endsWith('.csv')) {
       const reader = new FileReader();
       reader.readAsText(file);
@@ -32,11 +32,13 @@ export class CSVService {
           if (dataRecord.length >= headers.length) {
             var recordBlank = true;
             for (var j = 0; j < headers.length; j++) {
-              const value = dataRecord[j].trim();
-              if (value !== '') {
-                recordBlank = false;
+              if (headers[j] != 'id') {
+                const value = dataRecord[j].trim();
+                if (value !== '') {
+                  recordBlank = false;
+                }
+                record[headers[j]] = value;
               }
-              record[headers[j]] = value;
             }
             if (!recordBlank) {
               this.records.push(record);
@@ -61,7 +63,7 @@ export class CSVService {
     }
   }
 
-  getRecords(): any[] {
+  import(): any[] {
     return this.records;
   }
 
@@ -70,8 +72,13 @@ export class CSVService {
 
     var data = 'data:text/csv;charset=utf-8,';
     records.forEach((record) => {
-      let row = record.join(',');
-      data += row + '\r\n';
+      record.forEach((value: any, index: number) => {
+        record[index] = String(value).replace(/,/g, '|');
+        if (record[index] == undefined) {
+          record[index] = '';
+        }
+      });
+      data += record.join(',') + '\r\n';
     });
 
     const link = document.createElement('a');

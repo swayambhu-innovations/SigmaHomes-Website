@@ -83,6 +83,10 @@
         width: 100%;
       }
 
+      &.delete-btn {
+      background-color: var(--danger);
+      }
+
       &:last-child {
         margin-right: 0;
       }

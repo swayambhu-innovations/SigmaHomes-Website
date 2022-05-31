@@ -67,10 +67,10 @@
       />
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
-    <button class="secondary-btn">
+    <button class="secondary-btn" id="import-properties">
       <i class="fa-solid fa-file-import"></i>Import
     </button>
-    <button class="secondary-btn">
+    <button class="secondary-btn" id="export-properties">
       <i class="fa-solid fa-file-export"></i>Export
     </button>
   </div>
@@ -93,7 +93,10 @@
     <div id="view-responses-as">
       <input type="hidden" value="cards" id="view-as-input" #viewAsInput />
       <button
-        [ngClass]="{'view-as-btn': true, 'selected': viewAsInput.value == 'cards'}"
+        [ngClass]="{
+          'view-as-btn': true,
+          selected: viewAsInput.value == 'cards'
+        }"
         (click)="viewAsInput.value = 'cards'"
         uk-tooltip="View as cards"
         data-view-as="cards"
@@ -101,7 +104,10 @@
         <i class="fa-solid fa-address-card"></i>
       </button>
       <button
-        [ngClass]="{'view-as-btn': true, 'selected': viewAsInput.value == 'table'}"
+        [ngClass]="{
+          'view-as-btn': true,
+          selected: viewAsInput.value == 'table'
+        }"
         (click)="viewAsInput.value = 'table'"
         uk-tooltip="View as a table"
         data-view-as="table"

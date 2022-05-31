@@ -144,9 +144,9 @@ export class CustomersComponent implements OnInit {
           input.onchange = () => {
             this.dataProvider.pageSetting.blur = true;
             if (input.files && input.files[0]) {
-              this.csvService.loadRecords(input.files[0]);
+              this.csvService.load(input.files[0]);
               setTimeout(async () => {
-                const customers = this.csvService.getRecords();
+                const customers = this.csvService.import();
                 for (const customer of customers) {
                   await this.databaseService.addCustomer(customer);
                 }

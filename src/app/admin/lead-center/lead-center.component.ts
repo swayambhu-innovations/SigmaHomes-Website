@@ -96,9 +96,9 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
           input.onchange = () => {
             this.dataProvider.pageSetting.blur = true;
             if (input.files && input.files[0]) {
-              this.csvService.loadRecords(input.files[0]);
+              this.csvService.load(input.files[0]);
               setTimeout(async () => {
-                const leads = this.csvService.getRecords();
+                const leads = this.csvService.import();
                 for (const lead of leads) {
                   await this.databaseService.addLead(lead);
                 }
