@@ -6,7 +6,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 @Component({
   selector: 'app-response-page',
   templateUrl: './response-page.component.html',
-  styleUrls: ['./response-page.component.scss', '../../admin.util.scss', 'stepper.scss'],
+  styleUrls: ['./response-page.component.scss', '../../admin.util.scss'],
 })
 export class ResponsePageComponent implements OnInit {
   response: any;
@@ -30,8 +30,7 @@ export class ResponsePageComponent implements OnInit {
             this.response = response.data();
             if (!this.response) {
               this.router.navigate(['..'], { relativeTo: this.route });
-            }
-            else {
+            } else {
               this.activePhaseTab = this.response.phase;
             }
           });

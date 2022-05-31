@@ -8,7 +8,7 @@ declare const UIkit: any;
 @Component({
   selector: 'app-properties',
   templateUrl: './properties.component.html',
-  styleUrls: ['./properties.component.scss', './properties.modal.scss'],
+  styleUrls: ['./properties.component.scss'],
 })
 export class PropertiesComponent implements OnInit {
   properties: any[] = [];

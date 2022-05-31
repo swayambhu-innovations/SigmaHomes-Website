@@ -6,7 +6,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 @Component({
   selector: 'app-responses',
   templateUrl: './responses.component.html',
-  styleUrls: ['./responses.component.scss', 'responses.modal.scss'],
+  styleUrls: ['./responses.component.scss'],
 })
 export class ResponsesComponent implements OnInit {
   responses: any[];
