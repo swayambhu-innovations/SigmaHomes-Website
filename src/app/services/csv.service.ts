@@ -32,12 +32,12 @@ export class CSVService {
           if (dataRecord.length >= headers.length) {
             var recordBlank = true;
             for (var j = 0; j < headers.length; j++) {
-              if (headers[j] != 'id') {
+              if (headers[j] && headers[j] != 'id') {
                 const value = dataRecord[j].trim();
                 if (value !== '') {
                   recordBlank = false;
                 }
-                record[headers[j]] = value;
+                record[headers[j]] = value.replace(/\|/g, ',');
               }
             }
             if (!recordBlank) {

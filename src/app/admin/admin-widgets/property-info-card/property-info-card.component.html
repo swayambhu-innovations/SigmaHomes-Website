@@ -1,40 +1,32 @@
+
+
 <div id="card">
   <div id="details">
     <div id="property-img-container">
-      <img src="{{ propertyImgSrc }}" alt="{{ propertyName }}" />
+      <img [src]="property.images && property.images.length > 0 ? property.images[0] : ''" [alt]="property.name" />
     </div>
     <div id="text-container">
-      <div id="headings">
-        <p>{{ customerName }}</p>
-        <p>{{ propertyName }}</p>
-      </div>
-      <div id="subheadings">
-        <p>{{ time }}</p>
-        <p>{{ date }}</p>
+      <div>
+        <h4>{{ property.name }}</h4>
+        <p>{{ customer.name }}</p>
+        <div id="contact-buttons">
+          <a href="tel:{{ customer.phone }}" uk-tooltip="Call"
+            ><i class="fa-solid fa-phone"></i
+          ></a>
+          <button uk-tooltip="Send SMS">
+            <i class="fa-solid fa-comment-sms"></i>
+          </button>
+          <a
+            href="mailto:{{ customer.email }}"
+            target="_blank"
+            uk-tooltip="Email"
+          >
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+        </div>
       </div>
       <div id="badge">{{ status }}</div>
     </div>
-    <img
-      src="{{ customerImgSrc }}"
-      alt="{{ customerName }}"
-      id="customer-img"
-      [attr.uk-tooltip]="customerName"
-    />
-  </div>
-  <div id="buttons">
-    <button (click)="view.emit()" uk-tooltip="title: View">
-      <i class="fa-solid fa-eye"></i>
-    </button>
-    <button (click)="edit.emit()" uk-tooltip="title: Edit">
-      <i class="fa-solid fa-pen-to-square"></i>
-    </button>
-    <button
-      (click)="delete.emit()"
-      uk-tooltip="title: Delete"
-      class="delete-btn"
-    >
-      <i class="fa-solid fa-trash"></i>
-    </button>
   </div>
   <button *ngIf="selectable" id="select-button" (click)="selectResponse()">
     <i

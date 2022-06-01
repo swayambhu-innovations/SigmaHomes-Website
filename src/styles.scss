@@ -15,6 +15,7 @@
   --large: 20px;
   --medium: 18px;
   --small: 16px;
+  --xsmall: 14px;
   --font-one: "Playfair Display", serif;
   --font-two: "Lato", sans-serif;
   --font-three: "Poppins", sans-serif;
@@ -30,7 +31,7 @@
 .admin-input {
   display: block;
   background-color: transparent;
-  font-family: var(--font-two);
+  font-family: var(--font-three);
   font-size: var(--medium);
   padding: 0.5em;
   border: none;

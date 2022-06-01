@@ -1,88 +1,93 @@
-<section id="responses">
-  <div *ngIf="viewAs == 'cards'" id="cards">
-    <app-property-info-card
-      *ngFor="let response of filteredResponses; let i = index"
-      [id]="response.id"
-      [propertyImgSrc]="response.propertyImgSrc"
-      [customerName]="response.customerName"
-      [propertyName]="response.propertyName"
-      [time]="response.time"
-      [date]="response.date"
-      [status]="phases[response.phase]"
-      [customerImgSrc]="response.customerImgSrc"
-      [selectable]="true"
-      [selected]="responsesSelected.includes(response.id)"
-      (view)="goToResponsePage(response.id)"
-      (edit)="editResponse(response)"
-      (delete)="deleteResponse(response)"
-      (cardSelect)="toggleSelection($event)"
-    ></app-property-info-card>
+<section
+  id="responses"
+  [style]="selectedResponses.length > 0 ? 'padding-bottom: 5em' : ''"
+>
+  <div
+    id="no-responses"
+    *ngIf="!responses || responses.length === 0"
+    uk-toggle="target: #add-response-modal"
+  >
+    <i class="fa-solid fa-plus"></i>
+    <p>You have not sent any responses yet. Click here to send one.</p>
   </div>
-  <div *ngIf="viewAs == 'table'" id="table">
-    <table>
-      <thead>
-        <tr>
-          <th></th>
-          <th>Customer Name</th>
-          <th>Property Name</th>
-          <th>Time</th>
-          <th>Date</th>
-          <th>Status</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let response of filteredResponses">
-          <td>
-            <button
-              class="select-button"
-              (click)="toggleSelection(response.id)"
-            >
-              <i
-                class="fa-solid fa-circle-check"
-                [style]="
-                  'color: ' +
-                  (responsesSelected.includes(response.id)
-                    ? '#5cb85c'
-                    : '#727a81')
-                "
-              ></i>
-            </button>
-          </td>
-          <td>{{ response.customerName }}</td>
-          <td>{{ response.propertyName }}</td>
-          <td>{{ response.time }}</td>
-          <td>{{ response.date }}</td>
-          <td>{{ phases[response.phase] }}</td>
-          <td>
-            <div class="buttons">
-              <button (click)="goToResponsePage(response.id)" uk-tooltip="title: View Response">
-                <i class="fa-solid fa-eye"></i>
-              </button>
-              <button (click)="editResponse(response)" uk-tooltip="title: Edit Response">
-                <i class="fa-solid fa-pen-to-square"></i>
-              </button>
+  <ng-container *ngIf="responses && responses.length > 0">
+    <div *ngIf="viewAs == 'cards'" id="cards">
+      <app-property-info-card
+        *ngFor="let response of filteredResponses; let i = index"
+        [id]="response.id"
+        [property]="response.property"
+        [customer]="response.customer"
+        [status]="response.phase"
+        [selectable]="true"
+        [selected]="selectedResponses.includes(response.id)"
+        (view)="goToResponsePage(response.id)"
+        (cardSelect)="toggleResponseSelection($event)"
+      ></app-property-info-card>
+    </div>
+    <div *ngIf="viewAs == 'table'" id="table">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Property Name</th>
+            <th>Customer Name</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let response of filteredResponses">
+            <td>
               <button
-                (click)="deleteResponse(response)"
-                uk-tooltip="title: Delete Response"
-                class="delete-btn"
+                class="select-button"
+                (click)="toggleResponseSelection(response.id)"
               >
-                <i class="fa-solid fa-trash"></i>
+                <i
+                  class="fa-solid fa-circle-check"
+                  [style]="
+                    'color: ' +
+                    (selectedResponses.includes(response.id)
+                      ? '#5cb85c'
+                      : '#727a81')
+                  "
+                ></i>
               </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+            </td>
+            <td>{{ response.property.name }}</td>
+            <td>{{ response.customer.name }}</td>
+            <td>{{ response.phase }}</td>
+            <td>
+              <div class="buttons">
+                <button
+                  (click)="goToResponsePage(response.id)"
+                  uk-tooltip="title: View Response"
+                >
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+                <button
+                  (click)="deleteResponse(response)"
+                  uk-tooltip="title: Delete Response"
+                  class="delete-btn"
+                >
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
   <app-fab
-    *ngIf="responsesSelected.length === 0"
+    *ngIf="selectedResponses.length === 0"
     icon="plus"
     title="Add New Response"
     target="#add-response-modal"
   ></app-fab>
-  <div *ngIf="responsesSelected.length > 0" id="assign-agent">
-    <h5>{{ responsesSelected.length }}/{{ responses.length }} responses selected</h5>
+  <div *ngIf="selectedResponses.length > 0" id="assign-agent">
+    <h5>
+      {{ selectedResponses.length }}/{{ responses.length }} responses selected
+    </h5>
     <form>
       <select>
         <option>Mohan Chauhan</option>
@@ -100,98 +105,76 @@
   <div class="uk-modal-dialog uk-modal-body">
     <h2 class="uk-modal-title">Add New Response</h2>
     <button class="uk-modal-close-default" type="button" uk-close></button>
-    <form [formGroup]="addResponseForm" (ngSubmit)="addResponse()">
-      <div id="search-in-leads">
-        <div id="search-lead-input-container">
-          <input
-            type="text"
+    <form [formGroup]="addResponseForm" (ngSubmit)="submitResponseForm()">
+      <div class="response-form-box">
+        <label for="customer-input">Customer</label>
+        <div class="dropdown-container">
+          <button
+            (click)="toggleCustomerDropdown($event)"
             class="admin-input"
-            placeholder="Search in Leads"
-          />
-          <span uk-icon="icon: search; ratio: 1.25"></span>
-        </div>
-        <div id="leads-container">
-          <input type="hidden" formControlName="lead" #leadInput />
-          <div id="leads">
-            <button
-              [class]="
-                'lead' + (leadInput.value == 'customer1' ? ' selected' : '')
-              "
-              (click)="leadInput.value = 'customer1'"
-            >
-              <img
-                src="../../../assets/img/customer-sample-1.png"
-                alt="Manohar Singh"
-              />
-              <p>Manohar Singh</p>
-            </button>
-            <button
-              [class]="
-                'lead' + (leadInput.value == 'customer2' ? ' selected' : '')
-              "
-              (click)="leadInput.value = 'customer2'"
-            >
-              <img
-                src="../../../assets/img/customer-sample-2.png"
-                alt="Manohar Singh"
-              />
-              <p>Raghab Mishra</p>
-            </button>
+            id="customer-input"
+          >
+            <img [src]="getCustomerImage(addResponseForm.value.customer)" />
+            {{
+              getCustomerName(addResponseForm.value.customer) ||
+                "Select Customer"
+            }}
+            <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div *ngIf="showCustomerDropdown" class="dropdown">
+            <input
+              type="text"
+              placeholder="Search Customer"
+              (input)="searchCustomers($event)"
+            />
+            <ul>
+              <li
+                *ngFor="let customer of filteredCustomers"
+                (click)="selectCustomer(customer.id)"
+              >
+                <img
+                  [src]="customer.img || 'assets/img/circle-user-solid.svg'"
+                />
+                {{ customer.name }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
-      <div id="search-property">
-        <input type="hidden" formControlName="property" #propertyInput />
-        <div id="search-property-input-container">
-          <input
-            type="text"
+      <div class="response-form-box">
+        <label for="property-input">Property</label>
+        <div class="dropdown-container">
+          <button
+            (click)="togglePropertyDropdown($event)"
             class="admin-input"
-            placeholder="Search Property"
-          />
-          <span uk-icon="icon: search; ratio: 1.25"></span>
-        </div>
-        <div id="search-property-container">
-          <img
-            src="../../../assets/img/unsplash_4ojhpgKpS68.png"
-            alt="4 BHK, Sky Heights"
-            id="search-property-img"
-          />
-          <div id="search-property-details">
-            <h4>4 BHK, Sky Heights</h4>
-            <p id="search-address">Near Town Hall, Jaypur</p>
-            <p>Area: 12548 (Sq Ft)</p>
-            <p>Price: 1 Crore</p>
-            <app-secondary-btn [text]="'Select Property'"></app-secondary-btn>
+            id="property-input"
+          >
+            <img [src]="getPropertyImage(addResponseForm.value.property)" />
+            {{
+              getPropertyName(addResponseForm.value.property) ||
+                "Select Property"
+            }}
+            <i class="fa-solid fa-angle-down"></i>
+          </button>
+          <div *ngIf="showPropertyDropdown" class="dropdown">
+            <input
+              type="text"
+              placeholder="Search Property"
+              (input)="searchProperties($event)"
+            />
+            <ul>
+              <li
+                *ngFor="let property of filteredProperties"
+                (click)="selectProperty(property.id)"
+              >
+                <img
+                  [src]="(property.images && property.images.length > 0) ? property.images[0] : 'assets/img/house-chimney-solid.svg'"
+                />
+                {{ property.name }}
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
-      <div id="phase-radio">
-        <label>Phase</label>
-        <input type="hidden" formControlName="phase" #phaseInput />
-        <div id="phase-btns">
-          <button class="phase-btn" (click)="selectPhase($event, 'stageOne')">
-            Query
-          </button>
-          <button class="phase-btn" (click)="selectPhase($event, 'stageTwo')">
-            Visitation
-          </button>
-          <button class="phase-btn" (click)="selectPhase($event, 'stageThree')">
-            Negotiation
-          </button>
-          <button class="phase-btn" (click)="selectPhase($event, 'stageFour')">
-            Legalization
-          </button>
-          <button class="phase-btn" (click)="selectPhase($event, 'stageFive')">
-            Closure
-          </button>
-        </div>
-      </div>
-      <div id="phase-note">
-        <input
-          type="text"
-          class="admin-input"
-          placeholder="Add a note as per current phase"
-        />
       </div>
       <app-primary-btn
         text="Add Response"

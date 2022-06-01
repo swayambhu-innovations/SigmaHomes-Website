@@ -46,7 +46,7 @@
             <div id="customers">
               <div class="customer" *ngFor="let customer of filteredCustomers">
                 <div class="customer-image-and-name">
-                  <img [src]="customer.img" [alt]="customer.name" />
+                  <img [src]="customer.img || 'assets/img/circle-user-solid.svg'" [alt]="customer.name" />
                   <p>{{ customer.name }}</p>
                 </div>
                 <div class="select-customer pretty p-svg p-round p-smooth">

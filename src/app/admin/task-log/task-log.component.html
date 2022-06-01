@@ -5,12 +5,8 @@
       <div class="uk-accordion-content">
         <app-property-info-card
           *ngFor="let taskLog of taskLogs; let i = index"
-          [propertyImgSrc]="taskLog.propertyImgSrc"
-          [propertyName]="taskLog.propertyName"
-          [customerName]="taskLog.customerName"
-          [customerImgSrc]="taskLog.customerImgSrc"
-          [time]="taskLog.time"
-          [date]="taskLog.date"
+          [property]="taskLog.property"
+          [customer]="taskLog.customer"
           [status]="taskLog.status"
           (cardClick)="loadTaskLogDetails(i)"
         ></app-property-info-card>
@@ -21,12 +17,8 @@
       <div class="uk-accordion-content">
         <app-property-info-card
           *ngFor="let taskLog of taskLogs; let i = index"
-          [propertyImgSrc]="taskLog.propertyImgSrc"
-          [propertyName]="taskLog.propertyName"
-          [customerName]="taskLog.customerName"
-          [customerImgSrc]="taskLog.customerImgSrc"
-          [time]="taskLog.time"
-          [date]="taskLog.date"
+          [property]="taskLog.property"
+          [customer]="taskLog.customer"
           [status]="taskLog.status"
           (cardClick)="loadTaskLogDetails(i)"
         ></app-property-info-card>
@@ -37,12 +29,8 @@
       <div class="uk-accordion-content">
         <app-property-info-card
           *ngFor="let taskLog of taskLogs; let i = index"
-          [propertyImgSrc]="taskLog.propertyImgSrc"
-          [propertyName]="taskLog.propertyName"
-          [customerName]="taskLog.customerName"
-          [customerImgSrc]="taskLog.customerImgSrc"
-          [time]="taskLog.time"
-          [date]="taskLog.date"
+          [property]="taskLog.property"
+          [customer]="taskLog.customer"
           [status]="taskLog.status"
           (cardClick)="loadTaskLogDetails(i)"
         ></app-property-info-card>

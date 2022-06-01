@@ -122,6 +122,7 @@ export class DatabaseService {
   }
 
   addResponse(response: any) {
+    response.phase = 0;
     return addDoc(collection(this.fs, 'responses'), response);
   }
 
@@ -131,6 +132,14 @@ export class DatabaseService {
 
   getResponse(responseId: any) {
     return getDoc(doc(this.fs, 'responses/' + responseId));
+  }
+
+  getCustomer(customerId: string) {
+    return getDoc(doc(this.fs, 'customers/' + customerId));
+  }
+
+  getProperty(propertyId: string) {
+    return getDoc(doc(this.fs, 'properties/' + propertyId));
   }
 
   getBroadcasts() {
@@ -143,8 +152,7 @@ export class DatabaseService {
   }
 
   addBroadcast(broadcast: any) {
-    const timestamp = Timestamp.now();
-    broadcast.date = timestamp;
+    broadcast.date = Timestamp.now();
     return addDoc(collection(this.fs, 'broadcasts'), broadcast);
   }
 }
