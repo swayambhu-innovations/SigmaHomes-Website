@@ -26,11 +26,4 @@ export class DataProvider{
     public dataThree:any;
     public dataFour:any;
     public siteData:any = {};
-    constructor(private firestore: Firestore){
-        collectionSnapshots(collection(this.firestore,'siteData')).subscribe((data)=>{
-            data.forEach((doc)=>{
-                this.siteData[doc.id] = doc.data();
-            })
-        })
-    }
 }
