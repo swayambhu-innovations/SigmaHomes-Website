@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PropertyInfoCardComponent } from './property-info-card.component';
+import { ResponseCardComponent } from './response-card.component';
 
-describe('PropertyInfoCardComponent', () => {
-  let component: PropertyInfoCardComponent;
-  let fixture: ComponentFixture<PropertyInfoCardComponent>;
+describe('ResponseCardComponent', () => {
+  let component: ResponseCardComponent;
+  let fixture: ComponentFixture<ResponseCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PropertyInfoCardComponent ]
+      declarations: [ ResponseCardComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PropertyInfoCardComponent);
+    fixture = TestBed.createComponent(ResponseCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

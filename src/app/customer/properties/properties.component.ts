@@ -12,7 +12,7 @@ export class PropertiesComponent implements OnInit {
   constructor(private databaseService: DatabaseService) {}
 
   ngOnInit(): void {
-    this.databaseService.getAllProperties().subscribe((docs: any) => {
+    this.databaseService.getAllProjects().subscribe((docs: any) => {
       this.properties = [];
       docs.forEach((doc: any) => {
         const property = { id: doc.id, ...doc.data() };

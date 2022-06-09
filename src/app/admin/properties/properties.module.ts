@@ -5,20 +5,17 @@ import { PropertiesRoutingModule } from './properties-routing.module';
 import { PropertiesComponent } from './properties.component';
 import { AdminWidgetsModule } from '../admin-widgets/admin-widgets.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PropertyCardComponent } from './property-card/property-card.component';
-
+import { ProjectCardComponent } from './project-card/project-card.component';
+import { PropertyPageComponent } from './property-page/property-page.component';
 
 @NgModule({
-  declarations: [
-    PropertiesComponent,
-    PropertyCardComponent
-  ],
+  declarations: [PropertiesComponent, ProjectCardComponent, PropertyPageComponent],
   imports: [
     CommonModule,
     PropertiesRoutingModule,
     AdminWidgetsModule,
     FormsModule,
-    ReactiveFormsModule
-  ]
+    ReactiveFormsModule,
+  ],
 })
-export class PropertiesModule { }
+export class PropertiesModule {}

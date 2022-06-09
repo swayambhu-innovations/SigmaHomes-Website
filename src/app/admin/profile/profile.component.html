@@ -1,259 +1,275 @@
 <section>
-  <div *ngIf="!editMode" id="photos">
-    <img src="assets/img/Rectangle 643.png" alt="" id="cover" />
-    <app-avatar
-      [imgSrc]="dataProvider.userData?.photoURL || ''"
-      [altText]="dataProvider.userData?.displayName || 'N/A'"
-    ></app-avatar>
-  </div>
-  <div *ngIf="!editMode" id="container">
-    <h3>
-      {{
-        dataProvider.userData?.displayName
-          ? dataProvider.userData?.displayName
-          : "N/A"
-      }}
-    </h3>
-    <div id="details">
-      <p class="detail">
-        <span class="key">Phone Number: </span>
-        <span class="value">{{
-          dataProvider.userData?.phoneNumber
-            ? dataProvider.userData?.phoneNumber
-            : "N/A"
-        }}</span>
-      </p>
-      <p class="detail">
-        <span class="key">Email Address: </span>
-        <span class="value">{{
-          dataProvider.userData?.email ? dataProvider.userData?.email : "N/A"
-        }}</span>
-      </p>
-      <p class="detail">
-        <span class="key">Qualification: </span>
-        <span class="value">{{
-          dataProvider.userData?.qualification
-            ? dataProvider.userData?.qualification
-            : "N/A"
-        }}</span>
-      </p>
-      <p class="detail">
-        <span class="key">Date of Birth: </span>
-        <span class="value">{{
-          dataProvider.userData?.dob ? dataProvider.userData?.dob : "N/A"
-        }}</span>
-      </p>
-      <p class="detail">
-        <span class="key">PAN No.: </span>
-        <span class="value">{{
-          dataProvider.userData?.panNo ? dataProvider.userData?.panNo : "N/A"
-        }}</span>
-      </p>
-      <p class="detail">
-        <span class="key">Address: </span>
-        <span class="value">{{
-          dataProvider.userData?.address
-            ? dataProvider.userData?.address
-            : "N/A"
-        }}</span>
-      </p>
-      <p class="detail">
-        <span class="key">Bank Name: </span>
-        <span class="value">{{
-          dataProvider.userData?.bankName
-            ? dataProvider.userData?.bankName
-            : "N/A"
-        }}</span>
-      </p>
-      <p class="detail">
-        <span class="key">Father Name: </span>
-        <span class="value">{{
-          dataProvider.userData?.fatherName
-            ? dataProvider.userData?.fatherName
-            : "N/A"
-        }}</span>
-      </p>
-      <p class="detail">
-        <span class="key">Branch: </span>
-        <span class="value">{{
-          dataProvider.userData?.branch ? dataProvider.userData?.branch : "N/A"
-        }}</span>
-      </p>
-      <p class="detail">
-        <span class="key">Account No.: </span>
-        <span class="value">{{
-          dataProvider.userData?.accountNo
-            ? dataProvider.userData?.accountNo
-            : "N/A"
-        }}</span>
-      </p>
-      <p class="detail">
-        <span class="key">IFSC: </span>
-        <span class="value">{{
-          dataProvider.userData?.ifscCode
-            ? dataProvider.userData?.ifscCode
-            : "N/A"
-        }}</span>
-      </p>
-      <p class="detail">
-        <span class="key">Parent employee: </span>
-        <span class="value">{{
-          dataProvider.userData?.parentEmployee
-            ? dataProvider.userData?.parentEmployee
-            : "N/A"
-        }}</span>
-      </p>
-      <p class="detail">
-        <span class="key">User type: </span>
-        <span class="value">{{
-          dataProvider.userData?.userType
-            ? dataProvider.userData?.userType
-            : "N/A"
-        }}</span>
-      </p>
-    </div>
-    <app-primary-btn
-      [text]="'Edit Profile'"
-      (btnClick)="goToEditMode()"
-    ></app-primary-btn>
-  </div>
-  <div *ngIf="editMode" id="container">
-    <form [formGroup]="editForm" (ngSubmit)="saveEdit()" id="details">
-      <p class="detail">
-        <label for="photo-input" class="key">Profile Photo: </label>
-        <input
-          type="file"
-          id="photo-input"
-          class="admin-input value"
-          #photoInput
-          (change)="validateProfilePhoto()"
-        />
-      </p>
-      <p class="detail">
-        <label for="name-input" class="key">Name: </label>
-        <input
-          type="text"
-          id="name-input"
-          class="admin-input value"
-          formControlName="displayName"
-        />
-      </p>
-      <p class="detail">
-        <label for="phone-input" class="key">Phone Number: </label>
-        <input
-          type="tel"
-          id="phone-input"
-          class="admin-input value"
-          formControlName="phoneNumber"
-        />
-      </p>
-      <p class="detail">
-        <label for="qualification-input" class="key">Qualification: </label>
-        <input
-          type="text"
-          id="qualification-input"
-          class="admin-input value"
-          formControlName="qualification"
-        />
-      </p>
-      <p class="detail">
-        <label for="dob-input" class="key">Date of Birth: </label>
-        <input
-          type="date"
-          id="dob-input"
-          class="admin-input value"
-          formControlName="dob"
-        />
-      </p>
-      <p class="detail">
-        <label for="pan-input" class="key">PAN No.: </label>
-        <input
-          type="text"
-          id="pan-input"
-          class="admin-input value"
-          formControlName="panNo"
-        />
-      </p>
-      <p class="detail">
-        <label for="address-input" class="key">Address: </label>
-        <textarea class="admin-input value" formControlName="address">{{
-          dataProvider.userData?.address
-        }}</textarea>
-      </p>
-      <p class="detail">
-        <label for="bank-name-input" class="key">Bank Name: </label>
-        <input
-          type="text"
-          id="bank-name-input"
-          class="admin-input value"
-          formControlName="bankName"
-        />
-      </p>
-      <p class="detail">
-        <label for="father-name-input" class="key">Father Name: </label>
-        <input
-          type="text"
-          id="father-name-input"
-          class="admin-input value"
-          formControlName="fatherName"
-        />
-      </p>
-      <p class="detail">
-        <label for="branch-input" class="key">Branch: </label>
-        <input
-          type="text"
-          id="branch-input"
-          class="admin-input value"
-          formControlName="branch"
-        />
-      </p>
-      <p class="detail">
-        <label for="account-no-input" class="key">Account No.: </label>
-        <input
-          type="text"
-          id="account-no-input"
-          class="admin-input value"
-          formControlName="accountNo"
-        />
-      </p>
-      <p class="detail">
-        <label for="ifsc-code-input" class="key">IFSC Code: </label>
-        <input
-          type="text"
-          id="ifsc-code-input"
-          class="admin-input value"
-          formControlName="ifscCode"
-        />
-      </p>
-      <p class="detail">
-        <label for="parent-employee-input" class="key">Parent Employee: </label>
-        <input
-          type="text"
-          id="parent-employee-input"
-          class="admin-input value"
-          formControlName="parentEmployee"
-        />
-      </p>
-      <p class="detail">
-        <label for="user-type-input" class="key">User Type: </label>
-        <input
-          type="text"
-          id="user-type-input"
-          class="admin-input value"
-          formControlName="userType"
-        />
-      </p>
-    </form>
-    <div id="buttons">
-      <app-primary-btn
-        [text]="'Save'"
-        [disabled]="!editForm.valid"
-        (btnClick)="saveEdit()"
-      ></app-primary-btn>
-      <app-primary-btn
-        [text]="'Cancel'"
-        (btnClick)="cancelEdit()"
-      ></app-primary-btn>
-    </div>
-  </div>
+  <div
+    *ngIf="!dataProvider.userData; else container"
+    uk-spinner="ratio: 3"
+    id="loading"
+  ></div>
+  <ng-template #container>
+    <ng-container *ngIf="!editMode; else editContainer">
+      <app-avatar
+        [imgSrc]="dataProvider.userData?.photoURL || ''"
+        [altText]="dataProvider.userData?.displayName || 'N/A'"
+      ></app-avatar>
+      <div id="container">
+        <h3>
+          {{
+            dataProvider.userData?.displayName
+              ? dataProvider.userData?.displayName
+              : "N/A"
+          }}
+        </h3>
+        <div id="details">
+          <p class="detail">
+            <span class="key">Phone Number: </span>
+            <span class="value">{{
+              dataProvider.userData?.phoneNumber
+                ? dataProvider.userData?.phoneNumber
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Email Address: </span>
+            <span class="value">{{
+              dataProvider.userData?.email
+                ? dataProvider.userData?.email
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Qualification: </span>
+            <span class="value">{{
+              dataProvider.userData?.qualification
+                ? dataProvider.userData?.qualification
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Date of Birth: </span>
+            <span class="value">{{
+              dataProvider.userData?.dob ? dataProvider.userData?.dob : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">PAN No.: </span>
+            <span class="value">{{
+              dataProvider.userData?.panNo
+                ? dataProvider.userData?.panNo
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Address: </span>
+            <span class="value">{{
+              dataProvider.userData?.address
+                ? dataProvider.userData?.address
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Bank Name: </span>
+            <span class="value">{{
+              dataProvider.userData?.bankName
+                ? dataProvider.userData?.bankName
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Father Name: </span>
+            <span class="value">{{
+              dataProvider.userData?.fatherName
+                ? dataProvider.userData?.fatherName
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Branch: </span>
+            <span class="value">{{
+              dataProvider.userData?.branch
+                ? dataProvider.userData?.branch
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Account No.: </span>
+            <span class="value">{{
+              dataProvider.userData?.accountNo
+                ? dataProvider.userData?.accountNo
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">IFSC: </span>
+            <span class="value">{{
+              dataProvider.userData?.ifscCode
+                ? dataProvider.userData?.ifscCode
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Parent employee: </span>
+            <span class="value">{{
+              dataProvider.userData?.parentEmployee
+                ? dataProvider.userData?.parentEmployee
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">User type: </span>
+            <span class="value">{{
+              dataProvider.userData?.userType
+                ? dataProvider.userData?.userType
+                : "N/A"
+            }}</span>
+          </p>
+        </div>
+        <app-primary-btn
+          [text]="'Edit Profile'"
+          (btnClick)="goToEditMode()"
+        ></app-primary-btn>
+      </div>
+    </ng-container>
+    <ng-template #editContainer>
+      <div id="container">
+        <form [formGroup]="editForm" (ngSubmit)="saveEdit()" id="details">
+          <p class="detail">
+            <label for="photo-input" class="key">Profile Photo: </label>
+            <input
+              type="file"
+              id="photo-input"
+              class="admin-input value"
+              #photoInput
+              (change)="validateProfilePhoto()"
+            />
+          </p>
+          <p class="detail">
+            <label for="name-input" class="key">Name: </label>
+            <input
+              type="text"
+              id="name-input"
+              class="admin-input value"
+              formControlName="displayName"
+            />
+          </p>
+          <p class="detail">
+            <label for="phone-input" class="key">Phone Number: </label>
+            <input
+              type="tel"
+              id="phone-input"
+              class="admin-input value"
+              formControlName="phoneNumber"
+            />
+          </p>
+          <p class="detail">
+            <label for="qualification-input" class="key">Qualification: </label>
+            <input
+              type="text"
+              id="qualification-input"
+              class="admin-input value"
+              formControlName="qualification"
+            />
+          </p>
+          <p class="detail">
+            <label for="dob-input" class="key">Date of Birth: </label>
+            <input
+              type="date"
+              id="dob-input"
+              class="admin-input value"
+              formControlName="dob"
+            />
+          </p>
+          <p class="detail">
+            <label for="pan-input" class="key">PAN No.: </label>
+            <input
+              type="text"
+              id="pan-input"
+              class="admin-input value"
+              formControlName="panNo"
+            />
+          </p>
+          <p class="detail">
+            <label for="address-input" class="key">Address: </label>
+            <textarea class="admin-input value" formControlName="address">{{
+              dataProvider.userData?.address
+            }}</textarea>
+          </p>
+          <p class="detail">
+            <label for="bank-name-input" class="key">Bank Name: </label>
+            <input
+              type="text"
+              id="bank-name-input"
+              class="admin-input value"
+              formControlName="bankName"
+            />
+          </p>
+          <p class="detail">
+            <label for="father-name-input" class="key">Father Name: </label>
+            <input
+              type="text"
+              id="father-name-input"
+              class="admin-input value"
+              formControlName="fatherName"
+            />
+          </p>
+          <p class="detail">
+            <label for="branch-input" class="key">Branch: </label>
+            <input
+              type="text"
+              id="branch-input"
+              class="admin-input value"
+              formControlName="branch"
+            />
+          </p>
+          <p class="detail">
+            <label for="account-no-input" class="key">Account No.: </label>
+            <input
+              type="text"
+              id="account-no-input"
+              class="admin-input value"
+              formControlName="accountNo"
+            />
+          </p>
+          <p class="detail">
+            <label for="ifsc-code-input" class="key">IFSC Code: </label>
+            <input
+              type="text"
+              id="ifsc-code-input"
+              class="admin-input value"
+              formControlName="ifscCode"
+            />
+          </p>
+          <p class="detail">
+            <label for="parent-employee-input" class="key"
+              >Parent Employee:
+            </label>
+            <input
+              type="text"
+              id="parent-employee-input"
+              class="admin-input value"
+              formControlName="parentEmployee"
+            />
+          </p>
+          <p class="detail">
+            <label for="user-type-input" class="key">User Type: </label>
+            <input
+              type="text"
+              id="user-type-input"
+              class="admin-input value"
+              formControlName="userType"
+            />
+          </p>
+        </form>
+        <div id="buttons">
+          <app-primary-btn
+            [text]="'Save'"
+            [disabled]="!editForm.valid"
+            (btnClick)="saveEdit()"
+          ></app-primary-btn>
+          <app-primary-btn
+            [text]="'Cancel'"
+            (btnClick)="cancelEdit()"
+          ></app-primary-btn>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
 </section>

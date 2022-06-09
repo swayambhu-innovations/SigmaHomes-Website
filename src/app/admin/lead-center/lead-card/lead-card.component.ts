@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-lead-card',
@@ -6,17 +7,7 @@ import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
   styleUrls: ['./lead-card.component.scss'],
 })
 export class LeadCardComponent implements OnInit {
-  @Input() name: string = '';
-  @Input() number: string = '';
-  @Input() email: string = '';
-  @Input() address: string = '';
-  @Input() city: string = '';
-  @Input() state: string = '';
-  @Input() pinCode: string = '';
-  @Input() aadharNo: string = '';
-  @Input() panNo: string = '';
-  @Input() customerDob: string = '';
-  @Input() customerAnniversary: string = '';
+  @Input() lead: any;
 
   @Output() onEdit: EventEmitter<any> = new EventEmitter();
   @Output() onDelete: EventEmitter<any> = new EventEmitter();
@@ -24,7 +15,14 @@ export class LeadCardComponent implements OnInit {
 
   expanded: boolean = true;
 
-  constructor() {}
-  
+  visibleInputs: any = [];
+
+  constructor(private databaseService: DatabaseService) {}
+
   ngOnInit(): void {}
+
+  addField(input: string, value: string): void {
+    this.lead[input] = value;
+    this.databaseService.updateLead(this.lead.id, this.lead);
+  }
 }

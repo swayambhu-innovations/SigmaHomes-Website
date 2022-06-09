@@ -1,144 +1,178 @@
 <div *ngIf="!response" uk-spinner="ratio: 3" id="loading"></div>
 
-<section *ngIf="response" id="response-details" #responseDetails>
-  <button id="go-back" class="primary-btn" routerLink="..">
-    <i class="fa-solid fa-arrow-left"></i> All Responses
-  </button>
-  <div id="property-customer-details">
-    <div id="property-container">
-      <img [src]="response.propertyImgSrc" [alt]="response.propertyName" />
-      <div id="property-details">
-        <h4>{{ response.propertyName }}</h4>
-        <p id="address">{{ response.address }}</p>
-        <p><span style="font-weight: 600">Area:</span> {{ response.area }}</p>
-        <p><span style="font-weight: 600">Price:</span> {{ response.price }}</p>
-      </div>
-    </div>
-    <div id="customer-container">
-      <img [src]="response.customerImgSrc" [alt]="response.customerName" />
-      <div id="customer-details">
-        <h4>{{ response.customerName }}</h4>
-        <p id="phone">{{ response.phone }}</p>
-        <p id="email">{{ response.email }}</p>
-        <div id="contact-buttons">
-          <button><i class="fa-solid fa-phone"></i></button>
-          <button><i class="fa-solid fa-comment-sms"></i></button>
-          <button><i class="fa-solid fa-envelope"></i></button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div id="stepper-wrapper">
-    <div
-      [class]="
-        'stepper-item ' + (stageChecker(response.phase) >= 1 ? 'completed' : '')
-      "
-    >
-      <div class="step-counter"></div>
-      <div class="step-name">Query</div>
-    </div>
-    <div
-      [class]="
-        'stepper-item ' + (stageChecker(response.phase) >= 2 ? 'completed' : '')
-      "
-    >
-      <div class="step-counter"></div>
-      <div class="step-name">Visitation</div>
-    </div>
-    <div
-      [class]="
-        'stepper-item ' + (stageChecker(response.phase) >= 3 ? 'completed' : '')
-      "
-    >
-      <div class="step-counter"></div>
-      <div class="step-name">Negotiation</div>
-    </div>
-    <div
-      [class]="
-        'stepper-item ' + (stageChecker(response.phase) >= 4 ? 'completed' : '')
-      "
-    >
-      <div class="step-counter"></div>
-      <div class="step-name">Legalization</div>
-    </div>
-    <div
-      [class]="
-        'stepper-item ' + (stageChecker(response.phase) >= 5 ? 'completed' : '')
-      "
-    >
-      <div class="step-counter"></div>
-      <div class="step-name">Closure</div>
-    </div>
-  </div>
-  <ul uk-tab>
-    <li [class]="response.phase == 'stageOne' ? 'uk-active' : ''">
-      <a href="#" (click)="activePhaseTab = 'stageOne'">Query</a>
-    </li>
-    <li
-      [class]="
-        (response.phase == 'stageTwo' ? 'uk-active' : '') +
-        (stageChecker(response.phase) < 2 ? 'uk-disabled' : '')
-      "
-    >
-      <a href="#" (click)="activePhaseTab = 'stageTwo'">Visitation</a>
-    </li>
-    <li
-      [class]="
-        (response.phase == 'stageThree' ? 'uk-active' : '') +
-        (stageChecker(response.phase) < 3 ? 'uk-disabled' : '')
-      "
-    >
-      <a href="#" (click)="activePhaseTab = 'stageThree'">Negotiation</a>
-    </li>
-    <li
-      [class]="
-        (response.phase == 'stageFour' ? 'uk-active' : '') +
-        (stageChecker(response.phase) < 4 ? 'uk-disabled' : '')
-      "
-    >
-      <a href="#" (click)="activePhaseTab = 'stageFour'">Legalization</a>
-    </li>
-    <li
-      [class]="
-        (response.phase == 'stageFive' ? 'uk-active' : '') +
-        (stageChecker(response.phase) < 5 ? 'uk-disabled' : '')
-      "
-    >
-      <a href="#" (click)="activePhaseTab = 'stageFive'">Closure</a>
-    </li>
-  </ul>
-  <div id="notes">
-    <div *ngFor="let note of response.phases[activePhaseTab]" class="note">
-      <p class="date">{{ note.date }}</p>
-      <p class="description">{{ note.description }}</p>
-    </div>
-    <app-secondary-btn
-      text="Add Note"
-      target="#add-note-modal"
-    ></app-secondary-btn>
-  </div>
-</section>
+<ng-container *ngIf="response">
+  <section>
+    <button id="go-back" routerLink="..">
+      <i class="fa-solid fa-arrow-left"></i> All Responses
+    </button>
 
-<div id="add-note-modal" uk-modal>
-  <div class="uk-modal-dialog uk-modal-body">
-    <h2 class="uk-modal-title">Add Note</h2>
-    <button class="uk-modal-close-default" type="button" uk-close></button>
-    <form [formGroup]="addNoteForm" (ngSubmit)="addNote()">
-      <input
-        type="text"
-        class="admin-input"
-        formControlName="date"
-        placeholder="Date"
-      />
-      <textarea
-        class="admin-input"
-        formControlName="date"
-        placeholder="Description"
-      ></textarea>
-      <app-primary-btn
-        text="Add Note"
-        [disabled]="!addNoteForm.valid"
-      ></app-primary-btn>
-    </form>
+    <div id="view-details">
+      <button class="btn" uk-toggle="target: #view-property-modal">
+        <i class="fa-solid fa-house"></i> View Property Details
+      </button>
+      <button class="btn" uk-toggle="target: #view-customer-modal">
+        <i class="fa-solid fa-user"></i> View Customer Details
+      </button>
+    </div>
+
+    <div id="container">
+      <div id="response-container">
+        <app-response-card
+          [response]="response"
+          [readOnly]="true"
+        ></app-response-card>
+      </div>
+
+      <div id="phases">
+        <div id="stepper-wrapper">
+          <div
+            [ngClass]="{
+              'stepper-item': true,
+              completed: response.phase >= 0
+            }"
+          >
+            <div class="step-counter"></div>
+            <div class="step-name">Query</div>
+          </div>
+          <div
+            [ngClass]="{
+              'stepper-item': true,
+              completed: response.phase >= 1
+            }"
+          >
+            <div class="step-counter"></div>
+            <div class="step-name">Visitation</div>
+          </div>
+          <div
+            [ngClass]="{
+              'stepper-item': true,
+              completed: response.phase >= 2
+            }"
+          >
+            <div class="step-counter"></div>
+            <div class="step-name">Negotiation</div>
+          </div>
+          <div
+            [ngClass]="{
+              'stepper-item': true,
+              completed: response.phase >= 3
+            }"
+          >
+            <div class="step-counter"></div>
+            <div class="step-name">Legalization</div>
+          </div>
+          <div
+            [ngClass]="{
+              'stepper-item': true,
+              completed: response.phase >= 4
+            }"
+          >
+            <div class="step-counter"></div>
+            <div class="step-name">Closure</div>
+          </div>
+        </div>
+        <button
+          class="btn"
+          (click)="completePhase()"
+          [disabled]="response.phase >= 4"
+        >
+          <i class="fa-solid fa-check"></i> Mark this phase complete
+        </button>
+        <button
+          class="btn"
+          (click)="discardPhase()"
+          [disabled]="response.phase <= 0"
+        >
+          <i class="fa-solid fa-xmark"></i> Discard this phase
+        </button>
+      </div>
+    </div>
+
+    <ul uk-tab>
+      <li [ngClass]="{ 'uk-active': activePhase === 0 }">
+        <button (click)="activePhase = 0">Query</button>
+      </li>
+      <li
+        [ngClass]="{
+          'uk-active': activePhase === 1,
+          'uk-disabled': response.phase < 1
+        }"
+      >
+        <button (click)="activePhase = 1">Visitation</button>
+      </li>
+      <li
+        [ngClass]="{
+          'uk-active': activePhase === 2,
+          'uk-disabled': response.phase < 2
+        }"
+      >
+        <button (click)="activePhase = 2">Negotiation</button>
+      </li>
+      <li
+        [ngClass]="{
+          'uk-active': activePhase === 3,
+          'uk-disabled': response.phase < 3
+        }"
+      >
+        <button (click)="activePhase = 3">Legalization</button>
+      </li>
+      <li
+        [ngClass]="{
+          'uk-active': activePhase === 4,
+          'uk-disabled': response.phase < 4
+        }"
+      >
+        <button (click)="activePhase = 4">Closure</button>
+      </li>
+    </ul>
+    <div id="notes" *ngIf="activePhase >= 0">
+      <div class="note" *ngFor="let note of notes[activePhase]">
+        <p class="date">May 23, 2022</p>
+        <p class="description">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
+          voluptate.
+        </p>
+      </div>
+      <div class="note">
+        <p class="date">May 23, 2022</p>
+        <p class="description">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
+          voluptate.
+        </p>
+      </div>
+      <button class="btn"><i class="fa fa-plus"></i> Add Note</button>
+    </div>
+  </section>
+
+  <!-- <app-view-property-modal
+    [project]="response.property"
+  ></app-view-property-modal> -->
+
+  <app-view-customer-modal
+    [customer]="response.customer"
+  ></app-view-customer-modal>
+
+  <div id="add-note-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <h2 class="uk-modal-title">Add Note</h2>
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <form [formGroup]="addNoteForm" (ngSubmit)="addNote()">
+        <input
+          type="text"
+          class="admin-input"
+          formControlName="date"
+          placeholder="Date"
+        />
+        <textarea
+          class="admin-input"
+          formControlName="date"
+          placeholder="Description"
+        ></textarea>
+        <app-primary-btn
+          text="Add Note"
+          [disabled]="!addNoteForm.valid"
+        ></app-primary-btn>
+      </form>
+    </div>
   </div>
-</div>
+</ng-container>

@@ -14,31 +14,23 @@ declare const UIkit: any;
   styleUrls: ['./responses.component.scss'],
 })
 export class ResponsesComponent implements OnInit {
-  viewAs: any = 'cards';
+  viewAsInput: HTMLInputElement;
 
   responses: any[];
   filteredResponses: any[];
   selectedResponses: string[] = [];
 
-  phases: string[] = [
-    'Query',
-    'Visitation',
-    'Negotiation',
-    'Legalization',
-    'Closure',
-  ];
-
   showCustomerDropdown: boolean = false;
   customers: any[];
   filteredCustomers: any[];
 
-  showPropertyDropdown: boolean = false;
-  properties: any[];
-  filteredProperties: any[];
+  showProjectDropdown: boolean = false;
+  projects: any[];
+  filteredProjects: any[];
 
   addResponseForm: FormGroup = new FormGroup({
     customer: new FormControl('', [Validators.required]),
-    property: new FormControl('', [Validators.required]),
+    project: new FormControl('', [Validators.required]),
   });
 
   constructor(
@@ -52,21 +44,21 @@ export class ResponsesComponent implements OnInit {
 
   ngOnInit(): void {
     // get all responses
-    this.databaseService.getResponses().subscribe((data: any) => {
+    this.databaseService.getResponses().subscribe(async (docs: any) => {
       this.responses = [];
-      data.forEach(async (element: any) => {
-        const response = {
-          id: element.id,
+      for (const doc of docs) {
+        const docData = doc.data();
+        this.responses.push({
+          id: doc.id,
           customer: (
-            await this.databaseService.getCustomer(element.data().customer)
+            await this.databaseService.getCustomer(docData.customer)
           ).data(),
-          property: (
-            await this.databaseService.getProperty(element.data().property)
+          project: (
+            await this.databaseService.getProject(docData.project)
           ).data(),
-          phase: this.phases[element.data().phase],
-        };
-        this.responses.push(response);
-      });
+          phase: docData.phase,
+        });
+      }
       this.filteredResponses = this.responses;
     });
 
@@ -79,13 +71,13 @@ export class ResponsesComponent implements OnInit {
       this.filteredCustomers = this.customers;
     });
 
-    // Get all properties
-    this.databaseService.getAllProperties().subscribe((docs: any) => {
-      this.properties = [];
+    // Get all projects
+    this.databaseService.getAllProjects().subscribe((docs: any) => {
+      this.projects = [];
       docs.forEach((doc: any) => {
-        this.properties.push({ id: doc.id, ...doc.data() });
+        this.projects.push({ id: doc.id, ...doc.data() });
       });
-      this.filteredProperties = this.properties;
+      this.filteredProjects = this.projects;
     });
   }
 
@@ -98,7 +90,7 @@ export class ResponsesComponent implements OnInit {
       responseSearchInput.oninput = () => {
         const query = responseSearchInput.value.trim();
         if (query.length > 0) {
-          const options = { keys: ['customer.name', 'property.name'] };
+          const options = { keys: ['customer.name', 'project.name'] };
           const fuse = new Fuse(this.responses, options);
           const results = fuse.search(query);
           this.filteredResponses = [];
@@ -173,21 +165,9 @@ export class ResponsesComponent implements OnInit {
     // }
 
     // Set up "view as"
-    const viewResponsesAs = document.getElementById('view-responses-as');
-    if (viewResponsesAs) {
-      viewResponsesAs.addEventListener(
-        'click',
-        (event: Event) => {
-          var target = event.target as HTMLElement;
-          if (target.classList.contains('view-as-btn')) {
-            this.viewAs = target.getAttribute('data-view-as');
-          } else if (target.parentElement?.classList.contains('view-as-btn')) {
-            this.viewAs = target.parentElement.getAttribute('data-view-as');
-          }
-        },
-        false
-      );
-    }
+    this.viewAsInput = document.getElementById(
+      'view-as-input'
+    ) as HTMLInputElement;
   }
 
   toggleResponseSelection(responseId: string) {
@@ -202,7 +182,6 @@ export class ResponsesComponent implements OnInit {
 
   goToResponsePage(responseId: any) {
     this.router.navigate([responseId], { relativeTo: this.route });
-    // this.activePhaseTab = this.responses[index].phase;
   }
 
   toggleCustomerDropdown(event: Event) {
@@ -255,57 +234,57 @@ export class ResponsesComponent implements OnInit {
     return '';
   }
 
-  togglePropertyDropdown(event: Event) {
+  toggleProjectDropdown(event: Event) {
     event.preventDefault();
-    this.showPropertyDropdown = !this.showPropertyDropdown;
+    this.showProjectDropdown = !this.showProjectDropdown;
   }
 
-  searchProperties(event: Event) {
+  searchProjects(event: Event) {
     const input = event.target as HTMLInputElement;
     const query = input.value.trim();
     if (query.length > 0) {
       const options = { keys: ['name'] };
-      const fuse = new Fuse(this.properties, options);
+      const fuse = new Fuse(this.projects, options);
       const results = fuse.search(query);
-      this.filteredProperties = [];
+      this.filteredProjects = [];
       results.forEach((result: any) => {
-        this.filteredProperties.push(result.item);
+        this.filteredProjects.push(result.item);
       });
     } else {
-      this.filteredProperties = this.properties;
+      this.filteredProjects = this.projects;
     }
   }
 
-  selectProperty(propertyId: string) {
-    this.showPropertyDropdown = false;
-    this.addResponseForm.patchValue({ property: propertyId });
+  selectProject(projectId: string) {
+    this.showProjectDropdown = false;
+    this.addResponseForm.patchValue({ project: projectId });
   }
 
-  getPropertyImage(propertyId: string): string {
-    if (this.properties && this.properties.length > 0) {
-      const property = this.properties.find(
-        (property) => property.id === propertyId
+  getProjectImage(projectId: string): string {
+    if (this.projects && this.projects.length > 0) {
+      const project = this.projects.find(
+        (project) => project.id === projectId
       );
-      if (property && property.images && property.images.length > 0) {
-        return property.images[0];
+      if (project && project.images && project.images.length > 0) {
+        return project.images[0];
       }
     }
     return 'assets/img/house-chimney-solid.svg';
   }
 
-  getPropertyName(propertyId: string): string {
-    if (this.properties && this.properties.length > 0) {
-      const property = this.properties.find(
-        (property) => property.id === propertyId
+  getProjectName(projectId: string): string {
+    if (this.projects && this.projects.length > 0) {
+      const project = this.projects.find(
+        (project) => project.id === projectId
       );
-      if (property && property.name) {
-        return property.name;
+      if (project && project.name) {
+        return project.name;
       }
     }
     return '';
   }
 
-  submitResponseForm() {
+  addResponseFromForm() {
     if (this.addResponseForm.valid) {
       this.dataProvider.pageSetting.blur = true;
       this.databaseService
@@ -324,11 +303,25 @@ export class ResponsesComponent implements OnInit {
         });
     } else {
       this.alertify.presentToast(
-        'Please select both - the customer and the property',
+        'Please select both - the customer and the project',
         'error'
       );
     }
   }
 
-  deleteResponse(response: any) {}
+  deleteResponse(responseId: string) {
+    if (confirm('Are you sure you want to delete this response?')) {
+      this.dataProvider.pageSetting.blur = true;
+      this.databaseService
+        .deleteResponse(responseId)
+        .then(() => {
+          this.dataProvider.pageSetting.blur = false;
+          this.alertify.presentToast('Response deleted successfully', 'info');
+        })
+        .catch((error) => {
+          this.dataProvider.pageSetting.blur = false;
+          this.alertify.presentToast(error.message, 'error', 5000);
+        });
+    }
+  }
 }

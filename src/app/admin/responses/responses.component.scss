@@ -1,6 +1,7 @@
 section {
   padding: 1em;
   height: 100%;
+  position: relative;
 
   #no-responses {
     width: 100%;
@@ -33,7 +34,7 @@ section {
     display: flex;
     flex-wrap: wrap;
 
-    app-property-info-card {
+    app-response-card {
       width: 40%;
       max-width: 400px;
       flex-grow: 1;
@@ -65,18 +66,18 @@ section {
 
         td {
           color: var(--tertiary);
-          font-size: var(--xxsmall);
+          font-size: var(--small);
 
           .buttons {
             display: flex;
-            justify-content: space-evenly;
+            justify-content: center;
 
             button {
               padding: 0.5em;
               background-color: var(--secondary);
               color: var(--secondary-contrast);
               border: none;
-              font-size: var(--small);
+              font-size: var(--xsmall);
               font-family: var(--font-three);
               margin-right: 0.5em;
               width: 33%;
@@ -101,6 +102,8 @@ section {
             font-size: var(--large);
             cursor: pointer;
             transition: all 0.5s;
+            text-align: center;
+            width: 100%;
           }
         }
       }
@@ -110,7 +113,7 @@ section {
           background-color: var(--secondary);
 
           th {
-            font-size: var(--xsmall);
+            font-size: var(--small);
             font-weight: 650;
             text-align: left;
             color: var(--secondary-contrast);

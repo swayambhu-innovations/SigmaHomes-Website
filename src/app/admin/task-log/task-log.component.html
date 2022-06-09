@@ -3,37 +3,31 @@
     <li class="uk-open">
       <a class="uk-accordion-title" href="#">Ongoing</a>
       <div class="uk-accordion-content">
-        <app-property-info-card
+        <app-response-card
           *ngFor="let taskLog of taskLogs; let i = index"
-          [property]="taskLog.property"
-          [customer]="taskLog.customer"
-          [status]="taskLog.status"
+          [response]="taskLog"
           (cardClick)="loadTaskLogDetails(i)"
-        ></app-property-info-card>
+        ></app-response-card>
       </div>
     </li>
     <li>
       <a class="uk-accordion-title" href="#">To do</a>
       <div class="uk-accordion-content">
-        <app-property-info-card
+        <app-response-card
           *ngFor="let taskLog of taskLogs; let i = index"
-          [property]="taskLog.property"
-          [customer]="taskLog.customer"
-          [status]="taskLog.status"
+          [response]="taskLog"
           (cardClick)="loadTaskLogDetails(i)"
-        ></app-property-info-card>
+        ></app-response-card>
       </div>
     </li>
     <li>
       <a class="uk-accordion-title" href="#">Delayed</a>
       <div class="uk-accordion-content">
-        <app-property-info-card
+        <app-response-card
           *ngFor="let taskLog of taskLogs; let i = index"
-          [property]="taskLog.property"
-          [customer]="taskLog.customer"
-          [status]="taskLog.status"
+          [response]="taskLog"
           (cardClick)="loadTaskLogDetails(i)"
-        ></app-property-info-card>
+        ></app-response-card>
       </div>
     </li>
   </ul>

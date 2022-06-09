@@ -5,8 +5,9 @@ import { SecondaryBtnComponent } from './buttons/secondary-btn/secondary-btn.com
 import { TertiaryBtnComponent } from './buttons/tertiary-btn/tertiary-btn.component';
 import { AvatarComponent } from './avatar/avatar.component';
 import { FabComponent } from './fab/fab.component';
-import { PropertyInfoCardComponent } from './property-info-card/property-info-card.component';
+import { ResponseCardComponent } from './response-card/response-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ViewCustomerModalComponent } from './view-customer-modal/view-customer-modal.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TertiaryBtnComponent,
     AvatarComponent,
     FabComponent,
-    PropertyInfoCardComponent
+    ResponseCardComponent,
+    ViewCustomerModalComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TertiaryBtnComponent,
     AvatarComponent,
     FabComponent,
-    PropertyInfoCardComponent
+    ResponseCardComponent,
+    ViewCustomerModalComponent
   ]
 })
 export class AdminWidgetsModule { }

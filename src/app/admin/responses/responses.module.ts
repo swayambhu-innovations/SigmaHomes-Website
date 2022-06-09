@@ -8,7 +8,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResponsePageComponent } from './response-page/response-page.component';
 
 @NgModule({
-  declarations: [ResponsesComponent, ResponsePageComponent],
+  declarations: [
+    ResponsesComponent,
+    ResponsePageComponent
+  ],
   imports: [
     CommonModule,
     ResponsesRoutingModule,

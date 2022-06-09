@@ -13,274 +13,309 @@ declare const UIkit: any;
   styleUrls: ['./properties.component.scss'],
 })
 export class PropertiesComponent implements OnInit {
-  properties: any[] = [];
-  filteredProperties: any[] = [];
-  editMode: boolean = false;
-  currentEditId: string = '';
-  currentViewProperty: any;
-  imagesValue: any;
+  projects: any[];
+  filteredProjects: any[];
+  types: any[];
+  filteredTypes: any[] = [];
 
-  propertyForm: FormGroup = new FormGroup({
-    images: new FormControl([]),
+  projectForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    plotNo: new FormControl('', [Validators.required]),
-    plotArea: new FormControl(0, [Validators.required]),
-    flatArea: new FormControl(0, [Validators.required]),
-    flatType: new FormControl('', [Validators.required]),
-    companySalesValue: new FormControl(0, [Validators.required]),
-    companyAcceptedRate: new FormControl('', [Validators.required]),
-    companyAcceptedValue: new FormControl('', [Validators.required]),
-    furnishing: new FormControl('', [Validators.required]),
-    facilitiesNearby: new FormControl('', [Validators.required]),
-    distanceFromImportantLocations: new FormControl('', [Validators.required]),
-    rentingCost: new FormControl('', [Validators.required]),
-    fullFurnishingCost: new FormControl('', [Validators.required]),
-    reraStatus: new FormControl('', [Validators.required]),
-    otherDetails: new FormControl(''),
+    address: new FormControl('', [Validators.required]),
+    city: new FormControl('', [Validators.required]),
+    state: new FormControl('', [Validators.required]),
+    pincode: new FormControl('', [Validators.required]),
+    photos: new FormControl([]),
+    builderName: new FormControl(''),
+    plotArea: new FormControl(0),
+    budget: new FormControl(0),
+    facilitiesNearby: new FormControl(''),
+    distanceFromImportantLocations: new FormControl(''),
+    reraStatus: new FormControl(''),
+  });
+
+  typeForm: FormGroup = new FormGroup({
+    project: new FormControl(null, [Validators.required]),
+    name: new FormControl('', [Validators.required]),
+    photos: new FormControl([]),
+    area: new FormControl(0),
+    companySalesValue: new FormControl(0),
+    companySalesRate: new FormControl(0),
+    companyAcceptedValue: new FormControl(0),
+    companyAcceptedRate: new FormControl(0),
+  });
+
+  unitForm: FormGroup = new FormGroup({
+    project: new FormControl(null, [Validators.required]),
+    type: new FormControl(null, [Validators.required]),
+    name: new FormControl('', [Validators.required])
   });
 
   constructor(
     private dataProvider: DataProvider,
     private databaseService: DatabaseService,
-    private alertify: AlertsAndNotificationsService,
+    private alertService: AlertsAndNotificationsService,
     private csvService: CSVService
   ) {}
 
   ngOnInit() {
-    this.databaseService.getAllProperties().subscribe((data: any) => {
-      this.properties = [];
+    this.databaseService.getAllProjects().subscribe((data: any) => {
+      this.projects = [];
       data.forEach((element: any) => {
-        const property = { id: element.id, ...element.data() };
-        this.properties.push(property);
+        const project = { id: element.id, ...element.data() };
+        this.projects.push(project);
       });
-      this.filteredProperties = this.properties;
+      this.projects.sort((a, b) => a.name.localeCompare(b.name));
+      this.filteredProjects = this.projects;
+    });
+
+    this.databaseService.getTypes().subscribe((data: any) => {
+      this.types = [];
+      data.forEach((element: any) => {
+        const type = { id: element.id, ...element.data() };
+        this.types.push(type);
+      });
     });
   }
 
   ngAfterViewInit(): void {
-    // Search properties
-    const propertySearchInput = document.getElementById(
-      'property-search-input'
+    // Search projects
+    const projectSearchInput = document.getElementById(
+      'project-search-input'
     ) as HTMLInputElement;
-    if (propertySearchInput) {
-      propertySearchInput.oninput = () => {
-        const query = propertySearchInput.value.trim();
+    if (projectSearchInput) {
+      projectSearchInput.oninput = () => {
+        const query = projectSearchInput.value.trim();
         if (query.length > 0) {
           const options = { keys: ['name'] };
-          const fuse = new Fuse(this.properties, options);
+          const fuse = new Fuse(this.projects, options);
           const results = fuse.search(query);
-          this.filteredProperties = [];
+          this.filteredProjects = [];
           results.forEach((result: any) => {
-            this.filteredProperties.push(result.item);
+            this.filteredProjects.push(result.item);
           });
         } else {
-          this.filteredProperties = this.properties;
+          this.filteredProjects = this.projects;
         }
       };
     }
 
-    // import properties
-    const importProperties = document.getElementById('import-properties');
-    if (importProperties) {
-      importProperties.addEventListener(
-        'click',
-        () => {
-          const input = document.createElement('input');
-          input.type = 'file';
-          input.accept = '.csv';
-          input.click();
-          input.onchange = () => {
-            this.dataProvider.pageSetting.blur = true;
-            if (input.files && input.files[0]) {
-              this.csvService.load(input.files[0]);
-              setTimeout(async () => {
-                const properties = this.csvService.import();
-                for (const property of properties) {
-                  property.images = property.images.split('|');
-                  Object.keys(this.propertyForm).forEach((key) => {
-                    
-                  });
-                  await this.databaseService.addProperty(property);
-                }
-                input.value = '';
-                this.dataProvider.pageSetting.blur = false;
-                this.alertify.presentToast(
-                  'Properties added successfully',
-                  'info'
-                );
-              }, 1000);
-            }
-          };
-        },
-        false
-      );
+    // // import projects
+    // const importProjects = document.getElementById('import-projects');
+    // if (importProjects) {
+    //   importProjects.addEventListener(
+    //     'click',
+    //     () => {
+    //       const input = document.createElement('input');
+    //       input.type = 'file';
+    //       input.accept = '.csv';
+    //       input.click();
+    //       input.onchange = () => {
+    //         this.dataProvider.pageSetting.blur = true;
+    //         if (input.files && input.files[0]) {
+    //           this.csvService.load(input.files[0]);
+    //           setTimeout(async () => {
+    //             const projects = this.csvService.import();
+    //             for (const project of projects) {
+    //               project.images = project.images.split('|');
+    //               Object.keys(this.projectForm).forEach((key) => {});
+    //               await this.databaseService.addProject(project);
+    //             }
+    //             input.value = '';
+    //             this.dataProvider.pageSetting.blur = false;
+    //             this.alertService.presentToast(
+    //               'Projects added successfully',
+    //               'info'
+    //             );
+    //           }, 1000);
+    //         }
+    //       };
+    //     },
+    //     false
+    //   );
+    // }
+
+    // // export projects
+    // const exportProjects = document.getElementById('export-projects');
+    // if (exportProjects) {
+    //   exportProjects.addEventListener(
+    //     'click',
+    //     () => {
+    //       if (this.projects.length > 0) {
+    //         const keys = Object.keys(this.projects[0]);
+    //         const csvData = [keys];
+    //         this.projects.forEach((project) => {
+    //           const values = [];
+    //           for (const key of keys) {
+    //             values.push(project[key]);
+    //           }
+    //           csvData.push(values);
+    //         });
+    //         this.csvService.export(csvData, 'projects');
+    //       } else {
+    //         this.alertService.presentToast('No projects to export', 'error');
+    //       }
+    //     },
+    //     false
+    //   );
+    // }
+  }
+
+  projectHasTypes(projectId: string) {
+    if (this.types) {
+      for (const type of this.types) {
+        if (type.project === projectId) {
+          return true;
+        }
+      }
     }
-
-    // export properties
-    const exportProperties = document.getElementById('export-properties');
-    if (exportProperties) {
-      exportProperties.addEventListener(
-        'click',
-        () => {
-          if (this.properties.length > 0) {
-            const keys = Object.keys(this.properties[0]);
-            const csvData = [keys];
-            this.properties.forEach((property) => {
-              const values = [];
-              for (const key of keys) {
-                values.push(property[key]);
-              }
-              csvData.push(values);
-            });
-            this.csvService.export(csvData, 'properties');
-          } else {
-            this.alertify.presentToast('No properties to export', 'error');
-          }
-        },
-        false
-      );
-    }
+    return false;
   }
 
-  viewProperty(property: any): void {
-    this.currentViewProperty = property;
-    UIkit.modal(document.getElementById('view-property-modal')).show();
+  filterTypes(event: Event) {
+    const selectedProject = (event.target as HTMLSelectElement).value.split(
+      ' '
+    )[1];
+    this.filteredTypes = this.types.filter((type) => {
+      return type.project === selectedProject;
+    });
   }
 
-  editProperty(property: any): void {
-    this.editMode = true;
-    this.currentEditId = property.id;
-    this.propertyForm.patchValue(property);
-    document
-      .getElementById('edit-or-add-property-modal')
-      ?.addEventListener('hidden', () => {
-        this.editMode = false;
-        this.currentEditId = '';
-        this.propertyForm.reset();
-        (document.getElementById('images-input') as HTMLInputElement).value =
-          '';
-      });
-    UIkit.modal(document.getElementById('edit-or-add-property-modal')).show();
-  }
-
-  deleteProperty(property: any): void {
-    if (
-      property.id &&
-      confirm('Are you sure you want to delete this property?')
-    ) {
-      this.dataProvider.pageSetting.blur = true;
-      this.databaseService
-        .deleteProperty(property.id)
-        .then(() => {
-          this.dataProvider.pageSetting.blur = false;
-          this.alertify.presentToast('Property Deleted Successfully');
-        })
-        .catch((error) => {
-          this.dataProvider.pageSetting.blur = false;
-          this.alertify.presentToast(error.message, 'error', 5000);
-        });
-    }
-  }
-
-  async uploadImages(files: any): Promise<any[]> {
-    const imageUrls: any[] = [];
-    for (const file of files) {
-      await this.databaseService
-        .upload(
-          'propertyImages/' + this.propertyForm.value.name + '/' + file.name,
-          file
-        )
-        .then((url) => {
-          imageUrls.push(url);
-        });
-    }
-    return imageUrls;
-  }
-
-  async submitPropertyForm() {
-    const editOrAddPropertyModal = UIkit.modal(
-      document.getElementById('edit-or-add-property-modal')
-    );
-
-    // Validate the images
-    const imageFiles = this.imagesValue ? this.imagesValue.target.files : [];
-    if (imageFiles && imageFiles.length > 0) {
-      for (const file of imageFiles) {
-        if (
-          file.size > 1000_000 &&
-          file.type !== 'image/jpeg' &&
-          file.type !== 'image/png'
-        ) {
-          editOrAddPropertyModal.hide();
-          this.alertify.presentToast(
-            'Each image should be less than 1MB and should be in jpeg or png format',
-            'error',
-            10000
+  validatePhotos(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const files = target.files;
+    if (files) {
+      for (var i = 0; i < files.length; i++) {
+        const file = files[i];
+        var fileIsValid = false;
+        if (!['image/png', 'image/jpeg', 'image/jpg'].includes(file.type)) {
+          this.alertService.presentToast(
+            'Only png, jpeg and jpg images are allowed',
+            'error'
           );
+        } else if (file.size >= 1_000_000) {
+          this.alertService.presentToast(
+            "Each image's size must be less than 1 MB",
+            'error'
+          );
+        } else {
+          fileIsValid = true;
+        }
+        if (!fileIsValid) {
+          target.value = '';
           return;
         }
       }
     }
+  }
 
-    // if form and images both are valid
-    if (this.propertyForm.valid) {
+  async submitProjectForm() {
+    if (this.projectForm.valid) {
       this.dataProvider.pageSetting.blur = true;
 
-      if (!this.editMode || imageFiles.length > 0) {
-        // Upload the images, then get the image urls and set it to the form control
-        await this.uploadImages(imageFiles).then((imageUrls) => {
-          this.propertyForm.patchValue({ images: imageUrls });
-        });
-      }
-
-      // If in edit mode, update property
-      if (this.editMode) {
-        // If no photos are selected, we don't need to include the images form control
-        if (imageFiles.length === 0) {
-          this.propertyForm.removeControl('images');
+      // Upload photos
+      const projectPhotosInput = document.getElementById(
+        'project-photos-input'
+      ) as HTMLInputElement;
+      if (
+        projectPhotosInput &&
+        projectPhotosInput.files &&
+        projectPhotosInput.files.length > 0
+      ) {
+        this.projectForm.value.photos = [];
+        for (var i = 0; i < projectPhotosInput.files.length; i++) {
+          await this.databaseService
+            .upload(
+              'projects/' + new Date().getTime(),
+              projectPhotosInput.files[i]
+            )
+            .then((url) => {
+              this.projectForm.value.photos.push(url);
+            });
         }
+      } else {
+        this.projectForm.removeControl('photos');
+      }
 
-        this.databaseService
-          .updateProperty(this.currentEditId, this.propertyForm.value)
-          .then(() => {
-            editOrAddPropertyModal.hide();
-            this.dataProvider.pageSetting.blur = false;
-            this.alertify.presentToast('Property updated successfully');
-          })
-          .catch((error) => {
-            editOrAddPropertyModal.hide();
-            this.dataProvider.pageSetting.blur = false;
-            this.alertify.presentToast(error.message, 'error', 5000);
-          });
-      }
-      // If not in edit mode, add property
-      else {
-        this.databaseService
-          .addProperty(this.propertyForm.value)
-          .then(() => {
-            editOrAddPropertyModal.hide();
-            this.dataProvider.pageSetting.blur = false;
-            this.alertify.presentToast('Property added successfully');
-            this.propertyForm.reset();
-            (
-              document.getElementById('images-input') as HTMLInputElement
-            ).value = '';
-          })
-          .catch((error) => {
-            editOrAddPropertyModal.hide();
-            this.dataProvider.pageSetting.blur = false;
-            this.alertify.presentToast(error.message, 'error', 5000);
-            this.propertyForm.reset();
-            (
-              document.getElementById('images-input') as HTMLInputElement
-            ).value = '';
-          });
-      }
+      const projectModal = UIkit.modal(
+        document.getElementById('project-modal')
+      );
+      this.databaseService.addProject(this.projectForm.value).then(() => {
+        projectModal.hide();
+        this.projectForm.reset();
+        (
+          document.getElementById('project-photos-input') as HTMLInputElement
+        ).value = '';
+        this.ngOnInit();
+        this.dataProvider.pageSetting.blur = false;
+        this.alertService.presentToast('Project added successfully', 'info');
+      });
+    } else {
+      this.alertService.presentToast(
+        'Please fill all the required fields',
+        'error'
+      );
     }
-    // if form not valid
-    else {
-      editOrAddPropertyModal.hide();
-      this.alertify.presentToast('Please fill all the fields', 'error', 7000);
+  }
+
+  async submitTypeForm() {
+    if (this.typeForm.valid) {
+      this.dataProvider.pageSetting.blur = true;
+
+      // Upload photos
+      const typePhotosInput = document.getElementById(
+        'type-photos-input'
+      ) as HTMLInputElement;
+      if (
+        typePhotosInput &&
+        typePhotosInput.files &&
+        typePhotosInput.files.length > 0
+      ) {
+        this.typeForm.value.photos = [];
+        for (var i = 0; i < typePhotosInput.files.length; i++) {
+          await this.databaseService
+            .upload('types/' + new Date().getTime(), typePhotosInput.files[i])
+            .then((url) => {
+              this.typeForm.value.photos.push(url);
+            });
+        }
+      } else {
+        this.typeForm.removeControl('photos');
+      }
+
+      const typeModal = UIkit.modal(document.getElementById('type-modal'));
+      this.databaseService.addType(this.typeForm.value).then(() => {
+        typeModal.hide();
+        this.typeForm.reset();
+        typePhotosInput.value = '';
+        this.ngOnInit();
+        this.dataProvider.pageSetting.blur = false;
+        this.alertService.presentToast('Type added successfully', 'info');
+      });
+    } else {
+      this.alertService.presentToast(
+        'Please fill all the required fields',
+        'error'
+      );
+    }
+  }
+
+  async submitUnitForm() {
+    if (this.unitForm.valid) {
+      this.dataProvider.pageSetting.blur = true;
+      const unitModal = UIkit.modal(document.getElementById('unit-modal'));
+      
+      this.databaseService.addUnit(this.unitForm.value).then(() => {
+        unitModal.hide();
+        this.unitForm.reset();
+        this.ngOnInit();
+        this.dataProvider.pageSetting.blur = false;
+        this.alertService.presentToast('Unit added successfully', 'info');
+      });
+    } else {
+      this.alertService.presentToast(
+        'Please fill all the required fields',
+        'error'
+      );
     }
   }
 }

@@ -11,17 +11,36 @@ import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
+  @ViewChild('photoInput') photoInput: ElementRef;
+  editMode: boolean = false;
+
+  editForm: FormGroup = new FormGroup({
+    displayName: new FormControl('', [Validators.required]),
+    phoneNumber: new FormControl(),
+    qualification: new FormControl(),
+    dob: new FormControl(),
+    panNo: new FormControl(),
+    address: new FormControl(),
+    bankName: new FormControl(),
+    fatherName: new FormControl(),
+    branch: new FormControl(),
+    accountNo: new FormControl(),
+    ifscCode: new FormControl(),
+    parentEmployee: new FormControl(),
+    userType: new FormControl(),
+  });
+
   constructor(
     public dataProvider: DataProvider,
     private alertService: AlertsAndNotificationsService,
     private databaseService: DatabaseService
   ) {}
 
-  @ViewChild('photoInput') photoInput: ElementRef;
-  editMode: boolean = false;
-
   goToEditMode() {
     this.editMode = true;
+    if (this.dataProvider.userData) {
+      this.editForm.patchValue(this.dataProvider.userData);
+    }
   }
 
   validateProfilePhoto() {
@@ -63,29 +82,6 @@ export class ProfileComponent implements OnInit {
         });
     }
   }
-
-  editForm: FormGroup = new FormGroup({
-    displayName: new FormControl(
-      this.dataProvider.userData?.displayName || '',
-      [Validators.required]
-    ),
-    phoneNumber: new FormControl(this.dataProvider.userData?.phoneNumber || ''),
-    qualification: new FormControl(
-      this.dataProvider.userData?.qualification || ''
-    ),
-    dob: new FormControl(this.dataProvider.userData?.dob || ''),
-    panNo: new FormControl(this.dataProvider.userData?.panNo || ''),
-    address: new FormControl(this.dataProvider.userData?.address || ''),
-    bankName: new FormControl(this.dataProvider.userData?.bankName || ''),
-    fatherName: new FormControl(this.dataProvider.userData?.fatherName || ''),
-    branch: new FormControl(this.dataProvider.userData?.branch || ''),
-    accountNo: new FormControl(this.dataProvider.userData?.accountNo || ''),
-    ifscCode: new FormControl(this.dataProvider.userData?.ifscCode || ''),
-    parentEmployee: new FormControl(
-      this.dataProvider.userData?.parentEmployee || ''
-    ),
-    userType: new FormControl(this.dataProvider.userData?.userType || ''),
-  });
 
   saveEdit() {
     if (confirm('Are you sure?') && this.editForm.valid) {

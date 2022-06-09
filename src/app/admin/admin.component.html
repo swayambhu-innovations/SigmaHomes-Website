@@ -57,13 +57,13 @@
       <i class="fa-solid fa-file-export"></i>Export
     </button>
   </div>
-  <div *ngIf="currentPanel == 'Properties'" id="header-end">
+  <div *ngIf="currentPanel == 'Properties' && !showingPropertyPage" id="header-end">
     <div class="search-box">
       <input
         type="text"
         class="admin-search"
         placeholder="Search"
-        id="property-search-input"
+        id="project-search-input"
       />
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
@@ -74,7 +74,10 @@
       <i class="fa-solid fa-file-export"></i>Export
     </button>
   </div>
-  <div *ngIf="currentPanel == 'Responses' && !showingResponsePage" id="header-end">
+  <div
+    *ngIf="currentPanel == 'Responses' && !showingResponsePage"
+    id="header-end"
+  >
     <div class="search-box">
       <input
         type="text"
@@ -91,13 +94,18 @@
       <i class="fa-solid fa-file-export"></i>Export
     </button>
     <div id="view-responses-as">
-      <input type="hidden" value="cards" id="view-as-input" #viewAsInput />
+      <input
+        type="hidden"
+        [value]="getViewAs()"
+        id="view-as-input"
+        #viewAsInput
+      />
       <button
         [ngClass]="{
           'view-as-btn': true,
           selected: viewAsInput.value == 'cards'
         }"
-        (click)="viewAsInput.value = 'cards'"
+        (click)="setViewAs('cards')"
         uk-tooltip="View as cards"
         data-view-as="cards"
       >
@@ -108,7 +116,7 @@
           'view-as-btn': true,
           selected: viewAsInput.value == 'table'
         }"
-        (click)="viewAsInput.value = 'table'"
+        (click)="setViewAs('table')"
         uk-tooltip="View as a table"
         data-view-as="table"
       >

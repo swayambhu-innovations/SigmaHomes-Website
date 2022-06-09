@@ -2,19 +2,7 @@
   <div id="lead-cards" uk-grid="masonry:true">
     <app-lead-card
       *ngFor="let lead of filteredLeads"
-      [name]="lead.name ? lead.name : 'N/A'"
-      [number]="lead.phone ? lead.phone : 'N/A'"
-      [email]="lead.email ? lead.email : 'N/A'"
-      [address]="lead.address ? lead.address : 'N/A'"
-      [city]="lead.city ? lead.city : 'N/A'"
-      [state]="lead.state ? lead.state : 'N/A'"
-      [pinCode]="lead.pincode ? lead.pincode : 'N/A'"
-      [aadharNo]="lead.aadharNo ? lead.aadharNo : 'N/A'"
-      [panNo]="lead.panNo ? lead.panNo : 'N/A'"
-      [customerDob]="lead.customerDob ? lead.customerDob : 'N/A'"
-      [customerAnniversary]="
-        lead.customerAnniversary ? lead.customerAnniversary : 'N/A'
-      "
+      [lead]="lead"
       (onMakeCustomer)="makeCustomer(lead)"
       (onEdit)="edit(lead)"
       (onDelete)="delete(lead)"

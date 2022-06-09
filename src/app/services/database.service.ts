@@ -13,6 +13,7 @@ import {
   orderBy,
   limit,
   Timestamp,
+  where,
 } from '@angular/fire/firestore';
 import {
   getDownloadURL,
@@ -77,32 +78,56 @@ export class DatabaseService {
     return updateDoc(doc(this.fs, 'customers/' + customerId), data);
   }
 
-  addProperty(property: any) {
-    property.rating = 0;
-    return addDoc(collection(this.fs, 'properties'), property);
+  addProject(project: any) {
+    project.rating = 0;
+    return addDoc(collection(this.fs, 'projects'), project);
   }
 
-  getAllProperties() {
-    return collectionSnapshots(collection(this.fs, 'properties'));
+  getAllProjects() {
+    return collectionSnapshots(collection(this.fs, 'projects'));
   }
 
-  getNProperties(nProperties: number) {
+  getNProjects(nProjects: number) {
     return getDocs(
       query(
-        collection(this.fs, 'properties'),
+        collection(this.fs, 'projects'),
         orderBy('rating', 'desc'),
-        limit(nProperties)
+        limit(nProjects)
       )
     );
   }
 
-  updateProperty(propertyId: string, data: any) {
-    return updateDoc(doc(this.fs, 'properties/' + propertyId), data);
+  getTypes() {
+    return collectionSnapshots(collection(this.fs, 'types'));
   }
 
-  deleteProperty(propertyId: string) {
-    console.log(propertyId)
-    return deleteDoc(doc(this.fs, 'properties/' + propertyId));
+  getTypesOfProject(projectId: string) {
+    return getDocs(
+      query(collection(this.fs, 'types'), where('project', '==', projectId))
+    );
+  }
+
+  getUnitsOfType(typeId: string) {
+    return getDocs(
+      query(collection(this.fs, 'units'), where('type', '==', typeId))
+    );
+  }
+
+  addType(type: any) {
+    return addDoc(collection(this.fs, 'types'), type);
+  }
+
+  addUnit(unit: any) {
+    return addDoc(collection(this.fs, 'units'), unit);
+  }
+
+  editProject(projectId: string, data: any) {
+    return updateDoc(doc(this.fs, 'projects/' + projectId), data);
+  }
+
+  deleteProject(projectId: string) {
+    console.log(projectId);
+    return deleteDoc(doc(this.fs, 'projects/' + projectId));
   }
 
   addLead(lead: any) {
@@ -126,6 +151,14 @@ export class DatabaseService {
     return addDoc(collection(this.fs, 'responses'), response);
   }
 
+  updateResponsePhase(responseId: string, phase: number) {
+    return updateDoc(doc(this.fs, 'responses/' + responseId), { phase: phase });
+  }
+
+  deleteResponse(responseId: string) {
+    return deleteDoc(doc(this.fs, 'responses/' + responseId));
+  }
+
   getResponses() {
     return collectionSnapshots(collection(this.fs, 'responses'));
   }
@@ -138,16 +171,17 @@ export class DatabaseService {
     return getDoc(doc(this.fs, 'customers/' + customerId));
   }
 
-  getProperty(propertyId: string) {
-    return getDoc(doc(this.fs, 'properties/' + propertyId));
+  getProject(projectId: string) {
+    return getDoc(doc(this.fs, 'projects/' + projectId));
+  }
+
+  getNotes(responseId: any) {
+    return getDocs(query(collection(this.fs, 'notes')));
   }
 
   getBroadcasts() {
     return getDocs(
-      query(
-        collection(this.fs, 'broadcasts'),
-        orderBy('date', 'desc')
-      )
+      query(collection(this.fs, 'broadcasts'), orderBy('date', 'desc'))
     );
   }
 
