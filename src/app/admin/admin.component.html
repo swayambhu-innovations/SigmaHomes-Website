@@ -1,216 +1,124 @@
 <header>
   <div style="display: flex">
-    <button
-      *ngIf="!largeScreen"
-      class="uk-navbar-toggle"
-      uk-navbar-toggle-icon
-      id="toggle-button"
-      (click)="toggleSidebar()"
-    ></button>
+    <button *ngIf="!largeScreen" class="uk-navbar-toggle" uk-navbar-toggle-icon id="toggle-button"
+      (click)="toggleSidebar()"></button>
     <h2 id="header-heading">Agent {{ currentPanel }}</h2>
   </div>
   <div *ngIf="currentPanel == 'Broadcast'" id="header-end">
     <div class="search-box">
-      <input
-        type="text"
-        class="admin-search"
-        placeholder="Search"
-        id="broadcast-search-input"
-      />
+      <input type="text" class="admin-search" placeholder="Search" id="broadcast-search-input" />
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
-    <button routerLink="broadcast/new-broadcast" class="secondary-btn">
+    <button (click)="emitButtonAction('newBroadCast')" class="secondary-btn">
       <i class="fa-solid fa-plus"></i>New Broadcast
     </button>
   </div>
   <div *ngIf="currentPanel == 'Lead Center'" id="header-end">
     <div class="search-box">
-      <input
-        type="text"
-        class="admin-search"
-        placeholder="Search"
-        id="lead-search-input"
-      />
+      <input type="text" class="admin-search" placeholder="Search" id="lead-search-input" />
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
-    <button class="secondary-btn" id="import-leads">
+    <button class="secondary-btn" id="import-leads" (click)="emitButtonAction('importLead')">
       <i class="fa-solid fa-file-import"></i>Import
     </button>
-    <button class="secondary-btn" id="export-leads">
+    <button class="secondary-btn" id="export-leads" (click)="emitButtonAction('importLead')">
       <i class="fa-solid fa-file-export"></i>Export
     </button>
   </div>
   <div *ngIf="currentPanel == 'Customers'" id="header-end">
     <div class="search-box">
-      <input
-        type="text"
-        class="admin-search"
-        placeholder="Search"
-        id="customer-search-input"
-      />
+      <input type="text" class="admin-search" placeholder="Search" id="customer-search-input" />
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
-    <button class="secondary-btn" id="import-customers">
+    <button class="secondary-btn" id="import-customers" (click)="emitButtonAction('importCustomer')">
       <i class="fa-solid fa-file-import"></i>Import
     </button>
-    <button class="secondary-btn" id="export-customers">
+    <button class="secondary-btn" id="export-customers" (click)="emitButtonAction('exportCustomer')">
       <i class="fa-solid fa-file-export"></i>Export
     </button>
   </div>
   <div *ngIf="currentPanel == 'Properties' && !showingPropertyPage" id="header-end">
     <div class="search-box">
-      <input
-        type="text"
-        class="admin-search"
-        placeholder="Search"
-        id="project-search-input"
-      />
+      <input type="text" class="admin-search" placeholder="Search" id="project-search-input" />
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
-    <button class="secondary-btn" id="import-properties">
+    <button class="secondary-btn" id="import-properties" (click)="emitButtonAction('importProperty')">
       <i class="fa-solid fa-file-import"></i>Import
     </button>
-    <button class="secondary-btn" id="export-properties">
+    <button class="secondary-btn" id="export-properties" (click)="emitButtonAction('exportProperty')">
       <i class="fa-solid fa-file-export"></i>Export
     </button>
   </div>
-  <div
-    *ngIf="currentPanel == 'Responses' && !showingResponsePage"
-    id="header-end"
-  >
+  <div *ngIf="currentPanel == 'Responses' && !showingResponsePage" id="header-end">
     <div class="search-box">
-      <input
-        type="text"
-        class="admin-search"
-        placeholder="Search"
-        id="response-search-input"
-      />
+      <input type="text" class="admin-search" placeholder="Search" id="response-search-input" />
       <i class="fa-solid fa-magnifying-glass"></i>
     </div>
-    <button class="secondary-btn" id="import-responses">
+    <button class="secondary-btn" id="import-responses" (click)="emitButtonAction('importResponses')">
       <i class="fa-solid fa-file-import"></i>Import
     </button>
-    <button class="secondary-btn" id="export-responses">
+    <button class="secondary-btn" id="export-responses" (click)="emitButtonAction('exportResponses')">
       <i class="fa-solid fa-file-export"></i>Export
     </button>
     <div id="view-responses-as">
-      <input
-        type="hidden"
-        [value]="getViewAs()"
-        id="view-as-input"
-        #viewAsInput
-      />
-      <button
-        [ngClass]="{
+      <input type="hidden" [value]="getViewAs()" id="view-as-input" #viewAsInput />
+      <button [ngClass]="{
           'view-as-btn': true,
           selected: viewAsInput.value == 'cards'
-        }"
-        (click)="setViewAs('cards')"
-        uk-tooltip="View as cards"
-        data-view-as="cards"
-      >
+        }" (click)="setViewAs('cards')" uk-tooltip="View as cards" data-view-as="cards">
         <i class="fa-solid fa-address-card"></i>
       </button>
-      <button
-        [ngClass]="{
+      <button [ngClass]="{
           'view-as-btn': true,
           selected: viewAsInput.value == 'table'
-        }"
-        (click)="setViewAs('table')"
-        uk-tooltip="View as a table"
-        data-view-as="table"
-      >
+        }" (click)="setViewAs('table')" uk-tooltip="View as a table" data-view-as="table">
         <i class="fa-solid fa-table"></i>
       </button>
     </div>
   </div>
+  <input type="file" hidden #fileInput accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
 </header>
 <div id="wrapper" (window:resize)="onWindowResize()">
-  <div
-    [style]="largeScreen || showSidebar ? '' : 'display: none'"
-    id="sidebar-container"
-  >
+  <div [style]="largeScreen || showSidebar ? '' : 'display: none'" id="sidebar-container">
     <aside id="sidebar">
       <ul id="sidebar-ul">
         <li>
-          <a
-            routerLink="/admin/dashboard"
-            routerLinkActive="active"
-            class="sidebar-li-a"
-            (click)="toggleSidebar()"
-            ><span uk-icon="icon: thumbnails" class="sidebar-icon"></span
-            ><span class="sidebar-text">Dashboard</span></a
-          >
+          <a routerLink="/admin/dashboard" routerLinkActive="active" class="sidebar-li-a"
+            (click)="toggleSidebar()"><span uk-icon="icon: thumbnails" class="sidebar-icon"></span><span
+              class="sidebar-text">Dashboard</span></a>
         </li>
         <li>
-          <a
-            routerLink="/admin/profile"
-            routerLinkActive="active"
-            class="sidebar-li-a"
-            (click)="toggleSidebar()"
-            ><span uk-icon="icon: user" class="sidebar-icon"></span
-            ><span class="sidebar-text">Profile</span></a
-          >
+          <a routerLink="/admin/profile" routerLinkActive="active" class="sidebar-li-a" (click)="toggleSidebar()"><span
+              uk-icon="icon: user" class="sidebar-icon"></span><span class="sidebar-text">Profile</span></a>
         </li>
         <li>
-          <a
-            routerLink="/admin/broadcast"
-            routerLinkActive="active"
-            class="sidebar-li-a"
-            (click)="toggleSidebar()"
-            ><span uk-icon="icon: rss" class="sidebar-icon"></span
-            ><span class="sidebar-text">Broadcast</span></a
-          >
+          <a routerLink="/admin/broadcast" routerLinkActive="active" class="sidebar-li-a"
+            (click)="toggleSidebar()"><span uk-icon="icon: rss" class="sidebar-icon"></span><span
+              class="sidebar-text">Broadcast</span></a>
         </li>
         <li>
-          <a
-            routerLink="/admin/lead-center"
-            routerLinkActive="active"
-            class="sidebar-li-a"
-            (click)="toggleSidebar()"
-            ><span uk-icon="icon: folder" class="sidebar-icon"></span
-            ><span class="sidebar-text">Lead Center</span></a
-          >
+          <a routerLink="/admin/lead-center" routerLinkActive="active" class="sidebar-li-a"
+            (click)="toggleSidebar()"><span uk-icon="icon: folder" class="sidebar-icon"></span><span
+              class="sidebar-text">Lead Center</span></a>
         </li>
         <li>
-          <a
-            routerLink="/admin/customers"
-            routerLinkActive="active"
-            class="sidebar-li-a"
-            (click)="toggleSidebar()"
-            ><span uk-icon="icon: users" class="sidebar-icon"></span
-            ><span class="sidebar-text">Customers</span></a
-          >
+          <a routerLink="/admin/customers" routerLinkActive="active" class="sidebar-li-a"
+            (click)="toggleSidebar()"><span uk-icon="icon: users" class="sidebar-icon"></span><span
+              class="sidebar-text">Customers</span></a>
         </li>
         <li>
-          <a
-            routerLink="/admin/properties"
-            routerLinkActive="active"
-            class="sidebar-li-a"
-            (click)="toggleSidebar()"
-            ><span uk-icon="icon: home" class="sidebar-icon"></span
-            ><span class="sidebar-text">Properties</span></a
-          >
+          <a routerLink="/admin/properties" routerLinkActive="active" class="sidebar-li-a"
+            (click)="toggleSidebar()"><span uk-icon="icon: home" class="sidebar-icon"></span><span
+              class="sidebar-text">Properties</span></a>
         </li>
         <li>
-          <a
-            routerLink="/admin/responses"
-            routerLinkActive="active"
-            class="sidebar-li-a"
-            (click)="toggleSidebar()"
-            ><span uk-icon="icon: info" class="sidebar-icon"></span
-            ><span class="sidebar-text">Responses</span></a
-          >
+          <a routerLink="/admin/responses" routerLinkActive="active" class="sidebar-li-a"
+            (click)="toggleSidebar()"><span uk-icon="icon: info" class="sidebar-icon"></span><span
+              class="sidebar-text">Responses</span></a>
         </li>
         <li>
-          <a
-            routerLink="/admin/task-log"
-            routerLinkActive="active"
-            class="sidebar-li-a"
-            (click)="toggleSidebar()"
-            ><span uk-icon="icon: list" class="sidebar-icon"></span
-            ><span class="sidebar-text">Task Log</span></a
-          >
+          <a routerLink="/admin/task-log" routerLinkActive="active" class="sidebar-li-a" (click)="toggleSidebar()"><span
+              uk-icon="icon: list" class="sidebar-icon"></span><span class="sidebar-text">Task Log</span></a>
         </li>
       </ul>
     </aside>

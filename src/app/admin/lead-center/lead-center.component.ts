@@ -8,6 +8,7 @@ import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts
 import Fuse from 'fuse.js';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
+import { BulkService } from 'src/app/services/bulk.service';
 declare const UIkit: any;
 
 @Component({
@@ -30,7 +31,8 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
     private csvService: CSVService,
     private router: Router,
     private route: ActivatedRoute,
-    private dataTransferService: DataTransferService
+    private dataTransferService: DataTransferService,
+    private bulkDataHandler:BulkService
   ) {}
 
   leadForm: FormGroup = new FormGroup({
@@ -59,85 +61,98 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
         });
         this.filteredLeads = this.leads;
       });
-  }
-
-  ngAfterViewInit(): void {
-    // search leads
-    const leadSearchInput = document.getElementById(
-      'lead-search-input'
-    ) as HTMLInputElement;
-    if (leadSearchInput) {
-      leadSearchInput.oninput = () => {
-        const query = leadSearchInput.value.trim();
-        if (query.length > 0) {
-          const options = { keys: ['name', 'phone', 'email'] };
-          const fuse = new Fuse(this.leads, options);
-          const results = fuse.search(query);
-          this.filteredLeads = [];
-          results.forEach((result: any) => {
-            this.filteredLeads.push(result.item);
-          });
-        } else {
-          this.filteredLeads = this.leads;
+      this.dataProvider.headerButtonActions.subscribe((action:any)=>{
+        if (action==='importLead'){
+          
         }
-      };
-    }
-
-    // import leads
-    const importLeads = document.getElementById('import-leads');
-    if (importLeads) {
-      importLeads.addEventListener(
-        'click',
-        () => {
-          const input = document.createElement('input');
-          input.type = 'file';
-          input.accept = '.csv';
-          input.click();
-          input.onchange = () => {
-            this.dataProvider.pageSetting.blur = true;
-            if (input.files && input.files[0]) {
-              this.csvService.load(input.files[0]);
-              setTimeout(async () => {
-                const leads = this.csvService.import();
-                for (const lead of leads) {
-                  await this.databaseService.addLead(lead);
-                }
-                input.value = '';
-                this.dataProvider.pageSetting.blur = false;
-                this.alertify.presentToast('Leads added successfully', 'info');
-              }, 1000);
-            }
-          };
-        },
-        false
-      );
-    }
-
-    // export leads
-    const exportLeads = document.getElementById('export-leads');
-    if (exportLeads) {
-      exportLeads.addEventListener(
-        'click',
-        () => {
-          if (this.leads.length > 0) {
-            const keys = Object.keys(this.leads[0]);
-            const csvData = [keys];
-            this.leads.forEach((lead) => {
-              const values = [];
-              for (const key of keys) {
-                values.push(lead[key]);
-              }
-              csvData.push(values);
-            });
-            this.csvService.export(csvData, 'leads');
-          } else {
-            this.alertify.presentToast('No leads to export', 'error');
-          }
-        },
-        false
-      );
-    }
+      })
+      const dt = this.dataProvider.importExportFileActions.subscribe(async (action:any)=>{
+        if(action.type=='importLead'){
+          console.log(action.data);
+          await this.bulkDataHandler.readCsv(action.data[0]).then((data:any)=>{
+            console.log('DAtaJson',data);
+          });
+        }
+      })
   }
+
+  // ngAfterViewInit(): void {
+  //   // search leads
+  //   const leadSearchInput = document.getElementById(
+  //     'lead-search-input'
+  //   ) as HTMLInputElement;
+  //   if (leadSearchInput) {
+  //     leadSearchInput.oninput = () => {
+  //       const query = leadSearchInput.value.trim();
+  //       if (query.length > 0) {
+  //         const options = { keys: ['name', 'phone', 'email'] };
+  //         const fuse = new Fuse(this.leads, options);
+  //         const results = fuse.search(query);
+  //         this.filteredLeads = [];
+  //         results.forEach((result: any) => {
+  //           this.filteredLeads.push(result.item);
+  //         });
+  //       } else {
+  //         this.filteredLeads = this.leads;
+  //       }
+  //     };
+  //   }
+
+  //   // import leads
+  //   const importLeads = document.getElementById('import-leads');
+  //   if (importLeads) {
+  //     importLeads.addEventListener(
+  //       'click',
+  //       () => {
+  //         const input = document.createElement('input');
+  //         input.type = 'file';
+  //         input.accept = '.csv';
+  //         input.click();
+  //         input.onchange = () => {
+  //           this.dataProvider.pageSetting.blur = true;
+  //           if (input.files && input.files[0]) {
+  //             this.csvService.load(input.files[0]);
+  //             setTimeout(async () => {
+  //               const leads = this.csvService.import();
+  //               for (const lead of leads) {
+  //                 await this.databaseService.addLead(lead);
+  //               }
+  //               input.value = '';
+  //               this.dataProvider.pageSetting.blur = false;
+  //               this.alertify.presentToast('Leads added successfully', 'info');
+  //             }, 1000);
+  //           }
+  //         };
+  //       },
+  //       false
+  //     );
+  //   }
+
+  //   // export leads
+  //   const exportLeads = document.getElementById('export-leads');
+  //   if (exportLeads) {
+  //     exportLeads.addEventListener(
+  //       'click',
+  //       () => {
+  //         if (this.leads.length > 0) {
+  //           const keys = Object.keys(this.leads[0]);
+  //           const csvData = [keys];
+  //           this.leads.forEach((lead) => {
+  //             const values = [];
+  //             for (const key of keys) {
+  //               values.push(lead[key]);
+  //             }
+  //             csvData.push(values);
+  //           });
+  //           this.csvService.export(csvData, 'leads');
+  //         } else {
+  //           this.alertify.presentToast('No leads to export', 'error');
+  //         }
+  //       },
+  //       false
+  //     );
+  //   }
+  // }
 
   makeCustomer(lead: any) {
     this.dataTransferService.setLead(lead);

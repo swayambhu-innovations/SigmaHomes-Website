@@ -24,4 +24,24 @@ export type feature = {
     icon: string;
 }
 
+export type task = {
+    id:string;
+    propertyName:string;
+    propertyPrice:number;
+    assignedAgentImage:string;
+    assignedAgentName:string;
+    phase:'stageOne'|'stageTwo'|'stageThree'|'stageFour'|'stageFive';
+}
 
+export type Stages = {
+    stageOne?:stage[];
+    stageTwo?:stage[];
+    stageThree?:stage[];
+    stageFour?:stage[];
+    stageFive?:stage[];
+}
+
+export type stage = {
+    date:string;
+    description:string;
+}

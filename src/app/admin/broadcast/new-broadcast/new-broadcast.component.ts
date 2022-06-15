@@ -8,18 +8,20 @@ import { DatabaseService } from 'src/app/services/database.service';
 import Fuse from 'fuse.js';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataProvider } from 'src/app/providers/data.provider';
+import { map, startWith } from 'rxjs/operators';
+
 @Component({
   selector: 'app-new-broadcast',
   templateUrl: './new-broadcast.component.html',
   styleUrls: ['./new-broadcast.component.scss', '../../admin.util.scss'],
 })
 export class NewBroadcastComponent implements OnInit {
-  @ViewChild('photoInput') photoInput: ElementRef;
+  @ViewChild('imageSelector') photoInput: ElementRef;
 
   recipients: string[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   addOnBlur = true;
-
+  imageFile: File | false;
   customers: any[];
   filteredCustomers: any[];
 
@@ -27,9 +29,8 @@ export class NewBroadcastComponent implements OnInit {
     image: new FormControl(''),
     subject: new FormControl(''),
     text: new FormControl(''),
-    recipients: new FormControl([]),
   });
-
+  customerControl = new FormControl();
   constructor(
     private alertService: AlertsAndNotificationsService,
     private broadcastService: BroadcastService,
@@ -37,7 +38,12 @@ export class NewBroadcastComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dataProvider: DataProvider
-  ) {}
+  ) {
+    this.customerControl.valueChanges.pipe(
+      startWith(null),
+      map((room: string | null) => (room ? this._filter(room) : this.customers.slice())),
+    );
+  }
 
   ngOnInit(): void {
     // If "send a new broadcast to these recipients" is cliecked
@@ -60,8 +66,53 @@ export class NewBroadcastComponent implements OnInit {
       docs.forEach((doc: any) => {
         this.customers.push({ id: doc.id, ...doc.data() });
       });
-      this.filteredCustomers = this.customers;
+      this.customers.forEach((customer: any) => {
+        console.log('Customer',customer);
+      });
+      this.filteredCustomers = []
     });
+  }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    let returnResponse : any = [];
+    this.customers.forEach((customer: any) => {
+      if (customer.name.toLowerCase().includes(filterValue)) {
+        returnResponse.push(customer);
+      }
+    });
+    return returnResponse;
+  }
+  remove(data:any){
+    this.filteredCustomers.forEach((customer:any,index:number)=>{
+      if(data.id===customer.id){
+        this.filteredCustomers.splice(index,1);
+        this.customers.push(customer);
+      }
+    })
+  }
+
+  add(event:any){
+    console.log(event);
+  }
+
+  selected(event:any){
+    this.customers.forEach((customer:any,index:number)=>{
+      if(event.option.value===customer.id){
+        this.filteredCustomers.push(customer);
+        this.customers.splice(index,1);
+      }
+    })
+  }
+
+  verifyImage(): void {
+    const file:File = this.photoInput.nativeElement.files[0]
+    if(file.size<100_000 && file.type=='image/png' || file.type=='image/jpg'){
+      this.imageFile = file;
+    } else {
+      this.imageFile = false;
+      this.alertService.presentToast('Your photo should either be in .png or .jpg and less than 100kb');
+      this.photoInput.nativeElement.value = '';
+    }
   }
 
   triggerImageUpload(): void {

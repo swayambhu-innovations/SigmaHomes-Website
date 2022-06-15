@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { collection, collectionSnapshots, Firestore } from '@angular/fire/firestore';
 import { PageSetting } from '../structures/method.structure';
 import { UserData } from '../structures/user.structure';
-
+import { Subject } from 'rxjs';
 @Injectable()
 export class DataProvider{
     public data:any;
@@ -13,6 +13,8 @@ export class DataProvider{
         spinner:false,
         messageType:'Error'
     };
+    public headerButtonActions = new Subject();
+    public importExportFileActions = new Subject<fileSubscription>();
     public userData:UserData | undefined;
     public loggedIn:boolean = false;
     public gettingUserData:boolean = true;
@@ -26,4 +28,9 @@ export class DataProvider{
     public dataThree:any;
     public dataFour:any;
     public siteData:any = {};
+}
+
+export type fileSubscription = {
+    data:FileList;
+    type:'newBroadCast' | 'importLead' | 'exportLead' | 'importCustomer' | 'exportCustomer' | 'importProperty' | 'exportProperty' | 'importResponses' | 'exportResponses';
 }

@@ -9,8 +9,15 @@ import { MaterialModule } from '../../material/material.module';
 import { NewBroadcastComponent } from './new-broadcast/new-broadcast.component';
 import { BroadcastService } from 'src/app/services/broadcast.service';
 import { RouterModule } from '@angular/router';
-
-@NgModule({
+import {MatDialogModule} from '@angular/material/dialog'; 
+import {MatIconModule} from '@angular/material/icon';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import {MatFormFieldModule} from '@angular/material/form-field'; 
+import {MatInputModule} from '@angular/material/input'; 
+ 
+ 
+ @NgModule({
   declarations: [BroadcastComponent, NewBroadcastComponent],
   imports: [
     CommonModule,
@@ -19,7 +26,13 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    MatDialogModule,
+    MatIconModule,
+    MatAutocompleteModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [BroadcastService],
 })

@@ -5,15 +5,17 @@ import { TaskLogRoutingModule } from './task-log-routing.module';
 import { TaskLogComponent } from './task-log.component';
 import { AdminWidgetsModule } from '../admin-widgets/admin-widgets.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { TaskcardComponent } from './taskcard/taskcard.component'; 
 @NgModule({
-  declarations: [TaskLogComponent],
+  declarations: [TaskLogComponent, TaskcardComponent],
   imports: [
     CommonModule,
     TaskLogRoutingModule,
     AdminWidgetsModule,
     FormsModule,
     ReactiveFormsModule,
+    DragDropModule
   ],
 })
 export class TaskLogModule {}

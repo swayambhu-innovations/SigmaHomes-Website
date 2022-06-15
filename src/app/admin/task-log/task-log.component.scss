@@ -1,26 +1,36 @@
 section {
-  padding: 1.5em;
-
-  .uk-accordion-title {
-    font-family: var(--font-three);
-    color: var(--secondary);
-    font-weight: 500;
-  }
-
-  .uk-accordion-content {
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  div{
     display: flex;
-    flex-wrap: wrap;
-
-    app-response-card {
-      width: 40%;
-      max-width: 400px;
-      flex-grow: 1;
-      margin: 0.5em;
-
-      @media (max-width: 900px) {
-        width: 25%;
-        min-width: 250px;
-      }
+    flex-direction: column;
+    padding: 10px;
+    min-height: 80vh;
+    width:calc((100% / 3) - 30px);
+    border-radius: 10px;
+    background-color: rgb(236, 236, 236);
+    transition: background-color 0.5s ease-in;
+    box-shadow: inset 3px 3px 10px #ccc;
+    border:5px solid #ccc;
+    &:hover{
+      background: white;
+      box-shadow: 3px 3px 5px #ccc;
+    }
+    h3{
+      text-align: center;
+    }
+    hr{
+      // width: 100%;
+      border: 2px solid rgb(226, 226, 226);
+      border-radius: 10px;
+      // box-shadow: 0px 0px 10px rgba(82, 82, 82, 0.398);
+    }
+    ul{
+      padding: 0px;
     }
   }
 }

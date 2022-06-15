@@ -60,6 +60,7 @@ export class ResponsesComponent implements OnInit {
         });
       }
       this.filteredResponses = this.responses;
+      console.log(this.responses);
     });
 
     // Get all customers

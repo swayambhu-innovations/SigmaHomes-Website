@@ -1,31 +1,16 @@
-<section
-  id="responses"
-  [style]="selectedResponses.length > 0 ? 'padding-bottom: 5em' : ''"
->
+<section id="responses" [style]="selectedResponses.length > 0 ? 'padding-bottom: 5em' : ''">
   <div *ngIf="!filteredResponses" uk-spinner="ratio: 3" id="loading"></div>
-
   <ng-container *ngIf="filteredResponses">
-    <div
-      *ngIf="responses.length === 0"
-      id="no-responses"
-      uk-toggle="target: #add-response-modal"
-    >
+    <div *ngIf="responses.length === 0" id="no-responses" uk-toggle="target: #add-response-modal">
       <i class="fa-solid fa-plus"></i>
       <p>You have not sent any responses yet. Click here to send one.</p>
     </div>
-
     <ng-container *ngIf="responses.length > 0">
       <div *ngIf="viewAsInput.value == 'cards'" id="cards">
-        <app-response-card
-          *ngFor="let response of filteredResponses; let i = index"
-          [id]="response.id"
-          [response]="response"
-          [selectable]="true"
-          [selected]="selectedResponses.includes(response.id)"
-          (view)="goToResponsePage(response.id)"
-          (delete)="deleteResponse(response.id)"
-          (cardSelect)="toggleResponseSelection($event)"
-        ></app-response-card>
+        <app-response-card *ngFor="let response of filteredResponses; let i = index" [id]="response.id"
+          [response]="response" [selectable]="true" [selected]="selectedResponses.includes(response.id)"
+          (view)="goToResponsePage(response.id)" (delete)="deleteResponse(response.id)"
+          (cardSelect)="toggleResponseSelection($event)"></app-response-card>
       </div>
       <div *ngIf="viewAsInput.value == 'table'" id="table">
         <table>
@@ -41,19 +26,13 @@
           <tbody>
             <tr *ngFor="let response of filteredResponses">
               <td>
-                <button
-                  class="select-button"
-                  (click)="toggleResponseSelection(response.id)"
-                >
-                  <i
-                    class="fa-solid fa-circle-check"
-                    [style]="
+                <button class="select-button" (click)="toggleResponseSelection(response.id)">
+                  <i class="fa-solid fa-circle-check" [style]="
                       'color: ' +
                       (selectedResponses.includes(response.id)
                         ? '#5cb85c'
                         : '#727a81')
-                    "
-                  ></i>
+                    "></i>
                 </button>
               </td>
               <td>{{ response.project.name }}</td>
@@ -61,17 +40,10 @@
               <td>{{ response.phase }}</td>
               <td>
                 <div class="buttons">
-                  <button
-                    (click)="goToResponsePage(response.id)"
-                    uk-tooltip="title: View Response"
-                  >
+                  <button (click)="goToResponsePage(response.id)" uk-tooltip="title: View Response">
                     <i class="fa-solid fa-eye"></i>
                   </button>
-                  <button
-                    (click)="deleteResponse(response.id)"
-                    uk-tooltip="title: Delete Response"
-                    class="delete-btn"
-                  >
+                  <button (click)="deleteResponse(response.id)" uk-tooltip="title: Delete Response" class="delete-btn">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>
@@ -82,12 +54,8 @@
       </div>
     </ng-container>
   </ng-container>
-  <app-fab
-    *ngIf="selectedResponses.length === 0"
-    icon="plus"
-    title="Add New Response"
-    target="#add-response-modal"
-  ></app-fab>
+  <app-fab *ngIf="selectedResponses.length === 0" icon="plus" title="Add New Response" target="#add-response-modal">
+  </app-fab>
   <div *ngIf="selectedResponses.length > 0" id="assign-agent">
     <h5>
       {{ selectedResponses.length }}/{{ responses.length }} responses selected
@@ -104,7 +72,6 @@
     </form>
   </div>
 </section>
-
 <div id="add-response-modal" uk-modal>
   <div class="uk-modal-dialog uk-modal-body">
     <h2 class="uk-modal-title">Add New Response</h2>
@@ -113,32 +80,19 @@
       <div class="response-form-box">
         <label for="customer-input">Customer</label>
         <div class="dropdown-container">
-          <button
-            (click)="toggleCustomerDropdown($event)"
-            class="admin-input"
-            id="customer-input"
-          >
+          <button (click)="toggleCustomerDropdown($event)" class="admin-input" id="customer-input">
             <img [src]="getCustomerImage(addResponseForm.value.customer)" />
             {{
-              getCustomerName(addResponseForm.value.customer) ||
-                "Select Customer"
+            getCustomerName(addResponseForm.value.customer) ||
+            "Select Customer"
             }}
             <i class="fa-solid fa-angle-down"></i>
           </button>
           <div *ngIf="showCustomerDropdown" class="dropdown">
-            <input
-              type="text"
-              placeholder="Search Customer"
-              (input)="searchCustomers($event)"
-            />
+            <input type="text" placeholder="Search Customer" (input)="searchCustomers($event)" />
             <ul>
-              <li
-                *ngFor="let customer of filteredCustomers"
-                (click)="selectCustomer(customer.id)"
-              >
-                <img
-                  [src]="customer.img || 'assets/img/circle-user-solid.svg'"
-                />
+              <li *ngFor="let customer of filteredCustomers" (click)="selectCustomer(customer.id)">
+                <img [src]="customer.img || 'assets/img/circle-user-solid.svg'" />
                 {{ customer.name }}
               </li>
             </ul>
@@ -148,45 +102,29 @@
       <div class="response-form-box">
         <label for="project-input">Project</label>
         <div class="dropdown-container">
-          <button
-            (click)="toggleProjectDropdown($event)"
-            class="admin-input"
-            id="project-input"
-          >
+          <button (click)="toggleProjectDropdown($event)" class="admin-input" id="project-input">
             <img [src]="getProjectImage(addResponseForm.value.project)" />
             {{
-              getProjectName(addResponseForm.value.project) || "Select Project"
+            getProjectName(addResponseForm.value.project) || "Select Project"
             }}
             <i class="fa-solid fa-angle-down"></i>
           </button>
           <div *ngIf="showProjectDropdown" class="dropdown">
-            <input
-              type="text"
-              placeholder="Search Project"
-              (input)="searchProjects($event)"
-            />
+            <input type="text" placeholder="Search Project" (input)="searchProjects($event)" />
             <ul>
-              <li
-                *ngFor="let project of filteredProjects"
-                (click)="selectProject(project.id)"
-              >
-                <img
-                  [src]="
+              <li *ngFor="let project of filteredProjects" (click)="selectProject(project.id)">
+                <img [src]="
                     project.images && project.images.length > 0
                       ? project.images[0]
                       : 'assets/img/house-chimney-solid.svg'
-                  "
-                />
+                  " />
                 {{ project.name }}
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <app-primary-btn
-        text="Add Response"
-        [disabled]="!addResponseForm.valid"
-      ></app-primary-btn>
+      <app-primary-btn text="Add Response" [disabled]="!addResponseForm.valid"></app-primary-btn>
     </form>
   </div>
 </div>

@@ -1,34 +1,24 @@
+<h2>Tasks</h2>
 <section>
-  <ul uk-accordion="multiple: true">
-    <li class="uk-open">
-      <a class="uk-accordion-title" href="#">Ongoing</a>
-      <div class="uk-accordion-content">
-        <app-response-card
-          *ngFor="let taskLog of taskLogs; let i = index"
-          [response]="taskLog"
-          (cardClick)="loadTaskLogDetails(i)"
-        ></app-response-card>
-      </div>
-    </li>
-    <li>
-      <a class="uk-accordion-title" href="#">To do</a>
-      <div class="uk-accordion-content">
-        <app-response-card
-          *ngFor="let taskLog of taskLogs; let i = index"
-          [response]="taskLog"
-          (cardClick)="loadTaskLogDetails(i)"
-        ></app-response-card>
-      </div>
-    </li>
-    <li>
-      <a class="uk-accordion-title" href="#">Delayed</a>
-      <div class="uk-accordion-content">
-        <app-response-card
-          *ngFor="let taskLog of taskLogs; let i = index"
-          [response]="taskLog"
-          (cardClick)="loadTaskLogDetails(i)"
-        ></app-response-card>
-      </div>
-    </li>
-  </ul>
+  <div class="toDo">
+    <h3>To Do Tasks</h3>
+    <hr>
+    <ul cdkDropList [cdkDropListData]="todoTasks" (cdkDropListDropped)="drop($event)">
+      <app-taskcard *ngFor="let task of todoTasks"></app-taskcard>
+    </ul>
+  </div>
+  <div class="onGoing">
+    <h3>On Going Tasks</h3>
+    <hr>
+    <ul cdkDropList [cdkDropListData]="onGoingTasks" (cdkDropListDropped)="drop($event)">
+      <app-taskcard cdkDrag *ngFor="let task of onGoingTasks"></app-taskcard>
+    </ul>
+  </div>
+  <div class="completed">
+    <h3>Completed Tasks</h3>
+    <hr>
+    <ul cdkDropList [cdkDropListData]="completedTasks" (cdkDropListDropped)="drop($event)">
+      <app-taskcard cdkDrag *ngFor="let task of completedTasks"></app-taskcard>
+    </ul>
+  </div>
 </section>

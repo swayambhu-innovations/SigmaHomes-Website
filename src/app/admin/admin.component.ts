@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { DataProvider } from '../providers/data.provider';
+import { AlertsAndNotificationsService } from '../services/uiService/alerts-and-notifications.service';
 
 @Component({
   selector: 'app-admin',
@@ -7,26 +9,26 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
+  @ViewChild('fileInput') fileInput: ElementRef;
   currentPanel: string = 'Panel';
   showingPropertyPage: boolean = false;
   showingResponsePage: boolean = false;
-
   breakpoint: number = 1000;
   largeScreen: boolean = window.innerWidth > this.breakpoint;
   showSidebar: boolean = false;
 
   @ViewChild('viewAsInput') viewAsInput: ElementRef;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private dataProvider: DataProvider,private alertify:AlertsAndNotificationsService) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         const url = this.router.url;
         const urlArr = url.split('/');
         if (urlArr.includes('properties')) {
           this.currentPanel = 'Properties';
-          this.showingPropertyPage = urlArr.indexOf('properties') != urlArr.length - 1;
-        }
-        else if (urlArr.includes('responses')) {
+          this.showingPropertyPage =
+            urlArr.indexOf('properties') != urlArr.length - 1;
+        } else if (urlArr.includes('responses')) {
           this.currentPanel = 'Responses';
           this.showingResponsePage =
             urlArr.indexOf('responses') != urlArr.length - 1;
@@ -44,6 +46,41 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  emitButtonAction(
+    action:
+      | 'newBroadCast'
+      | 'importLead'
+      | 'exportLead'
+      | 'importCustomer'
+      | 'exportCustomer'
+      | 'importProperty'
+      | 'exportProperty'
+      | 'importResponses'
+      | 'exportResponses'
+  ) {
+    this.dataProvider.headerButtonActions.next(action);
+    if (action === 'importLead') {
+      this.fileInput.nativeElement.click();
+      this.fileInput.nativeElement.addEventListener('change', (data: any) => {
+        console.log(data);
+        if (
+          data.target.files.length == 1 &&
+          (data.target.files[0].type == 'text/csv' ||
+          data.target.files[0].type == 'text/csvapplication/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || 
+          data.target.files[0].type == 'application/vnd.ms-excel' || 
+          data.target.files[0].type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+        ) {
+          this.dataProvider.importExportFileActions.next({
+            data: data.target.files,
+            type: 'importLead',
+          });
+        } else {
+          this.alertify.presentToast('No file inserted','error');
+        }
+      });
+    }
+  }
 
   onWindowResize() {
     this.largeScreen = window.innerWidth > this.breakpoint;
