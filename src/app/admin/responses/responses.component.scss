@@ -1,270 +1,34 @@
-section {
-  padding: 1em;
-  height: 100%;
-  position: relative;
-
-  #no-responses {
-    width: 100%;
-    height: 100%;
-    border-radius: 12px;
-    border: 2px dashed var(--secondary);
-    color: var(--secondary);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.3s;
-
-    &:hover {
-      background-color: var(--secondary-lighter);
-    }
-
-    i {
-      font-size: var(--xxlarge);
-    }
-
-    p {
-      font-size: var(--medium);
-      font-family: var(--font-three);
-    }
-  }
-
-  #cards {
-    display: flex;
-    flex-wrap: wrap;
-
-    app-response-card {
-      width: 40%;
-      max-width: 400px;
-      flex-grow: 1;
-      margin: 0.5em;
-
-      @media (max-width: 900px) {
-        width: 25%;
-        min-width: 250px;
-      }
-    }
-  }
-
-  #table {
-    table {
-      font-family: var(--font-three);
-      border-collapse: collapse;
-      width: 100%;
-
-      tr {
-        &:nth-child(even) {
-          background-color: var(--secondary-lighter);
-        }
-
-        td,
-        th {
-          text-align: left;
-          padding: 8px;
-        }
-
-        td {
-          color: var(--tertiary);
-          font-size: var(--small);
-
-          .buttons {
-            display: flex;
-            justify-content: center;
-
-            button {
-              padding: 0.5em;
-              background-color: var(--secondary);
-              color: var(--secondary-contrast);
-              border: none;
-              font-size: var(--xsmall);
-              font-family: var(--font-three);
-              margin-right: 0.5em;
-              width: 33%;
-              border-radius: 7px;
-              cursor: pointer;
-              transition: all 0.5s;
-
-              &:last-of-type {
-                margin-right: 0;
-              }
-
-              &:hover {
-                box-shadow: var(--normal-shadow);
-              }
-            }
-          }
-
-          .select-button {
-            background: none;
-            font-weight: 700;
-            border: none;
-            font-size: var(--large);
-            cursor: pointer;
-            transition: all 0.5s;
-            text-align: center;
-            width: 100%;
-          }
-        }
-      }
-
-      thead {
-        tr {
-          background-color: var(--secondary);
-
-          th {
-            font-size: var(--small);
-            font-weight: 650;
-            text-align: left;
-            color: var(--secondary-contrast);
-          }
-        }
-      }
-
-      tbody {
-        tr {
-          transition: all 0.3s;
-
-          &:hover {
-            background-color: var(--secondary-light);
-          }
-        }
-      }
-    }
-  }
-
-  #assign-agent {
-    background-color: var(--secondary);
-    box-shadow: var(--normal-shadow);
-    padding: 0.75em 1em;
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    h5 {
-      font-size: var(--small);
-      font-family: var(--font-three);
-      color: var(--secondary-contrast);
-      margin: 0;
-    }
-
-    form {
-      display: flex;
-      align-items: center;
-      width: fit-content;
-      margin-left: auto;
-
-      select {
-        font-family: var(--font-three);
-        font-size: var(--small);
-        color: var(--secondary);
-        font-weight: 500;
-        border: none;
-        margin-right: 0.5em;
-        width: 250px;
-        padding: 0.25em;
-        border-radius: 7px;
-      }
-    }
+.actionButton{
+  position: absolute;
+  bottom: 50px;
+  right: 60px;
+  font-size: 50px;
+  border: none;
+  background: transparent;
+  color:var(--secondary);
+  text-shadow: 0px 2px 20px rgba(0,0,0,0.2);
+  z-index: 100;
+}
+.responsesContainer{
+  display: flex;
+  padding:20px;
+  app-response-card{
+    width:40%;
+    max-width: 400px;
+    flex-grow: 1;
   }
 }
-
-.uk-modal-body {
-  .uk-modal-title {
-    font-family: var(--font-three);
-    font-size: var(--xlarge);
-    color: var(--tertiary);
-  }
-
-  .uk-modal-close-default {
-    background-color: var(--secondary);
-    color: var(--secondary-contrast);
-    border-radius: 50%;
-    padding: 0.5em;
-  }
-
-  form {
-    .response-form-box {
-      margin-bottom: 1em;
-
-      &:last-of-type {
-        margin-bottom: 1.5em;
-      }
-
-      label {
-        font-family: var(--font-three);
-        font-size: var(--medium);
-        font-weight: 500;
-        margin-bottom: 1em;
-
-        color: var(--tertiary);
-      }
-
-      .dropdown-container {
-        img {
-          width: 30px;
-          height: 30px;
-          object-fit: cover;
-          border-radius: 50%;
-          margin-right: 0.25em;
-        }
-
-        button {
-          text-align: left;
-          position: relative;
-          width: 100%;
-          margin-bottom: 0;
-
-          i {
-            position: absolute;
-            top: 50%;
-            right: 1em;
-            transform: translateY(-50%);
-            color: var(--secondary);
-          }
-        }
-
-        .dropdown {
-          width: 100%;
-          border: 1px solid var(--secondary);
-          z-index: 1;
-
-          input {
-            width: 100%;
-            font-family: var(--font-three);
-            font-size: var(--small);
-            padding: 0.5em 1em;
-            border: none;
-          }
-
-          ul {
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            font-family: var(--font-three);
-            color: var(--secondary);
-            font-size: var(--small);
-            max-height: 200px;
-            overflow-y: auto;
-
-            li {
-              padding: 0.5em 1em;
-              border-top: 1px solid var(--secondary);
-              background-color: var(--secondary-lighter);
-              cursor: pointer;
-
-              &:hover {
-                background-color: var(--secondary-light);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+#assignAgentListner{
+  height: min-content;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding:10px 40px;
+  background: white;
+  box-shadow: 0px -5px 20px rgba(0,0,0,0.2);
+  position: absolute;
+  bottom:0px;
+  padding-right:200px;
+  // color:white;
 }

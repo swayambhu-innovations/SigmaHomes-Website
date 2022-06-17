@@ -14,6 +14,7 @@ import {
   limit,
   Timestamp,
   where,
+  FieldValue,
 } from '@angular/fire/firestore';
 import {
   getDownloadURL,
@@ -21,6 +22,7 @@ import {
   ref,
   uploadBytesResumable,
 } from '@angular/fire/storage';
+import { arrayUnion } from '@firebase/firestore';
 import { editFormInfo } from '../admin/profile/profile.component';
 import { DataProvider } from '../providers/data.provider';
 
@@ -54,6 +56,58 @@ export class DatabaseService {
     }
   }
 
+  getTodoTasks(){
+    return getDocs(collection(this.fs, 'todoTasks'));
+  }
+
+  getOnGoingTasks(){
+    return getDocs(collection(this.fs, 'onGoingTasks'));
+  }
+
+  getCompletedTasks(){
+    return getDocs(collection(this.fs, 'completedTasks'));
+  }
+
+  setTodoStage(id:string,stage:string){
+    return updateDoc(doc(this.fs,'todoTasks/'+id),{phase:stage});
+  }
+
+  setOnGoingStage(id:string,stage:string){
+    return updateDoc(doc(this.fs,'onGoingTasks/'+id),{phase:stage});
+  }
+
+  setCompletedStage(id:string,stage:string){
+    return updateDoc(doc(this.fs,'completedTasks/'+id),{phase:stage});
+  }
+
+  updateTodoTask(id:string,data:any){
+    return updateDoc(doc(this.fs,'todoTasks/'+id),data);
+  }
+
+  updateOnGoingTask(id:string,data:any){
+    return updateDoc(doc(this.fs,'onGoingTasks/'+id),data);
+  }
+
+  updateCompletedTask(id:string,data:any){
+    return updateDoc(doc(this.fs,'completedTasks/'+id),data);
+  }
+
+  addTodoTask(data:any){
+    return addDoc(collection(this.fs,'todoTasks'),data);
+  }
+
+  addOnGoingTask(data:any){
+    return addDoc(collection(this.fs,'onGoingTasks'),data);
+  }
+
+  addCompletedTask(data:any){
+    return addDoc(collection(this.fs,'completedTasks'),data);
+  }
+
+  assignAgent(agentId:string, responseId:string){
+    return updateDoc(doc(this.fs, 'responses/' + responseId), { agent:arrayUnion(agentId) });
+  }
+
   updateUserImage(imageUrl: string, userId: string) {
     return updateDoc(doc(this.fs, 'users/' + userId), { photoURL: imageUrl });
   }
@@ -68,6 +122,10 @@ export class DatabaseService {
 
   getCustomers() {
     return collectionSnapshots(collection(this.fs, 'customers'));
+  }
+
+  getCustomersPromise() {
+    return getDocs(collection(this.fs, 'customers'));
   }
 
   deleteCustomer(customerId: string) {
@@ -85,6 +143,10 @@ export class DatabaseService {
 
   getAllProjects() {
     return collectionSnapshots(collection(this.fs, 'projects'));
+  }
+
+  getAllProjectsPromise() {
+    return getDocs(collection(this.fs, 'projects'));
   }
 
   getNProjects(nProjects: number) {
@@ -138,6 +200,10 @@ export class DatabaseService {
     return collectionSnapshots(collection(this.fs, 'leads'));
   }
 
+  getLeadsPromise() {
+    return getDocs(collection(this.fs, 'leads'));
+  }
+
   updateLead(leadId: string, leadData: any) {
     return updateDoc(doc(this.fs, 'leads/' + leadId), leadData);
   }
@@ -151,6 +217,10 @@ export class DatabaseService {
     return addDoc(collection(this.fs, 'responses'), response);
   }
 
+  updateResponse(data:any,id:string){
+    return updateDoc(doc(this.fs, 'responses/' + id), data);
+  }
+
   updateResponsePhase(responseId: string, phase: number) {
     return updateDoc(doc(this.fs, 'responses/' + responseId), { phase: phase });
   }
@@ -161,6 +231,10 @@ export class DatabaseService {
 
   getResponses() {
     return collectionSnapshots(collection(this.fs, 'responses'));
+  }
+
+  getResponsesPromise(){
+    return getDocs(collection(this.fs, 'responses'));
   }
 
   getResponse(responseId: any) {
@@ -188,5 +262,9 @@ export class DatabaseService {
   addBroadcast(broadcast: any) {
     broadcast.date = Timestamp.now();
     return addDoc(collection(this.fs, 'broadcasts'), broadcast);
+  }
+
+  getAllAgentsPromise(){
+    return getDocs(query(collection(this.fs, 'users'),where('access.access','==','Agent')));
   }
 }

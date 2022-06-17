@@ -6,323 +6,112 @@ import Fuse from 'fuse.js';
 import { CSVService } from 'src/app/services/csv.service';
 import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
 import { DataProvider } from 'src/app/providers/data.provider';
+import { MatDialog } from '@angular/material/dialog';
+import { AddResponseComponent } from './add-response/add-response.component';
+import { AssignResponseComponent } from './assign-response/assign-response.component';
+import { animate, style, transition, trigger } from '@angular/animations';
 declare const UIkit: any;
 
 @Component({
   selector: 'app-responses',
   templateUrl: './responses.component.html',
   styleUrls: ['./responses.component.scss'],
+  animations: [
+    trigger(
+      'enterAnimation', [
+        transition(':enter', [
+          style({transform: 'translateY(100%)', opacity: 0}),
+          animate('500ms', style({transform: 'translateY(0)', opacity: 1}))
+        ]),
+        transition(':leave', [
+          style({transform: 'translateY(0)', opacity: 1}),
+          animate('500ms', style({transform: 'translateY(100%)', opacity: 0}))
+        ])
+      ]
+    )
+  ],
 })
 export class ResponsesComponent implements OnInit {
-  viewAsInput: HTMLInputElement;
-
-  responses: any[];
-  filteredResponses: any[];
-  selectedResponses: string[] = [];
-
-  showCustomerDropdown: boolean = false;
-  customers: any[];
-  filteredCustomers: any[];
-
-  showProjectDropdown: boolean = false;
-  projects: any[];
-  filteredProjects: any[];
-
-  addResponseForm: FormGroup = new FormGroup({
-    customer: new FormControl('', [Validators.required]),
-    project: new FormControl('', [Validators.required]),
-  });
-
+  responses: any[] = [];
+  selectedResponses:any[] = [];
+  agents:any[] = [];
+  assignedAgent:string = '';
+  loading:boolean = false;
   constructor(
-    private router: Router,
+    public dialog: MatDialog,
     private route: ActivatedRoute,
+    private router: Router,
     private databaseService: DatabaseService,
-    private csvService: CSVService,
-    private alertify: AlertsAndNotificationsService,
-    private dataProvider: DataProvider
+    private alertify: AlertsAndNotificationsService
   ) {}
-
   ngOnInit(): void {
-    // get all responses
-    this.databaseService.getResponses().subscribe(async (docs: any) => {
-      this.responses = [];
-      for (const doc of docs) {
-        const docData = doc.data();
-        this.responses.push({
-          id: doc.id,
-          customer: (
-            await this.databaseService.getCustomer(docData.customer)
-          ).data(),
-          project: (
-            await this.databaseService.getProject(docData.project)
-          ).data(),
-          phase: docData.phase,
-        });
-      }
-      this.filteredResponses = this.responses;
-      console.log(this.responses);
-    });
-
-    // Get all customers
-    this.databaseService.getCustomers().subscribe((docs: any) => {
-      this.customers = [];
-      docs.forEach((doc: any) => {
-        this.customers.push({ id: doc.id, ...doc.data() });
+    this.getResponses();
+    this.getAgents();
+  }
+  getAgents(){
+    this.databaseService.getAllAgentsPromise().then((docs: any) => {
+      docs.forEach((element: any) => {
+        this.agents.push({ ...element.data(), id: element.id });
       });
-      this.filteredCustomers = this.customers;
-    });
-
-    // Get all projects
-    this.databaseService.getAllProjects().subscribe((docs: any) => {
-      this.projects = [];
-      docs.forEach((doc: any) => {
-        this.projects.push({ id: doc.id, ...doc.data() });
-      });
-      this.filteredProjects = this.projects;
     });
   }
-
-  ngAfterViewInit(): void {
-    // Search responses
-    const responseSearchInput = document.getElementById(
-      'response-search-input'
-    ) as HTMLInputElement;
-    if (responseSearchInput) {
-      responseSearchInput.oninput = () => {
-        const query = responseSearchInput.value.trim();
-        if (query.length > 0) {
-          const options = { keys: ['customer.name', 'project.name'] };
-          const fuse = new Fuse(this.responses, options);
-          const results = fuse.search(query);
-          this.filteredResponses = [];
-          results.forEach((result: any) => {
-            this.filteredResponses.push(result.item);
-          });
-        } else {
-          this.filteredResponses = this.responses;
-        }
-      };
-    }
-
-    // import responses
-    // const importResponses = document.getElementById('import-responses');
-    // if (importResponses) {
-    //   importResponses.addEventListener(
-    //     'click',
-    //     () => {
-    //       const input = document.createElement('input');
-    //       input.type = 'file';
-    //       input.accept = '.csv';
-    //       input.click();
-    //       input.onchange = () => {
-    //         this.dataProvider.pageSetting.blur = true;
-    //         if (input.files && input.files[0]) {
-    //           this.csvService.load(input.files[0]);
-    //           setTimeout(async () => {
-    //             const responses = this.csvService.import();
-    //             for (const response of responses) {
-    //               delete response.phases;
-    //               await this.databaseService.addResponse(response);
-    //             }
-    //             input.value = '';
-    //             this.dataProvider.pageSetting.blur = false;
-    //             this.alertify.presentToast(
-    //               'Responses added successfully',
-    //               'info'
-    //             );
-    //           }, 1000);
-    //         }
-    //       };
-    //     },
-    //     false
-    //   );
-    // }
-
-    // export responses
-    // const exportResponses = document.getElementById('export-responses');
-    // if (exportResponses) {
-    //   exportResponses.addEventListener(
-    //     'click',
-    //     () => {
-    //       if (this.responses.length > 0) {
-    //         const keys = Object.keys(this.responses[0]).filter(
-    //           (key) => key !== 'phases'
-    //         );
-    //         const csvData = [keys];
-    //         this.responses.forEach((response) => {
-    //           const values = [];
-    //           for (const key of keys) {
-    //             values.push(response[key]);
-    //           }
-    //           csvData.push(values);
-    //         });
-    //         this.csvService.export(csvData, 'responses');
-    //       } else {
-    //         this.alertify.presentToast('No responses to export', 'error');
-    //       }
-    //     },
-    //     false
-    //   );
-    // }
-
-    // Set up "view as"
-    this.viewAsInput = document.getElementById(
-      'view-as-input'
-    ) as HTMLInputElement;
-  }
-
-  toggleResponseSelection(responseId: string) {
-    if (this.selectedResponses.includes(responseId)) {
-      this.selectedResponses = this.selectedResponses.filter(
-        (id) => id !== responseId
-      );
-    } else {
-      this.selectedResponses.push(responseId);
-    }
-  }
-
-  goToResponsePage(responseId: any) {
-    this.router.navigate([responseId], { relativeTo: this.route });
-  }
-
-  toggleCustomerDropdown(event: Event) {
-    event.preventDefault();
-    this.showCustomerDropdown = !this.showCustomerDropdown;
-  }
-
-  searchCustomers(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const query = input.value.trim();
-    if (query.length > 0) {
-      const options = { keys: ['name'] };
-      const fuse = new Fuse(this.customers, options);
-      const results = fuse.search(query);
-      this.filteredCustomers = [];
-      results.forEach((result: any) => {
-        this.filteredCustomers.push(result.item);
+  getResponses(){
+    this.loading = true;
+    this.responses = [];
+    this.databaseService.getResponsesPromise().then((docs: any) => {
+      docs.forEach((element: any) => {
+        this.responses.push({ ...element.data(), id: element.id });
       });
-    } else {
-      this.filteredCustomers = this.customers;
-    }
+    }).finally(()=>{
+      this.loading = false;
+    });
   }
-
-  selectCustomer(customerId: string) {
-    this.showCustomerDropdown = false;
-    this.addResponseForm.patchValue({ customer: customerId });
-  }
-
-  getCustomerImage(customerId: string): string {
-    if (this.customers && this.customers.length > 0) {
-      const customer = this.customers.find(
-        (customer) => customer.id === customerId
-      );
-      if (customer && customer.img) {
-        return customer.img;
-      }
-    }
-    return 'assets/img/circle-user-solid.svg';
-  }
-
-  getCustomerName(customerId: string): string {
-    if (this.customers && this.customers.length > 0) {
-      const customer = this.customers.find(
-        (customer) => customer.id === customerId
-      );
-      if (customer && customer.name) {
-        return customer.name;
-      }
-    }
-    return '';
-  }
-
-  toggleProjectDropdown(event: Event) {
-    event.preventDefault();
-    this.showProjectDropdown = !this.showProjectDropdown;
-  }
-
-  searchProjects(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const query = input.value.trim();
-    if (query.length > 0) {
-      const options = { keys: ['name'] };
-      const fuse = new Fuse(this.projects, options);
-      const results = fuse.search(query);
-      this.filteredProjects = [];
-      results.forEach((result: any) => {
-        this.filteredProjects.push(result.item);
-      });
-    } else {
-      this.filteredProjects = this.projects;
-    }
-  }
-
-  selectProject(projectId: string) {
-    this.showProjectDropdown = false;
-    this.addResponseForm.patchValue({ project: projectId });
-  }
-
-  getProjectImage(projectId: string): string {
-    if (this.projects && this.projects.length > 0) {
-      const project = this.projects.find(
-        (project) => project.id === projectId
-      );
-      if (project && project.images && project.images.length > 0) {
-        return project.images[0];
-      }
-    }
-    return 'assets/img/house-chimney-solid.svg';
-  }
-
-  getProjectName(projectId: string): string {
-    if (this.projects && this.projects.length > 0) {
-      const project = this.projects.find(
-        (project) => project.id === projectId
-      );
-      if (project && project.name) {
-        return project.name;
-      }
-    }
-    return '';
-  }
-
-  addResponseFromForm() {
-    if (this.addResponseForm.valid) {
-      this.dataProvider.pageSetting.blur = true;
+  addResponse() {
+    const ref = this.dialog.open(AddResponseComponent);
+    ref.componentInstance.addResponse.subscribe((data: any) => {
       this.databaseService
-        .addResponse(this.addResponseForm.value)
-        .then(() => {
-          UIkit.modal(document.getElementById('add-response-modal')).hide();
-          this.dataProvider.pageSetting.blur = false;
-          this.alertify.presentToast('Response added successfully', 'info');
-          this.addResponseForm.reset();
+        .addResponse(data)
+        .then((doc: any) => {
+          this.alertify.presentToast('Response added successfully');
+          this.getResponses();
         })
-        .catch((error) => {
-          UIkit.modal(document.getElementById('add-response-modal')).hide();
-          this.dataProvider.pageSetting.blur = false;
-          this.alertify.presentToast('Error Occurred: ' + error, 'error');
-          this.addResponseForm.reset();
+        .catch(() => {
+          this.alertify.presentToast('Error adding response');
         });
-    } else {
-      this.alertify.presentToast(
-        'Please select both - the customer and the project',
-        'error'
-      );
+    });
+  }
+  viewResponse(id: string) {
+    this.router.navigate([id], { relativeTo: this.route });
+  }
+  deleteResponse(id:string){
+    if(confirm('Are you sure')){
+      this.databaseService.deleteResponse(id).then(()=>{
+        this.alertify.presentToast('Response deleted successfully');
+        this.getResponses();
+      }).catch(()=>{
+        this.alertify.presentToast('Error deleting response');
+      });
     }
   }
-
-  deleteResponse(responseId: string) {
-    if (confirm('Are you sure you want to delete this response?')) {
-      this.dataProvider.pageSetting.blur = true;
-      this.databaseService
-        .deleteResponse(responseId)
-        .then(() => {
-          this.dataProvider.pageSetting.blur = false;
-          this.alertify.presentToast('Response deleted successfully', 'info');
-        })
-        .catch((error) => {
-          this.dataProvider.pageSetting.blur = false;
-          this.alertify.presentToast(error.message, 'error', 5000);
-        });
+  selectResponse(id:string){
+    if(this.selectedResponses.includes(id)){
+      this.selectedResponses.splice(this.selectedResponses.indexOf(id),1);
+    }else{
+      this.selectedResponses.push(id);
     }
+  }
+  assignAgent(){
+    this.selectedResponses.forEach((element:any) => {
+      // console.log(element);
+      this.databaseService.assignAgent(this.assignedAgent,element).then(()=>{
+        this.alertify.presentToast('Agent assigned successfully');
+        this.selectedResponses = [];
+      }).catch(()=>{
+        this.alertify.presentToast('Error assigning agent');
+      });
+    });
+  }
+  setAgent(event:any){
+    this.assignedAgent = event.value;
   }
 }

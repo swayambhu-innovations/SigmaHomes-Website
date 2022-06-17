@@ -1,11 +1,16 @@
+h2{
+  margin-left: 50px;
+  margin-top: 50px;
+  margin-bottom: 10px;
+}
 section {
   display: flex;
   flex-direction: row;
   column-gap: 20px;
   justify-content: space-between;
   align-items: center;
-  padding: 40px;
-  div{
+  padding: 10px;
+  div.completed, div.onGoing, div.toDo{
     display: flex;
     flex-direction: column;
     padding: 10px;
@@ -14,7 +19,7 @@ section {
     border-radius: 10px;
     background-color: rgb(236, 236, 236);
     transition: background-color 0.5s ease-in;
-    box-shadow: inset 3px 3px 10px #ccc;
+    // box-shadow: inset 3px 3px 10px #ccc;
     border:5px solid #ccc;
     &:hover{
       background: white;
@@ -29,8 +34,16 @@ section {
       border-radius: 10px;
       // box-shadow: 0px 0px 10px rgba(82, 82, 82, 0.398);
     }
-    ul{
+    .container{
       padding: 0px;
+      min-height: 80vh;
+    }
+    .header{
+      display: flex;
+      justify-content: space-between;
+      i{
+        font-size:30px;
+      }
     }
   }
 }
