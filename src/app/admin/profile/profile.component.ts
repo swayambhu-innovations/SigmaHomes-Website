@@ -13,6 +13,16 @@ import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts
 export class ProfileComponent implements OnInit {
   @ViewChild('photoInput') photoInput: ElementRef;
   editMode: boolean = false;
+  employees: any[];
+  userTypes: string[] = [
+    'HR Leader',
+    'Client Communication Manager',
+    'Lead Manager',
+    'Social Media Manager',
+    'Administrator',
+    'Agent',
+    'Master Agent',
+  ];
 
   editForm: FormGroup = new FormGroup({
     displayName: new FormControl('', [Validators.required]),
@@ -24,10 +34,17 @@ export class ProfileComponent implements OnInit {
     bankName: new FormControl(),
     fatherName: new FormControl(),
     branch: new FormControl(),
+    accountHolderName: new FormControl(),
     accountNo: new FormControl(),
     ifscCode: new FormControl(),
     parentEmployee: new FormControl(),
     userType: new FormControl(),
+    nationality: new FormControl(),
+    preferredLanguages: new FormControl(),
+    religion: new FormControl(),
+    organizationName: new FormControl(),
+    organizationRole: new FormControl(),
+    experience: new FormControl(),
   });
 
   constructor(
@@ -35,6 +52,15 @@ export class ProfileComponent implements OnInit {
     private alertService: AlertsAndNotificationsService,
     private databaseService: DatabaseService
   ) {}
+
+  ngOnInit() {
+    this.databaseService.getAllSuperAgentsPromise().then((superAgents) => {
+      this.employees = [];
+      superAgents.forEach((superAgent) => {
+        this.employees.push(superAgent.data());
+      });
+    });
+  }
 
   goToEditMode() {
     this.editMode = true;
@@ -83,6 +109,15 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  getParentEmployeeName() {
+    if (this.dataProvider.userData?.parentEmployee) {
+      return this.employees.find(
+        (employee) =>
+          employee.userId == this.dataProvider.userData?.parentEmployee
+      )?.displayName;
+    }
+  }
+
   saveEdit() {
     if (confirm('Are you sure?') && this.editForm.valid) {
       if (this.photoInput.nativeElement.files.length == 1) {
@@ -102,8 +137,6 @@ export class ProfileComponent implements OnInit {
   cancelEdit() {
     this.editMode = false;
   }
-
-  ngOnInit(): void {}
 }
 
 export type editFormInfo = {

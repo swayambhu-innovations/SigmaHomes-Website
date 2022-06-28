@@ -56,56 +56,58 @@ export class DatabaseService {
     }
   }
 
-  getTodoTasks(){
+  getTodoTasks() {
     return getDocs(collection(this.fs, 'todoTasks'));
   }
 
-  getOnGoingTasks(){
+  getOnGoingTasks() {
     return getDocs(collection(this.fs, 'onGoingTasks'));
   }
 
-  getCompletedTasks(){
+  getCompletedTasks() {
     return getDocs(collection(this.fs, 'completedTasks'));
   }
 
-  setTodoStage(id:string,stage:string){
-    return updateDoc(doc(this.fs,'todoTasks/'+id),{phase:stage});
+  setTodoStage(id: string, stage: string) {
+    return updateDoc(doc(this.fs, 'todoTasks/' + id), { phase: stage });
   }
 
-  setOnGoingStage(id:string,stage:string){
-    return updateDoc(doc(this.fs,'onGoingTasks/'+id),{phase:stage});
+  setOnGoingStage(id: string, stage: string) {
+    return updateDoc(doc(this.fs, 'onGoingTasks/' + id), { phase: stage });
   }
 
-  setCompletedStage(id:string,stage:string){
-    return updateDoc(doc(this.fs,'completedTasks/'+id),{phase:stage});
+  setCompletedStage(id: string, stage: string) {
+    return updateDoc(doc(this.fs, 'completedTasks/' + id), { phase: stage });
   }
 
-  updateTodoTask(id:string,data:any){
-    return updateDoc(doc(this.fs,'todoTasks/'+id),data);
+  updateTodoTask(id: string, data: any) {
+    return updateDoc(doc(this.fs, 'todoTasks/' + id), data);
   }
 
-  updateOnGoingTask(id:string,data:any){
-    return updateDoc(doc(this.fs,'onGoingTasks/'+id),data);
+  updateOnGoingTask(id: string, data: any) {
+    return updateDoc(doc(this.fs, 'onGoingTasks/' + id), data);
   }
 
-  updateCompletedTask(id:string,data:any){
-    return updateDoc(doc(this.fs,'completedTasks/'+id),data);
+  updateCompletedTask(id: string, data: any) {
+    return updateDoc(doc(this.fs, 'completedTasks/' + id), data);
   }
 
-  addTodoTask(data:any){
-    return addDoc(collection(this.fs,'todoTasks'),data);
+  addTodoTask(data: any) {
+    return addDoc(collection(this.fs, 'todoTasks'), data);
   }
 
-  addOnGoingTask(data:any){
-    return addDoc(collection(this.fs,'onGoingTasks'),data);
+  addOnGoingTask(data: any) {
+    return addDoc(collection(this.fs, 'onGoingTasks'), data);
   }
 
-  addCompletedTask(data:any){
-    return addDoc(collection(this.fs,'completedTasks'),data);
+  addCompletedTask(data: any) {
+    return addDoc(collection(this.fs, 'completedTasks'), data);
   }
 
-  assignAgent(agentId:string, responseId:string){
-    return updateDoc(doc(this.fs, 'responses/' + responseId), { agent:arrayUnion(agentId) });
+  assignAgent(agentId: string, responseId: string) {
+    return updateDoc(doc(this.fs, 'responses/' + responseId), {
+      agent: arrayUnion(agentId),
+    });
   }
 
   updateUserImage(imageUrl: string, userId: string) {
@@ -217,7 +219,7 @@ export class DatabaseService {
     return addDoc(collection(this.fs, 'responses'), response);
   }
 
-  updateResponse(data:any,id:string){
+  updateResponse(data: any, id: string) {
     return updateDoc(doc(this.fs, 'responses/' + id), data);
   }
 
@@ -233,7 +235,7 @@ export class DatabaseService {
     return collectionSnapshots(collection(this.fs, 'responses'));
   }
 
-  getResponsesPromise(){
+  getResponsesPromise() {
     return getDocs(collection(this.fs, 'responses'));
   }
 
@@ -264,7 +266,18 @@ export class DatabaseService {
     return addDoc(collection(this.fs, 'broadcasts'), broadcast);
   }
 
-  getAllAgentsPromise(){
-    return getDocs(query(collection(this.fs, 'users'),where('access.access','==','Agent')));
+  getAllAgentsPromise() {
+    return getDocs(
+      query(collection(this.fs, 'users'), where('access.access', '==', 'Agent'))
+    );
+  }
+
+  getAllSuperAgentsPromise() {
+    return getDocs(
+      query(
+        collection(this.fs, 'users'),
+        where('access.access', '==', 'Super Agent')
+      )
+    );
   }
 }
