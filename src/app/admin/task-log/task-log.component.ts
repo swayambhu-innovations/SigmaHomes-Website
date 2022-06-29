@@ -60,6 +60,9 @@ export class TaskLogComponent implements OnInit {
       responseInput.setAttribute('value', id);
     }
   }
+  updateBody(event:any,type:'todo' | 'ongoing' | 'completed'){
+    console.log(event,type);
+  }
 
   addTask(type:'todo' | 'ongoing' | 'completed'){
     if (type==='todo'){

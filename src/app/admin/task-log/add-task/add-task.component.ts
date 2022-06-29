@@ -15,6 +15,8 @@ export class AddTaskComponent implements OnInit {
   agents:any[] = [];
   properties:any[] = [];
   addTaskForm:FormGroup = new FormGroup({
+    title:new FormControl('',[Validators.required]),
+    body:new FormControl('',[Validators.required]),
     property:new FormControl('',[Validators.required]),
     agent:new FormControl('',[Validators.required]),
     stage:new FormControl('',[Validators.required]),
@@ -35,9 +37,13 @@ export class AddTaskComponent implements OnInit {
     });
   }
   verifyAndSubmit(){
+
+    console.log(this.addTaskForm);
     if(this.addTaskForm.valid){
-      console.log(this.addTaskForm.value);
       let data = {
+        title:this.addTaskForm.value.title,
+        body:this.addTaskForm.value.body,
+        date:new Date(),
         propertyName:this.addTaskForm.value.property.name,
         propertyPrice:this.addTaskForm.value.property.budget,
         assignedAgentImage:this.addTaskForm.value.agent.photoURL,

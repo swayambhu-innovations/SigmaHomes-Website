@@ -1,30 +1,32 @@
 h2{
-  margin-left: 50px;
-  margin-top: 50px;
+  margin-left: 20px;
+  margin-top: 10px;
   margin-bottom: 10px;
+  color:var(--secondary)
 }
 section {
   display: flex;
   flex-direction: row;
   column-gap: 20px;
   justify-content: space-between;
-  align-items: center;
+  // align-items: center;
   padding: 10px;
   div.completed, div.onGoing, div.toDo{
     display: flex;
     flex-direction: column;
+    position: relative;
     padding: 10px;
-    min-height: 80vh;
+    // min-height: 80vh;
     width:calc((100% / 3) - 30px);
     border-radius: 10px;
-    background-color: rgb(236, 236, 236);
+    // background-color: rgb(236, 236, 236);
     transition: background-color 0.5s ease-in;
     // box-shadow: inset 3px 3px 10px #ccc;
-    border:5px solid #ccc;
-    &:hover{
-      background: white;
-      box-shadow: 3px 3px 5px #ccc;
-    }
+    // border:5px solid #ccc;
+    // &:hover{
+    //   background: white;
+    //   box-shadow: 3px 3px 5px #ccc;
+    // }
     h3{
       text-align: center;
     }

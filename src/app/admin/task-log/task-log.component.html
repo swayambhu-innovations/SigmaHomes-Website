@@ -8,8 +8,8 @@
     <hr>
     <div class="container" cdkDropList #todoList="cdkDropList" [cdkDropListData]="todoTasks"
       [cdkDropListConnectedTo]="[ongoingTask]" (cdkDropListDropped)="drop($event)">
-      <app-taskcard cdkDrag (changedAgent)="changeAgent($event,'todoTasks',i)" (changedStage)="changeStage($event,'todoTasks',i)" *ngFor="let task of todoTasks;let i = index;" cdkDragPreviewContainer="parent"
-        [assignedAgentImage]="task.assignedAgentImage" [agents]="agents" [stage]="task.phase" [assignedAgentName]="task.assignedAgentName"
+      <app-taskcard cdkDrag (changedBody)="updateBody($event,'todo')" (changedAgent)="changeAgent($event,'todoTasks',i)" (changedStage)="changeStage($event,'todoTasks',i)" *ngFor="let task of todoTasks;let i = index;" cdkDragPreviewContainer="parent"
+        [assignedAgentImage]="task.assignedAgentImage" [heading]="task.title" [body]="task.body" [agents]="agents" [stage]="task.phase" [assignedAgentName]="task.assignedAgentName"
         [propertyName]="task.propertyName"></app-taskcard>
     </div>
   </div>
@@ -21,7 +21,7 @@
     <hr>
     <div class="container" cdkDropList #ongoingTask="cdkDropList" [cdkDropListData]="onGoingTasks"
       [cdkDropListConnectedTo]="[doneList]" (cdkDropListDropped)="drop($event)">
-      <app-taskcard cdkDrag (changedAgent)="changeAgent($event,'onGoingTasks',i)" (changedStage)="changeStage($event,'onGoingTasks',i)" *ngFor="let task of onGoingTasks;let i = index;" [assignedAgentImage]="task.assignedAgentImage"
+      <app-taskcard cdkDrag (changedBody)="updateBody($event,'ongoing')" (changedAgent)="changeAgent($event,'onGoingTasks',i)" (changedStage)="changeStage($event,'onGoingTasks',i)" *ngFor="let task of onGoingTasks;let i = index;" [assignedAgentImage]="task.assignedAgentImage"
         [assignedAgentName]="task.assignedAgentName" [agents]="agents" [stage]="task.phase" [propertyName]="task.propertyName">
       </app-taskcard>
     </div>
@@ -34,7 +34,7 @@
     <hr>
     <div class="container" cdkDropList #doneList="cdkDropList" [cdkDropListConnectedTo]="[todoList]"
       [cdkDropListData]="completedTasks" (cdkDropListDropped)="drop($event)">
-      <app-taskcard cdkDrag (changedAgent)="changeAgent($event,'completedTasks',i)" (changedStage)="changeStage($event,'completedTasks',i)" *ngFor="let task of completedTasks;let i = index;" [assignedAgentImage]="task.assignedAgentImage"
+      <app-taskcard cdkDrag (changedBody)="updateBody($event,'completed')" (changedAgent)="changeAgent($event,'completedTasks',i)" (changedStage)="changeStage($event,'completedTasks',i)" *ngFor="let task of completedTasks;let i = index;" [assignedAgentImage]="task.assignedAgentImage"
       [assignedAgentName]="task.assignedAgentName" [agents]="agents" [stage]="task.phase" [propertyName]="task.propertyName"></app-taskcard>
     </div>
   </div>
