@@ -38,7 +38,7 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
   leadForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [ Validators.email]),
     address: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
     state: new FormControl('', [Validators.required]),
