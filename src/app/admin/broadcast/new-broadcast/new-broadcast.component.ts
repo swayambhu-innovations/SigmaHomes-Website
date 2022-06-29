@@ -24,7 +24,7 @@ export class NewBroadcastComponent implements OnInit {
   imageFile: File | false;
   customers: any[];
   filteredCustomers: any[];
-
+  more = false;
   broadcastForm: FormGroup = new FormGroup({
     image: new FormControl(''),
     subject: new FormControl(''),
@@ -41,7 +41,9 @@ export class NewBroadcastComponent implements OnInit {
   ) {
     this.customerControl.valueChanges.pipe(
       startWith(null),
-      map((room: string | null) => (room ? this._filter(room) : this.customers.slice())),
+      map((room: string | null) =>
+        room ? this._filter(room) : this.customers.slice()
+      )
     );
   }
 
@@ -67,14 +69,15 @@ export class NewBroadcastComponent implements OnInit {
         this.customers.push({ id: doc.id, ...doc.data() });
       });
       this.customers.forEach((customer: any) => {
-        console.log('Customer',customer);
+        console.log('Customer', customer);
       });
-      this.filteredCustomers = []
+      this.filteredCustomers = [];
     });
   }
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    let returnResponse : any = [];
+    let returnResponse: any = [];
     this.customers.forEach((customer: any) => {
       if (customer.name.toLowerCase().includes(filterValue)) {
         returnResponse.push(customer);
@@ -82,35 +85,43 @@ export class NewBroadcastComponent implements OnInit {
     });
     return returnResponse;
   }
-  remove(data:any){
-    this.filteredCustomers.forEach((customer:any,index:number)=>{
-      if(data.id===customer.id){
-        this.filteredCustomers.splice(index,1);
+  toggleMore(){
+    this.more = ! this.more;
+  }
+  remove(data: any) {
+    this.filteredCustomers.forEach((customer: any, index: number) => {
+      if (data.id === customer.id) {
+        this.filteredCustomers.splice(index, 1);
         this.customers.push(customer);
       }
-    })
+    });
   }
 
-  add(event:any){
+  add(event: any) {
     console.log(event);
   }
 
-  selected(event:any){
-    this.customers.forEach((customer:any,index:number)=>{
-      if(event.option.value===customer.id){
+  selected(event: any) {
+    this.customers.forEach((customer: any, index: number) => {
+      if (event.option.value === customer.id) {
         this.filteredCustomers.push(customer);
-        this.customers.splice(index,1);
+        this.customers.splice(index, 1);
       }
-    })
+    });
   }
 
   verifyImage(): void {
-    const file:File = this.photoInput.nativeElement.files[0]
-    if(file.size<100_000 && file.type=='image/png' || file.type=='image/jpg'){
+    const file: File = this.photoInput.nativeElement.files[0];
+    if (
+      (file.size < 100_000 && file.type == 'image/png') ||
+      file.type == 'image/jpg'
+    ) {
       this.imageFile = file;
     } else {
       this.imageFile = false;
-      this.alertService.presentToast('Your photo should either be in .png or .jpg and less than 100kb');
+      this.alertService.presentToast(
+        'Your photo should either be in .png or .jpg and less than 100kb'
+      );
       this.photoInput.nativeElement.value = '';
     }
   }
@@ -207,21 +218,21 @@ export class NewBroadcastComponent implements OnInit {
     }
   }
 
-  searchCustomers(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const query = input.value.trim();
-    if (query.length > 0) {
-      const options = { keys: ['name'] };
-      const fuse = new Fuse(this.customers, options);
-      const results = fuse.search(query);
-      this.filteredCustomers = [];
-      results.forEach((result: any) => {
-        this.filteredCustomers.push(result.item);
-      });
-    } else {
-      this.filteredCustomers = this.customers;
-    }
-  }
+  // searchCustomers(event: Event) {
+  //   const input = event.target as HTMLInputElement;
+  //   const query = input.value.trim();
+  //   if (query.length > 0) {
+  //     const options = { keys: ['name'] };
+  //     const fuse = new Fuse(this.customers, options);
+  //     const results = fuse.search(query);
+  //     this.filteredCustomers = [];
+  //     results.forEach((result: any) => {
+  //       this.filteredCustomers.push(result.item);
+  //     });
+  //   } else {
+  //     this.filteredCustomers = this.customers;
+  //   }
+  // }
 
   formatCustomerAsRecipient(customer: any): string {
     return `${customer.name} (${customer.phone}, ${customer.email})`;
