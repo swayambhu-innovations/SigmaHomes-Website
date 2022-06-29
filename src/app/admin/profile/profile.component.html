@@ -66,14 +66,6 @@
             }}</span>
           </p>
           <p class="detail">
-            <span class="key">Bank Name: </span>
-            <span class="value">{{
-              dataProvider.userData?.bankName
-                ? dataProvider.userData?.bankName
-                : "N/A"
-            }}</span>
-          </p>
-          <p class="detail">
             <span class="key">Father Name: </span>
             <span class="value">{{
               dataProvider.userData?.fatherName
@@ -82,12 +74,22 @@
             }}</span>
           </p>
           <p class="detail">
-            <span class="key">Branch: </span>
+            <span class="key">Bank Name: </span>
             <span class="value">{{
-              dataProvider.userData?.branch
-                ? dataProvider.userData?.branch
+              dataProvider.userData?.bankName
+                ? dataProvider.userData?.bankName
                 : "N/A"
             }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Account Holder Name: </span>
+            <span class="value"
+              >{{
+                dataProvider.userData?.accountHolderName
+                  ? dataProvider.userData?.accountHolderName
+                  : "N/A"
+              }}
+            </span>
           </p>
           <p class="detail">
             <span class="key">Account No.: </span>
@@ -106,12 +108,16 @@
             }}</span>
           </p>
           <p class="detail">
-            <span class="key">Parent employee: </span>
+            <span class="key">Branch: </span>
             <span class="value">{{
-              dataProvider.userData?.parentEmployee
-                ? dataProvider.userData?.parentEmployee
+              dataProvider.userData?.branch
+                ? dataProvider.userData?.branch
                 : "N/A"
             }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Parent employee: </span>
+            <span class="value">{{ getParentEmployeeName() }}</span>
           </p>
           <p class="detail">
             <span class="key">User type: </span>
@@ -188,17 +194,11 @@
           </p>
           <p class="detail">
             <label for="address-input" class="key">Address: </label>
-            <textarea class="admin-input value" formControlName="address">{{
-              dataProvider.userData?.address
-            }}</textarea>
-          </p>
-          <p class="detail">
-            <label for="bank-name-input" class="key">Bank Name: </label>
             <input
               type="text"
-              id="bank-name-input"
+              id="address-input"
               class="admin-input value"
-              formControlName="bankName"
+              formControlName="address"
             />
           </p>
           <p class="detail">
@@ -208,6 +208,15 @@
               id="father-name-input"
               class="admin-input value"
               formControlName="fatherName"
+            />
+          </p>
+          <p class="detail">
+            <label for="bank-name-input" class="key">Bank Name: </label>
+            <input
+              type="text"
+              id="bank-name-input"
+              class="admin-input value"
+              formControlName="bankName"
             />
           </p>
           <p class="detail">
@@ -238,23 +247,109 @@
             />
           </p>
           <p class="detail">
-            <label for="parent-employee-input" class="key"
-              >Parent Employee:
+            <label for="account-holder-name-input" class="key"
+              >Account Holder Name:
             </label>
             <input
               type="text"
-              id="parent-employee-input"
+              id="account-holder-name-input"
               class="admin-input value"
-              formControlName="parentEmployee"
+              formControlName="accountHolderName"
             />
           </p>
           <p class="detail">
+            <label for="parent-employee-input" class="key"
+              >Parent Employee:
+            </label>
+            <select
+              id="parent-employee-input"
+              class="admin-input value"
+              formControlName="parentEmployee"
+            >
+              <option ngValue="" disabled>Select Parent Employee</option>
+              <option ngValue="N/A">N/A</option>
+              <option
+                *ngFor="let employee of employees"
+                [ngValue]="employee.userId"
+              >
+                {{ employee.displayName }}
+              </option>
+            </select>
+          </p>
+          <p class="detail">
             <label for="user-type-input" class="key">User Type: </label>
-            <input
-              type="text"
+            <select
               id="user-type-input"
               class="admin-input value"
               formControlName="userType"
+            >
+              <option ngValue="" disabled>Select User Type</option>
+              <option *ngFor="let userType of userTypes" [ngValue]="userType">
+                {{ userType }}
+              </option>
+            </select>
+          </p>
+          <p class="detail">
+            <label for="nationality-input" class="key">Nationality: </label>
+            <input
+              type="text"
+              id="nationality-input"
+              class="admin-input value"
+              formControlName="nationality"
+            />
+          </p>
+          <p class="detail">
+            <label for="preferred-languages-input" class="key"
+              >Preferred Languages:
+            </label>
+            <input
+              type="text"
+              id="preferred-languages-input"
+              class="admin-input value"
+              formControlName="preferredLanguages"
+            />
+          </p>
+          <p class="detail">
+            <label for="religion-input" class="key">Religion: </label>
+            <input
+              type="text"
+              id="religion-input"
+              class="admin-input value"
+              formControlName="religion"
+            />
+          </p>
+          <p class="detail">
+            <label for="organization-name-input" class="key"
+              >Organization Name:
+            </label>
+            <input
+              type="text"
+              id="organization-name-input"
+              class="admin-input value"
+              formControlName="organizationName"
+            />
+          </p>
+          <p class="detail">
+            <label for="organization-role-input" class="key"
+              >Role in Organization:
+            </label>
+            <input
+              type="text"
+              id="organization-role-input"
+              class="admin-input value"
+              formControlName="organizationRole"
+            />
+          </p>
+          <p class="detail">
+            <label for="experience-input" class="key"
+              >Years of Experience:
+            </label>
+            <input
+              type="number"
+              min="0"
+              id="experience-input"
+              class="admin-input value"
+              formControlName="experience"
             />
           </p>
         </form>

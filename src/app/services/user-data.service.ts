@@ -60,8 +60,9 @@ export class UserDataService {
       branch: '',
       accountNo: '',
       ifscCode: '',
-      parentEmployee: '',
+      parentEmployee: 'N/A',
       userType: '',
+      accountHolderName: '',
     };
     this.userDoc = doc(this.firestore, 'users/' + user.uid);
     await setDoc(this.userDoc, data).then(() => {
@@ -91,8 +92,9 @@ export class UserDataService {
       branch: '',
       accountNo: '',
       ifscCode: '',
-      parentEmployee: '',
+      parentEmployee: 'N/A',
       userType: '',
+      accountHolderName: '',
     };
     this.userDoc = doc(this.firestore, 'users/' + user.uid);
     await setDoc(this.userDoc, data).then(() => {
