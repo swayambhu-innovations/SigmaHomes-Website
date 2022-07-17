@@ -23,7 +23,7 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
   editLeadsValue: any;
   currentLeadId: string = '';
   leadsSubscription: Subscription = Subscription.EMPTY;
-
+  openModal:any;
   constructor(
     private databaseService: DatabaseService,
     private alertify: AlertsAndNotificationsService,
@@ -32,13 +32,28 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private dataTransferService: DataTransferService,
-    private bulkDataHandler:BulkService
-  ) {}
+    private bulkDataHandler: BulkService,
+    private activateRoute: ActivatedRoute
+  ) {
+    this.activateRoute.queryParams.subscribe((data: any) => {
+      console.log(data);
+      // if(data.openModal){
+      //   this.currentBroadcast = data.id;
+      // }
+      if (data.openModal === 'true') {
+        this.openModal = data.openModal;
+        UIkit.modal(document.getElementById('lead-modal')).show(); 
+      }
+      else{
+        this.openModal = 'false';
+      }
+    });
+  }
 
   leadForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     phone: new FormControl('', [Validators.required]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.email]),
     address: new FormControl('', [Validators.required]),
     city: new FormControl('', [Validators.required]),
     state: new FormControl('', [Validators.required]),
@@ -50,6 +65,10 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
+    if(this.openModal === 'true'){
+      UIkit.modal(document.getElementById('lead-modal')).show();   
+     }
+  
     this.leadsSubscription = this.databaseService
       .getLeads()
       .subscribe((data) => {
@@ -61,21 +80,27 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
         });
         this.filteredLeads = this.leads;
       });
-      this.dataProvider.headerButtonActions.subscribe((action:any)=>{
-        if (action==='importLead'){
-          
-        }
-      })
-      const dt = this.dataProvider.importExportFileActions.subscribe(async (action:any)=>{
-        if(action.type=='importLead'){
+    this.dataProvider.headerButtonActions.subscribe((action: any) => {
+      if (action === 'importLead') {
+      }
+    });
+    const dt = this.dataProvider.importExportFileActions.subscribe(
+      async (action: any) => {
+        if (action.type == 'importLead') {
           console.log(action.data);
-          await this.bulkDataHandler.readCsv(action.data[0]).then((data:any)=>{
-            console.log('DAtaJson',data);
-          });
+          await this.bulkDataHandler
+            .readCsv(action.data[0])
+            .then((data: any) => {
+              console.log('DAtaJson', data);
+            });
         }
-      })
+      }
+    );
   }
 
+  // openLead(){
+  //   UIkit.modal(document.getElementById('lead-modal')).show();
+  // }
   // ngAfterViewInit(): void {
   //   // search leads
   //   const leadSearchInput = document.getElementById(

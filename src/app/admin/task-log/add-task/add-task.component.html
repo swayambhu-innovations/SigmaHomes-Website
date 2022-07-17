@@ -1,5 +1,13 @@
 <form [formGroup]="addTaskForm" (ngSubmit)="verifyAndSubmit()">
     <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title"> 
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Body</mat-label>
+        <input matInput formControlName="body">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
         <mat-label>Properties</mat-label>
         <mat-select required formControlName="property">
             <mat-option [value]="property" *ngFor="let property of properties">{{property.name}}</mat-option>
@@ -24,5 +32,5 @@
             <mat-option value="stageFive">Stage Five</mat-option>
         </mat-select>
     </mat-form-field>
-    <button type="submit" color="primary" mat-raised-button>Submit</button>
+    <button [disabled]="!addTaskForm.valid" type="submit" color="primary" mat-raised-button>Submit</button>
 </form>

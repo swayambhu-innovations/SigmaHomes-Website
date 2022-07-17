@@ -11,7 +11,7 @@
         [altText]="dataProvider.userData?.displayName || 'N/A'"
       ></app-avatar>
       <div id="container">
-        <h3>
+        <h3 style="color:var(--primary)">
           {{
             dataProvider.userData?.displayName
               ? dataProvider.userData?.displayName
@@ -176,6 +176,7 @@
             }}</span>
           </p>
         </div>
+        
         <app-primary-btn
           [text]="'Edit Profile'"
           (btnClick)="goToEditMode()"
@@ -184,7 +185,7 @@
     </ng-container>
     <ng-template #editContainer>
       <div id="container">
-        <form [formGroup]="editForm" (ngSubmit)="saveEdit()" id="details">
+        <form [formGroup]="editForm" (ngSubmit)="saveEdit()" id="editdetails">
           <p class="detail">
             <label for="photo-input" class="key">Profile Photo: </label>
             <input

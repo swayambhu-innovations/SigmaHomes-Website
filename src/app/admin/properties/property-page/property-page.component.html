@@ -16,145 +16,91 @@
       </div>
 
       <h2>
-        <span><i class="fa-solid fa-city"></i>{{ project.name }}</span
-        ><span><i class="fa-solid fa-star"></i>{{ project.rating }}</span>
+        <span><i class="fa-solid fa-city"></i>{{ project.name }}</span><span><i class="fa-solid fa-star"></i>{{
+          project.rating }}</span>
       </h2>
       <p id="address">
         <i class="fa-solid fa-location-dot"></i> {{ project.address }},
         {{ project.city }}, {{ project.state }} - {{ project.pincode }}
       </p>
       <div class="badges">
-        <div class="badge">
-          <span class="key">Builder Name: </span
-          >{{ project.builderName || "-" }}
+        <div class="parent-container">
+          <div class="badge">
+            <span class="key">Builder Name: </span>{{ project.builderName || "-" }}
+          </div>
+          <div class="badge">
+            <span class="key">Plot Area: </span>{{ project.plotArea ? project.plotArea + " sqft" : "-" }}
+          </div>
+          <div class="badge">
+            <span class="key">Budget: </span>{{ project.budget ? "₹" + project.budget : "-" }}
+          </div>
+          <div class="badge">
+            <span class="key">Facilities Nearby: </span>{{ project.facilitiesNearby || "-" }}
+          </div>
+          <div class="badge">
+            <span class="key">Distance from Important Locations: </span>{{ project.distanceFromImportantLocations || "-"
+            }}
+          </div>
+          <div class="badge">
+            <span class="key">RERA Status: </span>{{ project.reraStatus || "-" }}
+          </div>
         </div>
-        <div class="badge">
-          <span class="key">Plot Area: </span
-          >{{ project.plotArea ? project.plotArea + " sqft" : "-" }}
+        <div class="lightbox" uk-lightbox="animation: scale">
+          <div *ngIf="project.photos && project.photos.length > 0">
+            <a href="{{photo}}" data-caption="Caption 1" *ngFor="let photo of project.photos">
+              <img [src]="photo" width="1800" height="1200" alt="">
+            </a>
+          </div>
         </div>
-        <div class="badge">
-          <span class="key">Budget: </span
-          >{{ project.budget ? "₹" + project.budget : "-" }}
-        </div>
-        <div class="badge">
-          <span class="key">Facilities Nearby: </span
-          >{{ project.facilitiesNearby || "-" }}
-        </div>
-        <div class="badge">
-          <span class="key">Distance from Important Locations: </span
-          >{{ project.distanceFromImportantLocations || "-" }}
-        </div>
-        <div class="badge">
-          <span class="key">RERA Status: </span>{{ project.reraStatus || "-" }}
-        </div>
-      </div>
-
-      <div
-        *ngIf="project.photos && project.photos.length > 0"
-        uk-slider="autoplay: true; autoplay-interval: 4000"
-        class="photos"
-      >
-        <div
-          class="uk-position-relative uk-visible-toggle uk-dark"
-          tabindex="-1"
-        >
-          <ul class="uk-slider-items uk-child-width-1-1">
-            <li *ngFor="let photo of project.photos">
-              <img [src]="photo" />
-            </li>
-          </ul>
-
-          <a
-            class="uk-position-center-left uk-position-small"
-            href="#"
-            uk-slidenav-previous
-            uk-slider-item="previous"
-          ></a>
-          <a
-            class="uk-position-center-right uk-position-small"
-            href="#"
-            uk-slidenav-next
-            uk-slider-item="next"
-          ></a>
-        </div>
-
-        <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
       </div>
     </section>
     <section>
       <h3>Property Types</h3>
       <ul uk-accordion="multiple: true">
         <li *ngFor="let type of project.types" class="type">
-          <h4 class="uk-accordion-title">{{ type.name }}</h4>
-          <div class="uk-accordion-content">
+          <h4 class="title">{{ type.name }}</h4>
+          <div class="content">
             <div class="badges">
               <div class="badge">
-                <span class="key">Area: </span
-                >{{ type.area ? type.area + " sqft" : "-" }}
+                <span class="key">Area: </span>{{ type.area ? type.area + " sqft" : "-" }}
               </div>
               <div class="badge">
-                <span class="key">Company Sales Value: </span
-                >{{
-                  type.companySalesValue ? "₹" + type.companySalesValue : "-"
+                <span class="key">Company Sales Rate: </span>{{ type.companySalesRate ? "₹" + type.companySalesRate :
+                "-" }}
+              </div>
+              <div class="badge">
+                <span class="key">Company Accepted Value: </span>{{
+                type.companyAcceptedValue
+                ? "₹" + type.companyAcceptedValue
+                : "-"
                 }}
               </div>
               <div class="badge">
-                <span class="key">Company Sales Rate: </span
-                >{{ type.companySalesRate ? "₹" + type.companySalesRate : "-" }}
-              </div>
-              <div class="badge">
-                <span class="key">Company Accepted Value: </span
-                >{{
-                  type.companyAcceptedValue
-                    ? "₹" + type.companyAcceptedValue
-                    : "-"
-                }}
-              </div>
-              <div class="badge">
-                <span class="key">Company Accepted Rate: </span
-                >{{
-                  type.companyAcceptedRate
-                    ? "₹" + type.companyAcceptedRate
-                    : "-"
+                <span class="key">Company Accepted Rate: </span>{{
+                type.companyAcceptedRate
+                ? "₹" + type.companyAcceptedRate
+                : "-"
                 }}
               </div>
             </div>
 
-            <div
-              *ngIf="type.photos && type.photos.length > 0"
-              uk-slider="autoplay: true; autoplay-interval: 4000"
-              class="photos"
-            >
-              <div
-                class="uk-position-relative uk-visible-toggle uk-dark"
-                tabindex="-1"
-              >
-                <ul class="uk-slider-items uk-child-width-1-1">
-                  <li *ngFor="let photo of type.photos">
-                    <img [src]="photo" />
-                  </li>
-                </ul>
+            <div *ngIf="type.photos && type.photos.length > 0" uk-slider="autoplay: true; autoplay-interval: 4000"
+              class="photos">
+              <div class="uk-position-relative uk-visible-toggle uk-dark" tabindex="-1">
+                <div uk-lightbox>
+                  <a class="uk-button uk-button-default" *ngFor="let photo of type.photos" href="{{photo}}" data-alt="Image">Open Image</a>
+                </div>
 
-                <a
-                  class="uk-position-center-left uk-position-small"
-                  href="#"
-                  uk-slidenav-previous
-                  uk-slider-item="previous"
-                ></a>
-                <a
-                  class="uk-position-center-right uk-position-small"
-                  href="#"
-                  uk-slidenav-next
-                  uk-slider-item="next"
-                ></a>
+                <a class="uk-position-center-left uk-position-small" href="#" uk-slidenav-previous
+                  uk-slider-item="previous"></a>
+                <a class="uk-position-center-right uk-position-small" href="#" uk-slidenav-next
+                  uk-slider-item="next"></a>
               </div>
 
               <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
             </div>
 
-            <ng-container
-              *ngIf="type.units && type.units.length > 0; else noUnits"
-            >
+            <ng-container *ngIf="type.units && type.units.length > 0; else noUnits">
               <h5>Property Units</h5>
               <table>
                 <thead>
@@ -173,10 +119,7 @@
                     <td>{{ unit.customer || "-" }}</td>
                     <td>{{ unit.phase || "-" }}</td>
                     <td>
-                      <button
-                        *ngIf="unit.customer && unit.phase; else assignCustomer"
-                        class="action-btn"
-                      >
+                      <button *ngIf="unit.customer && unit.phase; else assignCustomer" class="action-btn">
                         View Responses
                       </button>
                       <ng-template #assignCustomer>

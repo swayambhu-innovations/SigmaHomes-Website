@@ -42,8 +42,19 @@ export class ResponsesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private databaseService: DatabaseService,
-    private alertify: AlertsAndNotificationsService
-  ) {}
+    private alertify: AlertsAndNotificationsService,
+    private activateRoute: ActivatedRoute,
+  ) 
+  {
+    this.activateRoute.queryParams.subscribe((data: any) => {
+      console.log(data);
+     
+      if (data.openModal === 'true') {
+        this.addResponse()
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.getResponses();
     this.getAgents();

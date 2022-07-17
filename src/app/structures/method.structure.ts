@@ -25,6 +25,8 @@ export type feature = {
 }
 
 export type task = {
+    title:string;
+    body:string;
     id:string;
     propertyName:string;
     propertyPrice:number;

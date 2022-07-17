@@ -5,6 +5,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
 import Fuse from 'fuse.js';
 import { CSVService } from 'src/app/services/csv.service';
+import { ActivatedRoute } from '@angular/router';
 declare const UIkit: any;
 
 @Component({
@@ -17,7 +18,7 @@ export class PropertiesComponent implements OnInit {
   filteredProjects: any[];
   types: any[];
   filteredTypes: any[] = [];
-
+openModal:any;
   projectForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
@@ -54,10 +55,29 @@ export class PropertiesComponent implements OnInit {
     private dataProvider: DataProvider,
     private databaseService: DatabaseService,
     private alertService: AlertsAndNotificationsService,
-    private csvService: CSVService
-  ) {}
+    private csvService: CSVService,
+    private activateRoute: ActivatedRoute
+  ) 
+  {
+    this.activateRoute.queryParams.subscribe((data: any) => {
+      console.log(data);
+     
+      if (data.openModal === 'true') {
+        this.openModal = data.openModal;
+        UIkit.modal(document.getElementById('project-modal')).show();
+      }
+      else{
+        this.openModal = 'false';
+      }
+    });
+  }
+
 
   ngOnInit() {
+    if(this.openModal === 'true'){
+      UIkit.modal(document.getElementById('project-modal')).show();
+     }
+  
     this.databaseService.getAllProjects().subscribe((data: any) => {
       this.projects = [];
       data.forEach((element: any) => {

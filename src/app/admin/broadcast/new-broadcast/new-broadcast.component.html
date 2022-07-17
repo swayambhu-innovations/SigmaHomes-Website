@@ -9,7 +9,7 @@
       </svg>
       <p>Select Featured Image</p>
     </div>
-    <input (change)="verifyImage()" type="file" name="image" formControlName="image" hidden #imageSelector>
+    <input (change)="verifyImage()" type="file" multiple name="image" formControlName="image" hidden #imageSelector>
     <div class="dataFields">
       <mat-form-field appearance="standard">
         <mat-label>Title</mat-label>
@@ -79,6 +79,7 @@
       <p>Send</p>
       <i class="ri-send-plane-fill"></i>
     </button>
+    <button id="submit">Submit</button>
   </form>
   <!-- <section>
       <div id="form-content">
@@ -149,13 +150,20 @@
     </section> -->
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button text="Send Broadcast" type="submit">Broadcast</button>
+  <div id="brodcast_conatiner">
+    <button text="Send Email" type="submit"><i class="ri-mail-send-line"></i>EMAIL</button>
+    <button text="Send sms" type="submit"><i class="ri-message-2-line"></i>SMS</button>
+  </div>
   <div id="social-share">
     <a href="" id="twitter-share"><i class="ri-facebook-box-fill"></i></a>
     <a href="" id="facebook-share"><i class="ri-whatsapp-fill"></i></a>
-    <a href="" id="pinterest-share"><i class="ri-instagram-fill"></i></a>
-    <a href="" id="whatsapp-share"><i class="ri-twitter-fill"></i></a>
-    <a href="" id="whatsapp-share"><i class="ri-linkedin-box-fill"></i></a>
-    <a href="" id="whatsapp-share"><i class="ri-pinterest-fill"></i></a>
+    <a (click)="toggleMore()" id="pinterest-share"><i class="ri-more-fill"></i></a>
+<div class="more" *ngIf="more">
+
+  <a href="" id="pinterest-share"><i class="ri-instagram-fill"></i></a>
+  <a href="" id="whatsapp-share"><i class="ri-twitter-fill"></i></a>
+  <a href="" id="whatsapp-share"><i class="ri-linkedin-box-fill"></i></a>
+  <a href="" id="whatsapp-share"><i class="ri-pinterest-fill"></i></a>
+</div>
   </div>
 </mat-dialog-actions>

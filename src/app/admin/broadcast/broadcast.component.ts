@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Timestamp } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import Fuse from 'fuse.js';
 import { DataProvider } from 'src/app/providers/data.provider';
 import { BroadcastService } from 'src/app/services/broadcast.service';
@@ -16,13 +17,26 @@ export class BroadcastComponent implements OnInit {
   broadcasts: any[];
   filteredBroadcasts: any[];
   currentBroadcast: number = -1;
+  fileInput: any;
+  alertify: any;
 
   constructor(
     private databaseService: DatabaseService,
     public broadcastService: BroadcastService,
     public dialog: MatDialog,
-    private dataProvider:DataProvider 
-  ) {}
+    private dataProvider:DataProvider,
+    private activateRoute:ActivatedRoute
+  ) {
+    this.activateRoute.queryParams.subscribe((data:any)=>{
+      console.log(data);
+      // if(data.openModal){
+      //   this.currentBroadcast = data.id;
+      // }
+      if (data.openModal==="true"){
+        this.openBroadcast();
+      }
+    })
+  }
 
   ngOnInit(): void {
     this.dataProvider.headerButtonActions.subscribe((action: any) => {

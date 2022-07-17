@@ -76,7 +76,8 @@
       </button>
     </div>
   </div>
-  <input type="file" hidden #fileInput accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+  <input type="file" hidden #fileInput
+    accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
 </header>
 <div id="wrapper" (window:resize)="onWindowResize()">
   <div [style]="largeScreen || showSidebar ? '' : 'display: none'" id="sidebar-container">

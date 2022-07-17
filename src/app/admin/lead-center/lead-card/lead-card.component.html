@@ -232,7 +232,7 @@
     <button id="make-customer" (click)="onMakeCustomer.emit()">
       Make Customer
     </button>
-    <button uk-tooltip="title: Interesting Properties">
+    <button uk-tooltip="title: Interesting Properties" (click)="onMakeCustomer.emit()">
       <i class="fa-solid fa-circle-info"></i>
     </button>
     <button (click)="onEdit.emit()" uk-tooltip="title: Edit">
