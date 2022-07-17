@@ -94,7 +94,8 @@ section {
 }
 
 .uk-modal-body {
-  width: min(90vw, 1000px);
+  border-radius: 15px;
+  width: min(60vw, 800px);
   padding: 2em;
 
   .uk-modal-title {
@@ -130,7 +131,7 @@ section {
 
       label {
         margin-right: 1em;
-        font-weight: 700;
+        font-weight: 500;
       }
 
       input {
