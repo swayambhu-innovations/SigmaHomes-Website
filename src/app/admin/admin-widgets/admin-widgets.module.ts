@@ -1,3 +1,6 @@
+import { PropertiesModule } from './../../customer/properties/properties.module';
+import { PropertyCardComponent } from './../../customer/components/property-card/property-card.component';
+import { PropertiesComponent } from './../../customer/properties/properties.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PrimaryBtnComponent } from './buttons/primary-btn/primary-btn.component';
@@ -8,6 +11,8 @@ import { FabComponent } from './fab/fab.component';
 import { ResponseCardComponent } from './response-card/response-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewCustomerModalComponent } from './view-customer-modal/view-customer-modal.component';
+import { IntrestedModelComponent } from './intrested-model/intrested-model.component';
+
 
 @NgModule({
   declarations: [
@@ -17,12 +22,14 @@ import { ViewCustomerModalComponent } from './view-customer-modal/view-customer-
     AvatarComponent,
     FabComponent,
     ResponseCardComponent,
-    ViewCustomerModalComponent
+    ViewCustomerModalComponent,
+    IntrestedModelComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PropertiesModule
   ],
   exports: [
     PrimaryBtnComponent,

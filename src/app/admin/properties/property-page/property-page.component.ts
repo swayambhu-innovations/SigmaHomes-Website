@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
+declare const UIkit: any;
 
 @Component({
   selector: 'app-property-page',
@@ -10,6 +11,8 @@ import { DatabaseService } from 'src/app/services/database.service';
 export class PropertyPageComponent implements OnInit {
   project: any;
   ingredients: any;
+  customers: any[];
+  currentViewCustomer: any;
 
   constructor(
     private router: Router,
@@ -59,5 +62,9 @@ export class PropertyPageComponent implements OnInit {
       this.project.types.push(type);
     });
     this.project.types.sort((a: any, b: any) => a.name.localeCompare(b.name))
+  }
+  viewInstrested(property: any) {
+    this.currentViewCustomer = property;
+    UIkit.modal(document.getElementById('intrested-modal')).show();
   }
 }
