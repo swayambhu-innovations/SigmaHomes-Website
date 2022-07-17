@@ -9,7 +9,7 @@
       </svg>
       <p>Select Featured Image</p>
     </div>
-    <input (change)="verifyImage()" type="file" name="image" formControlName="image" hidden #imageSelector>
+    <input (change)="verifyImage()" type="file" multiple name="image" formControlName="image" hidden #imageSelector>
     <div class="dataFields">
       <mat-form-field appearance="standard">
         <mat-label>Title</mat-label>

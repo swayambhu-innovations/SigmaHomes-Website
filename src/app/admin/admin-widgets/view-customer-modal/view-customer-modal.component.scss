@@ -1,6 +1,7 @@
 .uk-modal-body {
-  width: min(90vw, 1000px);
+  width: min(80vw, 800px);
   padding: 2em;
+  border-radius: 15px;
 
   .uk-modal-title {
     font-family: var(--font-three);
@@ -47,7 +48,7 @@
 
       .key {
         margin-right: 1em;
-        font-weight: 700;
+        font-weight: 500;
       }
 
       @media (max-width: 650px) {

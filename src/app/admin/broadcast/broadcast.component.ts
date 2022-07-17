@@ -16,6 +16,8 @@ export class BroadcastComponent implements OnInit {
   broadcasts: any[];
   filteredBroadcasts: any[];
   currentBroadcast: number = -1;
+  fileInput: any;
+  alertify: any;
 
   constructor(
     private databaseService: DatabaseService,
