@@ -221,7 +221,7 @@ export class PropertiesComponent implements OnInit {
         projectPhotosInput.files &&
         projectPhotosInput.files.length > 0
       ) {
-        this.projectForm.value.photos = [];
+        this.projectForm.value.photoURL = [];
         for (var i = 0; i < projectPhotosInput.files.length; i++) {
           await this.databaseService
             .upload(
