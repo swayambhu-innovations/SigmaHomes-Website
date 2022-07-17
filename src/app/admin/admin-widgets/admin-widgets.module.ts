@@ -1,4 +1,4 @@
-import { PropertiesModule } from './../../customer/properties/properties.module';
+import { PropertiesModule } from '../properties/properties.module';
 import { PropertyCardComponent } from './../../customer/components/property-card/property-card.component';
 import { PropertiesComponent } from './../../customer/properties/properties.component';
 import { NgModule } from '@angular/core';
@@ -13,7 +13,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewCustomerModalComponent } from './view-customer-modal/view-customer-modal.component';
 import { IntrestedModelComponent } from './intrested-model/intrested-model.component';
 
-
 @NgModule({
   declarations: [
     PrimaryBtnComponent,
@@ -23,14 +22,9 @@ import { IntrestedModelComponent } from './intrested-model/intrested-model.compo
     FabComponent,
     ResponseCardComponent,
     ViewCustomerModalComponent,
-    IntrestedModelComponent
+    IntrestedModelComponent,
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    PropertiesModule
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, PropertiesModule],
   exports: [
     PrimaryBtnComponent,
     SecondaryBtnComponent,
@@ -38,7 +32,7 @@ import { IntrestedModelComponent } from './intrested-model/intrested-model.compo
     AvatarComponent,
     FabComponent,
     ResponseCardComponent,
-    ViewCustomerModalComponent
-  ]
+    ViewCustomerModalComponent,
+  ],
 })
-export class AdminWidgetsModule { }
+export class AdminWidgetsModule {}
