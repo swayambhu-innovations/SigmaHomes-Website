@@ -103,8 +103,10 @@
 
     .badges {
       display: flex;
-      flex-wrap: wrap;
-
+      justify-content: space-between;
+      .parent-container{
+        margin-top: 35px;
+      }
       .badge {
         background-color: var(--secondary);
         color: var(--secondary-contrast);
@@ -167,5 +169,18 @@
         }
       }
     }
+  }
+}
+.lightbox{
+  display: grid;
+  grid-template: auto / auto;
+  width: 50%;
+  flex-wrap: wrap;
+  img{
+    width: 30%;
+    object-fit: cover;
+    height: 45%;
+    margin-top: 15px;
+    margin-left: 15px;
   }
 }

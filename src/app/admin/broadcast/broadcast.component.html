@@ -90,6 +90,12 @@
             {{ recipient }}
           </p>
         </div>
+        <h5 class="bold">Name</h5>
+        <div class="recipients">
+          <p *ngFor="let name of broadcasts[currentBroadcast].name" class="recipient">
+            {{ name }}
+          </p>
+        </div>
       </div>
     </div>
     <button (click)="resendBroadcast(currentBroadcast)" routerLink="new-broadcast" class="uk-modal-close modal-end-btn">
