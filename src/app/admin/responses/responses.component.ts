@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
@@ -17,54 +17,84 @@ declare const UIkit: any;
   templateUrl: './responses.component.html',
   styleUrls: ['./responses.component.scss'],
   animations: [
-    trigger(
-      'enterAnimation', [
-        transition(':enter', [
-          style({transform: 'translateY(100%)', opacity: 0}),
-          animate('500ms', style({transform: 'translateY(0)', opacity: 1}))
-        ]),
-        transition(':leave', [
-          style({transform: 'translateY(0)', opacity: 1}),
-          animate('500ms', style({transform: 'translateY(100%)', opacity: 0}))
-        ])
-      ]
-    )
+    trigger('enterAnimation', [
+      transition(':enter', [
+        style({ transform: 'translateY(100%)', opacity: 0 }),
+        animate('500ms', style({ transform: 'translateY(0)', opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ transform: 'translateY(0)', opacity: 1 }),
+        animate('500ms', style({ transform: 'translateY(100%)', opacity: 0 })),
+      ]),
+    ]),
   ],
 })
 export class ResponsesComponent implements OnInit {
   responses: any[] = [];
-  selectedResponses:any[] = [];
-  agents:any[] = [];
-  assignedAgent:string = '';
-  loading:boolean = false;
+  selectedResponses: any[] = [];
+  agents: any[] = [];
+  assignedAgent: string = '';
+  loading: boolean = false;
+  viewAs: any;
+
+  @Output() view: EventEmitter<any> = new EventEmitter<any>();
+  @Output() delete: EventEmitter<any> = new EventEmitter<any>();
+
+  phases: string[] = [
+    'Query',
+    'Visitation',
+    'Negotiation',
+    'Legalization',
+    'Closure',
+  ];
+
   constructor(
     public dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
     private databaseService: DatabaseService,
-    private alertify: AlertsAndNotificationsService
-  ) {}
+    private alertify: AlertsAndNotificationsService,
+    private activateRoute: ActivatedRoute,
+    private dataProvider: DataProvider
+  ) {
+    this.activateRoute.queryParams.subscribe((data: any) => {
+      console.log(data);
+
+      if (data.openModal === 'true') {
+        this.addResponse();
+      }
+    });
+  }
+
   ngOnInit(): void {
     this.getResponses();
     this.getAgents();
+    this.viewAs = 'viewAsCard';
+    this.dataProvider.headerButtonActions.subscribe((action) => {
+      console.log(action);
+      this.viewAs = action;
+    });
   }
-  getAgents(){
+  getAgents() {
     this.databaseService.getAllAgentsPromise().then((docs: any) => {
       docs.forEach((element: any) => {
         this.agents.push({ ...element.data(), id: element.id });
       });
     });
   }
-  getResponses(){
+  getResponses() {
     this.loading = true;
     this.responses = [];
-    this.databaseService.getResponsesPromise().then((docs: any) => {
-      docs.forEach((element: any) => {
-        this.responses.push({ ...element.data(), id: element.id });
+    this.databaseService
+      .getResponsesPromise()
+      .then((docs: any) => {
+        docs.forEach((element: any) => {
+          this.responses.push({ ...element.data(), id: element.id });
+        });
+      })
+      .finally(() => {
+        this.loading = false;
       });
-    }).finally(()=>{
-      this.loading = false;
-    });
   }
   addResponse() {
     const ref = this.dialog.open(AddResponseComponent);
@@ -83,35 +113,41 @@ export class ResponsesComponent implements OnInit {
   viewResponse(id: string) {
     this.router.navigate([id], { relativeTo: this.route });
   }
-  deleteResponse(id:string){
-    if(confirm('Are you sure')){
-      this.databaseService.deleteResponse(id).then(()=>{
-        this.alertify.presentToast('Response deleted successfully');
-        this.getResponses();
-      }).catch(()=>{
-        this.alertify.presentToast('Error deleting response');
-      });
+  deleteResponse(id: string) {
+    if (confirm('Are you sure')) {
+      this.databaseService
+        .deleteResponse(id)
+        .then(() => {
+          this.alertify.presentToast('Response deleted successfully');
+          this.getResponses();
+        })
+        .catch(() => {
+          this.alertify.presentToast('Error deleting response');
+        });
     }
   }
-  selectResponse(id:string){
-    if(this.selectedResponses.includes(id)){
-      this.selectedResponses.splice(this.selectedResponses.indexOf(id),1);
-    }else{
+  selectResponse(id: string) {
+    if (this.selectedResponses.includes(id)) {
+      this.selectedResponses.splice(this.selectedResponses.indexOf(id), 1);
+    } else {
       this.selectedResponses.push(id);
     }
   }
-  assignAgent(){
-    this.selectedResponses.forEach((element:any) => {
+  assignAgent() {
+    this.selectedResponses.forEach((element: any) => {
       // console.log(element);
-      this.databaseService.assignAgent(this.assignedAgent,element).then(()=>{
-        this.alertify.presentToast('Agent assigned successfully');
-        this.selectedResponses = [];
-      }).catch(()=>{
-        this.alertify.presentToast('Error assigning agent');
-      });
+      this.databaseService
+        .assignAgent(this.assignedAgent, element)
+        .then(() => {
+          this.alertify.presentToast('Agent assigned successfully');
+          this.selectedResponses = [];
+        })
+        .catch(() => {
+          this.alertify.presentToast('Error assigning agent');
+        });
     });
   }
-  setAgent(event:any){
+  setAgent(event: any) {
     this.assignedAgent = event.value;
   }
 }

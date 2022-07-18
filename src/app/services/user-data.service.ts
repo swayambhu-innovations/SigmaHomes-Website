@@ -63,6 +63,12 @@ export class UserDataService {
       parentEmployee: 'N/A',
       userType: '',
       accountHolderName: '',
+      nationality: '',
+      preferredLanguages: '',
+      religion: '',
+      organizationName: '',
+      organizationRole: '',
+      experience: 0,
     };
     this.userDoc = doc(this.firestore, 'users/' + user.uid);
     await setDoc(this.userDoc, data).then(() => {
@@ -95,6 +101,12 @@ export class UserDataService {
       parentEmployee: 'N/A',
       userType: '',
       accountHolderName: '',
+      nationality: '',
+      preferredLanguages: '',
+      religion: '',
+      organizationName: '',
+      organizationRole: '',
+      experience: 0,
     };
     this.userDoc = doc(this.firestore, 'users/' + user.uid);
     await setDoc(this.userDoc, data).then(() => {

@@ -25,6 +25,12 @@ export type UserData = {
     | 'Administrator'
     | 'Agent'
     | 'Master Agent';
+  nationality: string;
+  preferredLanguages: string;
+  religion: string;
+  organizationName: string;
+  organizationRole: string;
+  experience: number;
 };
 
 export type UserAccess = {

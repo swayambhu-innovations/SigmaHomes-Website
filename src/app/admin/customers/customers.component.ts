@@ -6,6 +6,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
 import Fuse from 'fuse.js';
 import { CSVService } from 'src/app/services/csv.service';
+import { ActivatedRoute } from '@angular/router';
 declare const UIkit: any;
 
 @Component({
@@ -19,6 +20,7 @@ export class CustomersComponent implements OnInit {
   currentViewCustomer: any;
   editMode: boolean = false;
   currentEditId: string = '';
+  openModal:any;
 
   customerForm: FormGroup = new FormGroup({
     img: new FormControl(''),
@@ -58,10 +60,27 @@ export class CustomersComponent implements OnInit {
     private alertify: AlertsAndNotificationsService,
     private dataProvider: DataProvider,
     private dataTransferService: DataTransferService,
-    private csvService: CSVService
-  ) {}
+    private csvService: CSVService,
+    private activateRoute: ActivatedRoute
+  )
+  {
+    this.activateRoute.queryParams.subscribe((data: any) => {
+      console.log(data);
+     
+      if (data.openModal === 'true') {
+        this.openModal = data.openModal;
+        UIkit.modal(document.getElementById('edit-or-add-customer-modal')).show();
+      }
+      else{
+        this.openModal = 'false';
+      }
+    });
+  }
 
   ngOnInit(): void {
+    if(this.openModal === 'true'){
+      UIkit.modal(document.getElementById('edit-or-add-customer-modal')).show();
+    }
     this.databaseService.getCustomers().subscribe((data) => {
       this.customers = [];
       data.forEach((user: any) => {
