@@ -1,3 +1,4 @@
+import { PropertiesModule } from './../properties/properties.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -20,7 +21,8 @@ import { RouterModule } from '@angular/router';
     AdminWidgetsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule
+    RouterModule,
+    PropertiesModule
   ],
   providers: [CSVService],
 })
