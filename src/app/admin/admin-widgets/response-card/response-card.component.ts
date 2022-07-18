@@ -25,7 +25,8 @@ export class ResponseCardComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   selectResponse(): void {
     this.selected = !this.selected;

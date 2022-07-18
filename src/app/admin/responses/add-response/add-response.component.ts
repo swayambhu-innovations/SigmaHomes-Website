@@ -34,6 +34,7 @@ export class AddResponseComponent implements OnInit {
       label:'Closure'
     },
   ]
+  multiple:boolean = false;
   phasesNotes:FormGroup = new FormGroup({});
   notesFieldsControls:any[] = [];
   addResponseForm:FormGroup = new FormGroup({
@@ -78,6 +79,10 @@ export class AddResponseComponent implements OnInit {
     return this.notesFieldsControls;
   }
 
+
+  check(){
+    this.addResponseForm.value.phase<=2?this.multiple=true:this.multiple=false;
+  }
   submit(){
     if(this.addResponseForm.valid){
       let notes:any = {}
@@ -97,5 +102,6 @@ export class AddResponseComponent implements OnInit {
       this.addResponseForm.reset()
       this.dialog.closeAll();
     }
+    this.multiple=false;
   }
 }

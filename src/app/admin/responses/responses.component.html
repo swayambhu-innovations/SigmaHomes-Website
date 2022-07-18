@@ -16,10 +16,11 @@
       <table>
         <thead>
           <tr>
-            <th style="width: 8%">S. No.</th>
-            <th style="width: 22%">property Image</th>
-            <th style="width: 22%">propertyType</th>
-            <th style="width: 22%">Contact</th>
+            <th style="width: 5%">S. No.</th>
+            <th style="width: 20%">property Image</th>
+            <th style="width: 10%">Customers Name</th>
+            <th style="width: 10%">propertyType</th>
+            <th style="width: 30%">Contact</th>
             <th style="width: 10%">Stage</th>
             <th style="width: 15%"></th>
           </tr>
@@ -38,6 +39,7 @@
                 [alt]="response.property?.name"
               />
             </td>
+            <td>{{ response.customer?.name }}</td>
             <td>{{ response.property?.name }}</td>
 
             <td>
@@ -59,7 +61,7 @@
             <td>
               <div class="buttons">
                 <button (click)="view.emit()"><i class="fa-solid fa-eye"></i></button>
-                <button style="background-color: red; color: white" (click)="delete.emit()">
+                <button style="background-color: red; color: white" (click)="delete.emit()"  (delete)="deleteResponse(response.id)">
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </div>

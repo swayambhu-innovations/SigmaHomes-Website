@@ -47,9 +47,11 @@ export class ResponsePageComponent implements OnInit {
     this.response = {}
     this.dataProvider.pageSetting.blur = true;
     this.databaseService.getResponse(this.responseId).then((response) => {
+      console.log(response.data());
       this.response = {
         id: response.id,
         ...response.data(),
+        
       };
       this.dataProvider.pageSetting.blur = false;
     });
@@ -74,7 +76,8 @@ export class ResponsePageComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   completePhase(): void {
     if (this.response.phase < 5 && confirm('Are you sure you want to complete this phase.')) {

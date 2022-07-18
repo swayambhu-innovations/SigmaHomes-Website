@@ -1,13 +1,28 @@
 <form [formGroup]="addResponseForm" (ngSubmit)="submit()">
     <div>
         <mat-form-field appearance="fill">
+            <mat-label>Stage</mat-label>
+            <mat-select (selectionChange)="genFields()" formControlName="phase">
+                <mat-option [value]="phase.value" *ngFor="let phase of phases">
+                    {{phase.label}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" (click)="check()"  >
             <mat-label>Property</mat-label>
-            <mat-select formControlName="property">
+            <mat-select formControlName="property" *ngIf="!multiple">
                 <mat-option *ngFor="let property of properties" [value]="property.id">
                     {{property.name}}
                 </mat-option>
             </mat-select>
+            <mat-select multiple formControlName="property"  *ngIf="multiple" >
+                <mat-option *ngFor="let property of properties" [value]="property.id">
+                    {{property.name}}
+                </mat-option>
+            </mat-select>
+           
         </mat-form-field>
+       
         <mat-form-field appearance="fill">
             <mat-label>Customer</mat-label>
             <mat-select formControlName="customer">
@@ -24,14 +39,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Customer</mat-label>
-            <mat-select (selectionChange)="genFields()" formControlName="phase">
-                <mat-option [value]="phase.value" *ngFor="let phase of phases">
-                    {{phase.label}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+      
     </div>
     <div [formGroup]="phasesNotes" class="textFields">
         <mat-form-field appearance="fill" *ngFor="let input of notesFieldsControls">
@@ -39,5 +47,14 @@
             <input matInput [formControlName]="input.name" placeholder="Note">
         </mat-form-field>
     </div>
-    <button mat-button color="primary" type="submit">Submit</button>
+    <button mat-button style="background-color: var(--primary);color:white;" type="submit">Submit</button>
 </form>
+
+
+<!-- 
+<mat-form-field appearance="fill">
+    <mat-label>Toppings</mat-label>
+    <mat-select [formControl]="toppings" multiple>
+      <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+    </mat-select>
+  </mat-form-field> -->

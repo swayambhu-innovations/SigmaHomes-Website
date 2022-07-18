@@ -36,9 +36,9 @@ export class ResponsesComponent implements OnInit {
   assignedAgent: string = '';
   loading: boolean = false;
   viewAs: any;
+  @Output() delete: EventEmitter<any> = new EventEmitter<any>();
 
   @Output() view: EventEmitter<any> = new EventEmitter<any>();
-  @Output() delete: EventEmitter<any> = new EventEmitter<any>();
 
   phases: string[] = [
     'Query',
@@ -70,8 +70,12 @@ export class ResponsesComponent implements OnInit {
     this.getResponses();
     this.getAgents();
     this.viewAs = 'viewAsCard';
+  
+    // if (this.dataProvider.userData.role === 'admin') {
+    // console.log('hmm')
+    // }
     this.dataProvider.headerButtonActions.subscribe((action) => {
-      console.log(action);
+ 
       this.viewAs = action;
     });
   }
