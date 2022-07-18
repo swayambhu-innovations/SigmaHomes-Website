@@ -11,6 +11,7 @@ export class ResponseCardComponent implements OnInit {
   @Input() selectable: boolean = false;
   @Input() selected: boolean = false;
   @Input() readOnly: boolean = false;
+  @Input() requestPending: boolean = false;
   @Output() view: EventEmitter<any> = new EventEmitter<any>();
   @Output() delete: EventEmitter<any> = new EventEmitter<any>();
   @Output() cardSelect: EventEmitter<string> = new EventEmitter<string>();

@@ -1,8 +1,10 @@
 <section>
   <div class="responsesContainer">
+  
     <ng-container *ngIf="viewAs === 'viewAsCard'">
       <app-response-card
         *ngFor="let response of responses"
+        [requestPending]= "response.requestPending"
         [id]="response.id"
         [response]="response"
         (view)="viewResponse(response.id)"

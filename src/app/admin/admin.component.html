@@ -2,7 +2,7 @@
   <div style="display: flex">
     <button *ngIf="!largeScreen" class="uk-navbar-toggle" uk-navbar-toggle-icon id="toggle-button"
       (click)="toggleSidebar()"></button>
-    <h2 id="header-heading">Agent {{ currentPanel }}</h2>
+    <h2 id="header-heading">{{dataProvider.userData?.access?.access}} {{' '}}{{ currentPanel }}</h2>
   </div>
   <div *ngIf="currentPanel == 'Broadcast'" id="header-end">
     <div class="search-box">

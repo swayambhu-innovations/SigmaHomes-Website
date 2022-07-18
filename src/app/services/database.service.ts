@@ -237,6 +237,7 @@ export class DatabaseService {
 
   getResponsesPromise() {
     return getDocs(collection(this.fs, 'responses'));
+    
   }
 
   getResponse(responseId: any) {

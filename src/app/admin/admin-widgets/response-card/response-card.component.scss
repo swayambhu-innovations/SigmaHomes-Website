@@ -5,6 +5,13 @@
   padding: 1em;
   width: 26rem;
   position: relative;
+  .notification{
+    position: relative;
+    height: 10px;
+    width:10px;
+    background-color: red;
+    border-radius: 50%;
+  }
   &:hover {
     transform: scale(1.01);
   }

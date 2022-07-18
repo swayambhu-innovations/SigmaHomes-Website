@@ -1,7 +1,8 @@
 <div id="card">
+  
   <div class="card-header">
     <h3 class="card-title">{{ response.property?.notes }}</h3>
-   
+    
   <div id="content">
     <div id="property-img-container">
       <img [src]="
@@ -39,6 +40,7 @@
     </div>
   </div>
   <button *ngIf="selectable" id="select-button" (click)="selectResponse()">
-    <i class="fa-solid fa-circle-check" [style]="'color: ' + (selected ? '#5cb85c' : '#727a81')"></i>
+    <i  *ngIf="!requestPending" class="fa-solid fa-circle-check" [style]="'color: ' + (selected ? '#5cb85c' : '#727a81')"></i>
+    <i *ngIf="requestPending" class="fas fa-bell" style="color: var(--processing)" ></i>
   </button>
 </div>

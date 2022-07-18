@@ -186,7 +186,10 @@ section {
 
     .note {
       margin-bottom: 1em;
-
+      img{
+        height: 4rem;
+        width: 4rem;
+      }
       .date,
       .description {
         margin: 0;

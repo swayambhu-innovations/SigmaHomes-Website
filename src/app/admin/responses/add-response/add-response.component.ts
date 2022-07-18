@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { DataProvider } from 'src/app/providers/data.provider';
 import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
@@ -45,7 +46,7 @@ export class AddResponseComponent implements OnInit {
     phaseNotes:this.phasesNotes
   })
   @Output() addResponse:EventEmitter<any> = new EventEmitter<any>()
-  constructor(private databaseService:DatabaseService,public dialog: MatDialog) { }
+  constructor(private databaseService:DatabaseService,public dialog: MatDialog,private dataProvider:DataProvider) { }
 
   ngOnInit(): void {
     this.databaseService.getAllProjectsPromise().then((docs:any)=>{
@@ -89,7 +90,10 @@ export class AddResponseComponent implements OnInit {
       Object.keys(this.addResponseForm.value.phaseNotes).forEach((key:string)=>{
         notes[key] = [{
           note:this.addResponseForm.value.phaseNotes[key],
-          date:new Date()
+          date:new Date(),
+          userName:this.dataProvider.userData?.displayName,
+        userType:this.dataProvider.userData?.access?.access,
+
         }]
       })
       this.addResponse.emit({

@@ -55,7 +55,7 @@ export class ResponsesComponent implements OnInit {
     private databaseService: DatabaseService,
     private alertify: AlertsAndNotificationsService,
     private activateRoute: ActivatedRoute,
-    private dataProvider: DataProvider
+    public dataProvider: DataProvider
   ) {
     this.activateRoute.queryParams.subscribe((data: any) => {
       console.log(data);
@@ -67,15 +67,15 @@ export class ResponsesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.getResponses();
     this.getAgents();
     this.viewAs = 'viewAsCard';
-  
-    // if (this.dataProvider.userData.role === 'admin') {
-    // console.log('hmm')
-    // }
+          
+    this.responses.forEach((res)=>{
+      console.log(res)
+    })
     this.dataProvider.headerButtonActions.subscribe((action) => {
- 
       this.viewAs = action;
     });
   }
@@ -94,6 +94,7 @@ export class ResponsesComponent implements OnInit {
       .then((docs: any) => {
         docs.forEach((element: any) => {
           this.responses.push({ ...element.data(), id: element.id });
+  
         });
       })
       .finally(() => {

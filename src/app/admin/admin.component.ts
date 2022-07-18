@@ -19,7 +19,7 @@ export class AdminComponent implements OnInit {
 
   @ViewChild('viewAsInput') viewAsInput: ElementRef;
 
-  constructor(private router: Router, private dataProvider: DataProvider,private alertify:AlertsAndNotificationsService) {
+  constructor(private router: Router, public dataProvider: DataProvider,private alertify:AlertsAndNotificationsService) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         const url = this.router.url;
