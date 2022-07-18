@@ -45,7 +45,19 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    
+    this.dataProvider.headerButtonActions.subscribe((action) => {
+   
+      if (action === 'viewAsTable') {
+        this.setViewAs('table');
+      }
+      if (action === 'viewAsCard') {
+        this.setViewAs('cards');
+      }
+    
+    });
+  }
 
   emitButtonAction(
     action:
@@ -58,6 +70,8 @@ export class AdminComponent implements OnInit {
       | 'exportProperty'
       | 'importResponses'
       | 'exportResponses'
+      | 'viewAsTable'
+      | 'viewAsCard'
   ) {
     this.dataProvider.headerButtonActions.next(action);
     if (action === 'importLead') {

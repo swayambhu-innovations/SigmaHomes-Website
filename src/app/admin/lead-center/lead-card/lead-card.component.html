@@ -1,16 +1,10 @@
 <div id="card">
-  <div
-    id="top"
-    (click)="expanded = !expanded"
-    [style]="'border-radius: ' + (expanded ? '15px 15px 0 0' : '15px')"
-  >
+  <div id="top" (click)="expanded = !expanded" [style]="'border-radius: ' + (expanded ? '15px 15px 0 0' : '15px')">
     <h3>{{ lead.name || "Unknown Name" }}</h3>
     <button id="expand-collapse">
-      <span
-        [attr.uk-icon]="
+      <span [attr.uk-icon]="
           'icon: triangle-' + (expanded ? 'up' : 'down') + '; ratio: 1.25'
-        "
-      ></span>
+        "></span>
     </button>
   </div>
   <div *ngIf="expanded" id="key-values">
@@ -18,16 +12,10 @@
       <span class="key">Name: </span>
       <span *ngIf="lead.name" class="value">{{ lead.name }}</span>
       <span *ngIf="!lead.name" class="value">
-        <button
-          *ngIf="visibleInputs.indexOf('name') === -1"
-          (click)="visibleInputs.push('name')"
-        >
+        <button *ngIf="visibleInputs.indexOf('name') === -1" (click)="visibleInputs.push('name')">
           <i class="fa-solid fa-plus"></i> Add Field
         </button>
-        <span
-          *ngIf="visibleInputs.indexOf('name') !== -1"
-          class="add-field-form"
-        >
+        <span *ngIf="visibleInputs.indexOf('name') !== -1" class="add-field-form">
           <input type="text" #nameInput />
           <button (click)="addField('name', nameInput.value)">Add</button>
         </span>
@@ -37,16 +25,10 @@
       <span class="key">Phone: </span>
       <span *ngIf="lead.phone" class="value">{{ lead.phone }}</span>
       <span *ngIf="!lead.phone" class="value">
-        <button
-          *ngIf="visibleInputs.indexOf('phone') === -1"
-          (click)="visibleInputs.push('phone')"
-        >
+        <button *ngIf="visibleInputs.indexOf('phone') === -1" (click)="visibleInputs.push('phone')">
           <i class="fa-solid fa-plus"></i> Add Field
         </button>
-        <span
-          *ngIf="visibleInputs.indexOf('phone') !== -1"
-          class="add-field-form"
-        >
+        <span *ngIf="visibleInputs.indexOf('phone') !== -1" class="add-field-form">
           <input type="tel" #phoneInput />
           <button (click)="addField('phone', phoneInput.value)">Add</button>
         </span>
@@ -56,16 +38,10 @@
       <span class="key">Email: </span>
       <span *ngIf="lead.email" class="value">{{ lead.email }}</span>
       <span *ngIf="!lead.email" class="value">
-        <button
-          *ngIf="visibleInputs.indexOf('email') === -1"
-          (click)="visibleInputs.push('email')"
-        >
+        <button *ngIf="visibleInputs.indexOf('email') === -1" (click)="visibleInputs.push('email')">
           <i class="fa-solid fa-plus"></i> Add Field
         </button>
-        <span
-          *ngIf="visibleInputs.indexOf('email') !== -1"
-          class="add-field-form"
-        >
+        <span *ngIf="visibleInputs.indexOf('email') !== -1" class="add-field-form">
           <input type="email" #emailInput />
           <button (click)="addField('email', emailInput.value)">Add</button>
         </span>
@@ -75,16 +51,10 @@
       <span class="key">Address: </span>
       <span *ngIf="lead.address" class="value">{{ lead.address }}</span>
       <span *ngIf="!lead.address" class="value">
-        <button
-          *ngIf="visibleInputs.indexOf('address') === -1"
-          (click)="visibleInputs.push('address')"
-        >
+        <button *ngIf="visibleInputs.indexOf('address') === -1" (click)="visibleInputs.push('address')">
           <i class="fa-solid fa-plus"></i> Add Field
         </button>
-        <span
-          *ngIf="visibleInputs.indexOf('address') !== -1"
-          class="add-field-form"
-        >
+        <span *ngIf="visibleInputs.indexOf('address') !== -1" class="add-field-form">
           <input type="text" #addressInput />
           <button (click)="addField('address', addressInput.value)">Add</button>
         </span>
@@ -94,16 +64,10 @@
       <span class="key">City: </span>
       <span *ngIf="lead.city" class="value">{{ lead.city }}</span>
       <span *ngIf="!lead.city" class="value">
-        <button
-          *ngIf="visibleInputs.indexOf('city') === -1"
-          (click)="visibleInputs.push('city')"
-        >
+        <button *ngIf="visibleInputs.indexOf('city') === -1" (click)="visibleInputs.push('city')">
           <i class="fa-solid fa-plus"></i> Add Field
         </button>
-        <span
-          *ngIf="visibleInputs.indexOf('city') !== -1"
-          class="add-field-form"
-        >
+        <span *ngIf="visibleInputs.indexOf('city') !== -1" class="add-field-form">
           <input type="text" #cityInput />
           <button (click)="addField('city', cityInput.value)">Add</button>
         </span>
@@ -113,16 +77,10 @@
       <span class="key">State: </span>
       <span *ngIf="lead.state" class="value">{{ lead.state }}</span>
       <span *ngIf="!lead.state" class="value">
-        <button
-          *ngIf="visibleInputs.indexOf('state') === -1"
-          (click)="visibleInputs.push('state')"
-        >
+        <button *ngIf="visibleInputs.indexOf('state') === -1" (click)="visibleInputs.push('state')">
           <i class="fa-solid fa-plus"></i> Add Field
         </button>
-        <span
-          *ngIf="visibleInputs.indexOf('state') !== -1"
-          class="add-field-form"
-        >
+        <span *ngIf="visibleInputs.indexOf('state') !== -1" class="add-field-form">
           <input type="text" #stateInput />
           <button (click)="addField('state', stateInput.value)">Add</button>
         </span>
@@ -132,16 +90,10 @@
       <span class="key">Pin Code: </span>
       <span *ngIf="lead.pincode" class="value">{{ lead.pincode }}</span>
       <span *ngIf="!lead.pincode" class="value">
-        <button
-          *ngIf="visibleInputs.indexOf('pincode') === -1"
-          (click)="visibleInputs.push('pincode')"
-        >
+        <button *ngIf="visibleInputs.indexOf('pincode') === -1" (click)="visibleInputs.push('pincode')">
           <i class="fa-solid fa-plus"></i> Add Field
         </button>
-        <span
-          *ngIf="visibleInputs.indexOf('pincode') !== -1"
-          class="add-field-form"
-        >
+        <span *ngIf="visibleInputs.indexOf('pincode') !== -1" class="add-field-form">
           <input type="text" #pincodeInput />
           <button (click)="addField('pincode', pincodeInput.value)">Add</button>
         </span>
@@ -151,16 +103,10 @@
       <span class="key">Aadhar No.: </span>
       <span *ngIf="lead.aadharNo" class="value">{{ lead.aadharNo }}</span>
       <span *ngIf="!lead.aadharNo" class="value">
-        <button
-          *ngIf="visibleInputs.indexOf('aadharNo') === -1"
-          (click)="visibleInputs.push('aadharNo')"
-        >
+        <button *ngIf="visibleInputs.indexOf('aadharNo') === -1" (click)="visibleInputs.push('aadharNo')">
           <i class="fa-solid fa-plus"></i> Add Field
         </button>
-        <span
-          *ngIf="visibleInputs.indexOf('aadharNo') !== -1"
-          class="add-field-form"
-        >
+        <span *ngIf="visibleInputs.indexOf('aadharNo') !== -1" class="add-field-form">
           <input type="text" #aadharNoInput />
           <button (click)="addField('aadharNo', aadharNoInput.value)">
             Add
@@ -172,16 +118,10 @@
       <span class="key">PAN No.: </span>
       <span *ngIf="lead.panNo" class="value">{{ lead.panNo }}</span>
       <span *ngIf="!lead.panNo" class="value">
-        <button
-          *ngIf="visibleInputs.indexOf('panNo') === -1"
-          (click)="visibleInputs.push('panNo')"
-        >
+        <button *ngIf="visibleInputs.indexOf('panNo') === -1" (click)="visibleInputs.push('panNo')">
           <i class="fa-solid fa-plus"></i> Add Field
         </button>
-        <span
-          *ngIf="visibleInputs.indexOf('panNo') !== -1"
-          class="add-field-form"
-        >
+        <span *ngIf="visibleInputs.indexOf('panNo') !== -1" class="add-field-form">
           <input type="text" #panNoInput />
           <button (click)="addField('panNo', panNoInput.value)">Add</button>
         </span>
@@ -191,16 +131,10 @@
       <span class="key">Customer DOB: </span>
       <span *ngIf="lead.customerDob" class="value">{{ lead.customerDob }}</span>
       <span *ngIf="!lead.customerDob" class="value">
-        <button
-          *ngIf="visibleInputs.indexOf('customerDob') === -1"
-          (click)="visibleInputs.push('customerDob')"
-        >
+        <button *ngIf="visibleInputs.indexOf('customerDob') === -1" (click)="visibleInputs.push('customerDob')">
           <i class="fa-solid fa-plus"></i> Add Field
         </button>
-        <span
-          *ngIf="visibleInputs.indexOf('customerDob') !== -1"
-          class="add-field-form"
-        >
+        <span *ngIf="visibleInputs.indexOf('customerDob') !== -1" class="add-field-form">
           <input type="date" #customerDobInput />
           <button (click)="addField('customerDob', customerDobInput.value)">
             Add
@@ -212,16 +146,11 @@
       <span class="key">Customer Anniversary: </span>
       <span *ngIf="lead.customerAnniversary" class="value">{{ lead.customerAnniversary }}</span>
       <span *ngIf="!lead.customerAnniversary" class="value">
-        <button
-          *ngIf="visibleInputs.indexOf('customerAnniversary') === -1"
-          (click)="visibleInputs.push('customerAnniversary')"
-        >
+        <button *ngIf="visibleInputs.indexOf('customerAnniversary') === -1"
+          (click)="visibleInputs.push('customerAnniversary')">
           <i class="fa-solid fa-plus"></i> Add Field
         </button>
-        <span
-          *ngIf="visibleInputs.indexOf('customerAnniversary') !== -1"
-          class="add-field-form"
-        >
+        <span *ngIf="visibleInputs.indexOf('customerAnniversary') !== -1" class="add-field-form">
           <input type="date" #customerAnniversaryInput />
           <button (click)="addField('customerAnniversary', customerAnniversaryInput.value)">Add</button>
         </span>
@@ -232,18 +161,29 @@
     <button id="make-customer" (click)="onMakeCustomer.emit()">
       Make Customer
     </button>
-    <button uk-tooltip="title: Interesting Properties" (click)="onMakeCustomer.emit()">
+    <button uk-tooltip="title: Interesting Properties" type="button" uk-toggle="target: #modal-example">
       <i class="fa-solid fa-circle-info"></i>
     </button>
     <button (click)="onEdit.emit()" uk-tooltip="title: Edit">
       <i class="fa-solid fa-pen-to-square"></i>
     </button>
-    <button
-      (click)="onDelete.emit()"
-      class="delete-btn"
-      uk-tooltip="title: Delete"
-    >
+    <button (click)="onDelete.emit()" class="delete-btn" uk-tooltip="title: Delete">
       <i class="fa-solid fa-trash"></i>
     </button>
+  </div>
+</div>
+
+
+<!-- This is the intrested properties modal -->
+<div id="modal-example" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body" id="intrested-modal">
+    <h2 class="uk-modal-title">Intrested Properties</h2>
+    <div class="widgets">
+      <app-project-card></app-project-card>
+      <app-project-card></app-project-card>
+      <app-project-card></app-project-card>
+      <app-project-card></app-project-card>
+    </div>
+
   </div>
 </div>

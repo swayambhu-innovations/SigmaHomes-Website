@@ -11,7 +11,6 @@ import { FabComponent } from './fab/fab.component';
 import { ResponseCardComponent } from './response-card/response-card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewCustomerModalComponent } from './view-customer-modal/view-customer-modal.component';
-import { IntrestedModelComponent } from './intrested-model/intrested-model.component';
 
 @NgModule({
   declarations: [
@@ -22,9 +21,8 @@ import { IntrestedModelComponent } from './intrested-model/intrested-model.compo
     FabComponent,
     ResponseCardComponent,
     ViewCustomerModalComponent,
-    IntrestedModelComponent,
   ],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, PropertiesModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   exports: [
     PrimaryBtnComponent,
     SecondaryBtnComponent,
