@@ -53,38 +53,47 @@ section {
           vertical-align: center;
           text-align: center;
 
+          &.name-td {
+            text-align: left;
+          }
+
           img {
-            width: 50px;
-            height: 50px;
+            width: 30px;
+            height: 30px;
             object-fit: cover;
             border-radius: 50%;
-            margin-right: 1em;
+            margin-right: 0.75em;
           }
 
           .buttons {
             display: flex;
             justify-content: center;
+          }
 
-            button,
-            a {
-              background-color: var(--secondary);
-              color: var(--secondary-contrast);
-              border: none;
-              font-family: var(--font-three);
-              padding: 0.5em 1em;
-              margin: 0.25em;
-              font-size: var(--small);
-              border-radius: 7px;
-              transition: all 0.5s;
-              cursor: pointer;
+          button,
+          a {
+            background-color: var(--secondary);
+            color: var(--secondary-contrast);
+            border: none;
+            font-family: var(--font-three);
+            padding: 0.25em 0.5em;
+            margin: 0.25em;
+            font-size: var(--small);
+            border-radius: 7px;
+            transition: all 0.5s;
+            cursor: pointer;
 
-              &:hover {
-                box-shadow: var(--normal-shadow);
-              }
+            &:not(:disabled):hover {
+              box-shadow: var(--normal-shadow);
+            }
 
-              &.delete-btn {
-                background-color: var(--danger);
-              }
+            &:disabled {
+              opacity: 0.8;
+              cursor: no-drop;
+            }
+
+            &.delete-btn {
+              background-color: var(--danger);
             }
           }
         }
@@ -114,13 +123,13 @@ section {
 
   form {
     margin-top: 1em;
+    font-family: var(--font-three);
+    font-size: var(--medium);
+    color: var(--tertiary);
 
     .customer-form-box {
       display: flex;
       align-items: baseline;
-      font-family: var(--font-three);
-      font-size: var(--medium);
-      color: var(--tertiary);
 
       label,
       input {
@@ -156,6 +165,13 @@ section {
     app-primary-btn {
       display: block;
       margin-top: 1em;
+    }
+
+    &#transfer-form {
+      label,
+      select {
+        width: 100%;
+      }
     }
   }
 }

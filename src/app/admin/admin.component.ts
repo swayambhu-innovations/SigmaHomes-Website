@@ -19,7 +19,11 @@ export class AdminComponent implements OnInit {
 
   @ViewChild('viewAsInput') viewAsInput: ElementRef;
 
-  constructor(private router: Router, public dataProvider: DataProvider,private alertify:AlertsAndNotificationsService) {
+  constructor(
+    private router: Router,
+    public dataProvider: DataProvider,
+    private alertify: AlertsAndNotificationsService
+  ) {
     router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
         const url = this.router.url;
@@ -46,16 +50,13 @@ export class AdminComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
     this.dataProvider.headerButtonActions.subscribe((action) => {
-   
       if (action === 'viewAsTable') {
         this.setViewAs('table');
       }
       if (action === 'viewAsCard') {
         this.setViewAs('cards');
       }
-    
     });
   }
 
@@ -81,16 +82,18 @@ export class AdminComponent implements OnInit {
         if (
           data.target.files.length == 1 &&
           (data.target.files[0].type == 'text/csv' ||
-          data.target.files[0].type == 'text/csvapplication/vnd.openxmlformats-officedocument.spreadsheetml.sheet' || 
-          data.target.files[0].type == 'application/vnd.ms-excel' || 
-          data.target.files[0].type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            data.target.files[0].type ==
+              'text/csvapplication/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ||
+            data.target.files[0].type == 'application/vnd.ms-excel' ||
+            data.target.files[0].type ==
+              'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         ) {
           this.dataProvider.importExportFileActions.next({
             data: data.target.files,
             type: 'importLead',
           });
         } else {
-          this.alertify.presentToast('No file inserted','error');
+          this.alertify.presentToast('No file inserted', 'error');
         }
       });
     }

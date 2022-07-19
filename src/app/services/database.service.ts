@@ -122,11 +122,15 @@ export class DatabaseService {
     return addDoc(collection(this.fs, 'customers'), data);
   }
 
-  getCustomers() {
-    return collectionSnapshots(collection(this.fs, 'customers'));
-  }
-
   getCustomersPromise() {
+    if (this.dataProvider.userData?.access.access == 'Agent') {
+      return getDocs(
+        query(
+          collection(this.fs, 'customers'),
+          where('agentId', '==', this.dataProvider.userData.userId)
+        )
+      );
+    }
     return getDocs(collection(this.fs, 'customers'));
   }
 
@@ -136,6 +140,10 @@ export class DatabaseService {
 
   updateCustomer(customerId: string, data: any) {
     return updateDoc(doc(this.fs, 'customers/' + customerId), data);
+  }
+
+  async getAgent(agentId: string) {
+    return getDoc(doc(this.fs, 'users/' + agentId));
   }
 
   addProject(project: any) {
@@ -237,7 +245,6 @@ export class DatabaseService {
 
   getResponsesPromise() {
     return getDocs(collection(this.fs, 'responses'));
-    
   }
 
   getResponse(responseId: any) {

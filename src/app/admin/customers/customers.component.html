@@ -5,10 +5,10 @@
   <table *ngIf="customers && customers.length >= 1">
     <thead>
       <tr>
-        <th width="10%">Photo</th>
-        <th width="30%">Name</th>
-        <th width="30%">Contact</th>
-        <th width="30%"></th>
+        <th>Name</th>
+        <th>Contact</th>
+        <th *ngIf="dataProvider.userData?.access?.access == 'Admin'">Agent</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -16,10 +16,10 @@
         *ngFor="let customer of filteredCustomers; let i = index"
         [attr.data-index]="i"
       >
-        <td>
+        <td class="name-td">
           <img [src]="customer.img || 'assets/img/circle-user-solid.svg'" />
+          {{ customer.name }}
         </td>
-        <td style="font-weight: 500">{{ customer.name }}</td>
         <td>
           <div class="buttons">
             <a href="tel:{{ customer.phone }}" uk-tooltip="Call"
@@ -36,6 +36,17 @@
               <i class="fa-solid fa-envelope"></i>
             </a>
           </div>
+        </td>
+        <td *ngIf="dataProvider.userData?.access?.access == 'Admin'">
+          <span *ngIf="agentNames[customer.agentId]">{{
+            agentNames[customer.agentId]
+          }}</span>
+          <button
+            *ngIf="!agentNames[customer.agentId]"
+            (click)="openAgentModal(customer.agentId)"
+          >
+            Assign Agent
+          </button>
         </td>
         <td>
           <div class="buttons">
@@ -58,19 +69,21 @@
             >
               <i class="fa-solid fa-trash"></i>
             </button>
+            <button
+              (click)="openTransferModal(customer.id)"
+              [disabled]="!agentNames[customer.agentId]"
+            >
+              Transfer
+            </button>
           </div>
         </td>
       </tr>
     </tbody>
   </table>
-  <app-fab
-    [icon]="'plus'"
-    [target]="'#edit-or-add-customer-modal'"
-    [title]="'Add New Customer'"
-  ></app-fab>
 </section>
-
-<app-view-customer-modal [customer]="currentViewCustomer"></app-view-customer-modal>
+<app-view-customer-modal
+  [customer]="currentViewCustomer"
+></app-view-customer-modal>
 
 <div id="edit-or-add-customer-modal" uk-modal>
   <div class="uk-modal-dialog uk-modal-body">
@@ -331,6 +344,63 @@
       <app-primary-btn
         [text]="editMode ? 'Update Details' : 'Add Customer'"
         [disabled]="!customerForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>
+
+<div
+  *ngIf="dataProvider.userData?.access?.access == 'Admin'"
+  id="assign-agent-modal"
+  uk-modal
+  (hidden)="customerToAssign = null; assignAgentForm.reset()"
+>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Assign Agent</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form
+      [formGroup]="assignAgentForm"
+      (ngSubmit)="submitAgentForm()"
+      id="transfer-form"
+    >
+      <label>Select an agent to assign this customer to</label>
+      <select class="admin-input" formControlName="agent">
+        <option [ngValue]="null" disabled>Select Agent</option>
+        <option *ngFor="let agent of agents" [ngValue]="agent.id">
+          {{ agent.displayName }}
+        </option>
+      </select>
+      <app-primary-btn
+        text="Assign Agent"
+        [disabled]="!assignAgentForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>
+
+<div
+  id="transfer-customer-modal"
+  uk-modal
+  (hidden)="customerToTransfer = null; transferForm.reset()"
+>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Transfer Customer</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form
+      [formGroup]="transferForm"
+      (ngSubmit)="submitTransferForm()"
+      id="transfer-form"
+    >
+      <label>Select an agent to transfer this customer to</label>
+      <select class="admin-input" formControlName="agent">
+        <option [ngValue]="null" disabled>Select Agent</option>
+        <option *ngFor="let agent of agents" [ngValue]="agent.id">
+          {{ agent.displayName }}
+        </option>
+      </select>
+      <app-primary-btn
+        text="Transfer"
+        [disabled]="!transferForm.valid"
       ></app-primary-btn>
     </form>
   </div>

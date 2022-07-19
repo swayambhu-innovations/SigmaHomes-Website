@@ -20,7 +20,13 @@ export class CustomersComponent implements OnInit {
   currentViewCustomer: any;
   editMode: boolean = false;
   currentEditId: string = '';
-  openModal:any;
+  openModal: any;
+  agents: any[];
+  agentNames: {
+    [agentId: string]: string;
+  };
+  customerToAssign: string | null;
+  customerToTransfer: string | null;
 
   customerForm: FormGroup = new FormGroup({
     img: new FormControl(''),
@@ -53,41 +59,60 @@ export class CustomersComponent implements OnInit {
     itrStatus: new FormControl('', [Validators.required]),
   });
 
+  transferForm: FormGroup = new FormGroup({
+    agent: new FormControl(null, [Validators.required]),
+  });
+
+  assignAgentForm: FormGroup = new FormGroup({
+    agent: new FormControl(null, [Validators.required]),
+  });
+
   @ViewChild('photoInput') photoInput: ElementRef;
 
   constructor(
     private databaseService: DatabaseService,
     private alertify: AlertsAndNotificationsService,
-    private dataProvider: DataProvider,
+    public dataProvider: DataProvider,
     private dataTransferService: DataTransferService,
     private csvService: CSVService,
     private activateRoute: ActivatedRoute
-  )
-  {
+  ) {
     this.activateRoute.queryParams.subscribe((data: any) => {
-      console.log(data);
-     
       if (data.openModal === 'true') {
         this.openModal = data.openModal;
-        UIkit.modal(document.getElementById('edit-or-add-customer-modal')).show();
-      }
-      else{
+        UIkit.modal(
+          document.getElementById('edit-or-add-customer-modal')
+        ).show();
+      } else {
         this.openModal = 'false';
       }
     });
   }
 
   ngOnInit(): void {
-    if(this.openModal === 'true'){
+    if (this.openModal === 'true') {
       UIkit.modal(document.getElementById('edit-or-add-customer-modal')).show();
     }
-    this.databaseService.getCustomers().subscribe((data) => {
+    this.databaseService.getCustomersPromise().then((data) => {
       this.customers = [];
+      this.agentNames = {};
+
       data.forEach((user: any) => {
-        let data = user.data();
-        data.id = user.id;
-        this.customers.push(data);
+        let customer = user.data();
+        customer.id = user.id;
+        if (!(customer.agentId in this.agentNames)) {
+          this.databaseService.getAgent(customer.agentId).then((agentDoc) => {
+            if (agentDoc.exists()) {
+              this.agentNames[customer.agentId] =
+                agentDoc.data()!['displayName'];
+            } else {
+              this.agentNames[customer.agentId] = '';
+            }
+          });
+        }
+        this.customers.push(customer);
       });
+
       this.filteredCustomers = this.customers;
     });
 
@@ -293,7 +318,10 @@ export class CustomersComponent implements OnInit {
   async submitCustomerForm() {
     if (this.editMode) {
       if (this.customerForm.valid && this.currentEditId) {
-        if (this.photoInput.nativeElement.files && this.photoInput.nativeElement.files.length == 1) {
+        if (
+          this.photoInput.nativeElement.files &&
+          this.photoInput.nativeElement.files.length == 1
+        ) {
           const url = await this.uploadProfilePhoto();
           this.customerForm.patchValue({ img: url });
           this.photoInput.nativeElement = '';
@@ -353,4 +381,38 @@ export class CustomersComponent implements OnInit {
       }
     }
   }
+
+  openAgentModal(agentId: string) {
+    this.customerToAssign = agentId;
+    if (!this.agents || this.agents.length == 0) {
+      this.databaseService.getAllAgentsPromise().then((agentDocs) => {
+        this.agents = [];
+        agentDocs.forEach((agentDoc) => {
+          if (agentDoc.id != this.dataProvider.userData?.userId) {
+            this.agents.push({ id: agentDoc.id, ...agentDoc.data() });
+          }
+        });
+      });
+    }
+    UIkit.modal(document.getElementById('assign-agent-modal')).show();
+  }
+
+  submitAgentForm() {}
+
+  openTransferModal(customerId: string) {
+    this.customerToTransfer = customerId;
+    if (!this.agents || this.agents.length == 0) {
+      this.databaseService.getAllAgentsPromise().then((agentDocs) => {
+        this.agents = [];
+        agentDocs.forEach((agentDoc) => {
+          if (agentDoc.id != this.dataProvider.userData?.userId) {
+            this.agents.push({ id: agentDoc.id, ...agentDoc.data() });
+          }
+        });
+      });
+    }
+    UIkit.modal(document.getElementById('transfer-customer-modal')).show();
+  }
+
+  submitTransferForm() {}
 }

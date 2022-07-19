@@ -63,7 +63,7 @@ export class NewBroadcastComponent implements OnInit {
     }
 
     // Get customers from the database
-    this.databaseService.getCustomers().subscribe((docs: any) => {
+    this.databaseService.getCustomersPromise().then((docs: any) => {
       this.customers = [];
       docs.forEach((doc: any) => {
         this.customers.push({ id: doc.id, ...doc.data() });
@@ -85,8 +85,8 @@ export class NewBroadcastComponent implements OnInit {
     });
     return returnResponse;
   }
-  toggleMore(){
-    this.more = ! this.more;
+  toggleMore() {
+    this.more = !this.more;
   }
   remove(data: any) {
     this.filteredCustomers.forEach((customer: any, index: number) => {
