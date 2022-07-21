@@ -1,0 +1,27 @@
+<table CELLSPACING=0>
+    <thead>
+        <tr>
+            <th></th>
+            <th class="options">
+                <p>Inaccurate</p>
+                <p>Neutral</p>
+                <p>Accurate</p>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let question of questions">
+            <td>{{question.question}}</td>
+            <td class="options">
+                <input type="radio" [name]="question.question">
+                <input type="radio" [name]="question.question">
+                <input type="radio" [name]="question.question">
+                <input type="radio" [name]="question.question">
+                <input type="radio" [name]="question.question">
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <button class="secondary-btn">Final Submit</button>
+    </tfoot>
+</table>

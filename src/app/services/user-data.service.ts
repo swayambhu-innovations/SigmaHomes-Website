@@ -69,6 +69,7 @@ export class UserDataService {
       organizationName: '',
       organizationRole: '',
       experience: 0,
+      isOceanTestCompleted:false
     };
     this.userDoc = doc(this.firestore, 'users/' + user.uid);
     await setDoc(this.userDoc, data).then(() => {
@@ -107,6 +108,7 @@ export class UserDataService {
       organizationName: '',
       organizationRole: '',
       experience: 0,
+      isOceanTestCompleted:false
     };
     this.userDoc = doc(this.firestore, 'users/' + user.uid);
     await setDoc(this.userDoc, data).then(() => {

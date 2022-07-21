@@ -3,7 +3,7 @@ section {
 
   #container {
     margin-top: 2em;
-    
+
     h3,
     a,
     .detail {
@@ -17,13 +17,42 @@ section {
       font-weight: 600;
       margin-bottom: 0.5em;
     }
-.conatiner{
-  display: flex;
-  flex-wrap: wrap;
-gap:1.9rem;
-    #details {
+    .conatiner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.9rem;
+      #details {
+        margin: 1em 0;
+        width: 30rem;
+        display: flex;
+        flex-direction: column;
+
+        .detail {
+          width: 100%;
+          color: var(--tertiary);
+          font-size: var(--large);
+          margin: 0 0 0.5em 0;
+          display: flex;
+          justify-content: space-between;
+
+          .key,
+          .value {
+            min-width: 50%;
+            word-wrap: break-word;
+          }
+          .active {
+            color: grey;
+          }
+          .key {
+            font-weight: 700;
+            margin-right: 1em;
+          }
+        }
+      }
+    }
+    #editdetails {
       margin: 1em 0;
-      width: 30rem;
+      width: 50%;
       display: flex;
       flex-direction: column;
 
@@ -40,42 +69,13 @@ gap:1.9rem;
           min-width: 50%;
           word-wrap: break-word;
         }
-.active{
-  color: grey;
-}
+
         .key {
           font-weight: 700;
           margin-right: 1em;
         }
       }
     }
-  }
-  #editdetails {
-    margin: 1em 0;
-    width: 50%;
-    display: flex;
-    flex-direction: column;
-
-    .detail {
-      width: 100%;
-      color: var(--tertiary);
-      font-size: var(--large);
-      margin: 0 0 0.5em 0;
-      display: flex;
-      justify-content: space-between;
-
-      .key,
-      .value {
-        min-width: 50%;
-        word-wrap: break-word;
-      }
-
-      .key {
-        font-weight: 700;
-        margin-right: 1em;
-      }
-    }
-  }
     app-primary-btn {
       display: block;
       width: fit-content;
@@ -102,4 +102,12 @@ gap:1.9rem;
       }
     }
   }
+}
+.personalityButton{
+  background-color: var(--primary);
+  color: var(--primary-contrast);
+  padding:10px;
+  font-size: 18px;
+  border:none;
+  border-radius: 7px;
 }

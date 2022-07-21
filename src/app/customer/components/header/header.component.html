@@ -1,22 +1,11 @@
 <header [style]="positionAbsolute ? ' position: absolute; top: 0; left: 0; width: 100%; z-index: 1;' : ''">
-  <nav
-    class="uk-navbar-container uk-navbar-transparent"
-    uk-navbar
-    (window:resize)="onWindowResize()"
-  >
-    <div
-      class="uk-navbar-left"
-      uk-scrollspy="cls: uk-animation-scale-up"
-      id="heading"
-    >
+  <nav class="uk-navbar-container uk-navbar-transparent" uk-navbar (window:resize)="onWindowResize()">
+    <div class="uk-navbar-left" uk-scrollspy="cls: uk-animation-scale-up" id="heading">
       Sigma Homes
     </div>
 
     <div *ngIf="largeScreen" class="uk-navbar-center">
-      <ul
-        class="uk-navbar-nav"
-        uk-scrollspy="target: > li; cls: uk-animation-slide-left-small; delay: 150"
-      >
+      <ul class="uk-navbar-nav" uk-scrollspy="target: > li; cls: uk-animation-slide-left-small; delay: 150">
         <li>
           <button class="nav-link" routerLink="/home" routerLinkActive="active">
             Home
@@ -28,20 +17,12 @@
           </button>
         </li>
         <li>
-          <button
-            class="nav-link"
-            routerLink="/properties"
-            routerLinkActive="active"
-          >
+          <button class="nav-link" routerLink="/properties" routerLinkActive="active">
             Properties
           </button>
         </li>
         <li>
-          <button
-            class="nav-link"
-            routerLink="/contact"
-            routerLinkActive="active"
-          >
+          <button class="nav-link" routerLink="/contact" routerLinkActive="active">
             Contact
           </button>
         </li>
@@ -50,59 +31,33 @@
 
     <div class="uk-navbar-right">
       <div *ngIf="largeScreen && !dataProvider.loggedIn" id="header-buttons">
-        <button
-          routerLink="/login"
-          class="header-button"
-          id="login"
-          uk-scrollspy="cls: uk-animation-fade"
-        >
+        <button routerLink="/login" class="header-button" id="login" uk-scrollspy="cls: uk-animation-fade">
           Login
         </button>
-        <button
-          routerLink="/signup"
-          class="header-button"
-          id="signup"
-          uk-scrollspy="cls: uk-animation-fade"
-        >
+        <button routerLink="/signup" class="header-button" id="signup" uk-scrollspy="cls: uk-animation-fade">
           Sign Up
         </button>
       </div>
 
       <div *ngIf="largeScreen && dataProvider.loggedIn" id="header-buttons">
-        <button
-          id="logout"
-          class="header-button"
-          uk-scrollspy="cls: uk-animation-fade"
-          (click)="authService.logout()"
-        >
+        <button id="logout" class="header-button" uk-scrollspy="cls: uk-animation-fade" (click)="authService.logout()">
           Logout
         </button>
-        <button
-          *ngIf="this.dataProvider.userData?.access?.access != 'Unassigned'"
-          routerLink="/admin"
-          id="admin"
-          class="header-button"
-          uk-scrollspy="cls: uk-animation-fade"
-        >
+        <button *ngIf="this.dataProvider.userData?.access?.access === 'Admin'" routerLink="/admin" id="admin"
+          class="header-button" uk-scrollspy="cls: uk-animation-fade">
           Admin
+        </button>
+        <button *ngIf="this.dataProvider.userData?.access?.access === 'Agent'" routerLink="/agentPanel" id="admin"
+          class="header-button" uk-scrollspy="cls: uk-animation-fade">
+          Agent
         </button>
       </div>
 
-      <button
-        *ngIf="!largeScreen"
-        class="uk-navbar-toggle"
-        uk-navbar-toggle-icon
-        uk-toggle="target: #offcanvas-nav"
-        id="toggle-button"
-        uk-scrollspy="cls: uk-animation-fade"
-      ></button>
+      <button *ngIf="!largeScreen" class="uk-navbar-toggle" uk-navbar-toggle-icon uk-toggle="target: #offcanvas-nav"
+        id="toggle-button" uk-scrollspy="cls: uk-animation-fade"></button>
     </div>
 
-    <div
-      *ngIf="!largeScreen"
-      id="offcanvas-nav"
-      uk-offcanvas="overlay: true; flip: true"
-    >
+    <div *ngIf="!largeScreen" id="offcanvas-nav" uk-offcanvas="overlay: true; flip: true">
       <div class="uk-offcanvas-bar" id="offcanvas-bar">
         <ul class="uk-nav">
           <li>
@@ -111,29 +66,17 @@
             </button>
           </li>
           <li>
-            <button
-              class="nav-link2"
-              routerLink="/about"
-              routerLinkActive="active2"
-            >
+            <button class="nav-link2" routerLink="/about" routerLinkActive="active2">
               About
             </button>
           </li>
           <li>
-            <button
-              class="nav-link2"
-              routerLink="/properties"
-              routerLinkActive="active2"
-            >
+            <button class="nav-link2" routerLink="/properties" routerLinkActive="active2">
               Properties
             </button>
           </li>
           <li>
-            <button
-              class="nav-link2"
-              routerLink="/contact"
-              routerLinkActive="active2"
-            >
+            <button class="nav-link2" routerLink="/contact" routerLinkActive="active2">
               Contact
             </button>
           </li>

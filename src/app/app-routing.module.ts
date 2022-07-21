@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard } from './guards/admin.guard';
+import { AgentGuard } from './guards/agent.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
   },
-  { path: 'agentPanel', loadChildren: () => import('./agent/agent.module').then(m => m.AgentModule) },
+  {
+    path: 'agentPanel',
+    loadChildren: () =>
+      import('./agent/agent.module').then((m) => m.AgentModule),
+    canActivate: [AgentGuard],
+  },
   {
     path: '**',
     loadChildren: () =>

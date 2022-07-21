@@ -31,6 +31,7 @@ export type UserData = {
   organizationName: string;
   organizationRole: string;
   experience: number;
+  isOceanTestCompleted:boolean;
 };
 
 export type UserAccess = {

@@ -81,7 +81,7 @@ export class CustomersComponent implements OnInit {
     if(this.openModal === 'true'){
       UIkit.modal(document.getElementById('edit-or-add-customer-modal')).show();
     }
-    this.databaseService.getCustomers().subscribe((data) => {
+    this.databaseService.getCustomersPromise().then((data) => {
       this.customers = [];
       data.forEach((user: any) => {
         let data = user.data();
