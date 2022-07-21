@@ -1,4 +1,4 @@
-<div id="project">
+<div *ngIf="exists" id="project">
   <div class="uk-text-center">
     <div id="photos" class="uk-inline-clip uk-transition-toggle" tabindex="0">
       <img
@@ -22,6 +22,8 @@
         <i class="fa-solid fa-location-dot"></i> {{ project.address }},
         {{ project.city }}, {{ project.state }} - {{ project.pincode }}
       </p>
+      <p *ngIf="type"><strong>Type: </strong>{{ type.name }}</p>
+      <p *ngIf="unit"><strong>Unit: </strong>{{ unit.name }}</p>
     </div>
     <button [routerLink]="project.id">
       <i class="fa-solid fa-eye"></i>View Project

@@ -15,4 +15,4 @@ import { ModalComponent } from './modal/modal.component';
   ],
   exports:[ModalComponent]
 })
-export class IntrestedModalModule { }
+export class InterestedModalModule { }

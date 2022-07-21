@@ -173,6 +173,10 @@ export class DatabaseService {
     return collectionSnapshots(collection(this.fs, 'types'));
   }
 
+  getType(typeId: string) {
+    return getDoc(doc(this.fs, 'types/' + typeId));
+  }
+
   getTypesOfProject(projectId: string) {
     return getDocs(
       query(collection(this.fs, 'types'), where('project', '==', projectId))
@@ -183,6 +187,10 @@ export class DatabaseService {
     return getDocs(
       query(collection(this.fs, 'units'), where('type', '==', typeId))
     );
+  }
+
+  getUnit(unitId: string) {
+    return getDoc(doc(this.fs, 'units/' + unitId));
   }
 
   addType(type: any) {

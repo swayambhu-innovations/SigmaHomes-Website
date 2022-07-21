@@ -65,6 +65,6 @@ export class PropertyPageComponent implements OnInit {
   }
   viewInstrested(property: any) {
     this.currentViewCustomer = property;
-    UIkit.modal(document.getElementById('intrested-modal')).show();
+    UIkit.modal(document.getElementById('interested-modal')).show();
   }
 }
