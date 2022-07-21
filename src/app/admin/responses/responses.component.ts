@@ -104,6 +104,7 @@ export class ResponsesComponent implements OnInit {
   addResponse() {
     const ref = this.dialog.open(AddResponseComponent);
     ref.componentInstance.addResponse.subscribe((data: any) => {
+      console.log(data);
       this.databaseService
         .addResponse(data)
         .then((doc: any) => {

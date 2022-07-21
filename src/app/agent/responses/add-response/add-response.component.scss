@@ -1,16 +1,13 @@
-div {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
-  margin-top: 20px;
-}
-div.textFields{
-   display: flex; 
-}
-div.textFields > mat-form-field{
-    flex: 2;
-}
-div > * {
-  margin-right: 10px;
+form {
+  max-height: 85vh;
+  padding: 0.5em;
+
+  mat-form-field {
+    width: 100%;
+    display: block;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+  }
 }
