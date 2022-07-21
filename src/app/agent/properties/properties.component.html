@@ -1,0 +1,301 @@
+<section>
+  <div *ngIf="!filteredProjects" uk-spinner="ratio: 3" id="loading"></div>
+
+  <ng-container *ngIf="filteredProjects">
+    <div
+      *ngIf="projects.length === 0"
+      id="no-projects"
+      uk-toggle="target: #project-modal"
+    >
+      <i class="fa-solid fa-plus"></i>
+      <p>
+        You have not added any property projects yet. Click here to add one.
+      </p>
+    </div>
+    <ng-container *ngIf="projects.length > 0">
+      <div id="projects">
+        <app-project-card
+          *ngFor="let project of filteredProjects"
+          [project]="project"
+        ></app-project-card>
+      </div>
+      <div id="add-property">
+        <button class="round-btn" uk-tooltip="title: Add..."><i class="fa fa-plus"></i></button>
+        <div uk-dropdown="mode: click; pos: top-right">
+          <ul>
+            <li>
+              <button uk-toggle="target: #project-modal"><i class="fa-solid fa-city"></i>New Project</button>
+            </li>
+            <li>
+              <button uk-toggle="target: #type-modal"><i class="fa-solid fa-building"></i>New Type</button>
+            </li>
+            <li *ngIf="types && types.length > 0">
+              <button uk-toggle="target: #unit-modal"><i class="fa-solid fa-house"></i>New Unit</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</section>
+
+<div id="project-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Add Project</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form [formGroup]="projectForm" (ngSubmit)="submitProjectForm()">
+      <div class="property-form-box">
+        <label for="project-name-input">Name *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="project-name-input"
+          formControlName="name"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="address-input">Address *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="address-input"
+          formControlName="address"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="city-input">City *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="city-input"
+          formControlName="city"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="state-input">State *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="state-input"
+          formControlName="state"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="pincode-input">Pincode *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="pincode-input"
+          formControlName="pincode"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="project-photos-input">Photos</label>
+        <input
+          type="file"
+          class="admin-input"
+          id="project-photos-input"
+          multiple
+          (change)="validatePhotos($event)"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="builder-name-input">Builder Name</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="builder-name-input"
+          formControlName="builderName"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="plot-area-input">Plot Area (sqft)</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="plot-area-input"
+          formControlName="plotArea"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="budget-input">Budget (₹)</label>
+        <input
+          type="number"
+          id="budget-input"
+          class="admin-input"
+          formControlName="budget"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="facilities-nearby-input">Facilities Nearby</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="facilities-near-input"
+          formControlName="facilitiesNearby"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="distance-from-important-locations-input"
+          >Distance from Important Locations</label
+        >
+        <input
+          type="text"
+          class="admin-input"
+          id="distance-from-important-locations-input"
+          formControlName="distanceFromImportantLocations"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="rera-status-input">RERA Status</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="rera-status-input"
+          formControlName="reraStatus"
+        />
+      </div>
+      <app-primary-btn
+        text="Add Project"
+        [disabled]="!projectForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>
+
+<div id="type-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Add Property Type</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form [formGroup]="typeForm" (ngSubmit)="submitTypeForm()">
+      <div class="property-form-box">
+        <label for="project-input">Project *</label>
+        <select
+          class="admin-input"
+          id="project-input"
+          formControlName="project"
+        >
+          <option [ngValue]="null" disabled>Choose project</option>
+          <option *ngFor="let project of projects" [ngValue]="project.id">
+            {{ project.name }}
+          </option>
+        </select>
+      </div>
+      <div class="property-form-box">
+        <label for="type-name-input">Name *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="type-name-input"
+          formControlName="name"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="type-photos-input">Photos</label>
+        <input
+          type="file"
+          class="admin-input"
+          id="type-photos-input"
+          multiple
+          (change)="validatePhotos($event)"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="type-area-input">Area (sqft)</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="type-area-input"
+          formControlName="area"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="company-sales-value-input">Company Sales Value</label>
+        <input
+          type="text"
+          id="company-sales-value-input"
+          class="admin-input"
+          formControlName="companySalesValue"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="company-sales-rate-input">Company Sales Rate</label>
+        <input
+          type="text"
+          id="company-sales-rate-input"
+          class="admin-input"
+          formControlName="companySalesRate"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="company-accepted-value-input">Company Accepted Value</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="company-accepted-value-input"
+          formControlName="companyAcceptedValue"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="company-accepted-rate-input">Company Accepted Rate</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="company-accepted-rate-input"
+          formControlName="companyAcceptedRate"
+        />
+      </div>
+      <app-primary-btn
+        text="Add Property Type"
+        [disabled]="!typeForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>
+
+<div id="unit-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">Add Property Unit</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form [formGroup]="unitForm" (ngSubmit)="submitUnitForm()">
+      <div class="property-form-box">
+        <label for="project-for-unit-input">Project *</label>
+        <select
+          class="admin-input"
+          id="project-for-unit-input"
+          formControlName="project"
+          (change)="filterTypes($event)"
+        >
+          <option [ngValue]="null" disabled>Choose project</option>
+          <ng-container *ngFor="let project of projects">
+            <option *ngIf="projectHasTypes(project.id)" [ngValue]="project.id">
+              {{ project.name }}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="property-form-box">
+        <label for="type-input">Type *</label>
+        <select class="admin-input" id="type-input" formControlName="type">
+          <option [ngValue]="null" disabled>Choose type</option>
+          <option *ngFor="let type of filteredTypes" [ngValue]="type.id">
+            {{ type.name }}
+          </option>
+        </select>
+      </div>
+      <div class="property-form-box">
+        <label for="unit-name-input">Unit Name/Number *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="unit-name-input"
+          formControlName="name"
+        />
+      </div>
+      <app-primary-btn
+        text="Add Property Unit"
+        [disabled]="!unitForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>

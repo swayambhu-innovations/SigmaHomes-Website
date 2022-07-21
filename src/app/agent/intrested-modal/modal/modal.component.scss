@@ -1,0 +1,8 @@
+.container{
+    display: grid;
+    grid-template: auto / auto auto auto;
+    grid-gap: 10px;
+    border-radius: 15px;
+    padding: 15px;
+    width: 70vw;
+}

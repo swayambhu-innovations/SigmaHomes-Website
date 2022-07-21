@@ -1,0 +1,46 @@
+<div id="card">
+  
+  <div class="card-header">
+    <h3 class="card-title">{{ response.property?.notes }}</h3>
+    
+  <div id="content">
+    <div id="property-img-container">
+      <img [src]="
+          response.property?.photos && response.property?.photos.length > 0
+            ? response.property?.photos[0]
+            : ''
+        " [alt]="response.property?.name" />
+    </div>
+    <div id="details">
+      <div id="text-container">
+        <h4 [attr.uk-tooltip]="'title: ' + response.property?.name">
+          {{ response.property?.name }}
+        </h4>
+        <p [attr.uk-tooltip]="'title: ' + response.customer?.name">{{ response.customer?.name }}</p>
+        <div id="contact-buttons">
+          <a href="tel:{{ response.customer?.phone }}" class="round-btn" uk-tooltip="Call"><i
+              class="fa-solid fa-phone"></i></a>
+          <button class="round-btn" uk-tooltip="Send SMS">
+            <i class="fa-solid fa-comment-sms"></i>
+          </button>
+          <a href="mailto:{{ response.customer?.email }}" class="round-btn" target="_blank" uk-tooltip="Email">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+      <div id="status-and-btns">
+        <div id="status">{{ phases[response.phase] }}</div>
+        <ng-container *ngIf="!readOnly">
+          <button class="round-btn" (click)="view.emit()" uk-tooltip="title: View response"><i
+              class="fa-solid fa-eye"></i></button>
+          <button class="round-btn delete-btn" (click)="delete.emit()" uk-tooltip="title: Delete response"><i
+              class="fa-solid fa-trash"></i></button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <button *ngIf="selectable" id="select-button" (click)="selectResponse()">
+    <i  *ngIf="!requestPending" class="fa-solid fa-circle-check" [style]="'color: ' + (selected ? '#5cb85c' : '#727a81')"></i>
+    <i *ngIf="requestPending" class="fas fa-bell" style="color: var(--processing)" ></i>
+  </button>
+</div>

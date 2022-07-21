@@ -1,0 +1,142 @@
+<div id="wrapper">
+  <div *ngIf="!project" uk-spinner="ratio: 3" id="loading"></div>
+
+  <ng-container *ngIf="project">
+    <section>
+      <button id="go-back" class="action-btn" routerLink="..">
+        <i class="fa-solid fa-arrow-left"></i> All Projects
+      </button>
+      <div id="buttons">
+        <button class="action-btn">
+          <i class="fa-solid fa-pen-to-square"></i> Edit
+        </button>
+        <button class="action-btn">
+          <i class="fa-solid fa-trash"></i> Delete
+        </button>
+      </div>
+
+      <h2>
+        <span><i class="fa-solid fa-city"></i>{{ project.name }}</span><span><i class="fa-solid fa-star"></i>{{
+          project.rating }}</span>
+      </h2>
+      <p id="address">
+        <i class="fa-solid fa-location-dot"></i> {{ project.address }},
+        {{ project.city }}, {{ project.state }} - {{ project.pincode }}
+      </p>
+      <div class="badges">
+        <div class="parent-container">
+          <div class="badge">
+            <span class="key">Builder Name: </span>{{ project.builderName || "-" }}
+          </div>
+          <div class="badge">
+            <span class="key">Plot Area: </span>{{ project.plotArea ? project.plotArea + " sqft" : "-" }}
+          </div>
+          <div class="badge">
+            <span class="key">Budget: </span>{{ project.budget ? "₹" + project.budget : "-" }}
+          </div>
+          <div class="badge">
+            <span class="key">Facilities Nearby: </span>{{ project.facilitiesNearby || "-" }}
+          </div>
+          <div class="badge">
+            <span class="key">Distance from Important Locations: </span>{{ project.distanceFromImportantLocations || "-"
+            }}
+          </div>
+          <div class="badge">
+            <span class="key">RERA Status: </span>{{ project.reraStatus || "-" }}
+          </div>
+        </div>
+        <div class="lightbox" uk-lightbox="animation: scale">
+          <div *ngIf="project.photos && project.photos.length > 0">
+            <a href="{{photo}}" data-caption="Caption 1" *ngFor="let photo of project.photos">
+              <img [src]="photo" width="1800" height="1200" alt="">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h3>Property Types</h3>
+      <ul uk-accordion="multiple: true">
+        <li *ngFor="let type of project.types" class="type">
+          <h4 class="title">{{ type.name }}</h4>
+          <div class="content">
+            <div class="badges">
+              <div class="badge">
+                <span class="key">Area: </span>{{ type.area ? type.area + " sqft" : "-" }}
+              </div>
+              <div class="badge">
+                <span class="key">Company Sales Rate: </span>{{ type.companySalesRate ? "₹" + type.companySalesRate :
+                "-" }}
+              </div>
+              <div class="badge">
+                <span class="key">Company Accepted Value: </span>{{
+                type.companyAcceptedValue
+                ? "₹" + type.companyAcceptedValue
+                : "-"
+                }}
+              </div>
+              <div class="badge">
+                <span class="key">Company Accepted Rate: </span>{{
+                type.companyAcceptedRate
+                ? "₹" + type.companyAcceptedRate
+                : "-"
+                }}
+              </div>
+            </div>
+
+            <div *ngIf="type.photos && type.photos.length > 0" uk-slider="autoplay: true; autoplay-interval: 4000"
+              class="photos">
+              <div class="uk-position-relative uk-visible-toggle uk-dark" tabindex="-1">
+                <div uk-lightbox>
+                  <a class="uk-button uk-button-default" *ngFor="let photo of type.photos" href="{{photo}}" data-alt="Image">Open Image</a>
+                </div>
+
+                <a class="uk-position-center-left uk-position-small" href="#" uk-slidenav-previous
+                  uk-slider-item="previous"></a>
+                <a class="uk-position-center-right uk-position-small" href="#" uk-slidenav-next
+                  uk-slider-item="next"></a>
+              </div>
+
+              <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
+            </div>
+
+            <ng-container *ngIf="type.units && type.units.length > 0; else noUnits">
+              <h5>Property Units</h5>
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width: 10%">S No.</th>
+                    <th style="width: 20%">Unit Name/Number</th>
+                    <th style="width: 25%">Interested Customer</th>
+                    <th style="width: 25%">Phase</th>
+                    <th style="width: 20%"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let unit of type.units; let i = index">
+                    <td>{{ i + 1 }}.</td>
+                    <td>{{ unit.name }}</td>
+                    <td>{{ unit.customer || "-" }}</td>
+                    <td>{{ unit.phase || "-" }}</td>
+                    <td>
+                      <button *ngIf="unit.customer && unit.phase; else assignCustomer" class="action-btn">
+                        View Responses
+                      </button>
+                      <ng-template #assignCustomer>
+                        <button class="action-btn">Assign Customer</button>
+                      </ng-template>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-container>
+
+            <ng-template #noUnits>
+              <h5>No units have been added yet</h5>
+            </ng-template>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </ng-container>
+</div>

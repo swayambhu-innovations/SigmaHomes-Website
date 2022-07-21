@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Property Details</h2>
+<mat-dialog-content>
+    <ul>
+        <li><img [src]="property.photos[0]"></li>
+        <li>Name: <span>{{property.name || 'N/A'}}</span></li>
+        <li>Pin Code: <span>{{property.pincode || 'N/A'}}</span></li>
+        <li>Address: <span>{{property.address || 'N/A'}}</span></li>
+        <li>City: <span>{{property.city || 'N/A'}}</span></li>
+        <li>State: <span>{{property.state || 'N/A'}}</span></li>
+        <li>Id: <span>{{property.id || 'N/A'}}</span></li>
+        <li>Rating: <span>{{property.rating || 'N/A'}}</span></li>
+        <li>Budget: <span>{{property.budget || 'N/A'}}</span></li>
+        <li>Rera Status: <span>{{property.reraStatus || 'N/A'}}</span></li>
+        <li>Builder Name: <span>{{property.builderName || 'N/A'}}</span></li>
+        <li>Distance From Important Locations: <span>{{property.distanceFromImportantLocations || 'N/A'}}</span></li>
+        <li>Plot Area: <span>{{property.plotArea || 'N/A'}}</span></li>
+        <li>Facilities Nearby: <span>{{property.facilitiesNearby || 'N/A'}}</span></li>
+    </ul>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

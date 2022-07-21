@@ -1,0 +1,179 @@
+section {
+  padding: 1em;
+  height: 100%;
+
+  #no-broadcasts {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    border: 2px dashed var(--secondary);
+    color: var(--secondary);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: var(--secondary-lighter);
+    }
+
+    i {
+      font-size: var(--xxlarge);
+    }
+
+    p {
+      font-size: var(--medium);
+      font-family: var(--font-three);
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-three);
+    color: var(--tertiary);
+
+    th,
+    td {
+      padding: 0.75em;
+      font-size: var(--small);
+    }
+
+    thead {
+      tr {
+        background-color: var(--secondary);
+        color: var(--secondary-contrast);
+
+        th {
+          font-weight: 500;
+        }
+      }
+    }
+
+    tbody {
+      font-size: var(--small);
+
+      tr {
+        transition: all 0.5s;
+
+        &:nth-child(even) {
+          background-color: var(--secondary-lighter);
+        }
+
+        &:hover {
+          background-color: var(--secondary-light);
+        }
+
+        td {
+          vertical-align: top;
+
+          &.subject {
+            font-weight: 500;
+          }
+
+          a {
+            color: var(--primary);
+          }
+
+          .view-recipients {
+            background: none;
+            font-family: inherit;
+            font-size: inherit;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
+          .buttons {
+            display: flex;
+
+            button {
+              color: var(--secondary-contrast);
+              border: none;
+              font-family: var(--font-three);
+              padding: 0.5em 1em;
+              margin: 0.25em;
+              font-size: var(--small);
+              border-radius: 7px;
+              transition: all 0.5s;
+              background-color: var(--secondary);
+              cursor: pointer;
+
+              &:hover {
+                box-shadow: var(--normal-shadow);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.uk-modal-dialog {
+  font-family: var(--font-three);
+
+  .uk-modal-title {
+    font-family: inherit;
+    font-size: var(--xlarge);
+    color: var(--tertiary);
+    font-weight: 500;
+  }
+
+  .recipients {
+    display: flex;
+    flex-wrap: wrap;
+
+    .recipient {
+      padding: 0.25em 0.5em;
+      margin: 0 0.25em 0.25em 0;
+      background-color: var(--secondary);
+      color: var(--secondary-contrast);
+      width: fit-content;
+      border-radius: 20px;
+      font-size: var(--small);
+    }
+  }
+
+  h5 {
+    font-family: var(--font-three);
+    color: var(--tertiary);
+    font-size: var(--medium);
+    font-weight: 500;
+    margin: 0 0 0.5em 0;
+  }
+
+  p {
+    font-size: var(--small);
+    color: var(--tertiary);
+
+    .bold {
+      font-weight: 600;
+    }
+  }
+
+  .modal-end-btn {
+    font-family: var(--font-three);
+    font-size: var(--small);
+    border: none;
+    display: block;
+    margin: 2em auto 0 auto;
+    cursor: pointer;
+    background-color: var(--secondary);
+    color: var(--secondary-contrast);
+    border-radius: 15px;
+    padding: 0.5em;
+    width: 100%;
+    transition: all .5s;
+
+    &:hover {
+      box-shadow: var(--normal-shadow);
+    }
+  }
+}

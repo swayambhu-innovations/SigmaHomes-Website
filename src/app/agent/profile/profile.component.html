@@ -1,0 +1,419 @@
+<section>
+  <div
+    *ngIf="!dataProvider.userData; else container"
+    uk-spinner="ratio: 3"
+    id="loading"
+  ></div>
+  <ng-template #container>
+    <ng-container *ngIf="!editMode; else editContainer">
+      <app-avatar
+        [imgSrc]="dataProvider.userData?.photoURL || ''"
+        [altText]="dataProvider.userData?.displayName || 'N/A'"
+      ></app-avatar>
+      <div id="container">
+        <h3 style="color:var(--primary)">
+          {{
+            dataProvider.userData?.displayName
+              ? dataProvider.userData?.displayName
+              : "N/A"
+          }}
+        </h3>
+        <div id="details">
+          <p class="detail">
+            <span class="key">Phone No.: </span>
+            <span class="value">{{
+              dataProvider.userData?.phoneNumber
+                ? dataProvider.userData?.phoneNumber
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Email Address: </span>
+            <span class="value">{{
+              dataProvider.userData?.email
+                ? dataProvider.userData?.email
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Date of Birth: </span>
+            <span class="value">{{
+              dataProvider.userData?.dob ? dataProvider.userData?.dob : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Address: </span>
+            <span class="value">{{
+              dataProvider.userData?.address
+                ? dataProvider.userData?.address
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">User Type: </span>
+            <span class="value">{{
+              dataProvider.userData?.userType
+                ? dataProvider.userData?.userType
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Parent Employee: </span>
+            <span class="value">{{ getParentEmployeeName() }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Organization Name: </span>
+            <span class="value">{{
+              dataProvider.userData?.organizationName
+                ? dataProvider.userData?.organizationName
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Role in Organization: </span>
+            <span class="value">{{
+              dataProvider.userData?.organizationRole
+                ? dataProvider.userData?.organizationRole
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Years of Experience: </span>
+            <span class="value">{{
+              dataProvider.userData?.experience
+                ? dataProvider.userData?.experience
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Qualification: </span>
+            <span class="value">{{
+              dataProvider.userData?.qualification
+                ? dataProvider.userData?.qualification
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Father Name: </span>
+            <span class="value">{{
+              dataProvider.userData?.fatherName
+                ? dataProvider.userData?.fatherName
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Bank Name: </span>
+            <span class="value">{{
+              dataProvider.userData?.bankName
+                ? dataProvider.userData?.bankName
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Account Holder Name: </span>
+            <span class="value"
+              >{{
+                dataProvider.userData?.accountHolderName
+                  ? dataProvider.userData?.accountHolderName
+                  : "N/A"
+              }}
+            </span>
+          </p>
+          <p class="detail">
+            <span class="key">Account No.: </span>
+            <span class="value">{{
+              dataProvider.userData?.accountNo
+                ? dataProvider.userData?.accountNo
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">IFSC Code: </span>
+            <span class="value">{{
+              dataProvider.userData?.ifscCode
+                ? dataProvider.userData?.ifscCode
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Branch: </span>
+            <span class="value">{{
+              dataProvider.userData?.branch
+                ? dataProvider.userData?.branch
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">PAN No.: </span>
+            <span class="value">{{
+              dataProvider.userData?.panNo
+                ? dataProvider.userData?.panNo
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Nationality: </span>
+            <span class="value">{{
+              dataProvider.userData?.nationality
+                ? dataProvider.userData?.nationality
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Religion: </span>
+            <span class="value">{{
+              dataProvider.userData?.religion
+                ? dataProvider.userData?.religion
+                : "N/A"
+            }}</span>
+          </p>
+          <p class="detail">
+            <span class="key">Preferred Languages: </span>
+            <span class="value">{{
+              dataProvider.userData?.preferredLanguages
+                ? dataProvider.userData?.preferredLanguages
+                : "N/A"
+            }}</span>
+          </p>
+        </div>
+        
+        <app-primary-btn
+          [text]="'Edit Profile'"
+          (btnClick)="goToEditMode()"
+        ></app-primary-btn>
+      </div>
+    </ng-container>
+    <ng-template #editContainer>
+      <div id="container">
+        <form [formGroup]="editForm" (ngSubmit)="saveEdit()" id="editdetails">
+          <p class="detail">
+            <label for="photo-input" class="key">Profile Photo: </label>
+            <input
+              type="file"
+              id="photo-input"
+              class="admin-input value"
+              #photoInput
+              (change)="validateProfilePhoto()"
+            />
+          </p>
+          <p class="detail">
+            <label for="name-input" class="key">Name: </label>
+            <input
+              type="text"
+              id="name-input"
+              class="admin-input value"
+              formControlName="displayName"
+            />
+          </p>
+          <p class="detail">
+            <label for="phone-input" class="key">Phone No.: </label>
+            <input
+              type="tel"
+              id="phone-input"
+              class="admin-input value"
+              formControlName="phoneNumber"
+            />
+          </p>
+          <p class="detail">
+            <label for="dob-input" class="key">Date of Birth: </label>
+            <input
+              type="date"
+              id="dob-input"
+              class="admin-input value"
+              formControlName="dob"
+            />
+          </p>
+          <p class="detail">
+            <label for="address-input" class="key">Address: </label>
+            <input
+              type="text"
+              id="address-input"
+              class="admin-input value"
+              formControlName="address"
+            />
+          </p>
+          <p class="detail">
+            <label for="user-type-input" class="key">User Type: </label>
+            <select
+              id="user-type-input"
+              class="admin-input value"
+              formControlName="userType"
+            >
+              <option ngValue="" disabled>Select User Type</option>
+              <option *ngFor="let userType of userTypes" [ngValue]="userType">
+                {{ userType }}
+              </option>
+            </select>
+          </p>
+          <p class="detail">
+            <label for="parent-employee-input" class="key"
+              >Parent Employee:
+            </label>
+            <select
+              id="parent-employee-input"
+              class="admin-input value"
+              formControlName="parentEmployee"
+            >
+              <option ngValue="" disabled>Select Parent Employee</option>
+              <option ngValue="N/A">N/A</option>
+              <option
+                *ngFor="let employee of employees"
+                [ngValue]="employee.userId"
+              >
+                {{ employee.displayName }}
+              </option>
+            </select>
+          </p>
+          <p class="detail">
+            <label for="organization-name-input" class="key"
+              >Organization Name:
+            </label>
+            <input
+              type="text"
+              id="organization-name-input"
+              class="admin-input value"
+              formControlName="organizationName"
+            />
+          </p>
+          <p class="detail">
+            <label for="organization-role-input" class="key"
+              >Role in Organization:
+            </label>
+            <input
+              type="text"
+              id="organization-role-input"
+              class="admin-input value"
+              formControlName="organizationRole"
+            />
+          </p>
+          <p class="detail">
+            <label for="experience-input" class="key"
+              >Years of Experience:
+            </label>
+            <input
+              type="number"
+              min="0"
+              id="experience-input"
+              class="admin-input value"
+              formControlName="experience"
+            />
+          </p>
+          <p class="detail">
+            <label for="qualification-input" class="key">Qualification: </label>
+            <input
+              type="text"
+              id="qualification-input"
+              class="admin-input value"
+              formControlName="qualification"
+            />
+          </p>
+          <p class="detail">
+            <label for="father-name-input" class="key">Father Name: </label>
+            <input
+              type="text"
+              id="father-name-input"
+              class="admin-input value"
+              formControlName="fatherName"
+            />
+          </p>
+          <p class="detail">
+            <label for="bank-name-input" class="key">Bank Name: </label>
+            <input
+              type="text"
+              id="bank-name-input"
+              class="admin-input value"
+              formControlName="bankName"
+            />
+          </p>
+          <p class="detail">
+            <label for="account-holder-name-input" class="key"
+              >Account Holder Name:
+            </label>
+            <input
+              type="text"
+              id="account-holder-name-input"
+              class="admin-input value"
+              formControlName="accountHolderName"
+            />
+          </p>
+          <p class="detail">
+            <label for="account-no-input" class="key">Account No.: </label>
+            <input
+              type="text"
+              id="account-no-input"
+              class="admin-input value"
+              formControlName="accountNo"
+            />
+          </p>
+          <p class="detail">
+            <label for="ifsc-code-input" class="key">IFSC Code: </label>
+            <input
+              type="text"
+              id="ifsc-code-input"
+              class="admin-input value"
+              formControlName="ifscCode"
+            />
+          </p>
+          <p class="detail">
+            <label for="branch-input" class="key">Branch: </label>
+            <input
+              type="text"
+              id="branch-input"
+              class="admin-input value"
+              formControlName="branch"
+            />
+          </p>
+          <p class="detail">
+            <label for="pan-input" class="key">PAN No.: </label>
+            <input
+              type="text"
+              id="pan-input"
+              class="admin-input value"
+              formControlName="panNo"
+            />
+          </p>
+          <p class="detail">
+            <label for="nationality-input" class="key">Nationality: </label>
+            <input
+              type="text"
+              id="nationality-input"
+              class="admin-input value"
+              formControlName="nationality"
+            />
+          </p>
+          <p class="detail">
+            <label for="religion-input" class="key">Religion: </label>
+            <input
+              type="text"
+              id="religion-input"
+              class="admin-input value"
+              formControlName="religion"
+            />
+          </p>
+          <p class="detail">
+            <label for="preferred-languages-input" class="key"
+              >Preferred Languages:
+            </label>
+            <input
+              type="text"
+              id="preferred-languages-input"
+              class="admin-input value"
+              formControlName="preferredLanguages"
+            />
+          </p>
+        </form>
+        <div id="buttons">
+          <app-primary-btn
+            [text]="'Save'"
+            [disabled]="!editForm.valid"
+            (btnClick)="saveEdit()"
+          ></app-primary-btn>
+          <app-primary-btn
+            [text]="'Cancel'"
+            (btnClick)="cancelEdit()"
+          ></app-primary-btn>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
+</section>

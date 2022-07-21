@@ -1,0 +1,17 @@
+button {
+  position: fixed;
+  bottom: 2em;
+  right: 3em;
+  padding: 1em;
+  border-radius: 50%;
+  background-color: var(--secondary);
+  color: var(--secondary-contrast);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--normal-shadow);
+}
+
+button:hover {
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}

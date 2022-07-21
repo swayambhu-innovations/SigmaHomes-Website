@@ -1,0 +1,3 @@
+<button (click)="this.btnClick.emit()"[type]="type || null" [disabled]="disabled" [attr.uk-toggle]="target ? 'target: ' + target : null">
+  <span *ngIf="icon != ''" [attr.uk-icon]="icon"></span>{{ text }}
+</button>

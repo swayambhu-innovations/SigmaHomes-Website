@@ -1,0 +1,114 @@
+section {
+  position: relative;
+
+  #lead-cards {
+    padding: 1em;
+    height: 100% !important;
+    overflow: hidden;
+
+    app-lead-card {
+      width: 32%;
+      margin: 0.5em;
+
+      @media (max-width: 2000px) {
+        width: 47%;
+      }
+
+      @media (max-width: 600px) {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.uk-modal-body {
+  position: relative;
+  height: 80vh;
+  width: 50vw;
+
+  .uk-modal-title {
+    font-family: var(--font-three);
+    font-size: var(--xlarge);
+    color: var(--tertiary);
+  }
+
+  .uk-modal-close-default {
+    background-color: var(--secondary);
+    color: var(--secondary-contrast);
+    border-radius: 50%;
+    padding: 0.5em;
+  }
+
+  form {
+    width: calc(100% - 300px);
+    height: calc(100% - 10vh);
+    padding-right: 1em;
+    overflow-y: auto;
+
+    label {
+      font-family: var(--font-three);
+      font-size: var(--small);
+      color: var(--tertiary);
+    }
+
+    .admin-input {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.75em;
+    }
+
+    #dates {
+      display: flex;
+
+      @media (max-width: 1100px) {
+        display: block;
+      }
+
+      .date {
+        width: 50%;
+
+        @media (max-width: 1100px) {
+          width: 100%;
+        }
+      }
+
+      .date:first-of-type {
+        margin-right: 1em;
+      }
+    }
+
+    app-primary-btn {
+      display: block;
+      margin-top: 1em;
+    }
+  }
+
+  #modal-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 300px;
+    object-fit: cover;
+  }
+
+  @media (max-width: 900px) {
+    form {
+        width: calc(100% - 200px);
+    }
+
+    #modal-img {
+        width: 200px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    form {
+        width: 100%;
+    }
+
+    #modal-img {
+        display: none;
+    }
+  }
+}

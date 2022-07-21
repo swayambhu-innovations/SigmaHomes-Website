@@ -1,0 +1,53 @@
+<section class="card" [ngClass]="stage">
+    <div class="top">
+        <div [ngClass]="stage+'-badge'">{{stage}}</div>
+        <div class="actions">
+            <i class="ri-pencil-fill" *ngIf="!editMode" (click)="editMode=true"></i>
+            <i class="ri-more-fill" [matMenuTriggerFor]="menu"></i>
+        </div>
+    </div>
+    <div class="data" *ngIf="!editMode">
+        <p class="heading">{{heading}}</p>
+        <p class="body">{{body}}</p>
+    </div>
+    <form [formGroup]="dataForm" (ngSubmit)="updateForm()" class="data" *ngIf="editMode">
+        <input class="heading" formControlName="heading" [value]="heading">
+        <textarea rows="7" formControlName="body" class="body" [value]="body"></textarea>
+        <button type="submit">Save</button>
+    </form>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="changeStage()">
+            <span>Change Stage</span>
+        </button>
+        <button mat-menu-item (click)="changeAgent()">
+            <span>Change Assigned Agent</span>
+        </button>
+        <button mat-menu-item (click)="delete()">
+            <span>Delete</span>
+        </button>
+    </mat-menu>
+    <div class="details">
+        <p class="title"><i class="ri-home-2-fill"></i>{{propertyName}}</p>
+        <p class="title"><i class="ri-calendar-todo-fill"></i>{{addedDate | date}}</p>
+        <!-- <mat-form-field appearance="fill">
+            <mat-label>Favorite food</mat-label>
+            <mat-select (selectionChange)="changedOption($event)" [value]="stage" #stageSelector>
+                <mat-option value="stageOne">Stage One</mat-option>
+                <mat-option value="stageTwo">Stage Two</mat-option>
+                <mat-option value="stageThree">Stage Three</mat-option>
+                <mat-option value="stageFour">Stage Four</mat-option>
+                <mat-option value="stageFive">Stage Five</mat-option>
+            </mat-select>
+        </mat-form-field> -->
+    </div>
+    <!-- <div class="agent">
+        <img [src]="assignedAgentImage" [matMenuTriggerFor]="menu" #menuTrigger [alt]="assignedAgentName">
+        <p>{{assignedAgentName}}</p>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="changedAgent.emit(agent)" *ngFor="let agent of agents">
+                <img class="popupImage" [src]="agent.photoURL">
+                {{agent.displayName}}
+            </button>
+        </mat-menu>
+    </div> -->
+</section>

@@ -1,0 +1,337 @@
+<section>
+  <p *ngIf="!customers || customers.length < 1" id="no-customers">
+    No customers :(
+  </p>
+  <table *ngIf="customers && customers.length >= 1">
+    <thead>
+      <tr>
+        <th width="10%">Photo</th>
+        <th width="30%">Name</th>
+        <th width="30%">Contact</th>
+        <th width="30%"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let customer of filteredCustomers; let i = index"
+        [attr.data-index]="i"
+      >
+        <td>
+          <img [src]="customer.img || 'assets/img/circle-user-solid.svg'" />
+        </td>
+        <td style="font-weight: 500">{{ customer.name }}</td>
+        <td>
+          <div class="buttons">
+            <a href="tel:{{ customer.phone }}" uk-tooltip="Call"
+              ><i class="fa-solid fa-phone"></i
+            ></a>
+            <button uk-tooltip="Send SMS">
+              <i class="fa-solid fa-comment-sms"></i>
+            </button>
+            <a
+              href="mailto:{{ customer.email }}"
+              target="_blank"
+              uk-tooltip="Email"
+            >
+              <i class="fa-solid fa-envelope"></i>
+            </a>
+          </div>
+        </td>
+        <td>
+          <div class="buttons">
+            <button
+              (click)="viewCustomer(customer)"
+              uk-tooltip="title: View Customer"
+            >
+              <i class="fa-solid fa-eye"></i>
+            </button>
+            <button
+              (click)="editCustomer(customer)"
+              uk-tooltip="title: Edit Customer"
+            >
+              <i class="fa-solid fa-pen-to-square"></i>
+            </button>
+            <button
+              (click)="deleteCustomer(customer)"
+              uk-tooltip="title: Delete Customer"
+              class="delete-btn"
+            >
+              <i class="fa-solid fa-trash"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <app-fab
+    [icon]="'plus'"
+    [target]="'#edit-or-add-customer-modal'"
+    [title]="'Add New Customer'"
+  ></app-fab>
+</section>
+
+<app-view-customer-modal [customer]="currentViewCustomer"></app-view-customer-modal>
+
+<div id="edit-or-add-customer-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 *ngIf="editMode" class="uk-modal-title">Edit Customer Details</h2>
+    <h2 *ngIf="!editMode" class="uk-modal-title">Add New Customer</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+
+    <form [formGroup]="customerForm" (ngSubmit)="submitCustomerForm()">
+      <div class="customer-form-box">
+        <label for="photo-input"
+          >{{ editMode ? "Change " : "" }}Profile Photo:
+        </label>
+        <input type="file" id="photo-input" class="admin-input" #photoInput />
+      </div>
+      <div class="customer-form-box">
+        <label for="name-input">Name</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="name-input"
+          formControlName="name"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="phone-input">Phone number</label>
+        <input
+          type="tel"
+          class="admin-input"
+          id="phone-input"
+          formControlName="phone"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="email-input">Email address</label>
+        <input
+          type="email"
+          class="admin-input"
+          id="email-input"
+          formControlName="email"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="address-input">Address</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="address-input"
+          formControlName="address"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="state-input">State</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="state-input"
+          formControlName="state"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="city-input">City</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="city-input"
+          formControlName="city"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="pincode-input">Pincode</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="pincode-input"
+          formControlName="pincode"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="aadhar-no-input">Aadhar No.</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="aadhar-no-input"
+          formControlName="aadharNo"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="pan-no-input">PAN No.</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="pan-no-input"
+          formControlName="panNo"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="customer-dob-input">Customer DOB</label>
+        <input
+          type="date"
+          class="admin-input"
+          id="customer-dob-input"
+          formControlName="customerDob"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="customer-anniversary-input">Customer Anniversary</label>
+        <input
+          type="date"
+          class="admin-input"
+          id="customer-anniversary-input"
+          formControlName="customerAnniversary"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="booking-date-input">Booking date</label>
+        <input
+          type="date"
+          class="admin-input"
+          id="booking-date-input"
+          formControlName="bookingDate"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="project-name-input">Project Name</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="project-name-input"
+          formControlName="projectName"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="unit-no-input">Unit No.</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="unit-no-input"
+          formControlName="unitNo"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="property-type-input">Property Type</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="property-type-input"
+          formControlName="propertyType"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="company-sales-input">Company Sales Value</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="company-sales-input"
+          formControlName="companySalesValue"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="sales-value-input">Sales Value</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="sales-value-input"
+          formControlName="salesValue"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="advance-value-input">Advance Value</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="advance-value-input"
+          formControlName="advanceValue"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="finance-details-input">Finance Details</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="finance-details-input"
+          formControlName="financeDetails"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="payment-mode-input">Payment Mode</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="payment-mode-input"
+          formControlName="paymentMode"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="job-type-input">Job Type</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="job-type-input"
+          formControlName="jobType"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="company-name-input">Company Name</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="company-name-input"
+          formControlName="companyName"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="monthly-salary-input">Monthly Salary</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="monthly-salary-input"
+          formControlName="monthlySalary"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="firm-name-input">Firm Name</label>
+        <input
+          type="text"
+          id="firm-name-input"
+          class="admin-input"
+          formControlName="firmName"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="year-of-establishment-input">Year of Establishment</label>
+        <input
+          type="text"
+          id="year-of-establishment-input"
+          class="admin-input"
+          formControlName="yearOfEstablishment"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="income-as-per-itr-input">Income as per ITR</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="income-as-per-itr-input"
+          formControlName="incomeAsPerITR"
+        />
+      </div>
+      <div class="customer-form-box">
+        <label for="itr-status-input">ITR Status</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="itr-status-input"
+          formControlName="itrStatus"
+        />
+      </div>
+      <app-primary-btn
+        [text]="editMode ? 'Update Details' : 'Add Customer'"
+        [disabled]="!customerForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>

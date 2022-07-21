@@ -1,0 +1,75 @@
+<section>
+  <div class="quickAction">
+    <b>Quick Links</b>
+    <div class="links">
+      <button routerLink="../broadcast" [queryParams]="{openModal:true}">Add Broadcast +</button>
+      <button routerLink="../lead-center" [queryParams]="{openModal:true}">Add Lead +</button>
+      <button routerLink="../customers" [queryParams]="{openModal:true}">Add customer +</button>
+      <button  routerLink="../task-log" [queryParams]="{openModal:true}">Add Task +</button>
+      <button  routerLink="../properties" [queryParams]="{openModal:true}">Add Properties +</button>
+      <button  routerLink="../responses" [queryParams]="{openModal:true}">Add Responses +</button>
+    </div>
+    <div class="actions">
+
+      <i class="fa-solid fa-arrow-right-from-bracket" routerLink="/"></i>
+      <i class="fa-regular fa-circle-user " routerLink="/login"></i>
+    </div>
+  </div>
+  <div class="analytics">
+    <div class="line"><canvas id="graph"></canvas></div>
+    <div class="pie">
+      <canvas id="doughnut"></canvas>
+    </div>
+  </div>
+  <div class="features">
+    <div class="item">
+      <div>
+        <h3>Profile</h3>
+        <p>Edit or view your profile</p>
+      </div>
+      <button routerLink="/admin/profile">View</button>
+    </div>
+    <div class="item">
+      <div>
+        <h3>Broadcast</h3>
+        <p>Send a broacast to customers</p>
+      </div>
+      <button routerLink="/admin/broadcast">Send</button>
+    </div>
+    <div class="item">
+      <div>
+        <h3>Lead Center</h3>
+        <p>Edit or view your leads</p>
+      </div>
+      <button routerLink="/admin/lead-center">View</button>
+    </div>
+    <div class="item">
+      <div>
+        <h3>Customers</h3>
+        <p>Edit or view your customers</p>
+      </div>
+      <button routerLink="/admin/customers">View</button>
+    </div>
+    <div class="item">
+      <div>
+        <h3>Properties</h3>
+        <p>Edit or view your properties</p>
+      </div>
+      <button routerLink="/admin/properties">View</button>
+    </div>
+    <div class="item">
+      <div>
+        <h3>Responses</h3>
+        <p>Edit or view your customer's responses</p>
+      </div>
+      <button routerLink="/admin/responses">View</button>
+    </div>
+    <div class="item">
+      <div>
+        <h3>Task Log</h3>
+        <p>Edit or view your customer's task log</p>
+      </div>
+      <button routerLink="/admin/task-log">View</button>
+    </div>
+  </div>
+</section>

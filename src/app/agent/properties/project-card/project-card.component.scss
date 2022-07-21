@@ -1,0 +1,74 @@
+#project {
+  border-radius: 15px;
+  transition: all 0.5s;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    box-shadow: var(--normal-shadow);
+  }
+
+  #photos {
+    width: 100%;
+
+    img {
+      object-fit: cover;
+      height: 200px;
+      width: 100%;
+      border-radius: 15px 15px 0 0;
+    }
+  }
+
+  #content {
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    height: 100%;
+
+    h4 {
+      font-family: var(--font-three);
+      font-weight: 700;
+      font-size: var(--medium);
+      margin: 0;
+      color: var(--secondary);
+    }
+
+    #project-address {
+      font-family: var(--font-three);
+      font-size: var(--small);
+      color: var(--tertiary);
+      margin: 0;
+
+      i {
+        color: var(--secondary);
+      }
+    }
+
+    button {
+      background-color: var(--secondary);
+      color: var(--secondary-contrast);
+      border: none;
+      font-family: var(--font-three);
+      padding: 0.5em;
+      margin-top: 0.5em;
+      font-size: var(--small);
+      border-radius: 7px;
+      transition: all 0.5s;
+      width: 100%;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: var(--normal-shadow);
+      }
+
+      i {
+        margin-right: 0.5em;
+      }
+    }
+  }
+}

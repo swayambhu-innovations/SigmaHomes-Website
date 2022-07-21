@@ -13,6 +13,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminModule),
   },
+  { path: 'agentPanel', loadChildren: () => import('./agent/agent.module').then(m => m.AgentModule) },
   {
     path: '**',
     loadChildren: () =>

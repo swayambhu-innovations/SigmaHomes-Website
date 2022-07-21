@@ -1,0 +1,36 @@
+<form [formGroup]="addTaskForm" (ngSubmit)="verifyAndSubmit()">
+    <mat-form-field appearance="fill">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title"> 
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Body</mat-label>
+        <input matInput formControlName="body">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Properties</mat-label>
+        <mat-select required formControlName="property">
+            <mat-option [value]="property" *ngFor="let property of properties">{{property.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Agents</mat-label>
+        <mat-select required formControlName="agent">
+            <mat-option [value]="agent" *ngFor="let agent of agents">
+                <img class="popupImage" [src]="agent.photoURL">
+                {{agent.displayName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Stage</mat-label>
+        <mat-select required formControlName="stage">
+            <mat-option value="stageOne">Stage One</mat-option>
+            <mat-option value="stageTwo">Stage Two</mat-option>
+            <mat-option value="stageThree">Stage Three</mat-option>
+            <mat-option value="stageFour">Stage Four</mat-option>
+            <mat-option value="stageFive">Stage Five</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <button [disabled]="!addTaskForm.valid" type="submit" color="primary" mat-raised-button>Submit</button>
+</form>

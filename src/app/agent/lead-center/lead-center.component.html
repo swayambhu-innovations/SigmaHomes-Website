@@ -1,0 +1,67 @@
+<section>
+  <div id="lead-cards" uk-grid="masonry:true">
+    <app-lead-card *ngFor="let lead of filteredLeads" [lead]="lead" (onMakeCustomer)="makeCustomer(lead)"
+      (onEdit)="edit(lead)" (onDelete)="delete(lead)">
+    </app-lead-card>
+  </div>
+  <app-fab [icon]="'plus'" [target]="'#lead-modal'" [title]="'Add New Lead'"></app-fab>
+</section>
+
+<div id="lead-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 *ngIf="editMode" class="uk-modal-title">Edit Lead</h2>
+    <h2 *ngIf="!editMode" class="uk-modal-title">Add New Lead</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form [formGroup]="leadForm" (ngSubmit)="!editMode ? addLead() : editLead(currentLeadId)">
+      <div>
+        <label for="name-input">Name</label>
+        <input type="text" id="name-input" formControlName="name" class="admin-input" />
+      </div>
+      <div>
+        <label for="phone-number-input">Phone Number</label>
+        <input type="text" id="phone-number-input" formControlName="phone" class="admin-input" />
+      </div>
+      <div>
+        <label for="email-input">Email</label>
+        <input type="email" id="email-input" formControlName="email" class="admin-input" />
+      </div>
+      <div>
+        <label for="address-input">Address</label>
+        <input type="text" id="address-input" formControlName="address" class="admin-input" />
+      </div>
+      <div>
+        <label for="city-input">City</label>
+        <input type="text" id="city-input" formControlName="city" class="admin-input" />
+      </div>
+      <div>
+        <label for="state-input">State</label>
+        <input type="text" id="state-input" formControlName="state" class="admin-input" />
+      </div>
+      <div>
+        <label for="pincode-input">Pin Code</label>
+        <input type="text" id="pincode-input" formControlName="pincode" class="admin-input" />
+      </div>
+      <div>
+        <label for="aadhar-no-input">Aadhar No.</label>
+        <input type="text" id="aadhar-no-input" formControlName="aadharNo" class="admin-input" />
+      </div>
+      <div>
+        <label for="pan-no-input">Pan Card No.</label>
+        <input type="text" id="pan-no-input" formControlName="panNo" class="admin-input" />
+      </div>
+      <div id="dates">
+        <div class="date">
+          <label for="customer-dob-input">Customer DOB</label>
+          <input type="date" formControlName="customerDob" id="customer-dob-input" class="admin-input" />
+        </div>
+        <div class="date">
+          <label for="customer-anniversary-input">Customer Anniversary</label>
+          <input type="date" formControlName="customerAnniversary" id="customer-anniversary-input"
+            class="admin-input" />
+        </div>
+      </div>
+      <app-primary-btn [text]="editMode ? 'Update Lead' : 'Add Lead'" [disabled]="!leadForm.valid"></app-primary-btn>
+    </form>
+    <img src="../../../assets/img/add-lead-modal-img.png" id="modal-img" />
+  </div>
+</div>

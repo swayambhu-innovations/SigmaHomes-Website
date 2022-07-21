@@ -1,0 +1,128 @@
+<div id="view-customer-modal" uk-modal>
+  <div class="uk-modal-dialog uk-modal-body">
+    <div id="current-customer-image-and-name">
+      <img
+        [src]="customer?.img || 'assets/img/circle-user-solid.svg'"
+        id="current-customer-img"
+      />
+      <h2 class="uk-modal-title">{{ customer?.name }}</h2>
+    </div>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <div id="details">
+      <div class="detail">
+        <p class="key">Name</p>
+        <p class="value">{{ customer?.name }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Phone Number</p>
+        <p class="value">{{ customer?.phone || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Email Address</p>
+        <p class="value">{{ customer?.email || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Address</p>
+        <p class="value">{{ customer?.address || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">State</p>
+        <p class="value">{{ customer?.state || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">City</p>
+        <p class="value">{{ customer?.city || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Pincode</p>
+        <p class="value">{{ customer?.pincode || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Aadhar No.</p>
+        <p class="value">{{ customer?.aadharNo || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">PAN No.</p>
+        <p class="value">{{ customer?.panNo || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Customer DOB</p>
+        <p class="value">{{ customer?.customerDob || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Customer Anniversary</p>
+        <p class="value">
+          {{ customer?.customerAnniversary || "N/A" }}
+        </p>
+      </div>
+      <div class="detail">
+        <p class="key">Booking Date</p>
+        <p class="value">{{ customer?.bookingDate || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Project Name</p>
+        <p class="value">{{ customer?.projectName || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Unit No.</p>
+        <p class="value">{{ customer?.unitNo || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Property Type</p>
+        <p class="value">{{ customer?.propertyType || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Company Sales Value</p>
+        <p class="value">
+          {{ customer?.companySalesValue || "N/A" }}
+        </p>
+      </div>
+      <div class="detail">
+        <p class="key">Sales Value</p>
+        <p class="value">{{ customer?.salesValue || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Advance Value</p>
+        <p class="value">{{ customer?.advanceValue || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Finance Details</p>
+        <p class="value">{{ customer?.financeDetails || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Payment Mode</p>
+        <p class="value">{{ customer?.paymentMode || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Job Type</p>
+        <p class="value">{{ customer?.jobType || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Company Name</p>
+        <p class="value">{{ customer?.companyName || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Monthly Salary</p>
+        <p class="value">{{ customer?.monthlySalary || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Firm Name</p>
+        <p class="value">{{ customer?.firmName || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">Year of Establishment</p>
+        <p class="value">
+          {{ customer?.yearOfEstablishment || "N/A" }}
+        </p>
+      </div>
+      <div class="detail">
+        <p class="key">Income as per ITR</p>
+        <p class="value">{{ customer?.incomeAsPerITR || "N/A" }}</p>
+      </div>
+      <div class="detail">
+        <p class="key">ITR Status</p>
+        <p class="value">{{ customer?.itrStatus || "N/A" }}</p>
+      </div>
+    </div>
+  </div>
+</div>

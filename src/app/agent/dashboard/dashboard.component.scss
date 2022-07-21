@@ -1,0 +1,154 @@
+.quickAction{
+  width: 96%;
+  height:fit-content;
+  margin: auto;
+  background-color: var(--secondary);
+  margin: 1rem auto;
+  border-radius: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+
+  align-items: center;
+  justify-content: space-between;
+  padding:1rem;
+  color: var(--primary-contrast);
+font-size: 1.3rem;
+
+b{
+  width: 20%;
+  padding-right: 1.5rem;
+  width: 10rem;
+}
+.links{
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  gap:1.5rem;
+  button{
+    height: 2.5rem;
+    width: 7.5rem;
+border-radius: 0.3rem;
+background-color: var(--secondary-contrast);
+color: var(--secondary);
+font-weight: 600;
+border: none;
+transition: all 0.5s;
+cursor: pointer;
+&:hover{
+  transform: scale(1.05);
+}
+  }
+}
+.actions{
+  width: 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  
+  i{
+    margin-left: 0.3rem;
+    &:hover{
+      color: var(--primary);
+    }
+  }
+
+}
+@media only screen and (max-width: 600px) {
+ overflow: scroll;
+ gap: 30px;
+}
+}
+.analytics{
+  width: 100%;
+  height: fit-content;
+  margin: auto;
+  display:flex ;
+  align-items: center;
+  justify-content:center;
+    gap:1.5rem;
+  flex-wrap: wrap;
+  div{
+    width:30rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    canvas{
+      width: 100%;
+      height: 100%;
+    }
+    #doughnut{
+      transform: scale(0.6);
+    }
+  }
+
+  
+}
+.features {
+
+
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 1em;
+
+  .item {
+    width: 30%;
+    margin: 0.5em;
+    padding: 1em 1.5em;
+    box-shadow: var(--normal-shadow);
+    background-color: var(--secondary);
+    border-radius: 10px;
+    transition: all 0.5s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    h3,
+    p,
+    button {
+      font-family: var(--font-two);
+      color: var(--secondary-contrast);
+      margin: 0;
+    }
+
+    h3 {
+      font-size: var(--large);
+    }
+
+    p {
+      font-size: var(--medium);
+    }
+
+    button {
+      font-size: var(--small);
+      display: inline-block;
+      margin-top: 1em;
+      border: none;
+      padding: 0.25em 0.75em;
+      background-color: var(--primary);
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.5s;
+    }
+
+    button:hover,
+    button:focus {
+      text-decoration: none;
+      box-shadow: var(--normal-shadow);
+    }
+
+    @media (max-width: 850px) {
+      width: 45%;
+    }
+
+    @media (max-width: 600px) {
+      width: 100%;
+    }
+  }
+
+  .item:hover {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  }
+}
