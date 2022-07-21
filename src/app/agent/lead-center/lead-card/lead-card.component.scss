@@ -148,21 +148,9 @@
     }
   }
 }
-#interested-modal{
-  width: 45vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border-radius: 45px;
-  .widgets{
-    display: flex;
-    width: 35vw;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    app-project-card{
-      width: 45%;
-      margin: 10px;
-    }
-  }
+
+.uk-modal-title {
+  font-family: var(--font-three);
+  font-size: var(--medium);
+  color: var(--tertiary);
 }
