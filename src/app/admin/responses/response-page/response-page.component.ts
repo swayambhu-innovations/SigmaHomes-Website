@@ -13,8 +13,6 @@ import { increment } from '@firebase/firestore';
 import { DataProvider } from 'src/app/providers/data.provider';
 import { DatabaseService } from 'src/app/services/database.service';
 import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
-import { CustomerDetailComponent } from '../customer-detail/customer-detail.component';
-import { PropertyDetailComponent } from '../property-detail/property-detail.component';
 
 @Component({
   selector: 'app-response-page',
@@ -62,8 +60,8 @@ export class ResponsePageComponent implements OnInit {
     });
   }
   getNotes(currentPhase: number): any[] {
-    if (this.response?.phaseNotes) {
-      return this.response.phaseNotes[`phase${currentPhase}`];
+    if (this.response?.notes) {
+      return this.response.notes[currentPhase];
     } else {
       return [];
     }
@@ -72,22 +70,21 @@ export class ResponsePageComponent implements OnInit {
     console.log(this.response);
     if(this.response?.requestPending){
     this.completePhase();
-    this.response.requestPending = false;
     this.databaseService.updateResponse(this.response, this.responseId).then(()=>{
       this.alertify.presentToast('Phase Completed successfully');
     });
     }
   }
   openPropertyDetail() {
-    const dialogRef = this.dialog.open(PropertyDetailComponent, {
-      data: this.response.property,
-    });
+    // const dialogRef = this.dialog.open(PropertyDetailComponent, {
+    //   data: this.response.property,
+    // });
   }
 
   openCustomerDetail() {
-    const dialogRef = this.dialog.open(CustomerDetailComponent, {
-      data: this.response.customer,
-    });
+      // const dialogRef = this.dialog.open(CustomerDetailComponent, {
+      //   data: this.response.customer,
+      // });
   }
 
   ngOnInit(): void {}
@@ -97,12 +94,12 @@ export class ResponsePageComponent implements OnInit {
       this.response.phase < 5 &&
       confirm('Are you sure you want to complete this phase.')
     ) {
-      this.response.phaseNotes[`phase${this.response.phase + 1}`] = [];
-      console.log(this.response.phaseNotes);
+      this.response.notes[this.response.phase + 1] = [];
+      console.log(this.response.notes);
       this.dataProvider.pageSetting.blur = true;
       this.databaseService
         .updateResponse(
-          { phaseNotes: this.response.phaseNotes, phase: increment(1) },
+          { notes: this.response.notes, phase: increment(1) },
           this.responseId
         )
         .then((doc) => {
@@ -127,12 +124,12 @@ export class ResponsePageComponent implements OnInit {
       this.response.phase > 0 &&
       confirm('Are you sure you want to discard this phase.')
     ) {
-      delete this.response.phaseNotes[`phase${this.response.phase}`];
-      console.log(this.response.phaseNotes);
+      delete this.response.notes[this.response.phase];
+      console.log(this.response.notes);
       this.dataProvider.pageSetting.blur = true;
       this.databaseService
         .updateResponse(
-          { phaseNotes: this.response.phaseNotes, phase: increment(-1) },
+          { notes: this.response.notes, phase: increment(-1) },
           this.responseId
         )
         .then((doc) => {
@@ -153,7 +150,6 @@ export class ResponsePageComponent implements OnInit {
   }
   requestForComplete(){
     if(!this.response?.requestPending){
-    this.response.requestPending = true;
     console.log(this.response);
     this.databaseService.updateResponse(this.response, this.responseId).then(()=>{
       this.alertify.presentToast('Request sent successfully');
@@ -167,18 +163,18 @@ export class ResponsePageComponent implements OnInit {
     this.dataProvider.pageSetting.blur = false;
     const dialogRef = this.dialog.open(AddNoteFormComponent);
     dialogRef.componentInstance.submitted.subscribe((data: any) => {
-      this.response.phaseNotes[`phase${activePhase}`].push({
+      this.response.notes[activePhase].push({
         note: data.note,
         date: new Date(),
         image: data.image,
         userName:this.dataProvider.userData?.displayName,
         userType:this.dataProvider.userData?.access?.access,
       });
-      console.log(this.response.phaseNotes);
+      console.log(this.response.notes);
       this.dataProvider.pageSetting.blur = true;
       this.databaseService
         .updateResponse(
-          { phaseNotes: this.response.phaseNotes },
+          { notes: this.response.notes },
           this.responseId
         )
         .then((doc) => {

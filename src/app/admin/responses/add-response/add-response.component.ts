@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { DataProvider } from 'src/app/providers/data.provider';
 import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
@@ -10,52 +9,64 @@ import { DatabaseService } from 'src/app/services/database.service';
   styleUrls: ['./add-response.component.scss'],
 })
 export class AddResponseComponent implements OnInit {
-  properties: any[] = [];
-  agents: any[] = [];
+  customers: any[] = [];
   leads: any[] = [];
-  phases: any[] = [
-    {
-      value: 1,
-      label: 'Query',
-    },
-    {
-      value: 2,
-      label: 'Visitation',
-    },
-    {
-      value: 3,
-      label: 'Negotiation',
-    },
-    {
-      value: 4,
-      label: 'Legalization',
-    },
-    {
-      value: 5,
-      label: 'Closure',
-    },
+  projects: any[] = [];
+  types: any[] = [];
+  units: any[] = [];
+  agents: any[] = [];
+  phases: string[] = [
+    'Query',
+    'Visitation',
+    'Negotiation',
+    'Legalization',
+    'Closure',
   ];
-  multiple: boolean = false;
-  phasesNotes: FormGroup = new FormGroup({});
-  notesFieldsControls: any[] = [];
-  addResponseForm: FormGroup = new FormGroup({
-    property: new FormControl(null, Validators.required),
-    agent: new FormControl(null, Validators.required),
-    lead: new FormControl(null, Validators.required),
+  allowMultiple: boolean = true;
+
+  responseForm: FormGroup = new FormGroup({
+    customerId: new FormControl(null),
+    leadId: new FormControl(null),
+    agentId: new FormControl(null, Validators.required),
     phase: new FormControl(null, Validators.required),
-    phaseNotes: this.phasesNotes,
+    properties: new FormArray(
+      [
+        new FormGroup({
+          projectId: new FormControl(null, Validators.required),
+          typeId: new FormControl(null),
+          unitId: new FormControl(null),
+        }),
+      ],
+      Validators.required
+    ),
   });
-  @Output() addResponse: EventEmitter<any> = new EventEmitter<any>();
+
+  @Output() responseAdded: EventEmitter<any> = new EventEmitter<any>();
+
   constructor(
     private databaseService: DatabaseService,
-    public dialog: MatDialog,
-    private dataProvider: DataProvider
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
+    this.databaseService.getCustomersPromise().then((docs: any) => {
+      docs.forEach((element: any) => {
+        this.customers.push({ ...element.data(), id: element.id });
+      });
+    });
     this.databaseService.getAllProjectsPromise().then((docs: any) => {
       docs.forEach((element: any) => {
-        this.properties.push({ ...element.data(), id: element.id });
+        this.projects.push({ ...element.data(), id: element.id });
+      });
+    });
+    this.databaseService.getAllTypesPromise().then((docs: any) => {
+      docs.forEach((element: any) => {
+        this.types.push({ ...element.data(), id: element.id });
+      });
+    });
+    this.databaseService.getAllUnitsPromise().then((docs: any) => {
+      docs.forEach((element: any) => {
+        this.units.push({ ...element.data(), id: element.id });
       });
     });
     this.databaseService.getAllAgentsPromise().then((docs: any) => {
@@ -70,59 +81,45 @@ export class AddResponseComponent implements OnInit {
     });
   }
 
-  genFields(): any[] {
-    this.addResponseForm.patchValue({ property: null });
-    this.notesFieldsControls = [];
-    this.phasesNotes.controls = {};
-    const num = this.addResponseForm.value.phase;
+  calcMultiple(): void {
+    this.allowMultiple = ['Query', 'Visitation'].includes(
+      this.responseForm.value.phase
+    );
+  }
 
-    for (let i = 0; i < num; i++) {
-      this.notesFieldsControls.push({ name: `phase${i}`, index: i });
-      this.phasesNotes.addControl(
-        `phase${i}`,
-        new FormControl(null, Validators.required)
+  getPropertyControls() {
+    return (this.responseForm.get('properties') as FormArray).controls;
+  }
+
+  addProperty(): void {
+    if (this.allowMultiple) {
+      (this.responseForm.get('properties') as FormArray).push(
+        new FormGroup({
+          projectId: new FormControl(null, Validators.required),
+          typeId: new FormControl(null),
+          unitId: new FormControl(null),
+        })
       );
     }
-    // console.log(this.notesFieldsControls)
-    return this.notesFieldsControls;
   }
 
-  check() {
-    this.addResponseForm.value.phase <= 2
-      ? (this.multiple = true)
-      : (this.multiple = false);
+  deleteProperty(index: number) {
+    (this.responseForm.get('properties') as FormArray).removeAt(index);
   }
+
+  responseFormIsValid() {
+    return (
+      this.responseForm.valid &&
+      (this.responseForm.get('customerId')?.value ||
+        this.responseForm.get('leadId')?.value)
+    );
+  }
+
   submit() {
-    if (this.addResponseForm.valid) {
-      let notes: any = {};
-      Object.keys(this.addResponseForm.value.phaseNotes).forEach(
-        (key: string) => {
-          notes[key] = [
-            {
-              note: this.addResponseForm.value.phaseNotes[key],
-              date: new Date(),
-              userName: this.dataProvider.userData?.displayName,
-              userType: this.dataProvider.userData?.access?.access,
-            },
-          ];
-        }
-      );
-      this.addResponse.emit({
-        property: this.properties.filter(
-          (property: any) => property.id === this.addResponseForm.value.property
-        )[0],
-        agent: this.agents.filter(
-          (agent: any) => agent.id === this.addResponseForm.value.agent
-        )[0],
-        lead: this.leads.filter(
-          (lead: any) => lead.id === this.addResponseForm.value.lead
-        )[0],
-        phase: this.addResponseForm.value.phase,
-        phaseNotes: notes,
-      });
-      this.addResponseForm.reset();
+    if (this.responseFormIsValid()) {
+      this.responseAdded.emit(this.responseForm.value);
       this.dialog.closeAll();
+      this.responseForm.reset();
     }
-    this.multiple = false;
   }
 }

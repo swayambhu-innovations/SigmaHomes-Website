@@ -17,100 +17,153 @@
 
     <div id="container">
       <div id="response-container">
-        <app-response-card [response]="response" [readOnly]="true"></app-response-card>
+        <app-response-card
+          [response]="response"
+          [readOnly]="true"
+        ></app-response-card>
       </div>
 
       <div id="phases">
         <div id="stepper-wrapper">
-          <div [ngClass]="{
+          <div
+            [ngClass]="{
               'stepper-item': true,
               completed: response.phase >= 0
-            }">
+            }"
+          >
             <div class="step-counter"></div>
             <div class="step-name">Query</div>
           </div>
-          <div [ngClass]="{
+          <div
+            [ngClass]="{
               'stepper-item': true,
               completed: response.phase >= 1
-            }">
+            }"
+          >
             <div class="step-counter"></div>
             <div class="step-name">Visitation</div>
           </div>
-          <div [ngClass]="{
+          <div
+            [ngClass]="{
               'stepper-item': true,
               completed: response.phase >= 2
-            }">
+            }"
+          >
             <div class="step-counter"></div>
             <div class="step-name">Negotiation</div>
           </div>
-          <div [ngClass]="{
+          <div
+            [ngClass]="{
               'stepper-item': true,
               completed: response.phase >= 3
-            }">
+            }"
+          >
             <div class="step-counter"></div>
             <div class="step-name">Legalization</div>
           </div>
-          <div [ngClass]="{
+          <div
+            [ngClass]="{
               'stepper-item': true,
               completed: response.phase >= 4
-            }">
+            }"
+          >
             <div class="step-counter"></div>
             <div class="step-name">Closure</div>
           </div>
         </div>
 
-        <button  *ngIf="dataProvider.userData?.access?.access == 'Agent'"  class="btn" style="background-color: var(--processing);" (click)="requestForComplete()">
-          <i class="fas fa-spinner"></i>Request  For phase complete
+        <button
+          *ngIf="dataProvider.userData?.access?.access == 'Agent'"
+          class="btn"
+          style="background-color: var(--processing)"
+          (click)="requestForComplete()"
+        >
+          <i class="fas fa-spinner"></i>Request For phase complete
         </button>
-        <button  *ngIf="dataProvider.userData?.access?.access == 'Admin'" class="btn" (click)="completePhase()" [disabled]="response.phase >= 4">
+        <button
+          *ngIf="dataProvider.userData?.access?.access == 'Admin'"
+          class="btn"
+          (click)="completePhase()"
+          [disabled]="response.phase >= 4"
+        >
           <i class="fa-solid fa-check"></i> Mark this phase complete
         </button>
         <!-- <button   *ngIf="dataProvider.userData?.access?.access == 'Unassigned'"   class="btn" (click)="checkForCompletion()" [disabled]="response.phase >= 4">
           <i class="fa-solid fa-check"></i> Mark this phase complete
         </button> -->
-        <button class="btn" (click)="discardPhase()" [disabled]="response.phase <= 0">
+        <button
+          class="btn"
+          (click)="discardPhase()"
+          [disabled]="response.phase <= 0"
+        >
           <i class="fa-solid fa-xmark"></i> Discard this phase
         </button>
       </div>
     </div>
 
     <ul uk-tab>
-      <li (click)="activePhase = 0" [ngClass]="{ 'uk-active': activePhase === 0 }">
+      <li
+        (click)="activePhase = 0"
+        [ngClass]="{ 'uk-active': activePhase === 0 }"
+      >
         <button>Query</button>
       </li>
-      <li (click)="activePhase = 1" [ngClass]="{
+      <li
+        (click)="activePhase = 1"
+        [ngClass]="{
           'uk-active': activePhase === 1,
           'uk-disabled': response.phase < 1
-        }">
+        }"
+      >
         <button>Visitation</button>
       </li>
-      <li (click)="activePhase = 2" [ngClass]="{
+      <li
+        (click)="activePhase = 2"
+        [ngClass]="{
           'uk-active': activePhase === 2,
           'uk-disabled': response.phase < 2
-        }">
+        }"
+      >
         <button>Negotiation</button>
       </li>
-      <li (click)="activePhase = 3" [ngClass]="{
+      <li
+        (click)="activePhase = 3"
+        [ngClass]="{
           'uk-active': activePhase === 3,
           'uk-disabled': response.phase < 3
-        }">
+        }"
+      >
         <button>Legalization</button>
       </li>
-      <li (click)="activePhase = 4" [ngClass]="{
+      <li
+        (click)="activePhase = 4"
+        [ngClass]="{
           'uk-active': activePhase === 4,
           'uk-disabled': response.phase < 4
-        }">
+        }"
+      >
         <button>Closure</button>
       </li>
     </ul>
     <div id="notes">
       <div class="note" *ngFor="let note of getNotes(activePhase)">
-        <img *ngIf="note.image"  src={{note.image}} alt={{note.note}} class="note_image">
-        <p class="date">{{getDate(note.date) | date}}</p>
-        <p class="description">{{note.note}}</p>
-        <b  *ngIf="note.userName" style="color: grey; font-weight:400;font-size:0.9rem;">{{note.userName}} ( {{note.userType}} )  </b>
+        <img
+          *ngIf="note.image"
+          src="{{ note.image }}"
+          alt="{{ note.note }}"
+          class="note_image"
+        />
+        <p class="date">{{ getDate(note.date) | date }}</p>
+        <p class="description">{{ note.note }}</p>
+        <b
+          *ngIf="note.userName"
+          style="color: grey; font-weight: 400; font-size: 0.9rem"
+          >{{ note.userName }} ( {{ note.userType }} )
+        </b>
       </div>
-      <button class="btn" (click)="addNote(activePhase)"><i class="fa fa-plus"></i> Add Note</button>
+      <button class="btn" (click)="addNote(activePhase)">
+        <i class="fa fa-plus"></i> Add Note
+      </button>
     </div>
   </section>
 
@@ -118,7 +171,9 @@
     [project]="response.property"
   ></app-view-property-modal> -->
 
-  <app-view-customer-modal [customer]="response.customer"></app-view-customer-modal>
+  <app-view-customer-modal
+    [customer]="response.customer"
+  ></app-view-customer-modal>
 
   <!-- <div id="add-note-modal" uk-modal>
     <div class="uk-modal-dialog uk-modal-body">

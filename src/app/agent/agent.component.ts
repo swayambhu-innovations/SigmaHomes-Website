@@ -51,10 +51,10 @@ export class AgentComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataProvider.headerButtonActions.subscribe((action) => {
-      if (action === 'viewAsTable') {
+      if (action === 'table') {
         this.setViewAs('table');
       }
-      if (action === 'viewAsCard') {
+      if (action === 'cards') {
         this.setViewAs('cards');
       }
     });
@@ -71,8 +71,8 @@ export class AgentComponent implements OnInit {
       | 'exportProperty'
       | 'importResponses'
       | 'exportResponses'
-      | 'viewAsTable'
-      | 'viewAsCard'
+      | 'table'
+      | 'cards'
   ) {
     this.dataProvider.headerButtonActions.next(action);
     if (action === 'importLead') {

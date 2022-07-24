@@ -8,7 +8,7 @@
   --secondary-light: #badaff;
   --secondary-lighter: #e3f0ff;
   --tertiary: #000;
-  --danger: #DC143C;
+  --danger: #dc143c;
   --processing: #fa9d39;
   --xxxlarge: 36px;
   --xxlarge: 28px;
@@ -74,4 +74,12 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.dialog {
+  .mat-dialog-container {
+    min-width: 50vw;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
 }

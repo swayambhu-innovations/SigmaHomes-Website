@@ -1,114 +1,69 @@
-<section>
-  <div class="responsesContainer">
-  
-    <ng-container *ngIf="viewAs === 'viewAsCard'">
-      <app-response-card
-        *ngFor="let response of responses"
-        [requestPending]= "response.requestPending"
-        [id]="response.id"
-        [response]="response"
-        (view)="viewResponse(response.id)"
-        (delete)="deleteResponse(response.id)"
-        (cardSelect)="selectResponse(response.id)"
-        [selectable]="true"
-      >
-      </app-response-card>
-    </ng-container>
-    <div class="table-container" *ngIf="viewAs === 'viewAsTable'">
-      <table>
-        <thead>
-          <tr>
-            <th style="width: 5%">S. No.</th>
-            <th style="width: 20%">property Image</th>
-            <th style="width: 10%">Customers Name</th>
-            <th style="width: 10%">propertyType</th>
-            <th style="width: 30%">Contact</th>
-            <th style="width: 10%">Stage</th>
-            <th style="width: 15%"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let response of responses; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>
-              <img
-                [src]="
-                  response.property?.photos &&
-                  response.property?.photos.length > 0
-                    ? response.property?.photos[0]
-                    : ''
-                "
-                [alt]="response.property?.name"
-              />
-            </td>
-            <td>{{ response.customer?.name }}</td>
-            <td>{{ response.property?.name }}</td>
+<div
+  *ngIf="loading; else notLoading"
+  class="uk-position-center"
+  uk-spinner="ratio: 4"
+></div>
 
-            <td>
-              <div class="buttons">
-                <a href="tel:{{ response.customer?.phone }}"
-                  ><i class="fa-solid fa-phone"></i
-                ></a>
-                <button><i class="fa-solid fa-comment-sms"></i></button>
-                <a href="mailto:{{ response.customer?.email }}">
-                  <i class="fa-solid fa-envelope"></i>
-                </a>
-              </div>
-            </td>
-            <td>
-              <button class="stage">
-                {{ phases[response.phase] }}
-              </button>
-            </td>
-            <td>
-              <div class="buttons">
-                <button (click)="view.emit()"><i class="fa-solid fa-eye"></i></button>
-                <button style="background-color: red; color: white" (click)="delete.emit()"  (delete)="deleteResponse(response.id)">
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="uk-position-center" uk-spinner="ratio: 4" *ngIf="loading"></div>
-    <img
-      class="uk-position-center"
-      style="width: 400px"
-      src="assets/img/empty.svg"
-      alt="Empty"
-      *ngIf="!loading && responses.length == 0"
-    />
-  </div>
-</section>
-
-<button class="actionButton" (click)="addResponse()">
-  <i class="ri-add-circle-fill"></i>
-</button>
-<section
-  [@enterAnimation]
-  id="assignAgentListner"
-  *ngIf="selectedResponses.length > 0"
->
-  <span>
-    {{ selectedResponses.length }}/{{ responses.length }} responses selected
-  </span>
-  <form>
-    <mat-form-field appearance="fill">
-      <mat-label>Agent</mat-label>
-      <mat-select (selectionChange)="setAgent($event)">
-        <mat-option *ngFor="let agent of agents" [value]="agent.userId">
-          {{ agent.displayName }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button
-      (click)="assignAgent()"
-      class="secondary-btn"
-      *ngIf="this.assignedAgent != ''"
-    >
-      <i class="fa-solid fa-user-tie"></i> Assign Agent
-    </button>
-  </form>
-</section>
+<ng-template #notLoading>
+  <img
+    src="assets/img/empty.svg"
+    *ngIf="filteredResponses && filteredResponses.length == 0; else responsesExist"
+    class="uk-position-center"
+    style="width: 400px"
+    alt="Empty"
+  />
+  <ng-template #responsesExist>
+    <section>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>S. No.</th>
+              <th>Customer/Lead</th>
+              <th>Agent</th>
+              <th>Phase</th>
+              <th>Properties</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let response of filteredResponses; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+                {{ response.customerOrLead?.name }}
+                <br />
+                <div class="buttons">
+                  <a href="tel:{{ response.customerOrLead?.phone }}"
+                    ><i class="fa-solid fa-phone"></i
+                  ></a>
+                  <button><i class="fa-solid fa-comment-sms"></i></button>
+                  <a href="mailto:{{ response.customerOrLead?.email }}">
+                    <i class="fa-solid fa-envelope"></i>
+                  </a>
+                </div>
+              </td>
+              <td>{{ response.agent?.displayName }}</td>
+              <td>{{ response.phase }}</td>
+              <td>{{ response.properties.length }}</td>
+              <td>
+                <div class="buttons">
+                  <button [routerLink]="response.id">
+                    <i class="fa-solid fa-eye"></i>
+                  </button>
+                  <button (click)="deleteResponse(response.id)" class="delete-btn">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </ng-template>
+  <app-fab
+    [icon]="'plus'"
+    [title]="'Add New Response'"
+    (btnClick)="triggerAddResponse()"
+  ></app-fab>
+</ng-template>

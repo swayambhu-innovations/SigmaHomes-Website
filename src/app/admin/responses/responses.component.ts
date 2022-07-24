@@ -1,16 +1,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
-import Fuse from 'fuse.js';
-import { CSVService } from 'src/app/services/csv.service';
 import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
 import { DataProvider } from 'src/app/providers/data.provider';
 import { MatDialog } from '@angular/material/dialog';
 import { AddResponseComponent } from './add-response/add-response.component';
-import { AssignResponseComponent } from './assign-response/assign-response.component';
 import { animate, style, transition, trigger } from '@angular/animations';
-declare const UIkit: any;
+import { CSVService } from 'src/app/services/csv.service';
+import Fuse from 'fuse.js';
 
 @Component({
   selector: 'app-responses',
@@ -30,16 +27,9 @@ declare const UIkit: any;
   ],
 })
 export class ResponsesComponent implements OnInit {
-  responses: any[] = [];
-  selectedResponses: any[] = [];
-  agents: any[] = [];
-  assignedAgent: string = '';
   loading: boolean = false;
-  viewAs: any;
-  @Output() delete: EventEmitter<any> = new EventEmitter<any>();
-
-  @Output() view: EventEmitter<any> = new EventEmitter<any>();
-
+  responses: any[];
+  filteredResponses: any[] = [];
   phases: string[] = [
     'Query',
     'Visitation',
@@ -50,110 +40,268 @@ export class ResponsesComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private route: ActivatedRoute,
-    private router: Router,
     private databaseService: DatabaseService,
     private alertify: AlertsAndNotificationsService,
     private activateRoute: ActivatedRoute,
-    public dataProvider: DataProvider
+    public dataProvider: DataProvider,
+    private csvService: CSVService
   ) {
     this.activateRoute.queryParams.subscribe((data: any) => {
-      console.log(data);
-
       if (data.openModal === 'true') {
-        this.addResponse();
+        this.triggerAddResponse();
       }
     });
   }
 
-  ngOnInit(): void {
-    
-    this.getResponses();
-    this.getAgents();
-    this.viewAs = 'viewAsCard';
-          
-    this.responses.forEach((res)=>{
-      console.log(res)
-    })
-    this.dataProvider.headerButtonActions.subscribe((action) => {
-      this.viewAs = action;
-    });
-  }
-  getAgents() {
-    this.databaseService.getAllAgentsPromise().then((docs: any) => {
-      docs.forEach((element: any) => {
-        this.agents.push({ ...element.data(), id: element.id });
-      });
-    });
-  }
-  getResponses() {
+  async ngOnInit(): Promise<void> {
     this.loading = true;
-    this.responses = [];
-    this.databaseService
-      .getResponsesPromise()
-      .then((docs: any) => {
-        docs.forEach((element: any) => {
-          this.responses.push({ ...element.data(), id: element.id });
-  
-        });
-      })
-      .finally(() => {
-        this.loading = false;
+
+    await this.databaseService.getResponsesPromise().then((docs: any) => {
+      this.responses = [];
+      docs.forEach((element: any) => {
+        const response = { id: element.id, ...element.data() };
+        this.responses.push(response);
       });
+    });
+
+    this.responses.forEach(async (response) => {
+      if (response.agentId) {
+        await this.databaseService
+          .getAgent(response.agentId)
+          .then((agentDoc) => {
+            response.agent = agentDoc.data();
+          });
+      }
+      if (response.customerId) {
+        await this.databaseService
+          .getCustomer(response.customerId)
+          .then((customerDoc) => {
+            response.customerOrLead = customerDoc.data();
+          });
+      }
+      if (response.leadId) {
+        await this.databaseService.getLead(response.leadId).then((leadDoc) => {
+          response.customerOrLead = leadDoc.data();
+        });
+      }
+      if (response.properties) {
+        response.properties.forEach(
+          async (property: any, index: number, properties: any[]) => {
+            if (property.projectId) {
+              await this.databaseService
+                .getProject(property.projectId)
+                .then((projectDoc) => {
+                  properties[index].project = projectDoc.data();
+                });
+            }
+            if (property.typeId) {
+              await this.databaseService
+                .getType(property.typeId)
+                .then((typeDoc) => {
+                  properties[index].type = typeDoc.data();
+                });
+            }
+            if (property.unitId) {
+              await this.databaseService
+                .getUnit(property.unitId)
+                .then((unitDoc) => {
+                  properties[index].unit = unitDoc.data();
+                });
+            }
+          }
+        );
+      }
+    });
+
+    // this.responses.sort((a: any, b: any) => {
+    //   return a.customerOrLead.name.localeCompare(b.customerOrLead.name);
+    // });
+
+    this.loading = false;
+    this.filteredResponses = this.responses;
+
+    // Search responses
+    const responseSearchInput = document.getElementById(
+      'response-search-input'
+    ) as HTMLInputElement;
+    if (responseSearchInput) {
+      responseSearchInput.oninput = () => {
+        const query = responseSearchInput.value.trim();
+        if (query.length > 0) {
+          const options = {
+            keys: [
+              ['customerOrLead', 'name'],
+              ['agent', 'displayName'],
+            ],
+          };
+          const fuse = new Fuse(this.responses, options);
+          const results = fuse.search(query);
+          this.filteredResponses = [];
+          results.forEach((result: any) => {
+            this.filteredResponses.push(result.item);
+          });
+        } else {
+          this.filteredResponses = this.responses;
+        }
+      };
+    }
+
+    // import responses
+    const importResponses = document.getElementById('import-responses');
+    if (importResponses) {
+      importResponses.addEventListener(
+        'click',
+        () => {
+          const input = document.createElement('input');
+          input.type = 'file';
+          input.accept = '.csv';
+          input.click();
+          input.onchange = () => {
+            this.dataProvider.pageSetting.blur = true;
+            if (input.files && input.files[0]) {
+              this.csvService.load(input.files[0]);
+              setTimeout(async () => {
+                const records = this.csvService.import();
+                if (records && records.length) {
+                  for (const record of records) {
+                    const response = {
+                      agentId: record.agentId,
+                      customerId: record.customerId,
+                      leadId: record.leadId,
+                      phase: record.phase,
+                      properties: [] as any[],
+                    };
+
+                    var i = 1;
+                    while (true) {
+                      const property: any = {};
+                      if (
+                        `projectId${i}` in record &&
+                        record[`projectId${i}`]
+                      ) {
+                        property.projectId = record[`projectId${i}`];
+                      } else {
+                        break;
+                      }
+                      if (`typeId${i}` in record) {
+                        property.typeId = record[`typeId${i}`];
+                      } else {
+                        break;
+                      }
+                      if (`unitId${i}` in record) {
+                        property.unitId = record[`unitId${i}`];
+                      } else {
+                        break;
+                      }
+                      response.properties.push(property);
+                      i++;
+                    }
+                    await this.databaseService.addResponse(response);
+                  }
+                }
+
+                input.value = '';
+                this.ngOnInit();
+                this.dataProvider.pageSetting.blur = false;
+                this.alertify.presentToast(
+                  'Responses added successfully',
+                  'info'
+                );
+              }, 1000);
+            }
+          };
+        },
+        false
+      );
+    }
+
+    // export responses
+    const exportResponses = document.getElementById('export-responses');
+    if (exportResponses) {
+      exportResponses.addEventListener(
+        'click',
+        () => {
+          if (this.responses.length > 0) {
+            const keys = ['agentId', 'customerId', 'leadId', 'phase'];
+            const csvData: any[][] = [keys];
+            var maxProperties = 0;
+
+            this.responses.forEach((response) => {
+              const values = [];
+              for (const key of keys) {
+                if (key in response && response[key]) {
+                  values.push(response[key]);
+                } else {
+                  values.push('');
+                }
+              }
+
+              // Add properties
+              if (response.properties && response.properties.length) {
+                response.properties.forEach((property: any) => {
+                  values.push(property.projectId || '');
+                  values.push(property.typeId || '');
+                  values.push(property.unitId || '');
+                });
+
+                // Calculate max properties
+                maxProperties = Math.max(
+                  maxProperties,
+                  response.properties.length
+                );
+              }
+
+              csvData.push(values);
+            });
+
+            // Add property headings to keys
+            for (var i = 1; i <= maxProperties; i++) {
+              csvData[0].push('projectId' + i);
+              csvData[0].push('typeId' + i);
+              csvData[0].push('unitId' + i);
+            }
+
+            this.csvService.export(csvData, 'responses');
+          } else {
+            this.alertify.presentToast('No responses to export', 'error');
+          }
+        },
+        false
+      );
+    }
   }
-  addResponse() {
-    const ref = this.dialog.open(AddResponseComponent);
-    ref.componentInstance.addResponse.subscribe((data: any) => {
-      console.log(data);
+
+  triggerAddResponse() {
+    const ref = this.dialog.open(AddResponseComponent, {
+      panelClass: 'dialog',
+    });
+    ref.componentInstance.responseAdded.subscribe((response: any) => {
+      this.dataProvider.pageSetting.blur = true;
       this.databaseService
-        .addResponse(data)
+        .addResponse(response)
         .then((doc: any) => {
+          this.ngOnInit();
           this.alertify.presentToast('Response added successfully');
-          this.getResponses();
+          this.dataProvider.pageSetting.blur = false;
         })
         .catch(() => {
           this.alertify.presentToast('Error adding response');
+          this.dataProvider.pageSetting.blur = false;
         });
     });
   }
-  viewResponse(id: string) {
-    this.router.navigate([id], { relativeTo: this.route });
-  }
+
   deleteResponse(id: string) {
     if (confirm('Are you sure')) {
       this.databaseService
         .deleteResponse(id)
         .then(() => {
           this.alertify.presentToast('Response deleted successfully');
-          this.getResponses();
+          this.ngOnInit();
         })
         .catch(() => {
           this.alertify.presentToast('Error deleting response');
         });
     }
-  }
-  selectResponse(id: string) {
-    if (this.selectedResponses.includes(id)) {
-      this.selectedResponses.splice(this.selectedResponses.indexOf(id), 1);
-    } else {
-      this.selectedResponses.push(id);
-    }
-  }
-  assignAgent() {
-    this.selectedResponses.forEach((element: any) => {
-      // console.log(element);
-      this.databaseService
-        .assignAgent(this.assignedAgent, element)
-        .then(() => {
-          this.alertify.presentToast('Agent assigned successfully');
-          this.selectedResponses = [];
-        })
-        .catch(() => {
-          this.alertify.presentToast('Error assigning agent');
-        });
-    });
-  }
-  setAgent(event: any) {
-    this.assignedAgent = event.value;
   }
 }

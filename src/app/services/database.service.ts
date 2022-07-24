@@ -156,7 +156,7 @@ export class DatabaseService {
   }
 
   getAllProjectsPromise() {
-    return getDocs(collection(this.fs, 'projects'));
+    return getDocs(query(collection(this.fs, 'projects'), orderBy('name')));
   }
 
   getNProjects(nProjects: number) {
@@ -173,6 +173,10 @@ export class DatabaseService {
     return collectionSnapshots(collection(this.fs, 'types'));
   }
 
+  getAllTypesPromise() {
+    return getDocs(query(collection(this.fs, 'types'), orderBy('name')));
+  }
+
   getType(typeId: string) {
     return getDoc(doc(this.fs, 'types/' + typeId));
   }
@@ -187,6 +191,10 @@ export class DatabaseService {
     return getDocs(
       query(collection(this.fs, 'units'), where('type', '==', typeId))
     );
+  }
+
+  getAllUnitsPromise() {
+    return getDocs(query(collection(this.fs, 'units'), orderBy('name')));
   }
 
   getUnit(unitId: string) {
@@ -214,6 +222,10 @@ export class DatabaseService {
     return addDoc(collection(this.fs, 'leads'), lead);
   }
 
+  getLead(leadId: string) {
+    return getDoc(doc(this.fs, 'leads/' + leadId));
+  }
+
   getLeads() {
     return collectionSnapshots(collection(this.fs, 'leads'));
   }
@@ -231,7 +243,6 @@ export class DatabaseService {
   }
 
   addResponse(response: any) {
-    response.phase = 0;
     return addDoc(collection(this.fs, 'responses'), response);
   }
 

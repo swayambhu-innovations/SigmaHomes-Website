@@ -38,12 +38,12 @@ export class AddResponseComponent implements OnInit {
   multiple: boolean = false;
   phasesNotes: FormGroup = new FormGroup({});
   notesFieldsControls: any[] = [];
-  addResponseForm: FormGroup = new FormGroup({
+  responseForm: FormGroup = new FormGroup({
     property: new FormControl(null, Validators.required),
     agent: new FormControl(null, Validators.required),
     lead: new FormControl(null, Validators.required),
     phase: new FormControl(null, Validators.required),
-    phaseNotes: this.phasesNotes,
+    notes: this.phasesNotes,
   });
   @Output() addResponse: EventEmitter<any> = new EventEmitter<any>();
   constructor(
@@ -71,10 +71,10 @@ export class AddResponseComponent implements OnInit {
   }
 
   genFields(): any[] {
-    this.addResponseForm.patchValue({ property: null });
+    this.responseForm.patchValue({ property: null });
     this.notesFieldsControls = [];
     this.phasesNotes.controls = {};
-    const num = this.addResponseForm.value.phase;
+    const num = this.responseForm.value.phase;
 
     for (let i = 0; i < num; i++) {
       this.notesFieldsControls.push({ name: `phase${i}`, index: i });
@@ -88,19 +88,19 @@ export class AddResponseComponent implements OnInit {
   }
 
   check() {
-    this.addResponseForm.value.phase <= 2
+    this.responseForm.value.phase <= 2
       ? (this.multiple = true)
       : (this.multiple = false);
   }
   submit() {
-    this.addResponseForm.patchValue({ agent: this.dataProvider.userID });
-    if (this.addResponseForm.valid) {
+    this.responseForm.patchValue({ agent: this.dataProvider.userID });
+    if (this.responseForm.valid) {
       let notes: any = {};
-      Object.keys(this.addResponseForm.value.phaseNotes).forEach(
+      Object.keys(this.responseForm.value.notes).forEach(
         (key: string) => {
           notes[key] = [
             {
-              note: this.addResponseForm.value.phaseNotes[key],
+              note: this.responseForm.value.notes[key],
               date: new Date(),
               userName: this.dataProvider.userData?.displayName,
               userType: this.dataProvider.userData?.access?.access,
@@ -110,18 +110,18 @@ export class AddResponseComponent implements OnInit {
       );
       this.addResponse.emit({
         property: this.properties.filter(
-          (property: any) => property.id === this.addResponseForm.value.property
+          (property: any) => property.id === this.responseForm.value.property
         )[0],
         agent: this.agents.filter(
-          (agent: any) => agent.id === this.addResponseForm.value.agent
+          (agent: any) => agent.id === this.responseForm.value.agent
         )[0],
         lead: this.leads.filter(
-          (lead: any) => lead.id === this.addResponseForm.value.lead
+          (lead: any) => lead.id === this.responseForm.value.lead
         )[0],
-        phase: this.addResponseForm.value.phase,
-        phaseNotes: notes,
+        phase: this.responseForm.value.phase,
+        notes: notes,
       });
-      this.addResponseForm.reset();
+      this.responseForm.reset();
       this.dialog.closeAll();
     }
     this.multiple = false;

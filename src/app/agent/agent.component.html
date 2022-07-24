@@ -55,13 +55,13 @@
       <button [ngClass]="{
           'view-as-btn': true,
           selected: viewAsInput.value == 'cards'
-        }" (click)="emitButtonAction('viewAsCard')" uk-tooltip="View as cards" data-view-as="cards">
+        }" (click)="emitButtonAction('cards')" uk-tooltip="View as cards" data-view-as="cards">
         <i class="fa-solid fa-address-card"></i>
       </button>
       <button [ngClass]="{
           'view-as-btn': true,
           selected: viewAsInput.value == 'table'
-        }" (click)="emitButtonAction('viewAsTable')" uk-tooltip="View as a table" data-view-as="table">
+        }" (click)="emitButtonAction('table')" uk-tooltip="View as a table" data-view-as="table">
         <i class="fa-solid fa-table"></i>
       </button>
     </div>

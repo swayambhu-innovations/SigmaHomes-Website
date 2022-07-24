@@ -70,7 +70,7 @@ export class ResponsesComponent implements OnInit {
     
     this.getResponses();
     this.getAgents();
-    this.viewAs = 'viewAsCard';
+    this.viewAs = 'cards';
           
     this.responses.forEach((res)=>{
       console.log(res)

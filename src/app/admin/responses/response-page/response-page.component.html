@@ -17,7 +17,7 @@
 
     <div id="container">
       <div id="response-container">
-        <app-response-card [response]="response" [readOnly]="true"></app-response-card>
+        <!-- <app-response-card [response]="response" [readOnly]="true"></app-response-card> -->
       </div>
 
       <div id="phases">
@@ -108,7 +108,7 @@
         <img *ngIf="note.image"  src={{note.image}} alt={{note.note}} class="note_image">
         <p class="date">{{getDate(note.date) | date}}</p>
         <p class="description">{{note.note}}</p>
-        <b  *ngIf="note.userName" style="color: grey; font-weight:400;font-size:0.9rem;">{{note.userName}} ( {{note.userType}} )  </b>
+        <b  *ngIf="note.userName" style="color: grey; font-weight:400;font-size:0.9rem;">{{note.userName}} ({{note.userType}})</b>
       </div>
       <button class="btn" (click)="addNote(activePhase)"><i class="fa fa-plus"></i> Add Note</button>
     </div>
