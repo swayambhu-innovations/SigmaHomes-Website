@@ -25,7 +25,7 @@
       <p *ngIf="type"><strong>Type: </strong>{{ type.name }}</p>
       <p *ngIf="unit"><strong>Unit: </strong>{{ unit.name }}</p>
     </div>
-    <button [routerLink]="project.id">
+    <button [routerLink]="'/agentPanel/properties/' + project.id">
       <i class="fa-solid fa-eye"></i>View Project
     </button>
   </div>

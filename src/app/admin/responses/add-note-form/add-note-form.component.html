@@ -1,0 +1,17 @@
+<form [formGroup]="addNoteForm" (ngSubmit)="submit()">
+  <div class="form-box">
+    <label for="note">Note</label>
+    <textarea class="admin-input" id="note" formControlName="note"></textarea>
+  </div>
+  <div class="form-box">
+    <label for="file">File (optional)</label>
+    <input
+      type="file"
+      class="admin-input"
+      id="file"
+      #fileInput
+      (change)="validateFile()"
+    />
+  </div>
+  <button type="submit">Submit</button>
+</form>

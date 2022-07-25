@@ -1,0 +1,17 @@
+<h3>Interested Properties</h3>
+<div uk-slider>
+  <div class="uk-slider-container">
+    <ul class="uk-slider-items uk-child-width-1-1 uk-grid-small">
+      <li *ngFor="let property of data.properties">
+        <app-project-card
+          [project]="property.project"
+          [type]="property.type"
+          [unit]="property.unit"
+        ></app-project-card>
+      </li>
+    </ul>
+  </div>
+  <div class="uk-position-relative">
+    <ul class="uk-slider-nav uk-dotnav uk-position-center"></ul>
+  </div>
+</div>

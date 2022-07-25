@@ -1,5 +1,5 @@
 section {
-  padding: 1.5em;
+  padding: 1em;
   position: relative;
 
   .btn {
@@ -22,12 +22,16 @@ section {
       opacity: 0.7;
     }
 
+    &.delete-btn {
+      background-color: red;
+    }
+
     i {
       margin-right: 0.3em;
     }
   }
 
-  #view-details {
+  #actions {
     position: absolute;
     top: 1.5em;
     right: 1.5em;
@@ -40,9 +44,55 @@ section {
   #container {
     display: flex;
     align-items: center;
+    padding-top: 1em;
 
-    #response-container {
+    #cards {
       width: 40%;
+
+      .card {
+        box-shadow: var(--light-shadow);
+        border-radius: 10px;
+        padding: 0.5em;
+
+        &:not(:last-child) {
+          margin-bottom: 0.5em;
+        }
+
+        .contact-buttons {
+          display: flex;
+          margin-top: 0.5em;
+
+          a,
+          button {
+            text-decoration: none;
+            border: none;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: var(--secondary);
+            color: var(--secondary-contrast);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.5s;
+            margin-right: 0.25em;
+
+            &:not(:disabled):hover {
+              box-shadow: var(--normal-shadow);
+            }
+
+            &:disabled {
+              opacity: 0.8;
+              cursor: no-drop;
+            }
+
+            &.delete-btn {
+              background-color: var(--danger);
+            }
+          }
+        }
+      }
     }
 
     #phases {
@@ -133,7 +183,7 @@ section {
     }
   }
 
-  ul {
+  .phase-tabs {
     width: 100%;
     margin: 0;
     margin-top: 1.5em;
@@ -147,16 +197,19 @@ section {
       width: 20%;
       transition: all 0.4s;
       padding: 0.5em 0;
+      display: flex;
+      cursor: pointer;
 
       button {
         background: none;
+        cursor: pointer;
+        outline: none;
         border: none;
         width: 100%;
         font-family: var(--font-three);
         color: var(--primary-contrast);
         text-transform: unset;
         font-size: var(--small);
-        cursor: pointer;
       }
 
       &:hover {
@@ -164,7 +217,7 @@ section {
         z-index: 2;
       }
 
-      &.uk-active {
+      &.view-phase {
         background-color: var(--secondary);
       }
 
@@ -186,17 +239,30 @@ section {
 
     .note {
       margin-bottom: 1em;
-      img{
-        height: 4rem;
-        width: 4rem;
-      }
+
       .date,
-      .description {
+      .description,
+      .added-by {
         margin: 0;
       }
 
       .date {
         font-weight: 700;
+      }
+
+      .file {
+        text-decoration: underline;
+        color: var(--secondary);
+      }
+
+      .added-by {
+        color: var(--light-tertiary);
+      }
+    }
+
+    #note-buttons {
+      .btn:not(:last-child) {
+        margin-right: 0.25em;
       }
     }
   }

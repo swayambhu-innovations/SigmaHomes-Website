@@ -8,6 +8,7 @@
   --secondary-light: #badaff;
   --secondary-lighter: #e3f0ff;
   --tertiary: #000;
+  --light-tertiary: grey;
   --danger: #dc143c;
   --processing: #fa9d39;
   --xxxlarge: 36px;
@@ -21,6 +22,7 @@
   --font-two: "Lato", sans-serif;
   --font-three: "Poppins", sans-serif;
   --normal-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  --light-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 * {
@@ -78,8 +80,39 @@
 
 .dialog {
   .mat-dialog-container {
-    min-width: 50vw;
+    width: 50vw;
+    min-width: 270px;
     max-height: 90vh;
     overflow-y: auto;
+  }
+}
+
+.image-and-name {
+  display: flex;
+  align-items: flex-start;
+
+  img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: .5em;
+  }
+
+  h3 {
+    font-family: var(--font-three);
+    font-size: var(--medium);
+    color: var(--tertiary);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .label-badge {
+      color: var(--light-tertiary);
+      font-family: var(--font-three);
+      font-size: var(--small);
+      border-radius: 7px;
+    }
   }
 }

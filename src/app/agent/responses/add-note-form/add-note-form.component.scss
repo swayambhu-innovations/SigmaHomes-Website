@@ -1,0 +1,32 @@
+.form-box {
+  margin-bottom: 1em;
+  width: 100%;
+
+  label {
+    font-family: var(--font-three);
+    color: var(--tertiary);
+    font-size: var(--small);
+  }
+
+  .admin-input {
+    width: 100%;
+  }
+
+  textarea {
+    height: 80px;
+    resize: none;
+  }
+}
+
+button {
+  background-color: var(--secondary);
+  color: var(--secondary-contrast);
+  font-family: var(--font-three);
+  font-size: var(--small);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  margin-top: .5em;
+  padding: .5em;
+}

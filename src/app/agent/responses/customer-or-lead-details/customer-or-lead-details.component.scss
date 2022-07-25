@@ -1,0 +1,39 @@
+#details {
+  margin-top: 1em;
+
+  .detail {
+    display: flex;
+    align-items: baseline;
+    font-family: var(--font-three);
+    font-size: var(--medium);
+    color: var(--tertiary);
+
+    p {
+      margin: 0.25em 0;
+      min-width: 50%;
+      word-wrap: break-word;
+    }
+
+    .key {
+      margin-right: 1em;
+      font-weight: 500;
+    }
+
+    @media (max-width: 650px) {
+      flex-direction: column;
+
+      p {
+        width: 100%;
+      }
+
+      .key {
+        margin-right: 0;
+      }
+    }
+  }
+
+  app-primary-btn {
+    display: block;
+    margin-top: 1em;
+  }
+}

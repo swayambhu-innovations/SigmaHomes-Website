@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
@@ -12,7 +13,10 @@ export class ProjectCardComponent implements OnInit {
   @Input() type: any = null;
   @Input() unit: any = null;
 
-  constructor(private databaseService: DatabaseService) {}
+  constructor(
+    private databaseService: DatabaseService,
+    public dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     // If project ID is given in place of project object, get the object

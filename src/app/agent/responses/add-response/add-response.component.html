@@ -1,54 +1,104 @@
+<h3>Add New Response</h3>
 <form [formGroup]="responseForm" (ngSubmit)="submit()">
-  <mat-form-field appearance="fill">
-    <mat-label>Lead</mat-label>
-    <mat-select formControlName="lead">
-      <mat-option *ngFor="let lead of leads" [value]="lead.id">
-        {{ lead.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <div style="display: flex">
-    <mat-form-field appearance="fill" style="margin-right: 0.5em">
-      <mat-label>Stage</mat-label>
-      <mat-select (selectionChange)="genFields()" formControlName="phase">
-        <mat-option [value]="phase.value" *ngFor="let phase of phases">
-          {{ phase.label }}
+  <fieldset>
+    <legend>Basic Details</legend>
+    <mat-form-field appearance="fill">
+      <mat-label>Customer or Lead</mat-label>
+      <mat-select #customerOrLead (selectionChange)="responseForm.reset()">
+        <mat-option value="customer">Customer</mat-option>
+        <mat-option value="lead">Lead</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field
+      *ngIf="customerOrLead.value == 'customer'"
+      appearance="fill"
+    >
+      <mat-label>Customer</mat-label>
+      <mat-select formControlName="customerId">
+        <mat-option *ngFor="let customer of customers" [value]="customer.id">
+          {{ customer.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field appearance="fill" (click)="check()">
-      <mat-label>Property</mat-label>
-      <mat-select formControlName="property" *ngIf="!multiple">
-        <mat-option *ngFor="let property of properties" [value]="property.id">
-          {{ property.name }}
-        </mat-option>
-      </mat-select>
-      <mat-select multiple formControlName="property" *ngIf="multiple">
-        <mat-option *ngFor="let property of properties" [value]="property.id">
-          {{ property.name }}
+    <mat-form-field *ngIf="customerOrLead.value == 'lead'" appearance="fill">
+      <mat-label>Lead</mat-label>
+      <mat-select formControlName="leadId">
+        <mat-option *ngFor="let lead of leads" [value]="lead.id">
+          {{ lead.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </div>
-  <div [formGroup]="phasesNotes" class="textFields">
-    <mat-form-field appearance="fill" *ngFor="let input of notesFieldsControls">
-      <mat-label>Note For {{ phases[input.index].label }}</mat-label>
-      <input matInput [formControlName]="input.name" placeholder="Note" />
+    <mat-form-field appearance="fill">
+      <mat-label>Phase</mat-label>
+      <mat-select formControlName="phase" (selectionChange)="calcMultiple()">
+        <mat-option *ngFor="let phase of phases" [value]="phase">
+          {{ phase }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
+  </fieldset>
+  <div *ngIf="responseForm.get('properties')" formArrayName="properties">
+    <fieldset
+      *ngFor="let feature of getPropertyControls(); let i = index"
+      [formGroupName]="i"
+    >
+      <legend>Property{{ allowMultiple ? " " + (i + 1) : "" }}</legend>
+      <mat-form-field appearance="fill">
+        <mat-label>Project</mat-label>
+        <mat-select formControlName="projectId" #projectId>
+          <mat-option *ngFor="let project of projects" [value]="project.id">
+            {{ project.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Type (optional)</mat-label>
+        <mat-select formControlName="typeId" #typeId>
+          <ng-container *ngFor="let type of types">
+            <mat-option
+              *ngIf="type.project == projectId.value"
+              [value]="type.id"
+            >
+              {{ type.name }}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Unit (optional)</mat-label>
+        <mat-select formControlName="unitId">
+          <ng-container *ngFor="let unit of units">
+            <mat-option
+              *ngIf="
+                unit.project == projectId.value && unit.type == typeId.value
+              "
+              [value]="unit.id"
+            >
+              {{ unit.name }}
+            </mat-option>
+          </ng-container>
+        </mat-select>
+      </mat-form-field>
+      <button
+        *ngIf="i > 0"
+        type="button"
+        class="delete-property"
+        (click)="deleteProperty(i)"
+      >
+        <i class="fa-solid fa-xmark"></i>Delete Property
+      </button>
+    </fieldset>
   </div>
   <button
-    mat-button
-    style="background-color: var(--primary); color: white"
-    type="submit"
+    type="button"
+    (click)="addProperty()"
+    id="add-property"
+    *ngIf="allowMultiple"
   >
-    Submit
+    <i class="fa-solid fa-plus"></i> Add Property
+  </button>
+
+  <button type="submit" [disabled]="!responseFormIsValid()">
+    Add Response
   </button>
 </form>
-
-<!-- 
-<mat-form-field appearance="fill">
-    <mat-label>Toppings</mat-label>
-    <mat-select [formControl]="toppings" multiple>
-      <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
-    </mat-select>
-  </mat-form-field> -->

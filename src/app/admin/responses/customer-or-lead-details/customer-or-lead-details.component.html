@@ -1,0 +1,123 @@
+<div class="image-and-name">
+  <img [src]="data.customerOrLead?.img || 'assets/img/circle-user-solid.svg'" />
+  <h3>
+    <span>{{ data.customerOrLead?.name }}</span>
+    <span class="label-badge">{{ data.customerOrLead.customerOrLead }}</span>
+  </h3>
+</div>
+<div id="details">
+  <div class="detail">
+    <p class="key">Name</p>
+    <p class="value">{{ data.customerOrLead?.name }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Phone Number</p>
+    <p class="value">{{ data.customerOrLead?.phone || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Email Address</p>
+    <p class="value">{{ data.customerOrLead?.email || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Address</p>
+    <p class="value">{{ data.customerOrLead?.address || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">State</p>
+    <p class="value">{{ data.customerOrLead?.state || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">City</p>
+    <p class="value">{{ data.customerOrLead?.city || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Pincode</p>
+    <p class="value">{{ data.customerOrLead?.pincode || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Aadhar No.</p>
+    <p class="value">{{ data.customerOrLead?.aadharNo || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">PAN No.</p>
+    <p class="value">{{ data.customerOrLead?.panNo || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Customer DOB</p>
+    <p class="value">{{ data.customerOrLead?.customerDob || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Customer Anniversary</p>
+    <p class="value">
+      {{ data.customerOrLead?.customerAnniversary || "N/A" }}
+    </p>
+  </div>
+  <div class="detail">
+    <p class="key">Booking Date</p>
+    <p class="value">{{ data.customerOrLead?.bookingDate || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Project Name</p>
+    <p class="value">{{ data.customerOrLead?.projectName || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Unit No.</p>
+    <p class="value">{{ data.customerOrLead?.unitNo || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Property Type</p>
+    <p class="value">{{ data.customerOrLead?.propertyType || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Company Sales Value</p>
+    <p class="value">
+      {{ data.customerOrLead?.companySalesValue || "N/A" }}
+    </p>
+  </div>
+  <div class="detail">
+    <p class="key">Sales Value</p>
+    <p class="value">{{ data.customerOrLead?.salesValue || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Advance Value</p>
+    <p class="value">{{ data.customerOrLead?.advanceValue || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Finance Details</p>
+    <p class="value">{{ data.customerOrLead?.financeDetails || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Payment Mode</p>
+    <p class="value">{{ data.customerOrLead?.paymentMode || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Job Type</p>
+    <p class="value">{{ data.customerOrLead?.jobType || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Company Name</p>
+    <p class="value">{{ data.customerOrLead?.companyName || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Monthly Salary</p>
+    <p class="value">{{ data.customerOrLead?.monthlySalary || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Firm Name</p>
+    <p class="value">{{ data.customerOrLead?.firmName || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">Year of Establishment</p>
+    <p class="value">
+      {{ data.customerOrLead?.yearOfEstablishment || "N/A" }}
+    </p>
+  </div>
+  <div class="detail">
+    <p class="key">Income as per ITR</p>
+    <p class="value">{{ data.customerOrLead?.incomeAsPerITR || "N/A" }}</p>
+  </div>
+  <div class="detail">
+    <p class="key">ITR Status</p>
+    <p class="value">{{ data.customerOrLead?.itrStatus || "N/A" }}</p>
+  </div>
+</div>

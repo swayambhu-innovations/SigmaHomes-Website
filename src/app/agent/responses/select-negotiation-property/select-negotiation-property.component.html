@@ -1,0 +1,22 @@
+<h3>Select Negotiation Property</h3>
+<p>
+  Select one property which will enter the negotiation phase. All the other
+  interested properties will be dropped.
+</p>
+<form [formGroup]="negotiationForm" (ngSubmit)="submit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Property</mat-label>
+    <mat-select formControlName="propertyIndex">
+      <mat-option
+        *ngFor="let property of data.properties; let i = index"
+        [value]="i"
+        >Project: {{ property.project?.name
+        }}{{ property.type?.name ? ", Type: " + property.type.name : "" }}
+        {{ property.unit?.name ? ", Unit: " + property.unit.name : "" }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button type="submit" [disabled]="!negotiationForm.valid">
+    Go to Negotiation Phase
+  </button>
+</form>

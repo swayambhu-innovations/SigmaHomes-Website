@@ -246,7 +246,7 @@ export class DatabaseService {
     return addDoc(collection(this.fs, 'responses'), response);
   }
 
-  updateResponse(data: any, id: string) {
+  updateResponse(id: string, data: any) {
     return updateDoc(doc(this.fs, 'responses/' + id), data);
   }
 
@@ -263,6 +263,14 @@ export class DatabaseService {
   }
 
   getResponsesPromise() {
+    if (this.dataProvider.userData?.access.access == 'Agent') {
+      return getDocs(
+        query(
+          collection(this.fs, 'responses'),
+          where('agentId', '==', this.dataProvider.userData.userId)
+        )
+      );
+    }
     return getDocs(collection(this.fs, 'responses'));
   }
 
