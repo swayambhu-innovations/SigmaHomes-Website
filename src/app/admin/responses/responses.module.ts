@@ -18,6 +18,7 @@ import { CustomerOrLeadDetailsComponent } from './customer-or-lead-details/custo
 import { SelectNegotiationPropertyComponent } from './select-negotiation-property/select-negotiation-property.component';
 import { AddNoteFormComponent } from './add-note-form/add-note-form.component';
 import { AddVoiceNoteFormComponent } from './add-voice-note-form/add-voice-note-form.component';
+import { ChangeAgentComponent } from './change-agent/change-agent.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AddVoiceNoteFormComponent } from './add-voice-note-form/add-voice-note-
     SelectNegotiationPropertyComponent,
     AddNoteFormComponent,
     AddVoiceNoteFormComponent,
+    ChangeAgentComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,17 @@
+<h3>Change Agent</h3>
+<form [formGroup]="agentForm" (ngSubmit)="submit()">
+  <mat-form-field appearance="fill">
+    <mat-label>Select Agent</mat-label>
+    <mat-select formControlName="agentId">
+      <ng-container *ngFor="let agent of agents">
+        <mat-option
+          *ngIf="agent.userId != data.currentAgentId"
+          [value]="agent.userId"
+        >
+          {{ agent.displayName }}
+        </mat-option>
+      </ng-container>
+    </mat-select>
+  </mat-form-field>
+  <button type="submit" [disabled]="!agentForm.valid">Change Agent</button>
+</form>

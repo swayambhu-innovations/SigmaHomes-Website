@@ -1,0 +1,23 @@
+h3 {
+  font-family: var(--font-three);
+  font-size: var(--msmall);
+  color: var(--tertiary);
+}
+
+form {
+  mat-form-field {
+    width: 100%;
+    display: block;
+  }
+
+  button[type="submit"] {
+    width: 100%;
+    margin-top: 1em;
+    background-color: var(--secondary);
+    color: var(--secondary-contrast);
+    font-size: var(--small);
+    padding: 0.5em;
+    border: none;
+    font-family: var(--font-three);
+  }
+}

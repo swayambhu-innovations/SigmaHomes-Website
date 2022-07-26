@@ -7,6 +7,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
 import { AddNoteFormComponent } from '../add-note-form/add-note-form.component';
 import { AddVoiceNoteFormComponent } from '../add-voice-note-form/add-voice-note-form.component';
+import { ChangeAgentComponent } from '../change-agent/change-agent.component';
 import { CustomerOrLeadDetailsComponent } from '../customer-or-lead-details/customer-or-lead-details.component';
 import { InterestedPropertiesComponent } from '../interested-properties/interested-properties.component';
 import { SelectNegotiationPropertyComponent } from '../select-negotiation-property/select-negotiation-property.component';
@@ -293,6 +294,34 @@ export class ResponsePageComponent implements OnInit {
       data: {
         responseId: this.response.id,
       },
+    });
+  }
+
+  changeAgent(): void {
+    const dialogRef = this.dialog.open(ChangeAgentComponent, {
+      panelClass: 'dialog',
+      data: {
+        currentAgentId: this.response.agentId,
+      },
+    });
+    dialogRef.componentInstance.agentChanged.subscribe((data: any) => {
+      this.response.agentId = data.agentId;
+      this.dataProvider.pageSetting.blur = true;
+      this.databaseService
+        .updateResponse(this.response.id, { agentId: this.response.agentId })
+        .then(() => {
+          this.alertify.presentToast('Agent changed successfully');
+        })
+        .catch(() => {
+          dialogRef.close();
+          this.dataProvider.pageSetting.blur = false;
+          this.alertify.presentToast('Error changing agent');
+        })
+        .finally(() => {
+          dialogRef.close();
+          this.getResponse(this.response.id);
+          this.dataProvider.pageSetting.blur = false;
+        });
     });
   }
 }
