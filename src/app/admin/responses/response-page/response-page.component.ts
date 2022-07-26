@@ -294,5 +294,8 @@ export class ResponsePageComponent implements OnInit {
         responseId: this.response.id,
       },
     });
+    dialogRef.componentInstance.noteAdded.subscribe((note: any) => {
+      console.log(note);
+    })
   }
 }
