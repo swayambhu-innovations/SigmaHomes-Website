@@ -7,9 +7,9 @@
     <button class="btn" (click)="viewProperties()">
       <i class="fa-solid fa-house"></i> View Interested
       {{
-        response.properties?.length === 1
-          ? "Property"
-          : "Properties (" + response.properties?.length + ")"
+      response.properties?.length === 1
+      ? "Property"
+      : "Properties (" + response.properties?.length + ")"
       }}
     </button>
     <button class="btn" (click)="viewCustomerOrLead()">
@@ -27,31 +27,23 @@
     <div id="cards">
       <div class="card">
         <div class="image-and-name">
-          <img
-            [src]="
+          <img [src]="
               response.customerOrLead?.img || 'assets/img/circle-user-solid.svg'
-            "
-          />
+            " />
           <div>
             <h3>
               <span>{{ response.customerOrLead?.name }}</span>
               <span class="label-badge">{{
                 response.customerOrLead?.customerOrLead
-              }}</span>
+                }}</span>
             </h3>
             <div class="contact-buttons">
-              <a
-                *ngIf="response.customerOrLead?.phone"
-                href="tel:{{ response.customerOrLead?.phone }}"
-                ><i class="fa-solid fa-phone"></i
-              ></a>
+              <a *ngIf="response.customerOrLead?.phone" href="tel:{{ response.customerOrLead?.phone }}"><i
+                  class="fa-solid fa-phone"></i></a>
               <button *ngIf="response.customerOrLead?.phone" type="button">
                 <i class="fa-solid fa-comment-sms"></i>
               </button>
-              <a
-                *ngIf="response.customerOrLead?.email"
-                href="mailto:{{ response.customerOrLead?.email }}"
-              >
+              <a *ngIf="response.customerOrLead?.email" href="mailto:{{ response.customerOrLead?.email }}">
                 <i class="fa-solid fa-envelope"></i>
               </a>
             </div>
@@ -60,29 +52,21 @@
       </div>
       <div class="card">
         <div class="image-and-name">
-          <img
-            [src]="
+          <img [src]="
               response.agent?.photoURL || 'assets/img/circle-user-solid.svg'
-            "
-          />
+            " />
           <div>
             <h3>
               <span>{{ response.agent?.displayName }}</span>
               <span class="label-badge">Agent</span>
             </h3>
             <div class="contact-buttons">
-              <a
-                *ngIf="response.agent?.phoneNumber"
-                href="tel:{{ response.agent?.phoneNumber }}"
-                ><i class="fa-solid fa-phone"></i
-              ></a>
+              <a *ngIf="response.agent?.phoneNumber" href="tel:{{ response.agent?.phoneNumber }}"><i
+                  class="fa-solid fa-phone"></i></a>
               <button *ngIf="response.agent?.phoneNumber" type="button">
                 <i class="fa-solid fa-comment-sms"></i>
               </button>
-              <a
-                *ngIf="response.agent?.email"
-                href="mailto:{{ response.agent?.email }}"
-              >
+              <a *ngIf="response.agent?.email" href="mailto:{{ response.agent?.email }}">
                 <i class="fa-solid fa-envelope"></i>
               </a>
             </div>
@@ -93,112 +77,79 @@
 
     <div id="phases">
       <div id="stepper-wrapper">
-        <div
-          [ngClass]="{
+        <div [ngClass]="{
             'stepper-item': true,
             completed: activePhase >= 0
-          }"
-        >
+          }">
           <div class="step-counter"></div>
           <div class="step-name">Query</div>
         </div>
-        <div
-          [ngClass]="{
+        <div [ngClass]="{
             'stepper-item': true,
             completed: activePhase >= 1
-          }"
-        >
+          }">
           <div class="step-counter"></div>
           <div class="step-name">Visitation</div>
         </div>
-        <div
-          [ngClass]="{
+        <div [ngClass]="{
             'stepper-item': true,
             completed: activePhase >= 2
-          }"
-        >
+          }">
           <div class="step-counter"></div>
           <div class="step-name">Negotiation</div>
         </div>
-        <div
-          [ngClass]="{
+        <div [ngClass]="{
             'stepper-item': true,
             completed: activePhase >= 3
-          }"
-        >
+          }">
           <div class="step-counter"></div>
           <div class="step-name">Legalization</div>
         </div>
-        <div
-          [ngClass]="{
+        <div [ngClass]="{
             'stepper-item': true,
             completed: activePhase >= 4
-          }"
-        >
+          }">
           <div class="step-counter"></div>
           <div class="step-name">Closure</div>
         </div>
       </div>
-      <button
-        class="btn"
-        (click)="completePhase()"
-        [disabled]="activePhase >= 4"
-      >
+      <button class="btn" (click)="completePhase()" [disabled]="activePhase >= 4">
         <i class="fa-solid fa-check"></i> Mark this phase complete
       </button>
-      <button
-        class="btn"
-        (click)="discardPhase()"
-        [disabled]="activePhase <= 0"
-      >
+      <button class="btn" (click)="discardPhase()" [disabled]="activePhase <= 0">
         <i class="fa-solid fa-xmark"></i> Discard this phase
       </button>
     </div>
   </div>
 
   <ul uk-tab class="phase-tabs">
-    <li
-      (click)="viewPhase = 0"
-      [ngClass]="{
+    <li (click)="viewPhase = 0" [ngClass]="{
         'view-phase': viewPhase === 0
-      }"
-    >
+      }">
       <button>Query</button>
     </li>
-    <li
-      (click)="viewPhase = 1"
-      [class]="{
+    <li (click)="viewPhase = 1" [class]="{
         'view-phase': viewPhase === 1,
         'uk-disabled': activePhase < 1
-      }"
-    >
+      }">
       <button>Visitation</button>
     </li>
-    <li
-      (click)="viewPhase = 2"
-      [class]="{
+    <li (click)="viewPhase = 2" [class]="{
         'view-phase': viewPhase === 2,
         'uk-disabled': activePhase < 2
-      }"
-    >
+      }">
       <button>Negotiation</button>
     </li>
-    <li
-      (click)="viewPhase = 3"
-      [class]="{
+    <li (click)="viewPhase = 3" [class]="{
         'view-phase': viewPhase === 3,
         'uk-disabled': activePhase < 3
-      }"
-    >
+      }">
       <button>Legalization</button>
     </li>
-    <li
-      (click)="viewPhase = 4"
-      [class]="{
+    <li (click)="viewPhase = 4" [class]="{
         'view-phase': viewPhase === 4,
         'uk-disabled': activePhase < 4
-      }"
-    >
+      }">
       <button>Closure</button>
     </li>
   </ul>
@@ -207,9 +158,7 @@
       <div class="note" *ngFor="let note of response.notes[phases[viewPhase]]">
         <p class="date">{{ note.date.toDate() | date }}</p>
         <p class="description">{{ note.note }}</p>
-        <a *ngIf="note.file" [href]="note.file" target="_blank" class="file"
-          >View File</a
-        >
+        <a *ngIf="note.file" [href]="note.file" target="_blank" class="file">View File</a>
         <p class="added-by">Added by {{ note.addedBy }}</p>
       </div>
     </ng-container>
@@ -223,15 +172,3 @@
     </div>
   </div>
 </section>
-
-<!-- <div id="add-note-modal" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body">
-      <h2 class="uk-modal-title">Add Note</h2>
-      <button class="uk-modal-close-default" type="button" uk-close></button>
-      <form [formGroup]="addNoteForm" (ngSubmit)="addNote()">
-        <input type="text" class="admin-input" formControlName="date" placeholder="Date" />
-        <textarea class="admin-input" formControlName="date" placeholder="Description"></textarea>
-        <app-primary-btn text="Add Note" [disabled]="!addNoteForm.valid"></app-primary-btn>
-      </form>
-    </div>
-  </div> -->

@@ -1,0 +1,5 @@
+<button (click)="start()">Start</button>
+<button (click)="stop()">Stop</button>
+<button (click)="sourceFile = undefined">clear</button>
+<audio controls [src]="sourceFile" *ngIf="sourceFile"></audio>
+<button (click)="addAudioNote()" *ngIf="sourceFile">Add as a note</button>
