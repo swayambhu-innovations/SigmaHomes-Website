@@ -104,12 +104,6 @@ export class DatabaseService {
     return addDoc(collection(this.fs, 'completedTasks'), data);
   }
 
-  assignAgent(agentId: string, responseId: string) {
-    return updateDoc(doc(this.fs, 'responses/' + responseId), {
-      agent: arrayUnion(agentId),
-    });
-  }
-
   updateUserImage(imageUrl: string, userId: string) {
     return updateDoc(doc(this.fs, 'users/' + userId), { photoURL: imageUrl });
   }
@@ -122,12 +116,17 @@ export class DatabaseService {
     return addDoc(collection(this.fs, 'customers'), data);
   }
 
-  getCustomersPromise() {
+  async getCustomersPromise() {
     if (this.dataProvider.userData?.access.access == 'Agent') {
+      const responseIds: string[] = [];
+      const responseDocs = await this.getResponsesPromise();
+      responseDocs.forEach((doc) => {
+        responseIds.push(doc.id);
+      });
       return getDocs(
         query(
           collection(this.fs, 'customers'),
-          where('agentId', '==', this.dataProvider.userData.userId)
+          where('responseId', 'in', responseIds)
         )
       );
     }
@@ -230,7 +229,20 @@ export class DatabaseService {
     return collectionSnapshots(collection(this.fs, 'leads'));
   }
 
-  getLeadsPromise() {
+  async getLeadsPromise() {
+    if (this.dataProvider.userData?.access.access == 'Agent') {
+      const responseIds: string[] = [];
+      const responseDocs = await this.getResponsesPromise();
+      responseDocs.forEach((doc) => {
+        responseIds.push(doc.id);
+      });
+      return getDocs(
+        query(
+          collection(this.fs, 'leads'),
+          where('responseId', 'in', responseIds)
+        )
+      );
+    }
     return getDocs(collection(this.fs, 'leads'));
   }
 
@@ -242,8 +254,22 @@ export class DatabaseService {
     return deleteDoc(doc(this.fs, 'leads/' + leadId));
   }
 
-  addResponse(response: any) {
-    return addDoc(collection(this.fs, 'responses'), response);
+  async addResponse(response: any) {
+    // add link to response
+    const responseDoc = await addDoc(
+      collection(this.fs, 'responses'),
+      response
+    );
+    if (response.customerId) {
+      await this.updateCustomer(response.customerId, {
+        responseId: responseDoc.id,
+      });
+    }
+    if (response.leadId) {
+      await this.updateLead(response.leadId, {
+        responseId: responseDoc.id,
+      });
+    }
   }
 
   updateResponse(id: string, data: any) {

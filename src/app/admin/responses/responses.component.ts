@@ -8,6 +8,7 @@ import { AddResponseComponent } from './add-response/add-response.component';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { CSVService } from 'src/app/services/csv.service';
 import Fuse from 'fuse.js';
+import { Timestamp } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-responses',
@@ -48,7 +49,7 @@ export class ResponsesComponent implements OnInit {
   ) {
     this.activateRoute.queryParams.subscribe((data: any) => {
       if (data.openModal === 'true') {
-        this.triggerAddResponse();
+        this.triggerAddResponse(data.customerOrLead, data.id);
       }
     });
   }
@@ -164,14 +165,29 @@ export class ResponsesComponent implements OnInit {
                 const records = this.csvService.import();
                 if (records && records.length) {
                   for (const record of records) {
+                    // Format response data
                     const response = {
                       agentId: record.agentId,
                       customerId: record.customerId,
                       leadId: record.leadId,
                       phase: record.phase,
                       properties: [] as any[],
+                      notes: {} as any,
                     };
 
+                    // Log activity
+                    response.notes[response.phase] = [
+                      {
+                        note: 'Imported response from CSV',
+                        date: Timestamp.now(),
+                        addedBy: this.dataProvider.userID,
+                        addedByName: this.dataProvider.userData?.displayName,
+                        addedByAccess: 'Admin',
+                        file: null,
+                      },
+                    ];
+
+                    // Format interested documents
                     var i = 1;
                     while (true) {
                       const property: any = {};
@@ -196,6 +212,7 @@ export class ResponsesComponent implements OnInit {
                       response.properties.push(property);
                       i++;
                     }
+
                     await this.databaseService.addResponse(response);
                   }
                 }
@@ -271,9 +288,13 @@ export class ResponsesComponent implements OnInit {
     }
   }
 
-  triggerAddResponse() {
+  triggerAddResponse(customerOrLead?: 'customer' | 'lead', id?: string) {
     const ref = this.dialog.open(AddResponseComponent, {
       panelClass: 'dialog',
+      data: {
+        customerOrLead: customerOrLead,
+        id: id,
+      },
     });
     ref.componentInstance.responseAdded.subscribe((response: any) => {
       this.dataProvider.pageSetting.blur = true;

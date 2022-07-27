@@ -75,7 +75,9 @@ export class AddNoteFormComponent implements OnInit {
       this.noteAdded.emit({
         ...this.addNoteForm.value,
         date: Timestamp.now(),
-        addedBy: 'admin',
+        addedBy: this.dataProvider.userID,
+        addedByName: this.dataProvider.userData?.displayName,
+        addedByAccess: 'Admin',
       });
     }
   }

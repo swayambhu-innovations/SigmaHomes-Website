@@ -36,10 +36,6 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
     private activateRoute: ActivatedRoute
   ) {
     this.activateRoute.queryParams.subscribe((data: any) => {
-      console.log(data);
-      // if(data.openModal){
-      //   this.currentBroadcast = data.id;
-      // }
       if (data.openModal === 'true') {
         this.openModal = data.openModal;
         UIkit.modal(document.getElementById('lead-modal')).show(); 

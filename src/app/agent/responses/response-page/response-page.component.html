@@ -173,10 +173,13 @@
       <div class="note" *ngFor="let note of response.notes[phases[viewPhase]]">
         <p class="date">{{ note.date.toDate() | date }}</p>
         <p class="description">{{ note.note }}</p>
+        <audio *ngIf="note.voiceNote" [src]="note.voiceNote" controls></audio>
         <a *ngIf="note.file" [href]="note.file" target="_blank" class="file"
           >View File</a
         >
-        <p class="added-by">Added by {{ note.addedBy }}</p>
+        <p class="added-by">
+          {{ note.addedByName }} ({{ note.addedByAccess }})
+        </p>
       </div>
     </ng-container>
     <div id="note-buttons">

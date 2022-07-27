@@ -37,7 +37,7 @@ export class AgentComponent implements OnInit {
           this.showingResponsePage =
             urlArr.indexOf('responses') != urlArr.length - 1;
         } else {
-          const panel = urlArr[urlArr.length - 1];
+          const panel = urlArr[urlArr.length - 1].split('?')[0];
           const panelWords = panel.split('-');
           panelWords.forEach((word, index) => {
             panelWords[index] =

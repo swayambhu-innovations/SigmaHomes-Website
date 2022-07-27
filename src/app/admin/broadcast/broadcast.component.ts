@@ -24,18 +24,18 @@ export class BroadcastComponent implements OnInit {
     private databaseService: DatabaseService,
     public broadcastService: BroadcastService,
     public dialog: MatDialog,
-    private dataProvider:DataProvider,
-    private activateRoute:ActivatedRoute
+    private dataProvider: DataProvider,
+    private activateRoute: ActivatedRoute
   ) {
-    this.activateRoute.queryParams.subscribe((data:any)=>{
+    this.activateRoute.queryParams.subscribe((data: any) => {
       console.log(data);
       // if(data.openModal){
       //   this.currentBroadcast = data.id;
       // }
-      if (data.openModal==="true"){
+      if (data.openModal === 'true') {
         this.openBroadcast();
       }
-    })
+    });
   }
 
   ngOnInit(): void {
@@ -43,7 +43,7 @@ export class BroadcastComponent implements OnInit {
       if (action === 'newBroadCast') {
         this.openBroadcast();
       }
-    })
+    });
     this.databaseService.getBroadcasts().then((docs: any) => {
       this.broadcasts = [];
       docs.forEach((doc: any) => {
@@ -52,7 +52,7 @@ export class BroadcastComponent implements OnInit {
       this.filteredBroadcasts = this.broadcasts;
     });
   }
-  
+
   ngAfterViewInit(): void {
     const broadcastSearchInput = document.getElementById(
       'broadcast-search-input'
@@ -75,9 +75,9 @@ export class BroadcastComponent implements OnInit {
     }
   }
 
-  openBroadcast(){
+  openBroadcast() {
     const dialogRef = this.dialog.open(NewBroadcastComponent);
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log(`Dialog result: ${result}`);
     });
   }

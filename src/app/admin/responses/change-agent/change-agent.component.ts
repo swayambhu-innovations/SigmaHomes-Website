@@ -9,9 +9,11 @@ import { DatabaseService } from 'src/app/services/database.service';
   styleUrls: ['./change-agent.component.scss'],
 })
 export class ChangeAgentComponent implements OnInit {
-  agents: any[] = [];
+  agents: {
+    [key: string]: any;
+  } = {};
   agentForm: FormGroup = new FormGroup({
-    agentId: new FormControl(null, Validators.required),
+    agent: new FormControl(null, Validators.required),
   });
   @Output() agentChanged: EventEmitter<any> = new EventEmitter<any>();
 
@@ -23,8 +25,8 @@ export class ChangeAgentComponent implements OnInit {
 
   ngOnInit(): void {
     this.databaseService.getAllAgentsPromise().then((docs: any) => {
-      docs.forEach((element: any) => {
-        this.agents.push({ ...element.data(), id: element.id });
+      docs.forEach((doc: any) => {
+        this.agents[doc.id] = { id: doc.id, ...doc.data() };
       });
     });
   }

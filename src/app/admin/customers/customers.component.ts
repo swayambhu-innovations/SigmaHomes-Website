@@ -6,7 +6,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
 import Fuse from 'fuse.js';
 import { CSVService } from 'src/app/services/csv.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 declare const UIkit: any;
 
 @Component({
@@ -21,12 +21,6 @@ export class CustomersComponent implements OnInit {
   editMode: boolean = false;
   currentEditId: string = '';
   openModal: any;
-  agents: any[];
-  agentNames: {
-    [agentId: string]: string;
-  };
-  customerToAssign: string | null;
-  customerToTransfer: string | null;
 
   customerForm: FormGroup = new FormGroup({
     img: new FormControl(''),
@@ -59,23 +53,16 @@ export class CustomersComponent implements OnInit {
     itrStatus: new FormControl('', [Validators.required]),
   });
 
-  transferForm: FormGroup = new FormGroup({
-    agent: new FormControl(null, [Validators.required]),
-  });
-
-  assignAgentForm: FormGroup = new FormGroup({
-    agent: new FormControl(null, [Validators.required]),
-  });
-
   @ViewChild('photoInput') photoInput: ElementRef;
 
   constructor(
     private databaseService: DatabaseService,
     private alertify: AlertsAndNotificationsService,
-    public dataProvider: DataProvider,
+    private dataProvider: DataProvider,
     private dataTransferService: DataTransferService,
     private csvService: CSVService,
-    private activateRoute: ActivatedRoute
+    private activateRoute: ActivatedRoute,
+    private router: Router
   ) {
     this.activateRoute.queryParams.subscribe((data: any) => {
       if (data.openModal === 'true') {
@@ -95,28 +82,17 @@ export class CustomersComponent implements OnInit {
     }
     this.databaseService.getCustomersPromise().then((data) => {
       this.customers = [];
-      this.agentNames = {};
 
       data.forEach((user: any) => {
         let customer = user.data();
         customer.id = user.id;
-        if (!(customer.agentId in this.agentNames)) {
-          this.databaseService.getAgent(customer.agentId).then((agentDoc) => {
-            if (agentDoc.exists()) {
-              this.agentNames[customer.agentId] =
-                agentDoc.data()!['displayName'];
-            } else {
-              this.agentNames[customer.agentId] = '';
-            }
-          });
-        }
         this.customers.push(customer);
       });
 
       this.filteredCustomers = this.customers;
     });
 
-    // make lead a customer
+    // make lead a8 customer
     const lead = this.dataTransferService.getLead();
     if (lead) {
       this.customerForm.addControl('leadId', new FormControl(lead.id));
@@ -299,19 +275,6 @@ export class CustomersComponent implements OnInit {
         'customerImages/' + this.customerForm.value.name + '/' + file.name,
         file
       );
-
-      // this.databaseService
-      //   .upload('customers/' + this.dataProvider.userData?.userId, file)
-      //   .then((url: string) => {
-      //     this.databaseService
-      //       .updateUserImage(url, this.dataProvider.userData?.userId || '')
-      //       .then(() => {
-      //         this.alertify.presentToast('Image updated');
-      //       });
-      //   })
-      //   .catch((error) => {
-      //     this.alertify.presentToast(error);
-      //   });
     }
   }
 
@@ -382,37 +345,13 @@ export class CustomersComponent implements OnInit {
     }
   }
 
-  openAgentModal(agentId: string) {
-    this.customerToAssign = agentId;
-    if (!this.agents || this.agents.length == 0) {
-      this.databaseService.getAllAgentsPromise().then((agentDocs) => {
-        this.agents = [];
-        agentDocs.forEach((agentDoc) => {
-          if (agentDoc.id != this.dataProvider.userData?.userId) {
-            this.agents.push({ id: agentDoc.id, ...agentDoc.data() });
-          }
-        });
-      });
-    }
-    UIkit.modal(document.getElementById('assign-agent-modal')).show();
+  createResponse(customerId: string) {
+    this.router.navigate(['/admin/responses'], {
+      queryParams: {
+        openModal: true,
+        customerOrLead: 'customer',
+        id: customerId,
+      },
+    });
   }
-
-  submitAgentForm() {}
-
-  openTransferModal(customerId: string) {
-    this.customerToTransfer = customerId;
-    if (!this.agents || this.agents.length == 0) {
-      this.databaseService.getAllAgentsPromise().then((agentDocs) => {
-        this.agents = [];
-        agentDocs.forEach((agentDoc) => {
-          if (agentDoc.id != this.dataProvider.userData?.userId) {
-            this.agents.push({ id: agentDoc.id, ...agentDoc.data() });
-          }
-        });
-      });
-    }
-    UIkit.modal(document.getElementById('transfer-customer-modal')).show();
-  }
-
-  submitTransferForm() {}
 }

@@ -4,7 +4,7 @@
     <legend>Basic Details</legend>
     <mat-form-field appearance="fill">
       <mat-label>Customer or Lead</mat-label>
-      <mat-select #customerOrLead (selectionChange)="responseForm.reset()">
+      <mat-select #customerOrLead (selectionChange)="responseForm.reset()" [value]="data.customerOrLead">
         <mat-option value="customer">Customer</mat-option>
         <mat-option value="lead">Lead</mat-option>
       </mat-select>

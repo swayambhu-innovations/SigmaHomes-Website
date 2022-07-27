@@ -6,7 +6,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
 import Fuse from 'fuse.js';
 import { CSVService } from 'src/app/services/csv.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 declare const UIkit: any;
 
 @Component({
@@ -20,7 +20,7 @@ export class CustomersComponent implements OnInit {
   currentViewCustomer: any;
   editMode: boolean = false;
   currentEditId: string = '';
-  openModal:any;
+  openModal: any;
 
   customerForm: FormGroup = new FormGroup({
     img: new FormControl(''),
@@ -61,37 +61,38 @@ export class CustomersComponent implements OnInit {
     private dataProvider: DataProvider,
     private dataTransferService: DataTransferService,
     private csvService: CSVService,
-    private activateRoute: ActivatedRoute
-  )
-  {
+    private activateRoute: ActivatedRoute,
+    private router: Router
+  ) {
     this.activateRoute.queryParams.subscribe((data: any) => {
-      console.log(data);
-     
       if (data.openModal === 'true') {
         this.openModal = data.openModal;
-        UIkit.modal(document.getElementById('edit-or-add-customer-modal')).show();
-      }
-      else{
+        UIkit.modal(
+          document.getElementById('edit-or-add-customer-modal')
+        ).show();
+      } else {
         this.openModal = 'false';
       }
     });
   }
 
   ngOnInit(): void {
-    if(this.openModal === 'true'){
+    if (this.openModal === 'true') {
       UIkit.modal(document.getElementById('edit-or-add-customer-modal')).show();
     }
     this.databaseService.getCustomersPromise().then((data) => {
       this.customers = [];
+
       data.forEach((user: any) => {
-        let data = user.data();
-        data.id = user.id;
-        this.customers.push(data);
+        let customer = user.data();
+        customer.id = user.id;
+        this.customers.push(customer);
       });
+
       this.filteredCustomers = this.customers;
     });
 
-    // make lead a customer
+    // make lead a8 customer
     const lead = this.dataTransferService.getLead();
     if (lead) {
       this.customerForm.addControl('leadId', new FormControl(lead.id));
@@ -274,26 +275,16 @@ export class CustomersComponent implements OnInit {
         'customerImages/' + this.customerForm.value.name + '/' + file.name,
         file
       );
-
-      // this.databaseService
-      //   .upload('customers/' + this.dataProvider.userData?.userId, file)
-      //   .then((url: string) => {
-      //     this.databaseService
-      //       .updateUserImage(url, this.dataProvider.userData?.userId || '')
-      //       .then(() => {
-      //         this.alertify.presentToast('Image updated');
-      //       });
-      //   })
-      //   .catch((error) => {
-      //     this.alertify.presentToast(error);
-      //   });
     }
   }
 
   async submitCustomerForm() {
     if (this.editMode) {
       if (this.customerForm.valid && this.currentEditId) {
-        if (this.photoInput.nativeElement.files && this.photoInput.nativeElement.files.length == 1) {
+        if (
+          this.photoInput.nativeElement.files &&
+          this.photoInput.nativeElement.files.length == 1
+        ) {
           const url = await this.uploadProfilePhoto();
           this.customerForm.patchValue({ img: url });
           this.photoInput.nativeElement = '';
@@ -352,5 +343,15 @@ export class CustomersComponent implements OnInit {
           });
       }
     }
+  }
+
+  createResponse(customerId: string) {
+    this.router.navigate(['/admin/responses'], {
+      queryParams: {
+        openModal: true,
+        customerOrLead: 'customer',
+        id: customerId,
+      },
+    });
   }
 }

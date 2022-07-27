@@ -250,11 +250,16 @@ section {
         font-weight: 700;
       }
 
+      audio {
+        margin: .5em 0;
+      }
+
       .file {
         text-decoration: underline;
         color: var(--secondary);
+        display: block;
       }
-
+      
       .added-by {
         color: var(--light-tertiary);
       }

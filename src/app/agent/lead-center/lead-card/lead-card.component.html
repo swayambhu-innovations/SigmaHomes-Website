@@ -236,50 +236,54 @@
       </span>
     </p>
   </div>
-  <div *ngIf="expanded" id="buttons">
-    <button id="make-customer" (click)="onMakeCustomer.emit()">
-      Make Customer
-    </button>
-    <button
-      uk-tooltip="title: Interesting Properties"
-      type="button"
-      uk-toggle="target: #modal-example"
-    >
-      <i class="fa-solid fa-circle-info"></i>
-    </button>
-    <button (click)="onEdit.emit()" uk-tooltip="title: Edit">
-      <i class="fa-solid fa-pen-to-square"></i>
-    </button>
-    <button
-      (click)="onDelete.emit()"
-      class="delete-btn"
-      uk-tooltip="title: Delete"
-    >
-      <i class="fa-solid fa-trash"></i>
-    </button>
-  </div>
-</div>
-
-<!-- This is the interested properties modal -->
-
-<div id="modal-example" uk-modal>
-  <div class="uk-modal-dialog uk-modal-body" id="interested-modal">
-    <h2 class="uk-modal-title">Interested Properties</h2>
-    <div uk-slider>
-      <div class="uk-slider-container">
-        <ul class="uk-slider-items uk-child-width-1-1 uk-grid-small">
-          <li *ngFor="let property of lead.interested">
-            <app-project-card
-              [project]="property.project"
-              [type]="property.type"
-              [unit]="property.unit"
-            ></app-project-card>
+  <div *ngIf="expanded" id="actions">
+    <div id="dropdown-container">
+      <div id="dropdown" *ngIf="showDropdown">
+        <ul>
+          <li>
+            <a [href]="'tel:' + lead.phone" id="phone-link">Call</a>
+          </li>
+          <hr />
+          <li>
+            <button (click)="onMakeCustomer.emit()">Make Customer</button>
+          </li>
+          <li>
+            <button
+              *ngIf="lead.responseId"
+              class="response-btn"
+              [routerLink]="'/admin/responses/' + lead.responseId"
+            >
+              View Response
+            </button>
+          </li>
+          <li>
+            <button
+              *ngIf="!lead.responseId"
+              class="response-btn"
+              (click)="createResponse(lead.id)"
+            >
+              Create Response
+            </button>
+          </li>
+          <hr />
+          <li>
+            <button (click)="onEdit.emit()">
+              <i class="fa-solid fa-pen-to-square"></i> Edit Lead
+            </button>
+          </li>
+          <li>
+            <button (click)="onDelete.emit()">
+              <i class="fa-solid fa-trash"></i> Delete Lead
+            </button>
           </li>
         </ul>
       </div>
-      <div class="uk-position-relative">
-        <ul class="uk-slider-nav uk-dotnav uk-position-center"></ul>
-      </div>
     </div>
+    <button
+      type="button"
+      (click)="showDropdown = true"
+    >
+      Actions
+    </button>
   </div>
 </div>

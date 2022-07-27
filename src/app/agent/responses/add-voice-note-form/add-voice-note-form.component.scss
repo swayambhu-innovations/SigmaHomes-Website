@@ -1,0 +1,71 @@
+#container {
+  padding: 2em 0;
+
+  #recording-status {
+    font-family: var(--font-three);
+    font-size: var(--medium);
+    text-align: center;
+  }
+
+  .recording-btn {
+    background-color: var(--secondary);
+    color: var(--secondary-contrast);
+    border-radius: 50%;
+    font-size: 2rem;
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    transition: all 0.4s;
+    cursor: pointer;
+    outline: none;
+
+    &:hover,
+    &:focus {
+      box-shadow: var(--light-shadow);
+      transform: scale(1.02);
+    }
+  }
+}
+
+.form-box {
+  margin-bottom: 1em;
+  width: 100%;
+
+  label {
+    font-family: var(--font-three);
+    color: var(--tertiary);
+    font-size: var(--small);
+    display: block;
+  }
+
+  audio {
+    display: block;
+    width: 100%;
+  }
+
+  .admin-input {
+    width: 100%;
+  }
+
+  textarea {
+    height: 80px;
+    resize: none;
+  }
+}
+
+button {
+  background-color: var(--secondary);
+  color: var(--secondary-contrast);
+  font-family: var(--font-three);
+  font-size: var(--small);
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 0.5em;
+  padding: 0.5em;
+}

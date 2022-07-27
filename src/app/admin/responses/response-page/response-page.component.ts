@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Timestamp } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -189,6 +190,10 @@ export class ResponsePageComponent implements OnInit {
             .then(() => {
               this.activePhase++;
               this.viewPhase = this.activePhase;
+              this.logPhaseCompletion(
+                this.phases[this.activePhase - 1],
+                this.phases[this.activePhase]
+              );
               this.updatePhase('complete');
             })
             .catch(() => {
@@ -204,6 +209,10 @@ export class ResponsePageComponent implements OnInit {
       } else {
         this.activePhase++;
         this.viewPhase = this.activePhase;
+        this.logPhaseCompletion(
+          this.phases[this.activePhase - 1],
+          this.phases[this.activePhase]
+        );
         this.updatePhase('complete');
       }
     }
@@ -217,8 +226,97 @@ export class ResponsePageComponent implements OnInit {
     if (confirm('Are you sure?')) {
       this.activePhase--;
       this.viewPhase = this.activePhase;
+      this.logPhaseDiscard(
+        this.phases[this.activePhase + 1],
+        this.phases[this.activePhase]
+      );
       this.updatePhase('discard');
     }
+  }
+
+  async logPhaseCompletion(oldPhase: string, newPhase: string) {
+    const oldLogNote = {
+      date: Timestamp.now(),
+      file: null,
+      note: 'Phase marked complete',
+      addedBy: this.dataProvider.userID,
+      addedByName: this.dataProvider.userData?.displayName,
+      addedByAccess: 'Admin',
+    };
+    if (!this.response.notes) {
+      this.response.notes = {};
+      this.response.notes[oldPhase] = [oldLogNote];
+    } else if (!this.response.notes[oldPhase]) {
+      this.response.notes[oldPhase] = [oldLogNote];
+    } else {
+      this.response.notes[oldPhase].unshift(oldLogNote);
+    }
+
+    const newLogNote = {
+      date: Timestamp.now(),
+      file: null,
+      addedBy: this.dataProvider.userID,
+      addedByName: this.dataProvider.userData?.displayName,
+      addedByAccess: 'Admin',
+      note: '',
+    };
+    if (
+      this.response.notes[newPhase] &&
+      this.response.notes[newPhase].length > 0
+    ) {
+      newLogNote.note = 'Phase restarted';
+    } else {
+      newLogNote.note = 'Phase started';
+    }
+
+    if (!this.response.notes[newPhase]) {
+      this.response.notes[newPhase] = [newLogNote];
+    } else {
+      this.response.notes[newPhase].unshift(newLogNote);
+    }
+
+    await this.databaseService.updateResponse(this.response.id, {
+      notes: this.response.notes,
+    });
+  }
+
+  async logPhaseDiscard(oldPhase: string, newPhase: string) {
+    const oldLogNote = {
+      date: Timestamp.now(),
+      file: null,
+      note: 'Phase discarded',
+      addedBy: this.dataProvider.userID,
+      addedByName: this.dataProvider.userData?.displayName,
+      addedByAccess: 'Admin',
+    };
+
+    if (!this.response.notes) {
+      this.response.notes = {};
+      this.response.notes[oldPhase] = [oldLogNote];
+    } else if (!this.response.notes[oldPhase]) {
+      this.response.notes[oldPhase] = [oldLogNote];
+    } else {
+      this.response.notes[oldPhase].unshift(oldLogNote);
+    }
+
+    const newLogNote = {
+      date: Timestamp.now(),
+      file: null,
+      addedBy: this.dataProvider.userID,
+      addedByName: this.dataProvider.userData?.displayName,
+      addedByAccess: 'Admin',
+      note: 'Phase restarted',
+    };
+
+    if (!this.response.notes[newPhase]) {
+      this.response.notes[newPhase] = [newLogNote];
+    } else {
+      this.response.notes[newPhase].unshift(newLogNote);
+    }
+
+    await this.databaseService.updateResponse(this.response.id, {
+      notes: this.response.notes,
+    });
   }
 
   updatePhase(update: 'complete' | 'discard'): void {
@@ -295,9 +393,34 @@ export class ResponsePageComponent implements OnInit {
         responseId: this.response.id,
       },
     });
-    dialogRef.componentInstance.noteAdded.subscribe((note: any) => {
-      console.log(note);
-    })
+    dialogRef.componentInstance.voiceNoteAdded.subscribe((note: any) => {
+      if (!('notes' in this.response)) {
+        this.response.notes = {};
+      }
+      if (
+        this.response.notes &&
+        this.phases[this.viewPhase] in this.response.notes
+      ) {
+        this.response.notes[this.phases[this.viewPhase]].unshift(note);
+      } else {
+        this.response.notes[this.phases[this.viewPhase]] = [note];
+      }
+      this.dataProvider.pageSetting.blur = true;
+      this.databaseService
+        .updateResponse(this.response.id, { notes: this.response.notes })
+        .then(() => {
+          this.alertify.presentToast('Voice note added successfully');
+        })
+        .catch(() => {
+          dialogRef.close();
+          this.dataProvider.pageSetting.blur = false;
+          this.alertify.presentToast('Error adding voice note');
+        })
+        .finally(() => {
+          dialogRef.close();
+          this.dataProvider.pageSetting.blur = false;
+        });
+    });
   }
 
   changeAgent(): void {
@@ -308,10 +431,33 @@ export class ResponsePageComponent implements OnInit {
       },
     });
     dialogRef.componentInstance.agentChanged.subscribe((data: any) => {
-      this.response.agentId = data.agentId;
       this.dataProvider.pageSetting.blur = true;
+      const activityLog = {
+        note:
+          'Agent changed from ' +
+          this.response.agent.displayName +
+          ' to ' +
+          data.agent.displayName,
+        file: null,
+        date: Timestamp.now(),
+        addedBy: this.dataProvider.userID,
+        addedByName: this.dataProvider.userData?.displayName,
+        addedByAccess: 'Admin',
+      };
+      this.response.agentId = data.agent.id;
+      if (!this.response.notes) {
+        this.response.notes = {};
+        this.response.notes[this.response.phase] = [activityLog];
+      } else if (!this.response.notes[this.response.phase]) {
+        this.response.notes[this.response.phase] = [activityLog];
+      } else {
+        this.response.notes[this.response.phase].unshift(activityLog);
+      }
       this.databaseService
-        .updateResponse(this.response.id, { agentId: this.response.agentId })
+        .updateResponse(this.response.id, {
+          agentId: this.response.agentId,
+          notes: this.response.notes,
+        })
         .then(() => {
           this.alertify.presentToast('Agent changed successfully');
         })

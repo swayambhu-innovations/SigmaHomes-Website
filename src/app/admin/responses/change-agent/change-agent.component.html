@@ -2,13 +2,13 @@
 <form [formGroup]="agentForm" (ngSubmit)="submit()">
   <mat-form-field appearance="fill">
     <mat-label>Select Agent</mat-label>
-    <mat-select formControlName="agentId">
-      <ng-container *ngFor="let agent of agents">
+    <mat-select formControlName="agent">
+      <ng-container *ngFor="let agent of agents | keyvalue">
         <mat-option
-          *ngIf="agent.userId != data.currentAgentId"
-          [value]="agent.userId"
+          *ngIf="agent.key != data.currentAgentId"
+          [value]="agent.value"
         >
-          {{ agent.displayName }}
+          {{ agent.value.displayName }}
         </mat-option>
       </ng-container>
     </mat-select>

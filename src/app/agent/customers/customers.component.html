@@ -5,10 +5,10 @@
   <table *ngIf="customers && customers.length >= 1">
     <thead>
       <tr>
-        <th width="10%">Photo</th>
-        <th width="30%">Name</th>
-        <th width="30%">Contact</th>
-        <th width="30%"></th>
+        <th>Name</th>
+        <th>Contact</th>
+        <th>Responses</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -16,10 +16,10 @@
         *ngFor="let customer of filteredCustomers; let i = index"
         [attr.data-index]="i"
       >
-        <td>
+        <td class="name-td">
           <img [src]="customer.img || 'assets/img/circle-user-solid.svg'" />
+          {{ customer.name }}
         </td>
-        <td style="font-weight: 500">{{ customer.name }}</td>
         <td>
           <div class="buttons">
             <a href="tel:{{ customer.phone }}" uk-tooltip="Call"
@@ -36,6 +36,22 @@
               <i class="fa-solid fa-envelope"></i>
             </a>
           </div>
+        </td>
+        <td>
+          <button
+            *ngIf="customer.responseId"
+            class="response-btn"
+            [routerLink]="'/admin/responses/' + customer.responseId"
+          >
+            View
+          </button>
+          <button
+            *ngIf="!customer.responseId"
+            class="response-btn"
+            (click)="createResponse(customer.id)"
+          >
+            Create
+          </button>
         </td>
         <td>
           <div class="buttons">
@@ -63,14 +79,10 @@
       </tr>
     </tbody>
   </table>
-  <app-fab
-    [icon]="'plus'"
-    [target]="'#edit-or-add-customer-modal'"
-    [title]="'Add New Customer'"
-  ></app-fab>
 </section>
-
-<app-view-customer-modal [customer]="currentViewCustomer"></app-view-customer-modal>
+<app-view-customer-modal
+  [customer]="currentViewCustomer"
+></app-view-customer-modal>
 
 <div id="edit-or-add-customer-modal" uk-modal>
   <div class="uk-modal-dialog uk-modal-body">

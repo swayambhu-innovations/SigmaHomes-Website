@@ -1,6 +1,16 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { Timestamp } from '@angular/fire/firestore';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DataProvider } from 'src/app/providers/data.provider';
 import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
@@ -24,6 +34,8 @@ export class AddResponseComponent implements OnInit {
   ];
   allowMultiple: boolean = true;
 
+  @ViewChild('customerOrLead') customerOrLead: ElementRef;
+
   responseForm: FormGroup = new FormGroup({
     customerId: new FormControl(null),
     leadId: new FormControl(null),
@@ -45,13 +57,24 @@ export class AddResponseComponent implements OnInit {
 
   constructor(
     private databaseService: DatabaseService,
-    public dialog: MatDialog
-  ) {}
+    public dialog: MatDialog,
+    private dataProvider: DataProvider,
+    @Inject(MAT_DIALOG_DATA)
+    public data: { customerOrLead?: 'customer' | 'lead'; id: string }
+  ) {
+    this.responseForm.patchValue({
+      customerId: this.data.customerOrLead == 'customer' ? this.data.id : null,
+      leadId: this.data.customerOrLead == 'lead' ? this.data.id : null,
+    });
+  }
 
   ngOnInit(): void {
     this.databaseService.getCustomersPromise().then((docs: any) => {
       docs.forEach((element: any) => {
-        this.customers.push({ ...element.data(), id: element.id });
+        const customer = { ...element.data(), id: element.id };
+        if (!customer['responseId']) {
+          this.customers.push(customer);
+        }
       });
     });
     this.databaseService.getAllProjectsPromise().then((docs: any) => {
@@ -76,7 +99,10 @@ export class AddResponseComponent implements OnInit {
     });
     this.databaseService.getLeadsPromise().then((data: any) => {
       data.forEach((element: any) => {
-        this.leads.push({ ...element.data(), id: element.id });
+        const lead = { ...element.data(), id: element.id };
+        if (!lead['responseId']) {
+          this.leads.push(lead);
+        }
       });
     });
   }
@@ -117,6 +143,17 @@ export class AddResponseComponent implements OnInit {
 
   submit() {
     if (this.responseFormIsValid()) {
+      const response = this.responseForm.value;
+      response.notes = {};
+      response.notes[response.phase] = [
+        {
+          note: 'Response added',
+          date: Timestamp.now(),
+          addedBy: this.dataProvider.userID,
+          addedByName: this.dataProvider.userData?.displayName,
+          addedByAccess: 'Admin',
+        },
+      ];
       this.responseAdded.emit(this.responseForm.value);
       this.dialog.closeAll();
       this.responseForm.reset();

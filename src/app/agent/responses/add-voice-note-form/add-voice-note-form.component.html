@@ -1,0 +1,34 @@
+<div *ngIf="!sourceFile" id="container">
+  <p id="recording-status">
+    {{
+      recording ? "Recording..." : "Click on the button to start recording..."
+    }}
+  </p>
+  <button *ngIf="!recording" (click)="start()" class="recording-btn">
+    <i class="fa-solid fa-microphone"></i>
+  </button>
+  <button *ngIf="recording" (click)="stop()" class="recording-btn">
+    <i class="fa-solid fa-stop"></i>
+  </button>
+</div>
+<form *ngIf="sourceFile" [formGroup]="addVoiceNoteForm" (ngSubmit)="submit()">
+  <div class="form-box">
+    <label>Voice Note</label>
+    <audio controls [src]="sourceFile"></audio>
+  </div>
+  <div class="form-box">
+    <label for="note">Note (optional)</label>
+    <textarea class="admin-input" id="note" formControlName="note"></textarea>
+  </div>
+  <div class="form-box">
+    <label for="file">File (optional)</label>
+    <input
+      type="file"
+      class="admin-input"
+      id="file"
+      #fileInput
+      (change)="validateFile()"
+    />
+  </div>
+  <button type="submit">Add Voice Note</button>
+</form>
