@@ -1,5 +1,9 @@
 <section>
-  <div id="no-broadcasts" *ngIf="!broadcasts || broadcasts.length === 0" (click)="openBroadcast()">
+  <div
+    id="no-broadcasts"
+    *ngIf="!broadcasts || broadcasts.length === 0"
+    routerLink="new-broadcast"
+  >
     <i class="fa-solid fa-plus"></i>
     <p>You have not sent any broadcasts yet. Click here to send one.</p>
   </div>
@@ -28,17 +32,30 @@
         <td style="white-space: nowrap">{{ getDate(broadcast.date) }}</td>
         <td style="white-space: nowrap">{{ getTime(broadcast.date) }}</td>
         <td>
-          <button class="view-recipients" uk-toggle="target: #recipients-modal" (click)="currentBroadcast = i">
+          <button
+            class="view-recipients"
+            uk-toggle="target: #recipients-modal"
+            (click)="currentBroadcast = i"
+          >
             {{ broadcast.recipients.length }}
           </button>
         </td>
         <td>
           <div class="buttons">
-            <button class="view" uk-toggle="target: #view-broadcast-modal" (click)="currentBroadcast = i"
-              uk-tooltip="View">
+            <button
+              class="view"
+              uk-toggle="target: #view-broadcast-modal"
+              (click)="currentBroadcast = i"
+              uk-tooltip="View"
+            >
               <i class="fa-solid fa-eye"></i>
             </button>
-            <button class="resend" uk-tooltip="Resend" (click)="resendBroadcast(i)">
+            <button
+              class="resend"
+              uk-tooltip="Resend"
+              (click)="resendBroadcast(i)"
+              routerLink="new-broadcast"
+            >
               <i class="fa-solid fa-rotate-right"></i>
             </button>
           </div>
@@ -55,13 +72,20 @@
     </h4>
     <button class="uk-modal-close-default" type="button" uk-close></button>
     <div class="recipients">
-      <p *ngFor="let recipient of broadcasts[currentBroadcast].recipients" class="recipient">
+      <p
+        *ngFor="let recipient of broadcasts[currentBroadcast].recipients"
+        class="recipient"
+      >
         {{ recipient }}
       </p>
     </div>
-    <button routerLink="new-broadcast" class="uk-modal-close modal-end-btn" (click)="
+    <button
+      routerLink="new-broadcast"
+      class="uk-modal-close modal-end-btn"
+      (click)="
         broadcastService.setRecipients(broadcasts[currentBroadcast].recipients)
-      ">
+      "
+    >
       Send a new broadcast to these recipients
     </button>
   </div>
@@ -75,30 +99,36 @@
     <button class="uk-modal-close-default" type="button" uk-close></button>
     <div id="broadcast-container">
       <div id="broadcast-content">
-        <img *ngIf="broadcasts[currentBroadcast].image" [src]="broadcasts[currentBroadcast].image" />
+        <img
+          *ngIf="broadcasts[currentBroadcast].image"
+          [src]="broadcasts[currentBroadcast].image"
+        />
         <p>{{ broadcasts[currentBroadcast].text }}</p>
       </div>
       <div id="broadcast-details">
         <p>
           Sent on
-          <span class="bold">{{ getDate(broadcasts[currentBroadcast].date) }} at
-            {{ getTime(broadcasts[currentBroadcast].date) }}</span>
+          <span class="bold"
+            >{{ getDate(broadcasts[currentBroadcast].date) }} at
+            {{ getTime(broadcasts[currentBroadcast].date) }}</span
+          >
         </p>
         <h5 class="bold">Recipients</h5>
         <div class="recipients">
-          <p *ngFor="let recipient of broadcasts[currentBroadcast].recipients" class="recipient">
+          <p
+            *ngFor="let recipient of broadcasts[currentBroadcast].recipients"
+            class="recipient"
+          >
             {{ recipient }}
-          </p>
-        </div>
-        <h5 class="bold">Name</h5>
-        <div class="recipients">
-          <p *ngFor="let name of broadcasts[currentBroadcast].name" class="recipient">
-            {{ name }}
           </p>
         </div>
       </div>
     </div>
-    <button (click)="resendBroadcast(currentBroadcast)" routerLink="new-broadcast" class="uk-modal-close modal-end-btn">
+    <button
+      (click)="resendBroadcast(currentBroadcast)"
+      routerLink="new-broadcast"
+      class="uk-modal-close modal-end-btn"
+    >
       Resend Broadcast
     </button>
   </div>

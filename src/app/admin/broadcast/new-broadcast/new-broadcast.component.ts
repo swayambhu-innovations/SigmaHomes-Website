@@ -8,29 +8,31 @@ import { DatabaseService } from 'src/app/services/database.service';
 import Fuse from 'fuse.js';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataProvider } from 'src/app/providers/data.provider';
-import { map, startWith } from 'rxjs/operators';
-
 @Component({
   selector: 'app-new-broadcast',
   templateUrl: './new-broadcast.component.html',
   styleUrls: ['./new-broadcast.component.scss', '../../admin.util.scss'],
 })
 export class NewBroadcastComponent implements OnInit {
-  @ViewChild('imageSelector') photoInput: ElementRef;
+  @ViewChild('photoInput') photoInput: ElementRef;
 
   recipients: string[] = [];
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   addOnBlur = true;
-  imageFile: File | false;
+
   customers: any[];
   filteredCustomers: any[];
-  more = false;
+
+  leads: any[];
+  filteredLeads: any[];
+
   broadcastForm: FormGroup = new FormGroup({
     image: new FormControl(''),
     subject: new FormControl(''),
     text: new FormControl(''),
+    recipients: new FormControl([]),
   });
-  customerControl = new FormControl();
+
   constructor(
     private alertService: AlertsAndNotificationsService,
     private broadcastService: BroadcastService,
@@ -38,14 +40,7 @@ export class NewBroadcastComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private dataProvider: DataProvider
-  ) {
-    this.customerControl.valueChanges.pipe(
-      startWith(null),
-      map((room: string | null) =>
-        room ? this._filter(room) : this.customers.slice()
-      )
-    );
-  }
+  ) {}
 
   ngOnInit(): void {
     // If "send a new broadcast to these recipients" is cliecked
@@ -68,62 +63,17 @@ export class NewBroadcastComponent implements OnInit {
       docs.forEach((doc: any) => {
         this.customers.push({ id: doc.id, ...doc.data() });
       });
-      this.customers.forEach((customer: any) => {
-        console.log('Customer', customer);
+      this.filteredCustomers = this.customers;
+    });
+
+    // Get leads from the database
+    this.databaseService.getLeadsPromise().then((docs: any) => {
+      this.leads = [];
+      docs.forEach((doc: any) => {
+        this.leads.push({ id: doc.id, ...doc.data() });
       });
-      this.filteredCustomers = [];
+      this.filteredLeads = this.leads;
     });
-  }
-
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    let returnResponse: any = [];
-    this.customers.forEach((customer: any) => {
-      if (customer.name.toLowerCase().includes(filterValue)) {
-        returnResponse.push(customer);
-      }
-    });
-    return returnResponse;
-  }
-  toggleMore() {
-    this.more = !this.more;
-  }
-  remove(data: any) {
-    this.filteredCustomers.forEach((customer: any, index: number) => {
-      if (data.id === customer.id) {
-        this.filteredCustomers.splice(index, 1);
-        this.customers.push(customer);
-      }
-    });
-  }
-
-  add(event: any) {
-    console.log(event);
-  }
-
-  selected(event: any) {
-    this.customers.forEach((customer: any, index: number) => {
-      if (event.option.value === customer.id) {
-        this.filteredCustomers.push(customer);
-        this.customers.splice(index, 1);
-      }
-    });
-  }
-
-  verifyImage(): void {
-    const file: File = this.photoInput.nativeElement.files[0];
-    if (
-      (file.size < 100_000 && file.type == 'image/png') ||
-      file.type == 'image/jpg'
-    ) {
-      this.imageFile = file;
-    } else {
-      this.imageFile = false;
-      this.alertService.presentToast(
-        'Your photo should either be in .png or .jpg and less than 100kb'
-      );
-      this.photoInput.nativeElement.value = '';
-    }
   }
 
   triggerImageUpload(): void {
@@ -218,24 +168,44 @@ export class NewBroadcastComponent implements OnInit {
     }
   }
 
-  // searchCustomers(event: Event) {
-  //   const input = event.target as HTMLInputElement;
-  //   const query = input.value.trim();
-  //   if (query.length > 0) {
-  //     const options = { keys: ['name'] };
-  //     const fuse = new Fuse(this.customers, options);
-  //     const results = fuse.search(query);
-  //     this.filteredCustomers = [];
-  //     results.forEach((result: any) => {
-  //       this.filteredCustomers.push(result.item);
-  //     });
-  //   } else {
-  //     this.filteredCustomers = this.customers;
-  //   }
-  // }
+  searchCustomers(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const query = input.value.trim();
+    if (query.length > 0) {
+      const options = { keys: ['name'] };
+      const fuse = new Fuse(this.customers, options);
+      const results = fuse.search(query);
+      this.filteredCustomers = [];
+      results.forEach((result: any) => {
+        this.filteredCustomers.push(result.item);
+      });
+    } else {
+      this.filteredCustomers = this.customers;
+    }
+  }
+
+  searchLeads(event: Event) {
+    const input = event.target as HTMLInputElement;
+    const query = input.value.trim();
+    if (query.length > 0) {
+      const options = { keys: ['name'] };
+      const fuse = new Fuse(this.leads, options);
+      const results = fuse.search(query);
+      this.filteredLeads = [];
+      results.forEach((result: any) => {
+        this.filteredLeads.push(result.item);
+      });
+    } else {
+      this.filteredLeads = this.leads;
+    }
+  }
 
   formatCustomerAsRecipient(customer: any): string {
     return `${customer.name} (${customer.phone}, ${customer.email})`;
+  }
+
+  formatLeadAsRecipient(lead: any): string {
+    return `${lead.name} (${lead.phone}, ${lead.email})`;
   }
 
   toggleCustomerSelection(customerId: string) {
@@ -243,6 +213,17 @@ export class NewBroadcastComponent implements OnInit {
       (customer) => customer.id === customerId
     );
     const recipient = this.formatCustomerAsRecipient(customer);
+    const index = this.recipients.indexOf(recipient);
+    if (index !== -1) {
+      this.recipients.splice(index, 1);
+    } else {
+      this.recipients.push(recipient);
+    }
+  }
+
+  toggleLeadSelection(leadId: string) {
+    const lead = this.leads.find((lead) => lead.id === leadId);
+    const recipient = `${lead.name} (${lead.phone}, ${lead.email})`;
     const index = this.recipients.indexOf(recipient);
     if (index !== -1) {
       this.recipients.splice(index, 1);
