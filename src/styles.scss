@@ -9,6 +9,7 @@
   --secondary-lighter: #e3f0ff;
   --tertiary: #000;
   --light-tertiary: grey;
+  --success: #34b729;
   --danger: #dc143c;
   --processing: #fa9d39;
   --xxxlarge: 36px;
@@ -96,7 +97,7 @@
     height: 60px;
     object-fit: cover;
     border-radius: 50%;
-    margin-right: .5em;
+    margin-right: 0.5em;
   }
 
   h3 {

@@ -91,24 +91,6 @@ export class ProfileComponent implements OnInit {
     return true;
   }
 
-  uploadProfilePhoto() {
-    if (this.validateProfilePhoto()) {
-      const file = this.photoInput.nativeElement.files[0];
-      this.databaseService
-        .upload('users/' + this.dataProvider.userData?.userId, file)
-        .then((url: string) => {
-          this.databaseService
-            .updateUserImage(url, this.dataProvider.userData?.userId || '')
-            .then(() => {
-              this.alertService.presentToast('Image updated');
-            });
-        })
-        .catch((error) => {
-          this.alertService.presentToast(error);
-        });
-    }
-  }
-
   getParentEmployeeName() {
     if (this.dataProvider.userData?.parentEmployee) {
       return this.employees.find(
@@ -118,15 +100,27 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-  saveEdit() {
+  async saveEdit() {
     if (confirm('Are you sure?') && this.editForm.valid) {
+      this.dataProvider.pageSetting.blur = true;
+      var url = '';
       if (this.photoInput.nativeElement.files.length == 1) {
-        this.uploadProfilePhoto();
+        url = await this.databaseService.upload(
+          'users/' + this.dataProvider.userData?.userId,
+          this.photoInput.nativeElement.files[0]
+        );
       }
-      this.editMode = false;
       this.databaseService
-        .updateUserData(this.editForm.value, this.dataProvider.userData!.userId)
+        .updateUserData(
+          {
+            ...this.editForm.value,
+            photoURL: url,
+          },
+          this.dataProvider.userData!.userId
+        )
         .then(() => {
+          this.editMode = false;
+          this.dataProvider.pageSetting.blur = false;
           this.alertService.presentToast('Profile updated successfully');
         });
     } else {

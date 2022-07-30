@@ -1,7 +1,11 @@
+import { Timestamp } from "@angular/fire/firestore";
+
 export type UserData = {
   userId: string;
   displayName: string;
   email: string;
+  created: Timestamp;
+  emailVerified: boolean;
   phoneNumber?: string;
   photoURL: string;
   access: UserAccess;

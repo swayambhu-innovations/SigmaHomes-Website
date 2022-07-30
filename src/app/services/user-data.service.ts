@@ -14,6 +14,7 @@ import {
   docSnapshots,
   docData,
   getDoc,
+  Timestamp,
 } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { documentId } from 'firebase/firestore';
@@ -44,7 +45,9 @@ export class UserDataService {
     this.dataProvider.pageSetting.lastRedirect = '';
     let data: UserData = {
       userId: user.uid,
+      created: Timestamp.now(),
       email: user.email || '',
+      emailVerified: true,
       displayName: user.displayName || '',
       photoURL: user.photoURL || this.getRandomImage(),
       phoneNumber: userData.phoneNumber,
@@ -60,7 +63,7 @@ export class UserDataService {
       branch: '',
       accountNo: '',
       ifscCode: '',
-      parentEmployee: 'N/A',
+      parentEmployee: '',
       userType: '',
       accountHolderName: '',
       nationality: '',
@@ -83,7 +86,9 @@ export class UserDataService {
     this.dataProvider.pageSetting.lastRedirect = '';
     let data: UserData = {
       userId: user.uid,
+      created: Timestamp.now(),
       email: user.email || '',
+      emailVerified: false,
       displayName: userData.displayName || '',
       photoURL: userData.photoURL || this.getRandomImage(),
       phoneNumber: userData.phoneNumber || '',
@@ -99,7 +104,7 @@ export class UserDataService {
       branch: '',
       accountNo: '',
       ifscCode: '',
-      parentEmployee: 'N/A',
+      parentEmployee: '',
       userType: '',
       accountHolderName: '',
       nationality: '',

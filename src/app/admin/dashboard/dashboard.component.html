@@ -1,25 +1,40 @@
 <section>
-  <div class="quickAction">
-    <b>Quick Links</b>
-    <div class="links">
-      <button routerLink="../broadcast" [queryParams]="{openModal:true}">Add Broadcast +</button>
-      <button routerLink="../lead-center" [queryParams]="{openModal:true}">Add Lead +</button>
-      <button routerLink="../customers" [queryParams]="{openModal:true}">Add customer +</button>
-      <button  routerLink="../task-log" [queryParams]="{openModal:true}">Add Task +</button>
-      <button  routerLink="../properties" [queryParams]="{openModal:true}">Add Properties +</button>
-      <button  routerLink="../responses" [queryParams]="{openModal:true}">Add Responses +</button>
+  <h3>
+    Welcome back{{
+      dataProvider.userData?.displayName
+        ? ", " + dataProvider.userData!.displayName
+        : ""
+    }}!
+  </h3>
+  <div id="quick-links">
+    <h4>Quick Links</h4>
+    <div id="buttons">
+      <button routerLink="../broadcast" [queryParams]="{ openModal: true }">
+        <i class="fa-solid fa-plus"></i> Broadcast
+      </button>
+      <button routerLink="../lead-center" [queryParams]="{ openModal: true }">
+        <i class="fa-solid fa-plus"></i> Lead
+      </button>
+      <button routerLink="../customers" [queryParams]="{ openModal: true }">
+        <i class="fa-solid fa-plus"></i> Customer
+      </button>
+      <button routerLink="../task-log" [queryParams]="{ openModal: true }">
+        <i class="fa-solid fa-plus"></i> Task
+      </button>
+      <button routerLink="../properties" [queryParams]="{ openModal: true }">
+        <i class="fa-solid fa-plus"></i> Properties
+      </button>
+      <button routerLink="../responses" [queryParams]="{ openModal: true }">
+        <i class="fa-solid fa-plus"></i> Responses
+      </button>
     </div>
-    <div class="actions">
-
-      <i class="fa-solid fa-arrow-right-from-bracket" routerLink="/"></i>
-      <i class="fa-regular fa-circle-user " routerLink="/login"></i>
-    </div>
+    <button id="logout" routerLink="/" (click)="authService.logout()">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+    </button>
   </div>
   <div class="analytics">
-    <div class="line"><canvas id="graph"></canvas></div>
-    <div class="pie">
-      <canvas id="doughnut"></canvas>
-    </div>
+    <canvas id="graph"></canvas>
+    <canvas id="doughnut"></canvas>
   </div>
   <div class="features">
     <div class="item">
