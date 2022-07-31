@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DataProvider } from 'src/app/providers/data.provider';
 import { DataTransferService } from 'src/app/services/data-transfer.service';
@@ -21,7 +21,6 @@ export class CustomersComponent implements OnInit {
   editMode: boolean = false;
   currentEditId: string = '';
   openModal: any;
-
   customerForm: FormGroup = new FormGroup({
     img: new FormControl(''),
     name: new FormControl('', [Validators.required]),
@@ -53,8 +52,6 @@ export class CustomersComponent implements OnInit {
     itrStatus: new FormControl('', [Validators.required]),
   });
 
-  @ViewChild('photoInput') photoInput: ElementRef;
-
   constructor(
     private databaseService: DatabaseService,
     private alertify: AlertsAndNotificationsService,
@@ -80,19 +77,18 @@ export class CustomersComponent implements OnInit {
     if (this.openModal === 'true') {
       UIkit.modal(document.getElementById('edit-or-add-customer-modal')).show();
     }
+
     this.databaseService.getCustomersPromise().then((data) => {
       this.customers = [];
-
       data.forEach((user: any) => {
         let customer = user.data();
         customer.id = user.id;
         this.customers.push(customer);
       });
-
       this.filteredCustomers = this.customers;
     });
 
-    // make lead a8 customer
+    // make lead as customer
     const lead = this.dataTransferService.getLead();
     if (lead) {
       this.customerForm.addControl('leadId', new FormControl(lead.id));
@@ -169,6 +165,7 @@ export class CustomersComponent implements OnInit {
                 const customers = this.csvService.import();
                 for (const customer of customers) {
                   await this.databaseService.addCustomer(customer);
+                  this.ngOnInit();
                 }
                 input.value = '';
                 this.dataProvider.pageSetting.blur = false;
@@ -225,10 +222,10 @@ export class CustomersComponent implements OnInit {
         this.editMode = false;
         this.currentEditId = '';
         this.customerForm.reset();
-        this.photoInput.nativeElement = '';
+        (document.getElementById('photo-input') as HTMLInputElement).value = '';
       });
     UIkit.modal(document.getElementById('edit-or-add-customer-modal')).show();
-    this.photoInput.nativeElement = '';
+    (document.getElementById('photo-input') as HTMLInputElement).value = '';
   }
 
   deleteCustomer(customer: any) {
@@ -240,6 +237,7 @@ export class CustomersComponent implements OnInit {
       this.databaseService
         .deleteCustomer(customer.id)
         .then(() => {
+          this.ngOnInit();
           this.dataProvider.pageSetting.blur = false;
           this.alertify.presentToast('Customer Deleted Successfully');
         })
@@ -250,46 +248,46 @@ export class CustomersComponent implements OnInit {
     }
   }
 
-  validateProfilePhoto() {
-    const file = this.photoInput.nativeElement.files[0];
-
-    if (!['image/png', 'image/jpg', 'image/jpeg'].includes(file.type)) {
-      this.alertify.presentToast('Your photo should either be in .png or .jpg');
-      this.photoInput.nativeElement.value = '';
-      return false;
-    }
-
-    if (file.size > 100_000) {
-      this.alertify.presentToast("Your photo's size should not exceed 100 KB");
-      this.photoInput.nativeElement.value = '';
-      return false;
-    }
-
-    return true;
-  }
-
-  async uploadProfilePhoto() {
-    if (this.validateProfilePhoto()) {
-      const file = this.photoInput.nativeElement.files[0];
-      return await this.databaseService.upload(
-        'customerImages/' + this.customerForm.value.name + '/' + file.name,
-        file
-      );
+  validateProfilePhoto(event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target && target.files && target.files.length) {
+      const file = target.files[0];
+      if (!['image/png', 'image/jpg', 'image/jpeg'].includes(file.type)) {
+        this.alertify.presentToast(
+          'Your photo should either be in .png or .jpg'
+        );
+        (document.getElementById('photo-input') as HTMLInputElement).value = '';
+      } else if (file.size > 100_000) {
+        this.alertify.presentToast(
+          "Your photo's size should not exceed 100 KB"
+        );
+        (document.getElementById('photo-input') as HTMLInputElement).value = '';
+      }
     }
   }
 
   async submitCustomerForm() {
-    if (this.editMode) {
-      if (this.customerForm.valid && this.currentEditId) {
-        if (
-          this.photoInput.nativeElement.files &&
-          this.photoInput.nativeElement.files.length == 1
-        ) {
-          const url = await this.uploadProfilePhoto();
-          this.customerForm.patchValue({ img: url });
-          this.photoInput.nativeElement = '';
-        }
-        this.dataProvider.pageSetting.blur = true;
+    if (this.customerForm.valid) {
+      this.dataProvider.pageSetting.blur = true;
+
+      // Upload photo if exists
+      const photoInput = document.getElementById(
+        'photo-input'
+      ) as HTMLInputElement;
+      if (photoInput.files && photoInput.files.length == 1) {
+        const file = photoInput.files[0];
+        const url = await this.databaseService.upload(
+          'customerImages/' + this.customerForm.value.name + '/' + file.name,
+          file
+        );
+        this.customerForm.patchValue({ img: url });
+        (document.getElementById('photo-input') as HTMLInputElement).value = '';
+      } else {
+        this.customerForm.removeControl('img');
+      }
+
+      if (this.editMode) {
+        console.log(this.customerForm.value);
         this.databaseService
           .updateCustomer(this.currentEditId, this.customerForm.value)
           .then(() => {
@@ -299,6 +297,7 @@ export class CustomersComponent implements OnInit {
             ).hide();
             this.customerForm.reset();
             this.dataProvider.pageSetting.blur = false;
+            this.ngOnInit();
             this.alertify.presentToast(
               "Customer's details updated successfully"
             );
@@ -308,23 +307,13 @@ export class CustomersComponent implements OnInit {
             this.dataProvider.pageSetting.blur = false;
             this.alertify.presentToast(error.message, 'error', 5000);
           });
-      }
-    } else {
-      if (this.customerForm.valid) {
-        this.dataProvider.pageSetting.blur = true;
-
+      } else {
         // If there is a lead id, delete the lead and remove the lead id form control
         const leadId = this.customerForm.value.leadId;
         if (leadId) {
           this.databaseService.deleteLead(leadId).then(() => {
             this.customerForm.removeControl('leadId');
           });
-        }
-
-        if (this.photoInput.nativeElement.files.length == 1) {
-          const url = await this.uploadProfilePhoto();
-          this.customerForm.patchValue({ img: url });
-          this.photoInput.nativeElement = '';
         }
 
         this.databaseService
@@ -335,6 +324,7 @@ export class CustomersComponent implements OnInit {
             ).hide();
             this.customerForm.reset();
             this.dataProvider.pageSetting.blur = false;
+            this.ngOnInit();
             this.alertify.presentToast('Customer Added Successfully');
           })
           .catch((error) => {

@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { DataProvider } from 'src/app/providers/data.provider';
 import { CSVService } from 'src/app/services/csv.service';
 import { DatabaseService } from 'src/app/services/database.service';
@@ -16,14 +15,13 @@ declare const UIkit: any;
   templateUrl: './lead-center.component.html',
   styleUrls: ['./lead-center.component.scss'],
 })
-export class LeadCenterComponent implements OnInit, OnDestroy {
+export class LeadCenterComponent implements OnInit {
   leads: any[] = [];
   filteredLeads: any[] = [];
   editMode: boolean = false;
   editLeadsValue: any;
   currentLeadId: string = '';
-  leadsSubscription: Subscription = Subscription.EMPTY;
-  openModal:any;
+  openModal: any;
   constructor(
     private databaseService: DatabaseService,
     private alertify: AlertsAndNotificationsService,
@@ -38,9 +36,8 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
     this.activateRoute.queryParams.subscribe((data: any) => {
       if (data.openModal === 'true') {
         this.openModal = data.openModal;
-        UIkit.modal(document.getElementById('lead-modal')).show(); 
-      }
-      else{
+        UIkit.modal(document.getElementById('lead-modal')).show();
+      } else {
         this.openModal = 'false';
       }
     });
@@ -61,119 +58,101 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
   });
 
   ngOnInit(): void {
-    if(this.openModal === 'true'){
-      UIkit.modal(document.getElementById('lead-modal')).show();   
-     }
-  
-    this.leadsSubscription = this.databaseService
-      .getLeads()
-      .subscribe((data) => {
-        this.leads = [];
-        data.forEach((element: any) => {
-          let data = element.data();
-          data.id = element.id;
-          this.leads.push(data);
-        });
-        this.filteredLeads = this.leads;
+    if (this.openModal === 'true') {
+      UIkit.modal(document.getElementById('lead-modal')).show();
+    }
+
+    this.databaseService.getLeadsPromise().then((data) => {
+      this.leads = [];
+      data.forEach((element: any) => {
+        let data = element.data();
+        data.id = element.id;
+        this.leads.push(data);
       });
-    this.dataProvider.headerButtonActions.subscribe((action: any) => {
-      if (action === 'importLead') {
-      }
+      this.filteredLeads = this.leads;
     });
-    const dt = this.dataProvider.importExportFileActions.subscribe(
-      async (action: any) => {
-        if (action.type == 'importLead') {
-          console.log(action.data);
-          await this.bulkDataHandler
-            .readCsv(action.data[0])
-            .then((data: any) => {
-              console.log('DAtaJson', data);
-            });
-        }
-      }
-    );
   }
 
-  // openLead(){
-  //   UIkit.modal(document.getElementById('lead-modal')).show();
-  // }
-  // ngAfterViewInit(): void {
-  //   // search leads
-  //   const leadSearchInput = document.getElementById(
-  //     'lead-search-input'
-  //   ) as HTMLInputElement;
-  //   if (leadSearchInput) {
-  //     leadSearchInput.oninput = () => {
-  //       const query = leadSearchInput.value.trim();
-  //       if (query.length > 0) {
-  //         const options = { keys: ['name', 'phone', 'email'] };
-  //         const fuse = new Fuse(this.leads, options);
-  //         const results = fuse.search(query);
-  //         this.filteredLeads = [];
-  //         results.forEach((result: any) => {
-  //           this.filteredLeads.push(result.item);
-  //         });
-  //       } else {
-  //         this.filteredLeads = this.leads;
-  //       }
-  //     };
-  //   }
+  ngAfterViewInit(): void {
+    // search leads
+    const leadSearchInput = document.getElementById(
+      'lead-search-input'
+    ) as HTMLInputElement;
+    if (leadSearchInput) {
+      leadSearchInput.oninput = () => {
+        const query = leadSearchInput.value.trim();
+        if (query.length > 0) {
+          const options = { keys: ['name', 'phone', 'email'] };
+          const fuse = new Fuse(this.leads, options);
+          const results = fuse.search(query);
+          this.filteredLeads = [];
+          results.forEach((result: any) => {
+            this.filteredLeads.push(result.item);
+          });
+        } else {
+          this.filteredLeads = this.leads;
+        }
+      };
+    }
 
-  //   // import leads
-  //   const importLeads = document.getElementById('import-leads');
-  //   if (importLeads) {
-  //     importLeads.addEventListener(
-  //       'click',
-  //       () => {
-  //         const input = document.createElement('input');
-  //         input.type = 'file';
-  //         input.accept = '.csv';
-  //         input.click();
-  //         input.onchange = () => {
-  //           this.dataProvider.pageSetting.blur = true;
-  //           if (input.files && input.files[0]) {
-  //             this.csvService.load(input.files[0]);
-  //             setTimeout(async () => {
-  //               const leads = this.csvService.import();
-  //               for (const lead of leads) {
-  //                 await this.databaseService.addLead(lead);
-  //               }
-  //               input.value = '';
-  //               this.dataProvider.pageSetting.blur = false;
-  //               this.alertify.presentToast('Leads added successfully', 'info');
-  //             }, 1000);
-  //           }
-  //         };
-  //       },
-  //       false
-  //     );
-  //   }
+    // import leads
+    const importLeads = document.getElementById('import-leads');
+    if (importLeads) {
+      importLeads.addEventListener(
+        'click',
+        () => {
+          const input = document.createElement('input');
+          input.type = 'file';
+          input.accept = '.csv';
+          input.click();
+          input.onchange = () => {
+            this.dataProvider.pageSetting.blur = true;
+            if (input.files && input.files[0]) {
+              this.csvService.load(input.files[0]);
+              setTimeout(async () => {
+                const leads = this.csvService.import();
+                for (const lead of leads) {
+                  const id = (await this.databaseService.addLead(lead)).id;
+                  lead.id = id;
+                  this.leads.push(lead);
+                  this.leads.sort((a, b) => a.name.localeCompare(b.name));
+                }
+                input.value = '';
+                this.dataProvider.pageSetting.blur = false;
+                this.alertify.presentToast('Leads added from CSV file', 'info');
+              }, 1000);
+            }
+          };
+        },
+        false
+      );
+    }
 
-  //   // export leads
-  //   const exportLeads = document.getElementById('export-leads');
-  //   if (exportLeads) {
-  //     exportLeads.addEventListener(
-  //       'click',
-  //       () => {
-  //         if (this.leads.length > 0) {
-  //           const keys = Object.keys(this.leads[0]);
-  //           const csvData = [keys];
-  //           this.leads.forEach((lead) => {
-  //             const values = [];
-  //             for (const key of keys) {
-  //               values.push(lead[key]);
-  //             }
-  //             csvData.push(values);
-  //           });
-  //           this.csvService.export(csvData, 'leads');
-  //         } else {
-  //           this.alertify.presentToast('No leads to export', 'error');
-  //         }
-  //       },
-  //       false
-  //     );
-  //   }
-  // }
+    // export leads
+    const exportLeads = document.getElementById('export-leads');
+    if (exportLeads) {
+      exportLeads.addEventListener(
+        'click',
+        () => {
+          if (this.leads.length > 0) {
+            const keys = Object.keys(this.leads[0]);
+            const csvData = [keys];
+            this.leads.forEach((lead) => {
+              const values = [];
+              for (const key of keys) {
+                values.push(lead[key]);
+              }
+              csvData.push(values);
+            });
+            this.csvService.export(csvData, 'leads');
+          } else {
+            this.alertify.presentToast('No leads to export', 'error');
+          }
+        },
+        false
+      );
+    }
+  }
 
   makeCustomer(lead: any) {
     this.dataTransferService.setLead(lead);
@@ -220,6 +199,7 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
         .deleteLead(lead.id)
         .then(() => {
           this.dataProvider.pageSetting.blur = false;
+          this.ngOnInit();
           this.alertify.presentToast('Lead Deleted Successfully', 'info');
         })
         .catch((error) => {
@@ -235,6 +215,7 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
         .updateLead(leadId, this.leadForm.value)
         .then(() => {
           this.alertify.presentToast('Lead Updated Successfully', 'info');
+          this.ngOnInit();
           this.leadForm.reset();
           this.editMode = false;
           UIkit.modal(document.getElementById('lead-modal')).hide();
@@ -256,6 +237,7 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
         .addLead(this.leadForm.value)
         .then(() => {
           this.alertify.presentToast('Lead Added Successfully', 'info');
+          this.ngOnInit();
           this.leadForm.reset();
           UIkit.modal(document.getElementById('lead-modal')).hide();
           this.dataProvider.pageSetting.blur = false;
@@ -267,9 +249,5 @@ export class LeadCenterComponent implements OnInit, OnDestroy {
     } else {
       this.alertify.presentToast('Please Fill All The Fields', 'error');
     }
-  }
-
-  ngOnDestroy(): void {
-    this.leadsSubscription.unsubscribe();
   }
 }

@@ -107,10 +107,10 @@
       transition: all 0.5s;
     }
 
-    #dropdown-container {
+    .dropdown-container {
       position: relative;
 
-      #dropdown {
+      .dropdown {
         padding: 0;
         background-color: var(--secondary);
         position: absolute;

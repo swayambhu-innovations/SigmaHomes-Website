@@ -26,7 +26,9 @@ export class LeadCardComponent implements OnInit {
 
   ngOnInit(): void {
     document.addEventListener('mouseup', (event: Event) => {
-      const dropdownContainer = document.getElementById('dropdown-container');
+      const dropdownContainer = document.getElementById(
+        this.lead.id + '-dropdown-container'
+      );
       if (dropdownContainer && event.target) {
         if (!dropdownContainer.contains(event.target as Node)) {
           this.showDropdown = false;

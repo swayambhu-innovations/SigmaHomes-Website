@@ -237,8 +237,8 @@
     </p>
   </div>
   <div *ngIf="expanded" id="actions">
-    <div id="dropdown-container">
-      <div id="dropdown" *ngIf="showDropdown">
+    <div [id]="lead.id + '-dropdown-container'" class="dropdown-container">
+      <div class="dropdown" *ngIf="showDropdown">
         <ul>
           <li>
             <a [href]="'tel:' + lead.phone" id="phone-link">Call</a>

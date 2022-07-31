@@ -126,11 +126,12 @@ export class DatabaseService {
       return getDocs(
         query(
           collection(this.fs, 'customers'),
-          where('responseId', 'in', responseIds)
+          where('responseId', 'in', responseIds),
+          orderBy('name')
         )
       );
     }
-    return getDocs(collection(this.fs, 'customers'));
+    return getDocs(query(collection(this.fs, 'customers'), orderBy('name')));
   }
 
   deleteCustomer(customerId: string) {
@@ -239,11 +240,12 @@ export class DatabaseService {
       return getDocs(
         query(
           collection(this.fs, 'leads'),
-          where('responseId', 'in', responseIds)
+          where('responseId', 'in', responseIds),
+          orderBy('name')
         )
       );
     }
-    return getDocs(collection(this.fs, 'leads'));
+    return getDocs(query(collection(this.fs, 'leads'), orderBy('name')));
   }
 
   updateLead(leadId: string, leadData: any) {

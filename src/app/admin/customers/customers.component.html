@@ -95,7 +95,14 @@
         <label for="photo-input"
           >{{ editMode ? "Change " : "" }}Profile Photo:
         </label>
-        <input type="file" id="photo-input" class="admin-input" #photoInput />
+        <input
+          type="file"
+          id="photo-input"
+          class="admin-input"
+          accept="image/png, image/jpg, image/jpeg"
+          (change)="validateProfilePhoto($event)"
+          #photoInput
+        />
       </div>
       <div class="customer-form-box">
         <label for="name-input">Name</label>

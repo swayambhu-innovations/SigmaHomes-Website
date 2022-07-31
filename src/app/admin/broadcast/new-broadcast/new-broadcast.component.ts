@@ -135,6 +135,10 @@ export class NewBroadcastComponent implements OnInit {
                 this.recipients.push(record);
               }
             }
+            this.alertService.presentToast(
+              'Recipients added from CSV file',
+              'info'
+            );
           };
         } else {
           this.alertService.presentToast('Please upload a .csv file');
