@@ -1,0 +1,128 @@
+<div
+  id="project-modal"
+  uk-modal
+  (hidden)="projectForm.reset(); photoInput.value = ''; projectToEdit = null"
+>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">{{ projectToEdit ? "Edit" : "Add" }} Project</h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form [formGroup]="projectForm" (ngSubmit)="submitProjectForm()">
+      <div class="property-form-box">
+        <label for="project-name-input">Name *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="project-name-input"
+          formControlName="name"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="address-input">Address *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="address-input"
+          formControlName="address"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="city-input">City *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="city-input"
+          formControlName="city"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="state-input">State *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="state-input"
+          formControlName="state"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="pincode-input">Pincode *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="pincode-input"
+          formControlName="pincode"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="project-photos-input">Photos</label>
+        <input
+          type="file"
+          class="admin-input"
+          id="project-photos-input"
+          multiple
+          (change)="validatePhotos($event)"
+          #photoInput
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="builder-name-input">Builder Name</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="builder-name-input"
+          formControlName="builderName"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="plot-area-input">Plot Area (sqft)</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="plot-area-input"
+          formControlName="plotArea"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="budget-input">Budget (₹)</label>
+        <input
+          type="number"
+          id="budget-input"
+          class="admin-input"
+          formControlName="budget"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="facilities-nearby-input">Facilities Nearby</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="facilities-near-input"
+          formControlName="facilitiesNearby"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="distance-from-important-locations-input"
+          >Distance from Important Locations</label
+        >
+        <input
+          type="text"
+          class="admin-input"
+          id="distance-from-important-locations-input"
+          formControlName="distanceFromImportantLocations"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="rera-status-input">RERA Status</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="rera-status-input"
+          formControlName="reraStatus"
+        />
+      </div>
+      <app-primary-btn
+        [text]="(projectToEdit ? 'Edit' : 'Add') + ' Project'"
+        [disabled]="!projectForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>

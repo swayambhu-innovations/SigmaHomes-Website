@@ -312,10 +312,10 @@ export class ResponsesComponent implements OnInit {
     });
   }
 
-  deleteResponse(id: string) {
+  deleteResponse(id: string, customerOrLeadId: string) {
     if (confirm('Are you sure')) {
       this.databaseService
-        .deleteResponse(id)
+        .deleteResponse(id, customerOrLeadId)
         .then(() => {
           this.alertify.presentToast('Response deleted successfully');
           this.ngOnInit();

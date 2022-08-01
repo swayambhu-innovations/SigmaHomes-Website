@@ -154,11 +154,16 @@ export class ResponsePageComponent implements OnInit {
   deleteResponse() {
     if (confirm('Are you sure you want to delete this response?')) {
       this.dataProvider.pageSetting.blur = true;
-      this.databaseService.deleteResponse(this.response.id).then(() => {
-        this.router.navigate(['/admin/responses']);
-        this.dataProvider.pageSetting.blur = false;
-        this.alertify.presentToast('Response deleted successfully');
-      });
+      this.databaseService
+        .deleteResponse(
+          this.response.id,
+          this.response.customerId || this.response.leadId
+        )
+        .then(() => {
+          this.router.navigate(['/admin/responses']);
+          this.dataProvider.pageSetting.blur = false;
+          this.alertify.presentToast('Response deleted successfully');
+        });
     }
   }
 

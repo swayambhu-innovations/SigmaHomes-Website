@@ -1,0 +1,59 @@
+<div
+  id="unit-modal"
+  uk-modal
+  (beforeshow)="
+    unitForm.patchValue({
+      project: projectId,
+      type: typeId,
+      name: unitToEdit?.name
+    })
+  "
+  (hidden)="unitForm.reset(); unitToEdit = null"
+>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">
+      {{ unitToEdit ? "Edit" : "Add" }} Property Unit
+    </h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form [formGroup]="unitForm" (ngSubmit)="submitUnitForm()">
+      <div *ngIf="projects && projects.length > 0" class="property-form-box">
+        <label for="project-for-unit-input">Project *</label>
+        <select
+          class="admin-input"
+          id="project-for-unit-input"
+          formControlName="project"
+          (change)="filterTypes($event)"
+        >
+          <option [ngValue]="null" disabled>Choose project</option>
+          <ng-container *ngFor="let project of projects">
+            <option *ngIf="projectHasTypes(project.id)" [ngValue]="project.id">
+              {{ project.name }}
+            </option>
+          </ng-container>
+        </select>
+      </div>
+      <div *ngIf="types && types.length > 0" class="property-form-box">
+        <label for="type-input">Type *</label>
+        <select class="admin-input" id="type-input" formControlName="type">
+          <option [ngValue]="null" disabled>Choose type</option>
+          <option *ngFor="let type of filteredTypes" [ngValue]="type.id">
+            {{ type.name }}
+          </option>
+        </select>
+      </div>
+      <div class="property-form-box">
+        <label for="unit-name-input">Unit Name/Number *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="unit-name-input"
+          formControlName="name"
+        />
+      </div>
+      <app-primary-btn
+        [text]="(unitToEdit ? 'Edit' : 'Add') + ' Property Unit'"
+        [disabled]="!unitForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>

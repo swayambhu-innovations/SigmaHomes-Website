@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { PrimaryBtnComponent } from './buttons/primary-btn/primary-btn.component';
 import { SecondaryBtnComponent } from './buttons/secondary-btn/secondary-btn.component';
 import { TertiaryBtnComponent } from './buttons/tertiary-btn/tertiary-btn.component';
-import { AvatarComponent } from './avatar/avatar.component';
 import { FabComponent } from './fab/fab.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ViewCustomerModalComponent } from './view-customer-modal/view-customer-modal.component';
@@ -13,7 +12,6 @@ import { ViewCustomerModalComponent } from './view-customer-modal/view-customer-
     PrimaryBtnComponent,
     SecondaryBtnComponent,
     TertiaryBtnComponent,
-    AvatarComponent,
     FabComponent,
     ViewCustomerModalComponent,
   ],
@@ -22,7 +20,6 @@ import { ViewCustomerModalComponent } from './view-customer-modal/view-customer-
     PrimaryBtnComponent,
     SecondaryBtnComponent,
     TertiaryBtnComponent,
-    AvatarComponent,
     FabComponent,
     ViewCustomerModalComponent,
   ],

@@ -1,0 +1,97 @@
+<div
+  id="type-modal"
+  uk-modal
+  (beforeshow)="typeForm.patchValue(typeToEdit);"
+  (hidden)="typeForm.reset(); photoInput.value = ''; typeToEdit = null"
+>
+  <div class="uk-modal-dialog uk-modal-body">
+    <h2 class="uk-modal-title">
+      {{ typeToEdit ? "Edit" : "Add" }} Property Type
+    </h2>
+    <button class="uk-modal-close-default" type="button" uk-close></button>
+    <form [formGroup]="typeForm" (ngSubmit)="submitTypeForm()">
+      <div *ngIf="projects && projects.length > 0" class="property-form-box">
+        <label for="project-input">Project *</label>
+        <select
+          class="admin-input"
+          id="project-input"
+          formControlName="project"
+        >
+          <option [ngValue]="null" disabled>Choose project</option>
+          <option *ngFor="let project of projects" [ngValue]="project.id">
+            {{ project.name }}
+          </option>
+        </select>
+      </div>
+      <div class="property-form-box">
+        <label for="type-name-input">Name *</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="type-name-input"
+          formControlName="name"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="type-photos-input">Photos</label>
+        <input
+          type="file"
+          class="admin-input"
+          id="type-photos-input"
+          multiple
+          (change)="validatePhotos($event)"
+          #photoInput
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="type-area-input">Area (sqft)</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="type-area-input"
+          formControlName="area"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="company-sales-value-input">Company Sales Value</label>
+        <input
+          type="text"
+          id="company-sales-value-input"
+          class="admin-input"
+          formControlName="companySalesValue"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="company-sales-rate-input">Company Sales Rate</label>
+        <input
+          type="text"
+          id="company-sales-rate-input"
+          class="admin-input"
+          formControlName="companySalesRate"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="company-accepted-value-input">Company Accepted Value</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="company-accepted-value-input"
+          formControlName="companyAcceptedValue"
+        />
+      </div>
+      <div class="property-form-box">
+        <label for="company-accepted-rate-input">Company Accepted Rate</label>
+        <input
+          type="text"
+          class="admin-input"
+          id="company-accepted-rate-input"
+          formControlName="companyAcceptedRate"
+        />
+      </div>
+      <app-primary-btn
+        [text]="(typeToEdit ? 'Edit' : 'Add') + ' Property Type'"
+        [disabled]="!typeForm.valid"
+      ></app-primary-btn>
+    </form>
+  </div>
+</div>

@@ -7,7 +7,10 @@
 <ng-template #notLoading>
   <img
     src="assets/img/empty.svg"
-    *ngIf="filteredResponses && filteredResponses.length == 0; else responsesExist"
+    *ngIf="
+      filteredResponses && filteredResponses.length == 0;
+      else responsesExist
+    "
     class="uk-position-center"
     style="width: 400px"
     alt="Empty"
@@ -48,7 +51,15 @@
                   <button [routerLink]="response.id">
                     <i class="fa-solid fa-eye"></i>
                   </button>
-                  <button (click)="deleteResponse(response.id)" class="delete-btn">
+                  <button
+                    (click)="
+                      deleteResponse(
+                        response.id,
+                        response.customerId || response.leadId
+                      )
+                    "
+                    class="delete-btn"
+                  >
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>

@@ -23,6 +23,7 @@ import {
   uploadBytesResumable,
 } from '@angular/fire/storage';
 import { arrayUnion } from '@firebase/firestore';
+import { Console } from 'console';
 import { editFormInfo } from '../admin/profile/profile.component';
 import { DataProvider } from '../providers/data.provider';
 
@@ -138,8 +139,10 @@ export class DatabaseService {
     return deleteDoc(doc(this.fs, 'customers/' + customerId));
   }
 
-  updateCustomer(customerId: string, data: any) {
-    return updateDoc(doc(this.fs, 'customers/' + customerId), data);
+  async updateCustomer(customerId: string, data: any) {
+    if ((await this.getCustomer(customerId)).exists()) {
+      return updateDoc(doc(this.fs, 'customers/' + customerId), data);
+    }
   }
 
   async getAgent(agentId: string) {
@@ -205,16 +208,44 @@ export class DatabaseService {
     return addDoc(collection(this.fs, 'types'), type);
   }
 
+  editType(typeId: string, data: any) {
+    return updateDoc(doc(this.fs, 'types/' + typeId), data);
+  }
+
+  deleteType(typeId: string) {
+    return deleteDoc(doc(this.fs, 'types/' + typeId));
+  }
+
   addUnit(unit: any) {
     return addDoc(collection(this.fs, 'units'), unit);
+  }
+
+  editUnit(unitId: string, data: any) {
+    return updateDoc(doc(this.fs, 'units/' + unitId), data);
+  }
+
+  deleteUnit(unitId: string) {
+    return deleteDoc(doc(this.fs, 'units/' + unitId));
   }
 
   editProject(projectId: string, data: any) {
     return updateDoc(doc(this.fs, 'projects/' + projectId), data);
   }
 
-  deleteProject(projectId: string) {
-    console.log(projectId);
+  async deleteProject(projectId: string) {
+    // Delete corresponding types and units
+    const types = await getDocs(
+      query(collection(this.fs, 'types'), where('project', '==', projectId))
+    );
+    types.forEach((type) => {
+      deleteDoc(doc(this.fs, 'types/' + type.id));
+    });
+    const units = await getDocs(
+      query(collection(this.fs, 'units'), where('project', '==', projectId))
+    );
+    units.forEach((unit) => {
+      deleteDoc(doc(this.fs, 'units/' + unit.id));
+    });
     return deleteDoc(doc(this.fs, 'projects/' + projectId));
   }
 
@@ -248,8 +279,10 @@ export class DatabaseService {
     return getDocs(query(collection(this.fs, 'leads'), orderBy('name')));
   }
 
-  updateLead(leadId: string, leadData: any) {
-    return updateDoc(doc(this.fs, 'leads/' + leadId), leadData);
+  async updateLead(leadId: string, leadData: any) {
+    if ((await this.getLead(leadId)).exists()) {
+      return updateDoc(doc(this.fs, 'leads/' + leadId), leadData);
+    }
   }
 
   deleteLead(leadId: string) {
@@ -282,7 +315,9 @@ export class DatabaseService {
     return updateDoc(doc(this.fs, 'responses/' + responseId), { phase: phase });
   }
 
-  deleteResponse(responseId: string) {
+  async deleteResponse(responseId: string, customerOrLeadId: string) {
+    await this.updateCustomer(customerOrLeadId, { responseId: null });
+    await this.updateLead(customerOrLeadId, { responseId: null });
     return deleteDoc(doc(this.fs, 'responses/' + responseId));
   }
 

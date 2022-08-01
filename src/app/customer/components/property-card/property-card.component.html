@@ -1,14 +1,38 @@
 <div class="property">
-    <img src="{{ imageSrc }}" alt="{{ heading }}" class="property-image">
-    <div class="property-content">
-        <h4 class="property-heading">{{ heading }}</h4>
-        <p class="property-address"><span uk-icon="location"></span> {{ address }}</p>
-        <p class="property-price">₹ {{ price }}</p>
-        <div class="property-features">
-            <p class="property-sqft"><i class="fas fa-ruler-combined feature-icon"></i>{{ area }}</p>
-            <p class="property-rating"><i class="fas fa-star feature-icon"></i>{{ rating }}</p>
-        </div>
-        <button class="property-link property-like" uk-tooltip="title: Like" *ngIf="!liked" (click)="liked=true"><i class="far fa-heart"></i></button>
-        <button class="property-link property-unlike" uk-tooltip="title: Unlike" *ngIf="liked" (click)="liked=false"><i class="fas fa-heart"></i></button>
+  <img
+    [src]="imageSrc || 'assets/img/pexels-photo-101808.webp'"
+    [alt]="heading"
+    class="property-image"
+  />
+  <div class="property-content">
+    <h4 class="property-heading">{{ heading }}</h4>
+    <p class="property-address">
+      <span uk-icon="location"></span> {{ address }}
+    </p>
+    <p class="property-price">₹ {{ price }}</p>
+    <div class="property-features">
+      <p class="property-sqft">
+        <i class="fas fa-ruler-combined feature-icon"></i>{{ area }}
+      </p>
+      <p class="property-rating">
+        <i class="fas fa-star feature-icon"></i>{{ rating }}
+      </p>
     </div>
+    <button
+      class="property-link property-like"
+      uk-tooltip="title: Like"
+      *ngIf="!liked"
+      (click)="liked = true"
+    >
+      <i class="far fa-heart"></i>
+    </button>
+    <button
+      class="property-link property-unlike"
+      uk-tooltip="title: Unlike"
+      *ngIf="liked"
+      (click)="liked = false"
+    >
+      <i class="fas fa-heart"></i>
+    </button>
+  </div>
 </div>

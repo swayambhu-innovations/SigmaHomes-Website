@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { DatabaseService } from 'src/app/services/database.service';
-declare const UIkit: any;
+import { AlertsAndNotificationsService } from 'src/app/services/uiService/alerts-and-notifications.service';
 
 @Component({
   selector: 'app-property-page',
@@ -10,13 +10,14 @@ declare const UIkit: any;
 })
 export class PropertyPageComponent implements OnInit {
   project: any;
-  ingredients: any;
-  customers: any[];
-  currentViewCustomer: any;
+  typeToEdit: any = null;
+  typeIdOfUnit: string;
+  unitToEdit: any = null;
 
   constructor(
     private router: Router,
-    private databaseService: DatabaseService
+    private databaseService: DatabaseService,
+    private alertService: AlertsAndNotificationsService
   ) {
     this.router.events.forEach((event) => {
       if (event instanceof NavigationEnd) {
@@ -39,6 +40,7 @@ export class PropertyPageComponent implements OnInit {
     ).data();
     if (projectData) {
       this.project = projectData;
+      this.project.id = projectId;
     } else {
       this.router.navigate(['/admin/properties']);
       return;
@@ -49,22 +51,46 @@ export class PropertyPageComponent implements OnInit {
     this.project.types = [];
     typeDocs.forEach(async (typeDoc) => {
       const type = typeDoc.data();
+      type['id'] = typeDoc.id;
 
       // Get types' units
       type['units'] = [];
       const unitsDocs = await this.databaseService.getUnitsOfType(typeDoc.id);
-      unitsDocs.forEach((unitsDoc) => {
-        const unit = unitsDoc.data();
+      unitsDocs.forEach((unitDoc) => {
+        const unit = unitDoc.data();
+        unit['id'] = unitDoc.id;
         type['units'].push(unit);
       });
-      type['units'].sort((a: any, b: any) => a.name.localeCompare(b.name))
+      type['units'].sort((a: any, b: any) => a.name.localeCompare(b.name));
 
       this.project.types.push(type);
     });
-    this.project.types.sort((a: any, b: any) => a.name.localeCompare(b.name))
+    this.project.types.sort((a: any, b: any) => a.name.localeCompare(b.name));
   }
-  viewInstrested(property: any) {
-    this.currentViewCustomer = property;
-    UIkit.modal(document.getElementById('interested-modal')).show();
+
+  delete() {
+    if (confirm('Are you sure you want to delete this project?')) {
+      this.databaseService.deleteProject(this.project.id);
+      this.router.navigate(['/admin/properties']);
+      this.alertService.presentToast('Project deleted successfully', 'info');
+    }
+  }
+
+  deleteType(typeId: string) {
+    if (confirm('Are you sure you want to delete this type?')) {
+      this.databaseService.deleteType(typeId).then(() => {
+        location.reload();
+        this.alertService.presentToast('Type deleted successfully', 'info');
+      });
+    }
+  }
+
+  deleteUnit(unitId: string) {
+    if (confirm('Are you sure you want to delete this unit?')) {
+      this.databaseService.deleteUnit(unitId).then(() => {
+        location.reload();
+        this.alertService.presentToast('Unit deleted successfully', 'info');
+      });
+    }
   }
 }

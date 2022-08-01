@@ -2,7 +2,7 @@
 <main>
     <h3>Properties</h3>
     <div id="properties">
-        <app-property-card *ngFor="let property of properties" [imageSrc]="property.images[0]" [heading]="property.name" [price]="property.companyAcceptedRate" [address]="property.plotNo" [area]="property.plotArea +'m2'" [rating]="property.rating"></app-property-card>
+        <app-property-card *ngFor="let property of properties" [imageSrc]="property.photos[0]" [heading]="property.name" [price]="property.companyAcceptedRate" [address]="property.plotNo" [area]="property.plotArea +'m2'" [rating]="property.rating"></app-property-card>
     </div>
 </main>
 <app-footer></app-footer>

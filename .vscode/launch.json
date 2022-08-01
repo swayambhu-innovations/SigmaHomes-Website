@@ -3,6 +3,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "java",
+      "name": "Launch it",
+      "request": "launch",
+      "mainClass": "it",
+      "projectName": "SigamHomes-Website_2546bd36"
+    },
+    {
       "name": "ng serve",
       "type": "pwa-chrome",
       "request": "launch",

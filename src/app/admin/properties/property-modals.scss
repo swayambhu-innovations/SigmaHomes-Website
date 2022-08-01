@@ -1,0 +1,66 @@
+.uk-modal-body {
+  width: min(90vw, 1000px);
+  padding: 2em;
+
+  .uk-modal-title {
+    font-family: var(--font-three);
+    font-size: var(--xlarge);
+    color: var(--tertiary);
+    margin: 0;
+  }
+
+  .uk-modal-close-default {
+    background-color: var(--secondary);
+    color: var(--secondary-contrast);
+    border-radius: 50%;
+    padding: 0.5em;
+  }
+
+  form {
+    margin-top: 1em;
+
+    .property-form-box {
+      display: flex;
+      align-items: baseline;
+      font-family: var(--font-three);
+      font-size: var(--medium);
+      color: var(--tertiary);
+      margin-bottom: 0.5em;
+
+      label,
+      input,
+      select {
+        word-wrap: break-word;
+      }
+
+      label {
+        margin-right: 1em;
+        font-weight: 700;
+        min-width: 50%;
+      }
+
+      input,
+      select {
+        width: 50%;
+      }
+
+      @media (max-width: 650px) {
+        flex-direction: column;
+
+        label,
+        input {
+          width: 100%;
+        }
+
+        label {
+          margin-right: 0;
+        }
+      }
+    }
+
+    app-primary-btn {
+      display: block;
+      margin-top: 1.5em;
+    }
+  }
+}
